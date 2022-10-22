@@ -6,8 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -23,6 +21,8 @@ public class BloodBank {
     private String title;
     @Embedded
     private Address address;
+    @Embedded
+    private Period workingHours;
     @Column
     private String description;
     @Column
@@ -30,7 +30,9 @@ public class BloodBank {
     @JsonBackReference
     @OneToMany(mappedBy = "bloodBank", cascade = CascadeType.ALL)
     private Set<MedicalStaff> medicalStaff;
-
+    @JsonBackReference
+    @OneToMany(mappedBy = "bloodBank", cascade = CascadeType.ALL)
+    private Set<BloodSupply> bloodSupplies;
 
     public BloodBank(String title, Address address, String description) {
         this.id = UUID.randomUUID();
