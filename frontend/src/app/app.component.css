@@ -2,16 +2,21 @@
   background: linear-gradient(rgba(255,187,198,1) 0%, rgb(255, 233, 233) 100%);
   display: flex;
   align-items: center;
-  padding: 0.5rem;
+  padding: 0.5rem 1.2rem;
   color: rgb(225, 59, 85);
+  font-size: 18px;
 }
 
 .title {
   padding: 0px 3px;
   flex: 1;
   justify-content: flex-start;
+  font-style: italic;
+  font-family: "Poppins Bold", sans-serif;
+  background: #e82d4a;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
-
 .links {
   display: flex;
   flex: 1;
@@ -25,7 +30,7 @@
 }
 
 .chip {
-  background: rgb(255, 103, 127);
+  background: -webkit-linear-gradient(#ff8797, #ee435d);
   box-shadow: 0 5px 20px rgba(217, 79, 111, 0.38);
   color: white;
   padding: 0.3rem 1.3rem;
