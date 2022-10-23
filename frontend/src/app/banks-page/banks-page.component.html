@@ -1,85 +1,16 @@
 <div class="centered-content">
   <h1>Blood banks</h1>
+  <div class="sort-div"><mat-form-field><mat-label>Sort by</mat-label> <mat-select><mat-option value="option1">Title</mat-option>
+    <mat-option value="option2">Average rating</mat-option>
+    <mat-option value="option3">City</mat-option></mat-select></mat-form-field></div>
   <div class="cards">
-    <mat-card class="bank-card">
-      <mat-card-title class="bank-title">Blood bank
-          <div class="tag"><mat-icon fontIcon="star" class="icon"></mat-icon><span> 9.5</span></div>
+    <mat-card *ngFor="let bank of banks" class="bank-card">
+      <mat-card-title class="bank-title">{{bank.title}}
+          <div class="tag"><mat-icon fontIcon="star" class="icon"></mat-icon><span>{{bank.averageGrade}}</span></div>
       </mat-card-title>
-      <mat-card-subtitle>Danila Kisa 12, Novi Sad, Serbia<br>07:00-19:00</mat-card-subtitle>
+      <mat-card-subtitle>{{bank.street}} {{bank.number}}, {{bank.city}}, {{bank.country}}<br>{{bank.workingHoursEnd}}-{{bank.workingHoursStart}}</mat-card-subtitle>
       <mat-card-content>
-        <p>Description Description Description Description Description Description</p>
-      </mat-card-content>
-    </mat-card>
-    <mat-card class="bank-card">
-      <mat-card-title class="bank-title">Blood bank
-        <div class="tag"><mat-icon fontIcon="star" class="icon"></mat-icon><span> 9.5</span></div>
-      </mat-card-title>
-      <mat-card-subtitle>Danila Kisa 12, Novi Sad, Serbia<br>07:00-19:00</mat-card-subtitle>
-      <mat-card-content>
-        <p>Description Description Description Description Description Description</p>
-      </mat-card-content>
-    </mat-card>
-    <mat-card class="bank-card">
-      <mat-card-title class="bank-title">Blood bank
-        <div class="tag"><mat-icon fontIcon="star" class="icon"></mat-icon><span> 9.5</span></div>
-      </mat-card-title>
-      <mat-card-subtitle>Danila Kisa 12, Novi Sad, Serbia<br>07:00-19:00</mat-card-subtitle>
-      <mat-card-content>
-        <p>Description Description Description Description Description Description</p>
-      </mat-card-content>
-    </mat-card>
-    <mat-card class="bank-card">
-      <mat-card-title class="bank-title">Blood bank
-        <div class="tag"><mat-icon fontIcon="star" class="icon"></mat-icon><span> 9.5</span></div>
-      </mat-card-title>
-      <mat-card-subtitle>Danila Kisa 12, Novi Sad, Serbia<br>07:00-19:00</mat-card-subtitle>
-      <mat-card-content>
-        <p>Description Description Description Description Description Description</p>
-      </mat-card-content>
-    </mat-card>
-    <mat-card class="bank-card">
-      <mat-card-title class="bank-title">Blood bank
-        <div class="tag"><mat-icon fontIcon="star" class="icon"></mat-icon><span> 9.5</span></div>
-      </mat-card-title>
-      <mat-card-subtitle>Danila Kisa 12, Novi Sad, Serbia<br>07:00-19:00</mat-card-subtitle>
-      <mat-card-content>
-        <p>Description Description Description Description Description Description</p>
-      </mat-card-content>
-    </mat-card>
-    <mat-card class="bank-card">
-      <mat-card-title class="bank-title">Blood bank
-        <div class="tag"><mat-icon fontIcon="star" class="icon"></mat-icon><span> 9.5</span></div>
-      </mat-card-title>
-      <mat-card-subtitle>Danila Kisa 12, Novi Sad, Serbia<br>07:00-19:00</mat-card-subtitle>
-      <mat-card-content>
-        <p>Description Description Description Description Description Description</p>
-      </mat-card-content>
-    </mat-card>
-    <mat-card class="bank-card">
-      <mat-card-title class="bank-title">Blood bank
-        <div class="tag"><mat-icon fontIcon="star" class="icon"></mat-icon><span> 9.5</span></div>
-      </mat-card-title>
-      <mat-card-subtitle>Danila Kisa 12, Novi Sad, Serbia<br>07:00-19:00</mat-card-subtitle>
-      <mat-card-content>
-        <p>Description Description Description Description Description Description</p>
-      </mat-card-content>
-    </mat-card>
-    <mat-card class="bank-card">
-      <mat-card-title class="bank-title">Blood bank
-        <div class="tag"><mat-icon fontIcon="star" class="icon"></mat-icon><span> 9.5</span></div>
-      </mat-card-title>
-      <mat-card-subtitle>Danila Kisa 12, Novi Sad, Serbia<br>07:00-19:00</mat-card-subtitle>
-      <mat-card-content>
-        <p>Description Description Description Description Description Description</p>
-      </mat-card-content>
-    </mat-card>
-    <mat-card class="bank-card">
-      <mat-card-title class="bank-title">Blood bank
-        <div class="tag"><mat-icon fontIcon="star" class="icon"></mat-icon><span> 9.5</span></div>
-      </mat-card-title>
-      <mat-card-subtitle>Danila Kisa 12, Novi Sad, Serbia<br>07:00-19:00</mat-card-subtitle>
-      <mat-card-content>
-        <p>Description Description Description Description Description Description</p>
+        <p>{{bank.description}}</p>
       </mat-card-content>
     </mat-card>
   </div>

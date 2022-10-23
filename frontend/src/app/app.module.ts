@@ -12,6 +12,7 @@ import {MatChipsModule} from '@angular/material/chips';
 import {BanksPageComponent} from './banks-page/banks-page.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
+import {MatSelectModule} from '@angular/material/select';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import {MatIconModule} from '@angular/material/icon';
     MatToolbarModule,
     MatChipsModule,
     MatCardModule,
-    MatIconModule
+    MatIconModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

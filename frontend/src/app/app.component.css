@@ -30,12 +30,12 @@
 }
 
 .chip {
-  background: -webkit-linear-gradient(#ff8797, #ee435d);
+  background: rgba(248, 100, 122, 1);
   box-shadow: 0 5px 20px rgba(217, 79, 111, 0.38);
   color: white;
   padding: 0.3rem 1.3rem;
+  transition: 0.5s;
 }
-
 a {
   text-decoration: none;
 }
