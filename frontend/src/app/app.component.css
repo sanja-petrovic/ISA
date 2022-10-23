@@ -1,0 +1,42 @@
+.nav-bar {
+  background: linear-gradient(rgba(255,187,198,1) 0%, rgb(255, 233, 233) 100%);
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  color: rgb(225, 59, 85);
+}
+
+.title {
+  padding: 0px 3px;
+  flex: 1;
+  justify-content: flex-start;
+}
+
+.links {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+
+}
+
+.links > a {
+  margin-right: 1rem;
+  color: rgb(225, 59, 85);
+}
+
+.chip {
+  background: rgb(255, 103, 127);
+  box-shadow: 0 5px 20px rgba(217, 79, 111, 0.38);
+  color: white;
+  padding: 0.3rem 1.3rem;
+}
+
+a {
+  text-decoration: none;
+}
+
+.buttons {
+  display: flex;
+  flex: 1;
+  justify-content: flex-end !important;
+}
