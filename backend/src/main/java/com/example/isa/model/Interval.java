@@ -18,9 +18,9 @@ import java.util.Date;
 @Embeddable
 public class Interval {
     @Column
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIME)
     private Date intervalStart;
     @Column
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIME)
     private Date intervalEnd;
 }
