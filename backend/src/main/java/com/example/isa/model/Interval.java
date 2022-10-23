@@ -9,18 +9,18 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Embeddable
-public class Period {
+public class Interval {
     @Column
     @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime start;
+    private Date intervalStart;
     @Column
     @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime end;
+    private Date intervalEnd;
 }

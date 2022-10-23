@@ -1,0 +1,24 @@
+package com.example.isa.service.implementation;
+
+import com.example.isa.model.BloodBank;
+import com.example.isa.repository.BloodBankRepository;
+import com.example.isa.service.interfaces.BloodBankService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class BloodBankServiceImpl implements BloodBankService {
+    private final BloodBankRepository repository;
+
+    @Autowired
+    public BloodBankServiceImpl(BloodBankRepository repository) {
+        this.repository = repository;
+    }
+
+    @Override
+    public List<BloodBank> getAll() {
+        return repository.findAll();
+    }
+}
