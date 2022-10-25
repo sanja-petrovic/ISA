@@ -22,7 +22,7 @@ public class BloodBank {
     @Embedded
     private Address address;
     @Embedded
-    private Period workingHours;
+    private Interval workingHours;
     @Column
     private String description;
     @Column
