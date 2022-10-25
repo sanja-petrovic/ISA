@@ -9,7 +9,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Table(name = "users")
 @Entity
-public class Patient extends Account {
+public class Patient extends User {
     @Column
     private String occupation;
     @Embedded
