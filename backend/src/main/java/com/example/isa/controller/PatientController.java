@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @Api(value = "/users")
-@RequestMapping(value = "/events")
+@RequestMapping(value = "/users")
 public class PatientController {
 
     private final PatientService patientService;
@@ -24,16 +24,16 @@ public class PatientController {
     }
 
     @GetMapping
-    @ApiOperation(value = "Get all users.", httpMethod = "GET")
+    @ApiOperation(value = "Get all patients.", httpMethod = "GET")
     public ResponseEntity<?> getAll() {
         List<Patient> patients = patientService.getAll();
         return ResponseEntity.ok().build();
     }
 
     @PostMapping
-    @ApiOperation(value = "Register a user.", httpMethod = "POST")
-    public ResponseEntity<?> registerUser(@RequestBody PatientDto userDto) {
-        patientService.register(userDto);
+    @ApiOperation(value = "Register a patient.", httpMethod = "POST")
+    public ResponseEntity<?> register(@RequestBody PatientDto dto) {
+        patientService.register(dto);
         return ResponseEntity.ok().build();
     }
 

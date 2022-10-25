@@ -23,11 +23,4 @@ public class Address {
     private String city;
     @Column
     private String country;
-
-    public Address(String street, String number, String city, String country) {
-        this.street = street;
-        this.number = number;
-        this.city = city;
-        this.country = country;
-    }
 }

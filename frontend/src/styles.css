@@ -1,1 +1,255 @@
-/* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: 'Poppins Regular';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Poppins Regular'), url('assets/fonts/Poppins-Regular.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'Poppins Italic';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Poppins Italic'), url('assets/fonts/Poppins-Italic.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'Poppins Thin';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Poppins Thin'), url('assets/fonts/Poppins-Thin.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'Poppins Thin Italic';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Poppins Thin Italic'), url('assets/fonts/Poppins-ThinItalic.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'Poppins ExtraLight';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Poppins ExtraLight'), url('assets/fonts/Poppins-ExtraLight.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'Poppins ExtraLight Italic';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Poppins ExtraLight Italic'), url('assets/fonts/Poppins-ExtraLightItalic.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'Poppins Light';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Poppins Light'), url('assets/fonts/Poppins-Light.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'Poppins Light Italic';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Poppins Light Italic'), url('assets/fonts/Poppins-LightItalic.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'Poppins Medium';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Poppins Medium'), url('assets/fonts/Poppins-Medium.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'Poppins Medium Italic';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Poppins Medium Italic'), url('assets/fonts/Poppins-MediumItalic.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'Poppins SemiBold';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Poppins SemiBold'), url('assets/fonts/Poppins-SemiBold.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'Poppins SemiBold Italic';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Poppins SemiBold Italic'), url('assets/fonts/Poppins-SemiBoldItalic.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'Poppins Bold';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Poppins Bold'), url('assets/fonts/Poppins-Bold.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'Poppins Bold Italic';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Poppins Bold Italic'), url('assets/fonts/Poppins-BoldItalic.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'Poppins ExtraBold';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Poppins ExtraBold'), url('assets/fonts/Poppins-ExtraBold.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'Poppins ExtraBold Italic';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Poppins ExtraBold Italic'), url('assets/fonts/Poppins-ExtraBoldItalic.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'Poppins Black';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Poppins Black'), url('assets/fonts/Poppins-Black.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'Poppins Black Italic';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Poppins Black Italic'), url('assets/fonts/Poppins-BlackItalic.woff') format('woff');
+}
+@font-face {
+  font-family: 'SF UI Text Regular';
+  font-style: normal;
+  font-weight: normal;
+  src: local('SF UI Text Regular'), url('assets/fonts/SFUIText-Regular.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'SF UI Text Italic';
+  font-style: normal;
+  font-weight: normal;
+  src: local('SF UI Text Italic'), url('assets/fonts/SFUIText-RegularItalic.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'SF UI Text Light';
+  font-style: normal;
+  font-weight: normal;
+  src: local('SF UI Text Light'), url('assets/fonts/SFUIText-Light.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'SF UI Text Light Italic';
+  font-style: normal;
+  font-weight: normal;
+  src: local('SF UI Text Light Italic'), url('assets/fonts/SFUIText-LightItalic.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'SF UI Text Medium';
+  font-style: normal;
+  font-weight: normal;
+  src: local('SF UI Text Medium'), url('assets/fonts/SFUIText-Medium.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'SF UI Text Medium Italic';
+  font-style: normal;
+  font-weight: normal;
+  src: local('SF UI Text Medium Italic'), url('assets/fonts/SFUIText-MediumItalic.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'SF UI Text Semibold';
+  font-style: normal;
+  font-weight: normal;
+  src: local('SF UI Text Semibold'), url('assets/fonts/SFUIText-Semibold.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'SF UI Text Semibold Italic';
+  font-style: normal;
+  font-weight: normal;
+  src: local('SF UI Text Semibold Italic'), url('assets/fonts/SFUIText-SemiboldItalic.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'SF UI Text Bold';
+  font-style: normal;
+  font-weight: normal;
+  src: local('SF UI Text Bold'), url('assets/fonts/SFUIText-Bold.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'SF UI Text Bold Italic';
+  font-style: normal;
+  font-weight: normal;
+  src: local('SF UI Text Bold Italic'), url('assets/fonts/SFUIText-BoldItalic.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'SF UI Text Heavy';
+  font-style: normal;
+  font-weight: normal;
+  src: local('SF UI Text Heavy'), url('assets/fonts/SFUIText-Heavy.woff') format('woff');
+}
+
+
+@font-face {
+  font-family: 'SF UI Text Heavy Italic';
+  font-style: normal;
+  font-weight: normal;
+  src: local('SF UI Text Heavy Italic'), url('assets/fonts/SFUIText-HeavyItalic.woff') format('woff');
+}
+
+* {
+  font-family: "Poppins Regular", sans-serif;
+}
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: rgb(255, 233, 233);
+}
+
+.centered-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
