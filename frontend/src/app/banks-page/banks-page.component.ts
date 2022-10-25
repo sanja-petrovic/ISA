@@ -9,12 +9,29 @@ import axios from 'axios';
 export class BanksPageComponent implements OnInit {
 
   public banks: any[] = [];
+  public searchCriteria: string[] = [];
 
   getBanks(): void {
     axios.get('http://localhost:8080/bloodbanks').then((response) => {
       this.banks = response.data?.bloodBanks;
       console.log(response.data);
     })
+  }
+
+  searchBanks(sortCriteria: string): void {
+    const sort: string[] = sortCriteria.split('-');
+    const dto = {
+      searchCriteria: this.searchCriteria,
+      sortCriteria: {
+        direction: sort[1],
+        property: sort[0]
+      }
+    }
+    axios.post('http://localhost:8080/bloodbanks/search', dto)
+      .then((response) => {
+        this.banks = response.data?.bloodBanks;
+        console.log(response.data);
+      })
   }
 
   constructor(private bloodBankService: BloodBankService) { }

@@ -12,8 +12,5 @@ export class BloodBankService {
 
   constructor(private http: HttpClient) { }
 
-  getBloodBanks(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiHost + '/bloodbanks', {headers: this.headers});
-  }
 
 }

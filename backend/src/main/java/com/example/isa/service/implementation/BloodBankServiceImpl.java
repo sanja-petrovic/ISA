@@ -4,6 +4,7 @@ import com.example.isa.model.BloodBank;
 import com.example.isa.repository.BloodBankRepository;
 import com.example.isa.service.interfaces.BloodBankService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,5 +21,11 @@ public class BloodBankServiceImpl implements BloodBankService {
     @Override
     public List<BloodBank> getAll() {
         return repository.findAll();
+    }
+
+    @Override
+    public List<BloodBank> search(Sort sort, List<String> searchCriteria) {
+        //Searching to be implemented by student 2.
+        return repository.findAll(sort);
     }
 }
