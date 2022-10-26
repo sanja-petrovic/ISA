@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Builder
 @Entity
 @Table(name = "medical_staff")
-public class MedicalStaff extends Account {
+public class MedicalStaff extends User {
     @JsonManagedReference
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
