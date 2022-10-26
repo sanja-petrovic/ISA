@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "users")
+@Table(name = "patients")
 @Entity
 public class Patient extends User {
     @Column

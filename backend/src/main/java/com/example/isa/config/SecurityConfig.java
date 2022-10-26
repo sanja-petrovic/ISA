@@ -26,7 +26,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserService userService;
     private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
-
     private final TokenHandler tokenHandler;
 
     public SecurityConfig(UserService userService, RestAuthenticationEntryPoint restAuthenticationEntryPoint, TokenHandler tokenHandler) {
@@ -46,8 +45,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    @Override
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
     }
 
