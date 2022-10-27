@@ -31,4 +31,9 @@ public class PatientServiceImpl implements PatientService {
         Patient patient = new Patient();
         repository.save(patient);
     }
+
+    @Override
+    public Patient getByEmail(String email) {
+        return repository.findAllByEmail(email);
+    }
 }

@@ -9,4 +9,6 @@ import java.util.List;
 public interface PatientService {
     public List<Patient> getAll();
     public void register(PatientDto dto);
+
+    public Patient getByEmail(String email);
 }
