@@ -29,7 +29,7 @@ public class PatientController {
     @ApiOperation(value = "Get all patients.", httpMethod = "GET")
     public ResponseEntity<?> getAll() {
         List<Patient> patients = patientService.getAll();
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(patients);
     }
 
     @PostMapping

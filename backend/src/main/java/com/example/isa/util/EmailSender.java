@@ -9,10 +9,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EmailSender {
-    @Autowired
-    private JavaMailSender javaMailSender;
+    private final JavaMailSender javaMailSender;
     @Value("${spring.mail.username}")
     private String sender;
+
+    @Autowired
+    public EmailSender(JavaMailSender javaMailSender) {
+        this.javaMailSender = javaMailSender;
+    }
 
     public String send(Email email) {
         try {
@@ -24,9 +28,9 @@ public class EmailSender {
             mailMessage.setSubject(email.getSubject());
 
             javaMailSender.send(mailMessage);
-            return "Mail Sent Successfully...";
+            return "Mail sent successfully...";
         } catch (Exception e) {
-            return "Error while Sending Mail";
+            return "Error while sending mail:" + e.getLocalizedMessage();
         }
     }
 
