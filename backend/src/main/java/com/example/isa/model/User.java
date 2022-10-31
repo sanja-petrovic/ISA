@@ -20,6 +20,10 @@ import java.util.UUID;
 public class User implements UserDetails {
     @Id
     private UUID id = UUID.randomUUID();
+
+    @Column
+    @Enumerated(value = EnumType.STRING)
+    AccountStatus accountStatus;
     @Column(unique = true)
     private String personalId;
     @Column(unique = true)
@@ -36,8 +40,9 @@ public class User implements UserDetails {
     @Enumerated(value = EnumType.STRING)
     private Gender gender;
 
-    public User(String personalId, String email, String password, String firstName, String lastName, String phoneNumber, Gender gender) {
+    public User(String personalId, AccountStatus status, String email, String password, String firstName, String lastName, String phoneNumber, Gender gender) {
         this.personalId = personalId;
+        this.accountStatus = status;
         this.email = email;
         this.password = password;
         this.firstName = firstName;

@@ -1,5 +1,6 @@
 package com.example.isa.service.implementation;
 
+import com.example.isa.model.AccountStatus;
 import com.example.isa.model.Email;
 import com.example.isa.model.Patient;
 import com.example.isa.model.User;
@@ -44,5 +45,11 @@ public class UserServiceImpl implements UserService {
     public void register(Patient patient) {
         repository.save(patient);
         emailSender.send(new Email(patient.getEmail(), "Verify your registration", "To complete your registration, please click on the link bellow."));
+    }
+
+    @Override
+    public void verifyAccount(User user) {
+        user.setAccountStatus(AccountStatus.VERIFIED);
+        repository.save(user);
     }
 }

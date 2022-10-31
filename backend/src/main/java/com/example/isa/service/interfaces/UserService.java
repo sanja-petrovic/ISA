@@ -9,4 +9,5 @@ import java.util.List;
 public interface UserService extends UserDetailsService {
     List<User> getAll();
     void register(Patient patient);
+    void verifyAccount(User user);
 }
