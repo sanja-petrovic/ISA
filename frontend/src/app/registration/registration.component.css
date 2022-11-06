@@ -1,0 +1,39 @@
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 50vw;
+  padding: 2vw;
+}
+.centered-content {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+h2, h1 {
+  font-family: "Poppins SemiBold", sans-serif;
+  color: #ee435d;
+}
+.needs-space {
+  margin-top: 1rem;
+}
+h1 {
+  font-size: 29px;
+}
+
+.submit-button {
+  padding: 0.7rem;
+  border: 1px solid transparent;
+  background-image: linear-gradient(to right, #ea283f 0%, #ff5e70 51%, #ea283f 100%);
+  text-align: center;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  box-shadow: 0 0 20px #e13b55;
+  border-radius: 15px;
+  font-size: 16px;
+}
+
+.submit-button:hover {
+  background-position: right center; /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
+}

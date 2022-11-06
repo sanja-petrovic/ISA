@@ -6,6 +6,12 @@
   color: rgb(225, 59, 85);
   font-size: 18px;
 }
+h1 {
+  margin-top: 2vh;
+  font-family: "Poppins SemiBold", sans-serif;
+  color: #ee435d;
+  font-size: 29px;
+}
 
 .title {
   padding: 0px 3px;
