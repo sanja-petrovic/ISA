@@ -1,6 +1,6 @@
 <div class="centered-content">
   <h1>Welcome to <b>howtosavealife</b>!</h1>
-  <form class="form-wrapper" [formGroup]="form">
+  <form class="form-wrapper" [formGroup]="form" (ngSubmit)="onSubmit()">
     <h2><b>Personal</b></h2>
     <mat-form-field required appearance="outline">
       <mat-label>First name</mat-label>

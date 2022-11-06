@@ -49,7 +49,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void verifyAccount(User user) {
-        user.setAccountStatus(AccountStatus.VERIFIED);
+        user.setVerified(true);
         repository.save(user);
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        User user = repository.findByEmail(username);
+        if (user == null) {
+            throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));
+        } else {
+            return user;
+        }
     }
 }

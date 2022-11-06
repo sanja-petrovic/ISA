@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {AuthService} from "../services/AuthService";
+import {UserService} from "../services/UserService";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-registration',
@@ -49,18 +52,35 @@ export class RegistrationComponent implements OnInit {
         return;
       }
       if (control.value !== matchingControl.value) {
-        matchingControl.setErrors({ confirmedValidator: true });
+        matchingControl.setErrors({confirmedValidator: true});
       } else {
         matchingControl.setErrors(null);
       }
     };
   }
+
   constructor(
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private userService: UserService,
+    private router: Router) {
   }
 
   ngOnInit(): void {
 
+  }
+
+  onSubmit(): void {
+    this.authService.register(this.form.value).subscribe(data => {
+        console.log(data);
+        this.authService.login(this.form.value).subscribe(() => {
+          this.userService.getMyInfo().subscribe();
+        });
+        this.router.navigate(["/"]);
+      },
+      error => {
+        console.log('Sign up error');
+      });
   }
 
 }

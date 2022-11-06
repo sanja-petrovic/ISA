@@ -46,3 +46,7 @@ h1 {
   color: #fff;
   text-decoration: none;
 }
+
+.submit-button:disabled {
+  opacity: 50%;
+}
