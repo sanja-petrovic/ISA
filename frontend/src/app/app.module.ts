@@ -17,30 +17,34 @@ import { RegistrationComponent } from './registration/registration.component';
 import {FormsModule} from "@angular/forms";
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from "@angular/material/form-field";
+import { LoginComponent } from './login/login.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     BanksPageComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    LoginComponent
   ],
-    imports: [
-        HttpClientModule,
-        BrowserModule,
-        BrowserAnimationsModule,
-        MatButtonModule,
-        AppRoutingModule,
-        MatMenuModule,
-        MatToolbarModule,
-        MatChipsModule,
-        MatCardModule,
-        MatIconModule,
-        MatSelectModule,
-        FormsModule,
-        MatFormFieldModule,
-        MatInputModule
-    ],
+  imports: [
+    HttpClientModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    AppRoutingModule,
+    MatMenuModule,
+    MatToolbarModule,
+    MatChipsModule,
+    MatCardModule,
+    MatIconModule,
+    MatSelectModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCheckboxModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
