@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void register(Patient patient) {
         repository.save(patient);
-        emailSender.send(new Email(patient.getEmail(), "Verify your registration", "To complete your registration, please click on the link bellow."));
+        //emailSender.send(new Email(patient.getEmail(), "Verify your registration", "To complete your registration, please click on the link bellow."));
     }
 
     @Override
@@ -56,10 +56,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByUsername(String username) {
         User user = repository.findByEmail(username);
-        if (user == null) {
-            throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));
-        } else {
-            return user;
-        }
+        return user;
     }
 }

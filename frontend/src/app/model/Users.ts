@@ -4,7 +4,7 @@ type Patient = {
   personalId: string,
   gender: string,
   occupation: string,
-  institutionInfo: string,
+  institution: string,
   phoneNumber: string,
   homeAddress: string,
   city: string,

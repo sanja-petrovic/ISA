@@ -24,7 +24,7 @@ export class RegistrationComponent implements OnInit {
     (c: AbstractControl) => Validators.required(c)
   ]);
   form: FormGroup = this.formBuilder.group({
-    email: ['', Validators.compose([Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")],)],
+    email: ['', Validators.compose([Validators.required, Validators.email],)],
     password: this.password,
     passwordCheck: this.passwordCheck,
     firstName: ['', Validators.compose([Validators.required])],
@@ -32,8 +32,8 @@ export class RegistrationComponent implements OnInit {
     occupation: ['', Validators.compose([Validators.required])],
     institution: ['', Validators.compose([Validators.required])],
     gender: ['', Validators.compose([Validators.required])],
-    phone: ['', Validators.compose([Validators.required])],
-    personalId: ['', Validators.compose([Validators.required])],
+    phoneNumber: ['', Validators.compose([Validators.required, Validators.pattern("[0-9]\+")])],
+    personalId: ['', Validators.compose([Validators.required, Validators.pattern("[0-9]{13}")] )],
     homeAddress: ['', Validators.compose([Validators.required])],
     city: ['', Validators.compose([Validators.required])],
     country: ['', Validators.compose([Validators.required])],
@@ -73,10 +73,6 @@ export class RegistrationComponent implements OnInit {
   onSubmit(): void {
     this.authService.register(this.form.value).subscribe(data => {
         console.log(data);
-        this.authService.login(this.form.value).subscribe(() => {
-          this.userService.getMyInfo().subscribe();
-        });
-        this.router.navigate(["/"]);
       },
       error => {
         console.log('Sign up error');

@@ -14,7 +14,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,7 +26,6 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AuthController {
     private final TokenHandler tokenHandler;
-
     private final AuthenticationManager authenticationManager;
     private final UserService userService;
     private final RoleService roleService;
@@ -54,12 +52,11 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<Patient> registerPatient(@RequestBody PatientDto dto) {
-        UserDetails user = userService.loadUserByUsername(dto.getEmail());
-        if (user != null) {
+        User user = userService.findByUsername(dto.getEmail());
+        if (user == null) {
             Gender gender = dto.getGender().trim().equalsIgnoreCase("female") ? Gender.FEMALE : Gender.MALE;
             Patient patient = Patient.builder()
                     .personalId(dto.getPersonalId())
-                    .status(AccountStatus.NOT_VERIFIED)
                     .firstName(dto.getFirstName())
                     .lastName(dto.getLastName())
                     .email(dto.getEmail())
@@ -67,8 +64,8 @@ public class AuthController {
                     .phoneNumber(dto.getPhoneNumber())
                     .gender(gender)
                     .occupation(dto.getOccupation())
-                    .address(new Address(dto.getStreet(), dto.getCity(), dto.getCountry()))
-                    .institutionInfo(dto.getInstitutionInfo())
+                    .address(new Address(dto.getHomeAddress(), dto.getCity(), dto.getCountry()))
+                    .institutionInfo(dto.getInstitution())
                     .roles(roleService.findByName("ROLE_PATIENT"))
                     .build();
             userService.register(patient);

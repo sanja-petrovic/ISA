@@ -1,4 +1,4 @@
-import {HttpClient, HttpHeaders, HttpRequest, HttpResponse, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpRequest, HttpResponse, HttpParams, HttpEvent} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {catchError, filter, map} from 'rxjs/operators';
@@ -26,7 +26,7 @@ export class ApiService {
   constructor(private http: HttpClient) { }
 
   get(path: string, args?: any): Observable<any> {
-    const options = {
+    const options: any = {
       headers: this.headers,
     };
 
@@ -55,8 +55,9 @@ export class ApiService {
       headers: custemHeaders || this.headers,
     });
 
-    return this.http.request(req).pipe(filter(response => response instanceof HttpResponse))
-      .pipe(map((response: HttpResponse<any>) => response.body))
+    // @ts-ignore
+    return this.http.request(req).pipe(filter((response: HttpResponse<any>) => response))
+      .pipe(map(response => response.body))
       .pipe(catchError(error => this.checkError(error)));
   }
 

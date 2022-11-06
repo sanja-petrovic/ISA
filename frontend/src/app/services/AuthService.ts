@@ -9,7 +9,9 @@ import {ConfigService} from "./ConfigService";
 import {UserService} from "./UserService";
 import {Patient} from "../model/Users";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthService {
 
   constructor(
