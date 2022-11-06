@@ -52,6 +52,10 @@ export class AuthService {
       }));
   }
 
+  verify(email: string) {
+    return this.apiService.post(`${this.config.verification_url}/${email}`, email);
+  }
+
   logout() {
     this.userService.currentUser = null;
     this.access_token = null;

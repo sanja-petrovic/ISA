@@ -9,6 +9,7 @@ export class ConfigService {
   private _auth_url = 'http://localhost:8080/auth';
   public users_url = this._api_url + '/users';
   private _login_url = this._auth_url + '/login';
+  public verification_url = this._auth_url + '/verify';
 
   get login_url(): string {
     return this._login_url;

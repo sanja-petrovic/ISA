@@ -15,10 +15,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -72,6 +69,19 @@ public class AuthController {
             return new ResponseEntity<>(patient, HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>(null, HttpStatus.CONFLICT);
+        }
+    }
+
+    @PostMapping("/verify/{email}")
+    public ResponseEntity<?> verifyAccount(@PathVariable String email) {
+        User user = userService.findByUsername(email);
+        if(user == null) {
+            return ResponseEntity.status(404).body("Account with the given email does not exist.");
+        } else if(user.isVerified()) {
+            return ResponseEntity.status(403).body("Account already verified.");
+        } else {
+            userService.verifyAccount(user);
+            return ResponseEntity.ok().build();
         }
     }
 }
