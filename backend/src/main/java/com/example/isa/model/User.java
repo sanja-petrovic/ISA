@@ -22,6 +22,10 @@ import java.util.UUID;
 public class User implements UserDetails {
     @Id
     private UUID id = UUID.randomUUID();
+
+    @Column
+    @Enumerated(value = EnumType.STRING)
+    AccountStatus accountStatus;
     @Column(unique = true)
     private String personalId;
     @Column(unique = true)
@@ -47,6 +51,7 @@ public class User implements UserDetails {
     private List<Role> roles = new ArrayList<>();
     public User(String personalId, String email, String password, String firstName, String lastName, String phoneNumber, Gender gender, boolean verified, List<Role> roles) {
         this.personalId = personalId;
+        this.accountStatus = status;
         this.email = email;
         this.password = password;
         this.firstName = firstName;
