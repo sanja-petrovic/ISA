@@ -8,7 +8,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -42,7 +44,12 @@ public class User implements UserDetails {
     @Column
     private boolean isVerified;
 
-    public User(String personalId, AccountStatus status, String email, String password, String firstName, String lastName, String phoneNumber, Gender gender, boolean verified) {
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    private List<Role> roles = new ArrayList<>();
+    public User(String personalId, String email, String password, String firstName, String lastName, String phoneNumber, Gender gender, boolean verified, List<Role> roles) {
         this.personalId = personalId;
         this.accountStatus = status;
         this.email = email;
@@ -52,6 +59,7 @@ public class User implements UserDetails {
         this.phoneNumber = phoneNumber;
         this.gender = gender;
         this.isVerified = verified;
+        this.roles = roles;
     }
 
     @JsonIgnore
