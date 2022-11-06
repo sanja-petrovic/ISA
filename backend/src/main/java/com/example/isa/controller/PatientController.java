@@ -32,5 +32,23 @@ public class PatientController {
         List<Patient> patients = patientService.getAll();
         return ResponseEntity.ok(patients);
     }
-
+    @RequestMapping(value="/{personalId}")
+    @ApiOperation(value = "Get patient by personalId. (returns DTO)", httpMethod = "GET")
+    public ResponseEntity<?> getByPersonalId(@PathVariable String personalId){
+    	Patient patient = null;
+		try {
+			patient = patientService.getById(personalId);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		PatientDto dto = new PatientDto(patient);
+    	return ResponseEntity.ok(dto);
+    }
+    @RequestMapping(value="/update", method = RequestMethod.POST)
+    @ApiOperation(value = "Update patient info", httpMethod = "POST")
+    public ResponseEntity<?> updatePatient(@RequestParam PatientDto patientDto){
+    	return ResponseEntity.ok(null);
+    }
+    
 }
