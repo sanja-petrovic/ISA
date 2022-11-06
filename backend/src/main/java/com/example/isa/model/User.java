@@ -20,6 +20,10 @@ import java.util.UUID;
 public class User implements UserDetails {
     @Id
     private UUID id = UUID.randomUUID();
+
+    @Column
+    @Enumerated(value = EnumType.STRING)
+    AccountStatus accountStatus;
     @Column(unique = true)
     private String personalId;
     @Column(unique = true)
@@ -35,15 +39,19 @@ public class User implements UserDetails {
     @Column
     @Enumerated(value = EnumType.STRING)
     private Gender gender;
+    @Column
+    private boolean isVerified;
 
-    public User(String personalId, String email, String password, String firstName, String lastName, String phoneNumber, Gender gender) {
+    public User(String personalId, AccountStatus status, String email, String password, String firstName, String lastName, String phoneNumber, Gender gender, boolean verified) {
         this.personalId = personalId;
+        this.accountStatus = status;
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.gender = gender;
+        this.isVerified = verified;
     }
 
     @JsonIgnore
@@ -59,21 +67,21 @@ public class User implements UserDetails {
     @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return isVerified;
     }
     @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return isVerified;
     }
     @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return isVerified;
     }
     @JsonIgnore
     @Override
     public boolean isEnabled() {
-        return true;
+        return isVerified;
     }
 }

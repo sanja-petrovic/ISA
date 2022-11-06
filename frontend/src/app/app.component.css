@@ -6,6 +6,54 @@
   color: rgb(225, 59, 85);
   font-size: 18px;
 }
+h1 {
+  margin-top: 2vh;
+  font-family: "Poppins SemiBold", sans-serif;
+  color: #ee435d;
+  font-size: 29px;
+}
+
+.register-button {
+  width: 5vw;
+  border: 1px solid transparent;
+  background-image: linear-gradient(to right, #ea283f 0%, #ff5e70 51%, #ea283f 100%);
+  text-align: center;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  height: 100%;
+  box-shadow: 0 0 20px rgba(255, 100, 125, 0.3);
+  border-radius: 1rem;
+  cursor: pointer;
+}
+.register-button:hover {
+  background-position: right center;
+  color: #fff;
+  text-decoration: none;
+}
+
+.buttons > a {
+  margin-left: 0.5rem;
+}
+
+.login-button {
+  height: 100%;
+  width: 5vw;
+  background-color: white;
+  text-align: center;
+  border: 1px solid transparent;
+  color: #ff5e75;
+  background-color: rgba(255, 255, 255, 0.7);
+  transition: 0.5s;
+  padding: 0.3rem 1.5rem;
+  box-shadow: 0 0 20px rgba(255, 100, 125, 0.2);
+  border-radius: 1rem;
+  cursor: pointer;
+}
+
+.login-button:hover {
+  background-color: rgba(255, 255, 255, 1);
+}
 
 .title {
   padding: 0px 3px;

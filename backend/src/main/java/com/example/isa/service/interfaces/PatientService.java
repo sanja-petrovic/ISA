@@ -8,5 +8,4 @@ import java.util.List;
 
 public interface PatientService {
     public List<Patient> getAll();
-    public void register(Patient patient);
 }
