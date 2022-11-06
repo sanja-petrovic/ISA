@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 public class BloodBankDto {
     private String title;
     private String street;
-    private String number;
     private String city;
     private String country;
     private String workingHoursStart;

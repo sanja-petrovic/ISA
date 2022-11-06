@@ -60,7 +60,7 @@ public class UserController {
                     .phoneNumber(dto.getPhoneNumber())
                     .gender(gender)
                     .occupation(dto.getOccupation())
-                    .address(new Address(dto.getStreet(), dto.getNumber(), dto.getCity(), dto.getCountry()))
+                    .address(new Address(dto.getStreet(), dto.getCity(), dto.getCountry()))
                     .institutionInfo(dto.getInstitutionInfo())
                     .build();
             service.register(patient);
