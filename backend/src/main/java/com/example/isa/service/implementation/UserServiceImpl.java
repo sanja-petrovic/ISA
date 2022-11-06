@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
     public void register(Patient patient) {
         repository.save(patient);
         String link = "http://localhost:4200/verify/" + patient.getEmail();
-        String content = "<h1>Thanks for registering!<h1><p>To verify your account, please click on <a href=" + link + ">this link</a>.</p>";
+        String content = "<h1>Thanks for registering!</h1><p>To verify your account, please click on <a href=" + link + ">this link</a>.</p>";
         emailSender.send(new Email(patient.getEmail(), "Verify your registration", content));
     }
 
