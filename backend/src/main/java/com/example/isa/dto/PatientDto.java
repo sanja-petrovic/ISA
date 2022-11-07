@@ -33,11 +33,11 @@ public class PatientDto {
     	this.phoneNumber = patient.getPhoneNumber();
     	this.gender = patient.getGender().toString();
     	this.occupation = patient.getOccupation();
-    	this.street = patient.getAddress().getStreet();
+    	this.homeAddress = patient.getAddress().getStreet();
     	this.number = "8";
     	this.city = patient.getAddress().getCountry();
     	this.country = patient.getAddress().getCountry();
-    	this.institutionInfo = patient.getInstitutionInfo();
+    	this.institution = patient.getInstitutionInfo();
     }
 }
 

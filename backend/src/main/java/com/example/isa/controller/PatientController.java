@@ -42,12 +42,16 @@ public class PatientController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		PatientDto dto = new PatientDto(patient);
-    	return ResponseEntity.ok(dto);
+		if(!patient.equals(null)) {
+			PatientDto dto = new PatientDto(patient);
+	    	return ResponseEntity.ok(dto);
+		}
+		return (ResponseEntity<?>) ResponseEntity.notFound();
     }
-    @RequestMapping(value="/update", method = RequestMethod.POST)
-    @ApiOperation(value = "Update patient info", httpMethod = "POST")
+    @RequestMapping(value="/update", method = RequestMethod.PUT)
+    @ApiOperation(value = "Update patient info", httpMethod = "PUT")
     public ResponseEntity<?> updatePatient(@RequestParam PatientDto patientDto){
+    	//patientService.
     	return ResponseEntity.ok(null);
     }
     

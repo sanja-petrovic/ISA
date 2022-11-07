@@ -29,7 +29,7 @@ public class PatientServiceImpl implements PatientService {
 	@Override
 	public Patient getById(String personalId) throws Exception {
 		Patient patient =  repository.findByPersonalId(personalId);
-		if(!patient.equals(null)) {
+		if(patient.equals(null)) {
 			throw new Exception(String.format("No user found with personalId '%s'.", personalId));
 		}
 		else {
