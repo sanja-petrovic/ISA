@@ -1,0 +1,8 @@
+<div class="centered-content">
+  <div class="verification-card">
+      <div *ngIf="verifiedSuccessfully; else elseBlock">
+        <h1>Account successfully verified! You may log in now.</h1>
+      </div>
+    <ng-template #elseBlock><h1>{{error}}</h1></ng-template>
+  </div>
+</div>

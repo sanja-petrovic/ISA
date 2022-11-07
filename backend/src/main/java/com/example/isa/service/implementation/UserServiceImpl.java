@@ -44,12 +44,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public void register(Patient patient) {
         repository.save(patient);
-        emailSender.send(new Email(patient.getEmail(), "Verify your registration", "To complete your registration, please click on the link bellow."));
+        String link = "http://localhost:4200/verify/" + patient.getEmail();
+        String content = "<h1>Thanks for registering!</h1><p>To verify your account, please click on <a href=" + link + ">this link</a>.</p>";
+        emailSender.send(new Email(patient.getEmail(), "Verify your registration", content));
     }
 
     @Override
     public void verifyAccount(User user) {
-        user.setAccountStatus(AccountStatus.VERIFIED);
+        user.setVerified(true);
         repository.save(user);
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        User user = repository.findByEmail(username);
+        return user;
     }
 }

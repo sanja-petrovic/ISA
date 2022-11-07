@@ -10,4 +10,6 @@ public interface UserService extends UserDetailsService {
     List<User> getAll();
     void register(Patient patient);
     void verifyAccount(User user);
+
+    public User findByUsername(String username);
 }

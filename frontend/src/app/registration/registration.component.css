@@ -33,8 +33,20 @@ h1 {
   cursor: pointer;
 }
 
+.password-input {
+  color: #e82d4a;
+  font-weight: bold;
+  font-size: 12px;
+  margin-top: -1rem;
+  margin-bottom: 0.5rem;
+}
+
 .submit-button:hover {
   background-position: right center; /* change the direction of the change here */
   color: #fff;
   text-decoration: none;
+}
+
+.submit-button:disabled {
+  opacity: 50%;
 }

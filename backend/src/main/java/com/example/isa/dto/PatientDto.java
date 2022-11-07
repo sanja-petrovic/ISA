@@ -18,11 +18,11 @@ public class PatientDto {
     private String phoneNumber;
     private String gender;
     private String occupation;
-    private String street;
+    private String homeAddress;
     private String number;
     private String city;
     private String country;
-    private String institutionInfo;
+    private String institution;
 
     public PatientDto(Patient patient) {
     	this.personalId = patient.getPersonalId();
