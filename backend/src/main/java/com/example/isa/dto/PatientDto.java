@@ -1,5 +1,7 @@
 package com.example.isa.dto;
 
+import com.example.isa.model.Address;
+import com.example.isa.model.Gender;
 import com.example.isa.model.Patient;
 
 import lombok.AllArgsConstructor;
@@ -38,6 +40,20 @@ public class PatientDto {
     	this.city = patient.getAddress().getCountry();
     	this.country = patient.getAddress().getCountry();
     	this.institution = patient.getInstitutionInfo();
+    }
+    public Patient convert() {
+    	Patient retVal = new Patient();
+    	retVal.setPersonalId(this.getPersonalId());
+    	retVal.setFirstName(this.getFirstName());
+    	retVal.setLastName(this.getLastName());
+    	retVal.setEmail(this.getEmail());
+    	retVal.setPassword(this.getPassword());
+    	retVal.setPhoneNumber(this.getPhoneNumber());
+    	retVal.setGender(Gender.valueOf(this.getGender()));
+    	retVal.setOccupation(this.getOccupation());
+    	retVal.setAddress(new Address(this.getHomeAddress(), this.getCity(), this.getCountry()));
+    	retVal.setInstitutionInfo(this.getInstitution());
+    	return retVal;
     }
 }
 

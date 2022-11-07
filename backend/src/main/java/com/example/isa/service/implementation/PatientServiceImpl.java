@@ -5,10 +5,14 @@ import com.example.isa.model.*;
 import com.example.isa.repository.PatientRepository;
 import com.example.isa.service.interfaces.PatientService;
 import com.example.isa.util.EmailSender;
+
+import net.bytebuddy.asm.Advice.Return;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PatientServiceImpl implements PatientService {
@@ -35,5 +39,30 @@ public class PatientServiceImpl implements PatientService {
 		else {
 			return patient;
 		}
+	}
+
+	@Override
+	public Patient update(Patient patient){
+		Patient fromRepo = repository.findByPersonalId(patient.getPersonalId());
+		if(fromRepo == null) {
+			return null;
+		}
+		Patient swapped = swapValues(fromRepo, patient);
+		
+		return repository.save(swapped);
+	}
+	private Patient swapValues(Patient fromRepo, Patient patient) {
+		Patient retVal = fromRepo;
+		retVal.setPersonalId(patient.getPersonalId());
+    	retVal.setFirstName(patient.getFirstName());
+    	retVal.setLastName(patient.getLastName());
+    	retVal.setEmail(patient.getEmail());
+    	retVal.setPassword(patient.getPassword());
+    	retVal.setPhoneNumber(patient.getPhoneNumber());
+    	retVal.setGender(patient.getGender());
+    	retVal.setOccupation(patient.getOccupation());
+    	retVal.setAddress(patient.getAddress());
+    	retVal.setInstitutionInfo(patient.getInstitutionInfo());
+    	return retVal;
 	}
 }

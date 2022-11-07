@@ -6,12 +6,20 @@ import com.example.isa.model.Gender;
 import com.example.isa.model.Patient;
 import com.example.isa.service.interfaces.PatientService;
 import com.example.isa.service.interfaces.UserService;
+import com.fasterxml.jackson.databind.introspect.TypeResolutionContext.Empty;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.models.media.MediaType;
+import lombok.experimental.var;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.method.P;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Provider.Service;
 import java.util.List;
 
 @RestController
@@ -48,11 +56,20 @@ public class PatientController {
 		}
 		return (ResponseEntity<?>) ResponseEntity.notFound();
     }
-    @RequestMapping(value="/update", method = RequestMethod.PUT)
+    
+    @PutMapping(value="/update")
     @ApiOperation(value = "Update patient info", httpMethod = "PUT")
-    public ResponseEntity<?> updatePatient(@RequestParam PatientDto patientDto){
-    	//patientService.
-    	return ResponseEntity.ok(null);
+    public ResponseEntity<?> updatePatient(@RequestBody PatientDto patientDto){
+    	Patient patient = new Patient();
+    	if(patientDto.equals(null)) {
+    		return (ResponseEntity<?>) ResponseEntity.badRequest();
+    	}
+    	patient = patientDto.convert();
+    	Patient retVal = patientService.update(patient);
+    	if(retVal == null) {
+    		//return ResponseEntity.notFound(retVal);
+    	}
+    	return ResponseEntity.ok(retVal);
     }
     
 }
