@@ -25,14 +25,4 @@ public class PatientServiceImpl implements PatientService {
     public List<Patient> getAll() {
         return repository.findAll();
     }
-    @Override
-    public void register(Patient patient) {
-        emailSender.send(new Email(patient.getEmail(), "Verify your registration", "To complete your registration, please click on the link bellow."));
-        repository.save(patient);
-    }
-
-    @Override
-    public Patient getByEmail(String email) {
-        return repository.findAllByEmail(email);
-    }
 }

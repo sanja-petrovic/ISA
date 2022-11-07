@@ -8,7 +8,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -20,6 +22,10 @@ import java.util.UUID;
 public class User implements UserDetails {
     @Id
     private UUID id = UUID.randomUUID();
+
+    @Column
+    @Enumerated(value = EnumType.STRING)
+    AccountStatus accountStatus;
     @Column(unique = true)
     private String personalId;
     @Column(unique = true)
@@ -35,8 +41,15 @@ public class User implements UserDetails {
     @Column
     @Enumerated(value = EnumType.STRING)
     private Gender gender;
+    @Column
+    private boolean isVerified;
 
-    public User(String personalId, String email, String password, String firstName, String lastName, String phoneNumber, Gender gender) {
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    private List<Role> roles = new ArrayList<>();
+    public User(String personalId, String email, String password, String firstName, String lastName, String phoneNumber, Gender gender, boolean verified, List<Role> roles) {
         this.personalId = personalId;
         this.email = email;
         this.password = password;
@@ -44,6 +57,8 @@ public class User implements UserDetails {
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.gender = gender;
+        this.isVerified = verified;
+        this.roles = roles;
     }
 
     @JsonIgnore
@@ -59,21 +74,21 @@ public class User implements UserDetails {
     @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return isVerified;
     }
     @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return isVerified;
     }
     @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return isVerified;
     }
     @JsonIgnore
     @Override
     public boolean isEnabled() {
-        return true;
+        return isVerified;
     }
 }

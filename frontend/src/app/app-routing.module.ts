@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import {RouterModule, Routes} from "@angular/router";
 import {HomeComponent} from "./home/home.component";
 import {BanksPageComponent} from "./banks-page/banks-page.component";
+import {RegistrationComponent} from "./registration/registration.component";
+import {LoginComponent} from "./login/login.component";
+import {VerificationComponent} from "./verification/verification.component";
 
 const routes: Routes = [
   {
@@ -10,6 +13,15 @@ const routes: Routes = [
   },
   {
     path: 'banks', component: BanksPageComponent
+  },
+  {
+    path: 'register', component: RegistrationComponent
+  },
+  {
+    path: 'login', component: LoginComponent
+  },
+  {
+    path: 'verify/:email', component: VerificationComponent
   }
 ]
 
