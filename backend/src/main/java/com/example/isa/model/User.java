@@ -51,7 +51,6 @@ public class User implements UserDetails {
     private List<Role> roles = new ArrayList<>();
     public User(String personalId, String email, String password, String firstName, String lastName, String phoneNumber, Gender gender, boolean verified, List<Role> roles) {
         this.personalId = personalId;
-        this.accountStatus = status;
         this.email = email;
         this.password = password;
         this.firstName = firstName;

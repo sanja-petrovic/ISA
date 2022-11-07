@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import {ApiService} from "./ApiService";
 import {ConfigService} from "./ConfigService";
 import {UserService} from "./UserService";
-import {Patient} from "../model/Users";
+import {Credentials, Patient} from "../model/Users";
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +24,7 @@ export class AuthService {
 
   private access_token = null;
 
-  login(user: Patient) {
+  login(user: Credentials) {
     const loginHeaders = new HttpHeaders({
       'Accept': 'application/json',
       'Content-Type': 'application/json'
@@ -35,7 +35,7 @@ export class AuthService {
     };
     return this.apiService.post(this.config.login_url, JSON.stringify(body), loginHeaders)
       .pipe(map((res) => {
-        console.log('Login success');
+        console.log(res);
         this.access_token = res.accessToken;
         localStorage.setItem("jwt", res.accessToken)
       }));

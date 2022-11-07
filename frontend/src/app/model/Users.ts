@@ -13,4 +13,9 @@ type Patient = {
   password: string
 }
 
-export { Patient };
+type Credentials = {
+  email: string,
+  password: string
+}
+
+export { Patient, Credentials };

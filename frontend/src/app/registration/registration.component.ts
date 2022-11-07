@@ -11,9 +11,6 @@ import {Router} from "@angular/router";
 })
 export class RegistrationComponent implements OnInit {
 
-  passwordsMatching: boolean = false;
-  passwordValidator = this.ConfirmedValidator('password', 'passwordCheck');
-  confirmPasswordClass = 'form-control';
   password = new FormControl(null, [
     (c: AbstractControl) => Validators.required(c),
     Validators.pattern(
@@ -76,7 +73,7 @@ export class RegistrationComponent implements OnInit {
         this.router.navigate(["/"])
       },
       error => {
-        console.log('Sign up error');
+        console.log(error);
       });
   }
 
