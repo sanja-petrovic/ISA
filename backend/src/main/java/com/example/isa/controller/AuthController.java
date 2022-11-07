@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
-@RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/auth")
 public class AuthController {
     private final TokenHandler tokenHandler;
     private final AuthenticationManager authenticationManager;
@@ -39,11 +39,11 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<UserTokenState> createAuthenticationToken(
             @RequestBody CredentialsDto authenticationRequest, HttpServletResponse response) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
+        Authentication authentication = this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         User user = (User) authentication.getPrincipal();
-        String jwt = tokenHandler.generateToken(user.getUsername());
-        int expiresIn = tokenHandler.getExpiredIn();
+        String jwt = this.tokenHandler.generateToken(user.getUsername());
+        int expiresIn = this.tokenHandler.getExpiredIn();
         return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));
     }
 

@@ -35,7 +35,7 @@ export class AuthService {
     };
     return this.apiService.post(this.config.login_url, JSON.stringify(body), loginHeaders)
       .pipe(map((res) => {
-        console.log('Login success');
+        console.log(res);
         this.access_token = res.accessToken;
         localStorage.setItem("jwt", res.accessToken)
       }));
