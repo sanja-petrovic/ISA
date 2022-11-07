@@ -56,7 +56,9 @@ export class ApiService {
     });
 
     // @ts-ignore
-    return this.http.request(req);
+    return this.http.request(req).pipe(filter((response: HttpResponse<any>) => response))
+      .pipe(map(response => response.body))
+      .pipe(catchError(error => this.checkError(error)));
   }
 
   private checkError(error: any): any {
