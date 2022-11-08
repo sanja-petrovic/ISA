@@ -33,14 +33,14 @@ public class AnswerController {
     @GetMapping
     public ResponseEntity<AnswerListDto> getAll() {
         List<Answer> answers = answerService.getAll();
-        List<AnswerDto> answerDtos = answers.stream().map(answer -> AnswerDto.builder().questionText(answer.getQuestion().getText()).answerValue(answer.isValue()).user(answer.getUser().getEmail()).build()).collect(Collectors.toList());
+        List<AnswerDto> answerDtos = answers.stream().map(answer -> AnswerDto.builder().questionId(answer.getQuestion().getId()).answerValue(answer.isValue()).user(answer.getUser().getEmail()).build()).collect(Collectors.toList());
         AnswerListDto listDto = new AnswerListDto(answerDtos);
         return ResponseEntity.ok(listDto);
     }
 
     @PostMapping
     public ResponseEntity<?> save(AnswerListDto list) {
-        List<Answer> answers = list.getAnswers().stream().map(dto -> Answer.builder().question(questionService.getByText(dto.getQuestionText())).value(dto.isAnswerValue()).user(patientService.getByEmail(dto.getUser())).build()).collect(Collectors.toList());
+        List<Answer> answers = list.getAnswers().stream().map(dto -> Answer.builder().question(questionService.getById(dto.getQuestionId())).value(dto.isAnswerValue()).user(patientService.getByEmail(dto.getUser())).build()).collect(Collectors.toList());
         answerService.save(answers);
         return ResponseEntity.ok().build();
     }

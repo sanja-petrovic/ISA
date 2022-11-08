@@ -27,11 +27,11 @@ public class QuestionController {
     }
 
     @GetMapping
-    public ResponseEntity<QuestionListDto> getAll() {
+    public ResponseEntity<List<QuestionDto>> getAll() {
         List<Question> questions = service.getAll();
         List<QuestionDto> questionDtos = questions.stream().map(question -> new QuestionDto(question)).collect(Collectors.toList());
         QuestionListDto dtoList = new QuestionListDto(questionDtos);
-        return ResponseEntity.ok(dtoList);
+        return ResponseEntity.ok(questionDtos);
     }
 
     @PostMapping

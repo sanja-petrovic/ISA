@@ -20,6 +20,8 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { LoginComponent } from './login/login.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import { VerificationComponent } from './verification/verification.component';
+import { QuestionnaireComponent } from './questionnaire/questionnaire.component';
+import {MatRadioModule} from "@angular/material/radio";
 
 @NgModule({
   declarations: [
@@ -28,7 +30,8 @@ import { VerificationComponent } from './verification/verification.component';
     BanksPageComponent,
     RegistrationComponent,
     LoginComponent,
-    VerificationComponent
+    VerificationComponent,
+    QuestionnaireComponent
   ],
     imports: [
         HttpClientModule,
@@ -46,7 +49,8 @@ import { VerificationComponent } from './verification/verification.component';
         MatFormFieldModule,
         MatInputModule,
         MatCheckboxModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatRadioModule
     ],
   providers: [],
   bootstrap: [AppComponent]

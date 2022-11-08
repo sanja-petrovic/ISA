@@ -9,4 +9,5 @@ import java.util.UUID;
 @Repository
 public interface QuestionRepository extends JpaRepository<Question, UUID> {
     Question findAllByText(String text);
+    Question findAllById(UUID id);
 }
