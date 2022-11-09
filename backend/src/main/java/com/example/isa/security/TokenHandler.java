@@ -18,9 +18,9 @@ import io.jsonwebtoken.SignatureAlgorithm;
 public class TokenHandler {
     @Value("blood-bank-center")
     private String APP_NAME;
-    @Value("somesecret")
+    @Value("123456789secreties")
     public String SECRET;
-    @Value("1800000")
+    @Value("36000000")
     private int EXPIRES_IN;
     @Value("Authorization")
     private String AUTH_HEADER;

@@ -31,7 +31,8 @@ export class QuestionnaireComponent implements OnInit {
       }
     });
     this.answers = [];
-    this.user = userService.currentUser;
+    userService.getActiveUser()?.subscribe(data => this.user = data.email);
+    console.log(this.user);
   }
 
   ngOnInit(): void {
@@ -46,7 +47,7 @@ export class QuestionnaireComponent implements OnInit {
     let answer: Answer = {
       questionId: questionId,
       answerValue: value,
-      user: "sanjica.petrovic7+19@gmail.com"
+      user: this.user
     }
     this.answers[index] = answer;
     if(index == 37) {
