@@ -2,30 +2,23 @@ import {Injectable} from '@angular/core';
 import {map} from 'rxjs/operators';
 import {ApiService} from "./ApiService";
 import {ConfigService} from "./ConfigService";
-import {AuthService} from "./AuthService";
-import {User} from "../model/Users";
+import {Question} from "../model/Question";
 import {Observable} from "rxjs";
+import {Answer} from "../model/Answer";
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
-
-  currentUser: User | null = null;
+export class AnswerService {
 
   constructor(
     private apiService: ApiService,
     private config: ConfigService
   ) {
-
   }
 
-  getActiveUser(): Observable<User> | null {
-      return this.apiService.get(this.config.current_url);
-  }
-
-  getAll() {
-    return this.apiService.get(this.config.users_url);
+  save(answers: Answer[]) {
+    this.apiService.put(this.config.answers_url, answers).subscribe();
   }
 
 }

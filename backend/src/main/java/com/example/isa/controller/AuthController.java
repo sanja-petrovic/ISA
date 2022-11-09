@@ -2,6 +2,7 @@ package com.example.isa.controller;
 
 import com.example.isa.dto.CredentialsDto;
 import com.example.isa.dto.PatientDto;
+import com.example.isa.dto.UserDto;
 import com.example.isa.dto.UserTokenState;
 import com.example.isa.model.*;
 import com.example.isa.security.TokenHandler;
@@ -43,8 +44,13 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         User user = (User) authentication.getPrincipal();
         String jwt = this.tokenHandler.generateToken(user.getUsername());
-        int expiresIn = this.tokenHandler.getExpiredIn();
-        return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));
+        return ResponseEntity.ok(new UserTokenState(jwt, user.getUsername()));
+    }
+
+    @GetMapping("/current")
+    public ResponseEntity<UserDto> createAuthenticationToken() {
+        var user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return ResponseEntity.ok(new UserDto(user));
     }
 
     @PostMapping("/register")

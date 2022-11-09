@@ -14,6 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -38,9 +39,10 @@ public class UserController {
     }
 
     @GetMapping("/current")
-    @PreAuthorize("hasRole('ROLE_PATIENT') or hasRole('ROLE_ADMIN')or hasRole('ROLE_STAFF')")
+    //@PreAuthorize("hasRole('ROLE_PATIENT') or hasRole('ROLE_ADMIN')or hasRole('ROLE_STAFF')")
     @ApiOperation(value = "Get the logged in user.", httpMethod = "GET")
     public User user(Principal user) {
+        System.out.println(user);
         return this.service.findByUsername(user.getName());
     }
 }
