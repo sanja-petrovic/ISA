@@ -8,10 +8,7 @@ import com.example.isa.service.interfaces.PatientService;
 import com.example.isa.service.interfaces.QuestionService;
 import com.example.isa.service.interfaces.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,9 +35,9 @@ public class AnswerController {
         return ResponseEntity.ok(listDto);
     }
 
-    @PostMapping
-    public ResponseEntity<?> save(AnswerListDto list) {
-        List<Answer> answers = list.getAnswers().stream().map(dto -> Answer.builder().question(questionService.getById(dto.getQuestionId())).value(dto.isAnswerValue()).user(patientService.getByEmail(dto.getUser())).build()).collect(Collectors.toList());
+    @PutMapping
+    public ResponseEntity<?> save(@RequestBody List<AnswerDto> list) {
+        List<Answer> answers = list.stream().map(dto -> Answer.builder().question(questionService.getById(dto.getQuestionId())).value(dto.isAnswerValue()).user(patientService.getByEmail(dto.getUser())).build()).collect(Collectors.toList());
         answerService.save(answers);
         return ResponseEntity.ok().build();
     }

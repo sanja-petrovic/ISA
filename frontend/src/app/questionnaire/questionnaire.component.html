@@ -2,10 +2,11 @@
   <form class="form-wrapper" (ngSubmit)="onSubmit()">
     <div *ngFor="let question of questions; let i = index">
       <p class="question">{{i+1}}. {{question.text}}</p>
-      <mat-radio-group aria-label="Select an option">
+      <mat-radio-group required aria-label="Select an option">
         <mat-radio-button (click)="handleClick(question.id, i, true)" class="answer" [value]="true">Yes</mat-radio-button>
         <mat-radio-button (click)="handleClick(question.id, i, false)" class="answer"[value]="false">No</mat-radio-button>
       </mat-radio-group>
     </div>
+    <input type="submit" [disabled]="answers.includes(null)" value="Submit" class="submit-button"/>
   </form>
 </div>

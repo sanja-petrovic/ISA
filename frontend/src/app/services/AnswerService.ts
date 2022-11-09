@@ -4,6 +4,7 @@ import {ApiService} from "./ApiService";
 import {ConfigService} from "./ConfigService";
 import {Question} from "../model/Question";
 import {Observable} from "rxjs";
+import {Answer} from "../model/Answer";
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class AnswerService {
   }
 
   save(answers: Answer[]) {
-    this.apiService.post(this.config.answers_url, answers);
+    this.apiService.put(this.config.answers_url, answers).subscribe();
   }
 
 }
