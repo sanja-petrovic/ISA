@@ -6,6 +6,7 @@ import {BanksPageComponent} from "./banks-page/banks-page.component";
 import {RegistrationComponent} from "./registration/registration.component";
 import {LoginComponent} from "./login/login.component";
 import {VerificationComponent} from "./verification/verification.component";
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   {
@@ -22,7 +23,10 @@ const routes: Routes = [
   },
   {
     path: 'verify/:email', component: VerificationComponent
-  }
+  },
+  {
+    path: 'profile', component: ProfileComponent
+  },
 ]
 
 @NgModule({

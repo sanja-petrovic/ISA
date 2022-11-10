@@ -40,7 +40,7 @@ public class PatientController {
         List<Patient> patients = patientService.getAll();
         return ResponseEntity.ok(patients);
     }
-    @RequestMapping(value="/{personalId}")
+    @RequestMapping(value="/get/{personalId}")
     @ApiOperation(value = "Get patient by personalId. (returns DTO)", httpMethod = "GET")
     public ResponseEntity<?> getByPersonalId(@PathVariable String personalId){
     	Patient patient = null;
