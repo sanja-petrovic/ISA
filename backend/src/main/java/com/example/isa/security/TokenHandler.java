@@ -16,16 +16,16 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 @Component
 public class TokenHandler {
-    @Value("blood-bank-center")
+    @Value("${spring.application.name")
     private String APP_NAME;
-    @Value("123456789secreties")
+    @Value("${jwt.secret}")
     public String SECRET;
-    @Value("36000000")
+    @Value("${jwt.expiration}")
     private int EXPIRES_IN;
     @Value("Authorization")
     private String AUTH_HEADER;
     private static final String AUDIENCE_WEB = "web";
-    private SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS512;
+    private final SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS512;
 
     public String generateToken(String username) {
         return Jwts.builder()
