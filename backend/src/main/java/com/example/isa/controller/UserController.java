@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @GetMapping("/current")
-    @PreAuthorize("hasRole('ROLE_PATIENT') or hasRole('ROLE_ADMIN')or hasRole('ROLE_STAFF')")
+    //@PreAuthorize("hasRole('ROLE_PATIENT') or hasRole('ROLE_ADMIN')or hasRole('ROLE_STAFF')")
     @ApiOperation(value = "Get the logged in user.", httpMethod = "GET")
     public User user(Principal user) {
         return this.service.findByUsername(user.getName());
