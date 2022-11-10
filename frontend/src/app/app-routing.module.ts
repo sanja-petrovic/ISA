@@ -6,6 +6,7 @@ import {BanksPageComponent} from "./banks-page/banks-page.component";
 import {RegistrationComponent} from "./registration/registration.component";
 import {LoginComponent} from "./login/login.component";
 import {VerificationComponent} from "./verification/verification.component";
+import {MedicalStaffComponent} from "./medical-staff/medical-staff.component"
 
 const routes: Routes = [
   {
@@ -22,6 +23,9 @@ const routes: Routes = [
   },
   {
     path: 'verify/:email', component: VerificationComponent
+  },
+  {
+    path: 'medical-staff', component: MedicalStaffComponent
   }
 ]
 
