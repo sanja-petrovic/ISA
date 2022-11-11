@@ -1,5 +1,7 @@
 package com.example.isa.dto;
 
+import org.hibernate.query.criteria.internal.predicate.IsEmptyPredicate;
+
 import com.example.isa.model.Address;
 import com.example.isa.model.Gender;
 import com.example.isa.model.Patient;
@@ -21,7 +23,6 @@ public class PatientDto {
     private String gender;
     private String occupation;
     private String homeAddress;
-    private String number;
     private String city;
     private String country;
     private String institution;
@@ -36,7 +37,6 @@ public class PatientDto {
     	this.gender = patient.getGender().toString();
     	this.occupation = patient.getOccupation();
     	this.homeAddress = patient.getAddress().getStreet();
-    	this.number = "8";
     	this.city = patient.getAddress().getCountry();
     	this.country = patient.getAddress().getCountry();
     	this.institution = patient.getInstitutionInfo();

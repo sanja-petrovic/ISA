@@ -21,7 +21,8 @@ import { LoginComponent } from './login/login.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import { VerificationComponent } from './verification/verification.component';
 import { ProfileComponent } from './profile/profile.component';
-
+import { ChangePasswordDialogComponent } from './change-password-dialog/change-password-dialog.component';
+import {MatDialogModule, MatDialog, MatDialogRef,MAT_DIALOG_DATA, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ProfileComponent } from './profile/profile.component';
     RegistrationComponent,
     LoginComponent,
     VerificationComponent,
-    ProfileComponent
+    ProfileComponent,
+    ChangePasswordDialogComponent,
   ],
     imports: [
         HttpClientModule,
@@ -49,9 +51,12 @@ import { ProfileComponent } from './profile/profile.component';
         MatFormFieldModule,
         MatInputModule,
         MatCheckboxModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatDialogModule
     ],
-  providers: [],
+  providers: [
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

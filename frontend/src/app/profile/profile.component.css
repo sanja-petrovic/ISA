@@ -9,6 +9,16 @@
     flex-direction: row;
     justify-content:space-between;
 }
+.password-field-wrapper{
+    display: flex;
+    flex-direction: row;
+}
+.password-field-input{
+    flex-grow: 4
+}
+.password-field-button{
+    flex-grow: 1
+}
 h2, h1 {
     font-family: "Poppins SemiBold", sans-serif;
     color: #ee435d;

@@ -1,5 +1,6 @@
 package com.example.isa.controller;
 
+import com.example.isa.dto.PasswordDto;
 import com.example.isa.dto.PatientDto;
 import com.example.isa.model.Address;
 import com.example.isa.model.Gender;
@@ -15,6 +16,7 @@ import io.swagger.v3.oas.models.media.MediaType;
 import lombok.experimental.var;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.convert.DtoInstantiatingConverter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.method.P;
 import org.springframework.web.bind.annotation.*;
@@ -67,9 +69,37 @@ public class PatientController {
     	patient = patientDto.convert();
     	Patient retVal = patientService.update(patient);
     	if(retVal == null) {
-    		//return ResponseEntity.notFound(retVal);
+    		return (ResponseEntity<?>) ResponseEntity.notFound();
     	}
     	return ResponseEntity.ok(retVal);
+    }
+    @PostMapping(value="/update/password")
+    @ApiOperation(value = "Update patient password", httpMethod = "POST")
+    public ResponseEntity<?> updatePatientPassword(@RequestBody PasswordDto passwordDto){
+    	if(passwordDto == null) {
+    		return (ResponseEntity<?>) ResponseEntity.badRequest();
+    	}
+    	Patient patient = null;
+    	try {
+    		patient = patientService.getById(passwordDto.getPersonalId());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	if(patient ==null) {
+    		return (ResponseEntity<?>) ResponseEntity.notFound();
+    	}
+    	if(patient.getPassword().equals(passwordDto.getOldPassword())) {
+    		patient.setPassword(passwordDto.getNewPassword());
+    		Patient retVal = patientService.update(patient);
+        	if(retVal == null) {
+        		return (ResponseEntity<?>) ResponseEntity.notFound();
+        	}
+    	}
+    	else {
+    		return (ResponseEntity<?>) ResponseEntity.badRequest();
+    	}
+    	return ResponseEntity.ok(null);
     }
     
 }
