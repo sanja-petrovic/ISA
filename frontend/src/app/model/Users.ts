@@ -29,4 +29,12 @@ type Credentials = {
   password: string
 }
 
-export { Patient, Credentials, User };
+
+type PasswordDto ={
+  personalId: string,
+  oldPassword: string,
+  newPassword: string
+}
+
+export { Patient, Credentials, PasswordDto, User};
+
