@@ -2,25 +2,17 @@ package com.example.isa.controller;
 
 import com.example.isa.dto.PasswordDto;
 import com.example.isa.dto.PatientDto;
-import com.example.isa.model.Address;
-import com.example.isa.model.Gender;
 import com.example.isa.model.Patient;
 import com.example.isa.service.interfaces.PatientService;
-import com.example.isa.service.interfaces.UserService;
-import com.fasterxml.jackson.databind.introspect.TypeResolutionContext.Empty;
+import com.example.isa.util.EntityDtoConverter;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.models.media.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.convert.DtoInstantiatingConverter;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.method.P;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Provider.Service;
 import java.util.List;
 
 @RestController
@@ -29,11 +21,13 @@ import java.util.List;
 public class PatientController {
 
     private final PatientService patientService;
+	private final EntityDtoConverter entityDtoConverter;
 
     @Autowired
-    public PatientController(PatientService patientService) {
+    public PatientController(PatientService patientService, EntityDtoConverter entityDtoConverter) {
         this.patientService = patientService;
-    }
+		this.entityDtoConverter = entityDtoConverter;
+	}
 
     @GetMapping
     @ApiOperation(value = "Get all patients.", httpMethod = "GET")
@@ -60,8 +54,7 @@ public class PatientController {
     @PutMapping(value="/update")
     @ApiOperation(value = "Update patient info", httpMethod = "PUT")
     public ResponseEntity<?> updatePatient(@RequestBody PatientDto patientDto){
-    	Patient patient = new Patient();
-		patient = patientDto.convert();
+    	Patient patient = entityDtoConverter.DtoToPatient(patientDto);
     	Patient retVal = patientService.update(patient);
     	if(retVal == null) {
     		return ResponseEntity.notFound().build();

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EntityDtoConverter {
-
     private final EnumConverter enumConverter;
     private final PasswordEncoder passwordEncoder;
 
@@ -18,6 +17,21 @@ public class EntityDtoConverter {
     }
 
     public PatientDto PatientToDto(Patient patient) {
+        PatientDto dto = PatientDto.builder()
+                .personalId(patient.getPersonalId())
+                .firstName(patient.getFirstName())
+                .lastName(patient.getLastName())
+                .email(patient.getEmail())
+                .phoneNumber(patient.getPhoneNumber())
+                .gender(patient.getGender().toString())
+                .occupation(patient.getOccupation())
+                .homeAddress(patient.getAddress().getStreet())
+                .city(patient.getAddress().getCity())
+                .country(patient.getAddress().getCountry())
+                .institution(patient.getInstitution())
+                .build();
+
+        return dto;
     }
 
     public Patient DtoToPatient(PatientDto dto) {
@@ -31,7 +45,7 @@ public class EntityDtoConverter {
                 .gender(enumConverter.StringToGender(dto.getGender()))
                 .occupation(dto.getOccupation())
                 .address(new Address(dto.getHomeAddress(), dto.getCity(), dto.getCountry()))
-                .institutionInfo(dto.getInstitution())
+                .institution(dto.getInstitution())
                 .build();
 
         return patient;

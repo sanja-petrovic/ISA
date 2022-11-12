@@ -1,6 +1,6 @@
 package com.example.isa.dto;
 
-import org.hibernate.query.criteria.internal.predicate.IsEmptyPredicate;
+import lombok.Builder;
 
 import com.example.isa.model.Address;
 import com.example.isa.model.Gender;
@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Builder
 public class PatientDto {
     private String personalId;
     private String firstName;
@@ -39,7 +40,7 @@ public class PatientDto {
     	this.homeAddress = patient.getAddress().getStreet();
     	this.city = patient.getAddress().getCountry();
     	this.country = patient.getAddress().getCountry();
-    	this.institution = patient.getInstitutionInfo();
+    	this.institution = patient.getInstitution();
     }
     public Patient convert() {
     	Patient retVal = new Patient();
@@ -52,7 +53,7 @@ public class PatientDto {
     	retVal.setGender(Gender.valueOf(this.getGender()));
     	retVal.setOccupation(this.getOccupation());
     	retVal.setAddress(new Address(this.getHomeAddress(), this.getCity(), this.getCountry()));
-    	retVal.setInstitutionInfo(this.getInstitution());
+    	retVal.setInstitution(this.getInstitution());
     	return retVal;
     }
 }

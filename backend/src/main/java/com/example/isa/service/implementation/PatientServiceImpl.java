@@ -1,18 +1,14 @@
 package com.example.isa.service.implementation;
 
-import com.example.isa.dto.PatientDto;
 import com.example.isa.model.*;
 import com.example.isa.repository.PatientRepository;
 import com.example.isa.service.interfaces.PatientService;
 import com.example.isa.util.EmailSender;
 
-import net.bytebuddy.asm.Advice.Return;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PatientServiceImpl implements PatientService {
@@ -61,7 +57,7 @@ public class PatientServiceImpl implements PatientService {
     	retVal.setGender(patient.getGender());
     	retVal.setOccupation(patient.getOccupation());
     	retVal.setAddress(patient.getAddress());
-    	retVal.setInstitutionInfo(patient.getInstitutionInfo());
+    	retVal.setInstitution(patient.getInstitution());
     	return retVal;
 	}
     @Override
