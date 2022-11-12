@@ -16,25 +16,40 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 @Component
 public class TokenHandler {
-    @Value("blood-bank-center")
+    @Value("${spring.application.name}")
     private String APP_NAME;
-    @Value("123456789secreties")
-    public String SECRET;
-    @Value("36000000")
+    @Value("${jwt.access.secret}")
+    public String ACCESS_SECRET;
+
+    @Value("${jwt.refresh.secret}")
+    public String REFRESH_SECRET;
+    @Value("${jwt.access.expires.in}")
     private int EXPIRES_IN;
     @Value("Authorization")
     private String AUTH_HEADER;
     private static final String AUDIENCE_WEB = "web";
     private SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS512;
 
-    public String generateToken(String username) {
+    public String generateAccessToken(String username) {
+        //set subject: access
+        //set claims: username, roles
         return Jwts.builder()
                 .setIssuer(APP_NAME)
                 .setSubject(username)
                 .setAudience(generateAudience())
                 .setIssuedAt(new Date())
                 .setExpiration(generateExpirationDate())
-                .signWith(SIGNATURE_ALGORITHM, SECRET).compact();
+                .signWith(SIGNATURE_ALGORITHM, ACCESS_SECRET).compact();
+    }
+    public String generateRefreshToken(String username) {
+        //set subject: refresh
+        //set claims: username, roles
+        return Jwts.builder()
+                .setIssuer(APP_NAME)
+                .setSubject(username)
+                .setAudience(generateAudience())
+                .setIssuedAt(new Date())
+                .signWith(SIGNATURE_ALGORITHM, REFRESH_SECRET).compact();
     }
     private String generateAudience() {
         return AUDIENCE_WEB;
@@ -109,7 +124,7 @@ public class TokenHandler {
         Claims claims;
         try {
             claims = Jwts.parser()
-                    .setSigningKey(SECRET)
+                    .setSigningKey(ACCESS_SECRET)
                     .parseClaimsJws(token)
                     .getBody();
         } catch (ExpiredJwtException ex) {

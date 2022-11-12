@@ -38,13 +38,23 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                     UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                     if (tokenHandler.validateToken(authToken, userDetails)) {
                         TokenBasedAuthentication authentication = new TokenBasedAuthentication(userDetails);
-                        authentication.setToken(authToken);
+                        authentication.setAccessToken(authToken);
                         SecurityContextHolder.getContext().setAuthentication(authentication);
                     }
                 }
             }
         } catch (ExpiredJwtException ex) {
+            //if token.subject == access
             LOGGER.debug("Token expired!");
+            if(request.getServletPath().equals("/api/token/refresh")) {
+                username = tokenHandler.getUsernameFromToken(authToken);
+                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                TokenBasedAuthentication authentication = new TokenBasedAuthentication(userDetails);
+                String newAccessToken = tokenHandler.generateAccessToken(username);
+                authentication.setAccessToken(authToken);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
+            //if token.subject=refresh: error!!!
         }
         chain.doFilter(request, response);
     }
