@@ -22,6 +22,9 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import { VerificationComponent } from './verification/verification.component';
 import { MedicalStaffComponent } from './medical-staff/medical-staff.component';
 import { MatDividerModule } from '@angular/material/divider';
+import { ProfileComponent } from './profile/profile.component';
+import { ChangePasswordDialogComponent } from './change-password-dialog/change-password-dialog.component';
+import {MatDialogModule, MatDialog, MatDialogRef,MAT_DIALOG_DATA, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
 import {QuestionnaireComponent} from './questionnaire/questionnaire.component';
 import {MatRadioModule} from "@angular/material/radio";
 import {TokenInterceptor} from './interceptor/TokenInterceptor';
@@ -30,7 +33,6 @@ import {UserService} from "./services/UserService";
 import {ConfigService} from "./services/ConfigService";
 import {ApiService} from "./services/ApiService";
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import { MatDialogModule } from '@angular/material/dialog';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
@@ -41,6 +43,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     RegistrationComponent,
     LoginComponent,
     VerificationComponent,
+    ProfileComponent,
+    ChangePasswordDialogComponent,
+    QuestionnaireComponent,
     MedicalStaffComponent,
     QuestionnaireComponent
   ],
@@ -81,14 +86,20 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         MatRadioModule,
         MatSnackBarModule,
         MatDialogModule,
-        FlexLayoutModule
+        FlexLayoutModule,
+        MatDialogModule,
+        MatRadioModule
     ],
   providers: [
     {
-      provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
-      multi: true
-    },
+		provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}
+	},
+	{
+		provide: HTTP_INTERCEPTORS,
+		useClass: TokenInterceptor,
+		multi: true
+	},
+	QuestionnaireComponent,
     AuthService,
     ApiService,
     UserService,
