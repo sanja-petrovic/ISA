@@ -10,4 +10,5 @@ public interface PatientService {
     public List<Patient> getAll();
     public Patient getById(String personalId) throws Exception;
     public Patient update(Patient patient);
+    public Patient getByEmail(String email);
 }

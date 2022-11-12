@@ -10,12 +10,14 @@ export class ConfigService {
   public users_url = this._api_url + '/users';
   private _login_url = this._auth_url + '/login';
   public verification_url = this._auth_url + '/verify';
+  public questions_url = this._api_url + '/questions'
+  public answers_url = this._api_url + '/answers'
 
   get login_url(): string {
     return this._login_url;
   }
 
-  private _current_url = this.users_url + '/current';
+  private _current_url = this._auth_url + '/current';
 
   get current_url(): string {
     return this._current_url;

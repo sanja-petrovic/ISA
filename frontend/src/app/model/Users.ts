@@ -13,10 +13,22 @@ type Patient = {
   password: string
 }
 
+type User = {
+  id: string,
+  firstName: string,
+  lastName: string,
+  personalId: string,
+  gender: string,
+  phoneNumber: string,
+  email: string,
+  isVerified: boolean
+}
+
 type Credentials = {
   email: string,
   password: string
 }
+
 
 type PasswordDto ={
   personalId: string,
@@ -24,4 +36,5 @@ type PasswordDto ={
   newPassword: string
 }
 
-export { Patient, Credentials, PasswordDto};
+export { Patient, Credentials, PasswordDto, User};
+

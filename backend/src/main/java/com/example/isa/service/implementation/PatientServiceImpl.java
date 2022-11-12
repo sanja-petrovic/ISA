@@ -29,7 +29,6 @@ public class PatientServiceImpl implements PatientService {
     public List<Patient> getAll() {
         return repository.findAll();
     }
-
 	@Override
 	public Patient getById(String personalId) throws Exception {
 		Patient patient =  repository.findByPersonalId(personalId);
@@ -65,4 +64,8 @@ public class PatientServiceImpl implements PatientService {
     	retVal.setInstitutionInfo(patient.getInstitutionInfo());
     	return retVal;
 	}
+    @Override
+    public Patient getByEmail(String email) {
+        return repository.findAllByEmail(email);
+    }
 }

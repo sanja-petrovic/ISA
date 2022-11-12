@@ -1,40 +1,38 @@
 package com.example.isa.security;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 
+@Getter
 public class TokenBasedAuthentication extends AbstractAuthenticationToken {
 
 	private static final long serialVersionUID = 1L;
-	private String token;
-	private final UserDetails principle;
+	@Setter
+	private String accessToken;
+	@Setter
+	private String refreshToken;
+	private final UserDetails principal;
 
-	public TokenBasedAuthentication(UserDetails principle) {
-		super(principle.getAuthorities());
-		this.principle = principle;
-	}
-
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
+	public TokenBasedAuthentication(UserDetails principal) {
+		super(principal.getAuthorities());
+		this.principal = principal;
 	}
 
 	@Override
 	public boolean isAuthenticated() {
-		return true;
+		return accessToken != null;
 	}
 
 	@Override
 	public Object getCredentials() {
-		return token;
+		return accessToken;
 	}
 
 	@Override
 	public UserDetails getPrincipal() {
-		return principle;
+		return principal;
 	}
 
 }

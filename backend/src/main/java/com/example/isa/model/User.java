@@ -22,10 +22,6 @@ import java.util.UUID;
 public class User implements UserDetails {
     @Id
     private UUID id = UUID.randomUUID();
-
-    @Column
-    @Enumerated(value = EnumType.STRING)
-    AccountStatus accountStatus;
     @Column(unique = true)
     private String personalId;
     @Column(unique = true)
