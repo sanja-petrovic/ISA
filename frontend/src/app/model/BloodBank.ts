@@ -1,0 +1,5 @@
+type BloodBank = {
+
+}
+
+export { BloodBank }

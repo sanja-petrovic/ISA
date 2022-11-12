@@ -32,14 +32,12 @@ public class UserController {
         this.service = service;
     }
     @GetMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @ApiOperation(value = "See all users.", httpMethod = "GET")
     public ResponseEntity<?> getAll() {
         return ResponseEntity.ok(service.getAll());
     }
 
     @GetMapping("/current")
-    //@PreAuthorize("hasRole('ROLE_PATIENT') or hasRole('ROLE_ADMIN')or hasRole('ROLE_STAFF')")
     @ApiOperation(value = "Get the logged in user.", httpMethod = "GET")
     public User user(Principal user) {
         System.out.println(user);

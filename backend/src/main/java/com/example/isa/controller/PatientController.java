@@ -13,7 +13,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.models.media.MediaType;
-import lombok.experimental.var;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.convert.DtoInstantiatingConverter;
@@ -49,10 +48,9 @@ public class PatientController {
 		try {
 			patient = patientService.getById(personalId);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if(!patient.equals(null)) {
+		if(patient != null) {
 			PatientDto dto = new PatientDto(patient);
 	    	return ResponseEntity.ok(dto);
 		}
@@ -63,13 +61,10 @@ public class PatientController {
     @ApiOperation(value = "Update patient info", httpMethod = "PUT")
     public ResponseEntity<?> updatePatient(@RequestBody PatientDto patientDto){
     	Patient patient = new Patient();
-    	if(patientDto.equals(null)) {
-    		return (ResponseEntity<?>) ResponseEntity.badRequest();
-    	}
-    	patient = patientDto.convert();
+		patient = patientDto.convert();
     	Patient retVal = patientService.update(patient);
     	if(retVal == null) {
-    		return (ResponseEntity<?>) ResponseEntity.notFound();
+    		return ResponseEntity.notFound().build();
     	}
     	return ResponseEntity.ok(retVal);
     }
@@ -77,27 +72,26 @@ public class PatientController {
     @ApiOperation(value = "Update patient password", httpMethod = "POST")
     public ResponseEntity<?> updatePatientPassword(@RequestBody PasswordDto passwordDto){
     	if(passwordDto == null) {
-    		return (ResponseEntity<?>) ResponseEntity.badRequest();
+    		return ResponseEntity.badRequest().build();
     	}
     	Patient patient = null;
     	try {
     		patient = patientService.getById(passwordDto.getPersonalId());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	if(patient ==null) {
-    		return (ResponseEntity<?>) ResponseEntity.notFound();
+    	if(patient == null) {
+    		return ResponseEntity.notFound().build();
     	}
     	if(patient.getPassword().equals(passwordDto.getOldPassword())) {
     		patient.setPassword(passwordDto.getNewPassword());
     		Patient retVal = patientService.update(patient);
         	if(retVal == null) {
-        		return (ResponseEntity<?>) ResponseEntity.notFound();
+        		return ResponseEntity.notFound().build();
         	}
     	}
     	else {
-    		return (ResponseEntity<?>) ResponseEntity.badRequest();
+    		return ResponseEntity.badRequest().build();
     	}
     	return ResponseEntity.ok(null);
     }

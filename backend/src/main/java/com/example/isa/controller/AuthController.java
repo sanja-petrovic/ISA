@@ -8,8 +8,8 @@ import com.example.isa.model.*;
 import com.example.isa.security.TokenHandler;
 import com.example.isa.service.interfaces.RoleService;
 import com.example.isa.service.interfaces.UserService;
+import com.example.isa.util.EntityDtoConverter;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,14 +27,14 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final UserService userService;
     private final RoleService roleService;
-    private final PasswordEncoder passwordEncoder;
+    private final EntityDtoConverter entityDtoConverter;
 
-    public AuthController(TokenHandler tokenHandler, AuthenticationManager authenticationManager, UserService userService, RoleService roleService, PasswordEncoder passwordEncoder) {
+    public AuthController(TokenHandler tokenHandler, AuthenticationManager authenticationManager, UserService userService, RoleService roleService, PasswordEncoder passwordEncoder, EntityDtoConverter entityDtoConverter) {
         this.tokenHandler = tokenHandler;
         this.authenticationManager = authenticationManager;
         this.userService = userService;
         this.roleService = roleService;
-        this.passwordEncoder = passwordEncoder;
+        this.entityDtoConverter = entityDtoConverter;
     }
 
     @PostMapping("/login")
@@ -57,20 +57,8 @@ public class AuthController {
     public ResponseEntity<Patient> registerPatient(@RequestBody PatientDto dto) {
         User user = userService.findByUsername(dto.getEmail());
         if (user == null) {
-            Gender gender = dto.getGender().trim().equalsIgnoreCase("female") ? Gender.FEMALE : Gender.MALE;
-            Patient patient = Patient.builder()
-                    .personalId(dto.getPersonalId())
-                    .firstName(dto.getFirstName())
-                    .lastName(dto.getLastName())
-                    .email(dto.getEmail())
-                    .password(passwordEncoder.encode(dto.getPassword()))
-                    .phoneNumber(dto.getPhoneNumber())
-                    .gender(gender)
-                    .occupation(dto.getOccupation())
-                    .address(new Address(dto.getHomeAddress(), dto.getCity(), dto.getCountry()))
-                    .institutionInfo(dto.getInstitution())
-                    .roles(roleService.findByName("ROLE_PATIENT"))
-                    .build();
+            Patient patient = entityDtoConverter.DtoToPatient(dto);
+            patient.setRoles(roleService.findByName("ROLE_PATIENT"));
             userService.register(patient);
             return new ResponseEntity<>(patient, HttpStatus.CREATED);
         } else {
