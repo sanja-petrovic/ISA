@@ -21,21 +21,8 @@ export class MedicalStaffService {
   ) {
   }
 
-  getMyInfo() {
-    return this.apiService.get(this.config.current_url)
-      .pipe(map(user => {
-        this.currentUser = user;
-        return user;
-      }));
+  updateMedicalStaff (mediclStaff: MedicalStaff){
+    return this.apiService.post(`${this.medicalStaffUrl}`, mediclStaff);
   }
-
-  getAll() {
-    return this.apiService.get(this.config.users_url);
-  }
-
-  public getMedicalStaffById(id: string): Observable<MedicalStaff> {
-    return this.http
-        .get<MedicalStaff>(this.medicalStaffUrl + 'findById/' + id);
-  } 
 
 }

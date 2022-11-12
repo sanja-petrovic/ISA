@@ -1,5 +1,5 @@
 .full {
-	width: 100%;
+	width: 40%;
 }
 
 .patient-profile {
@@ -10,18 +10,22 @@
 	min-width: 900px;
 	min-height: 560px;
 }  
-	.avatar {
+.patient-profile	.avatar {
 		width: 110px;
 		height: 110px;
 		margin-left: 40px;
 		border-radius: 50%;
 	}
-	h3 {
+	.patient-profile	h3 {
 		margin: auto;
 	}
-	.center-data {
+	.patient-profile	.center-data {
 		margin-left: 200px;
 	}
-	.center-address {
+	.patient-profile .center-address {
 		margin-left: 70px;
 	}
+
+.example-form-field {
+	margin-right: 1rem;
+}

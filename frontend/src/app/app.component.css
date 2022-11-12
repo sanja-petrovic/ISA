@@ -93,3 +93,28 @@ a {
   flex: 1;
   justify-content: flex-end !important;
 }
+
+.submit-button {
+  padding: 0.7rem;
+  border: 1px solid transparent;
+  background-image: linear-gradient(to right, #ea283f 0%, #ff5e70 51%, #ea283f 100%);
+  text-align: center;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  box-shadow: 0 0 20px #e13b55;
+  border-radius: 15px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+
+.submit-button:hover {
+  background-position: right center; /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
+}
+
+.submit-button:disabled {
+  opacity: 50%;
+}

@@ -29,9 +29,21 @@ type MedicalStaff = {
   bloodBank: string
 }
 
+type User = {
+  id: string,
+  firstName: string,
+  lastName: string,
+  personalId: string,
+  gender: string,
+  phoneNumber: string,
+  email: string,
+  isVerified: boolean
+}
+
 type Credentials = {
   email: string,
   password: string
 }
 
-export { Patient, Credentials, MedicalStaff };
+
+export { Patient, Credentials, User, MedicalStaff };

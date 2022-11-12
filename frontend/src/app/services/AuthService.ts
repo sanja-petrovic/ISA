@@ -22,7 +22,7 @@ export class AuthService {
   ) {
   }
 
-  private access_token = null;
+  private access_token = localStorage.getItem("jwt");
 
   login(user: Credentials) {
     const loginHeaders = new HttpHeaders({

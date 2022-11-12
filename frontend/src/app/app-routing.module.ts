@@ -7,6 +7,7 @@ import {RegistrationComponent} from "./registration/registration.component";
 import {LoginComponent} from "./login/login.component";
 import {VerificationComponent} from "./verification/verification.component";
 import {MedicalStaffComponent} from "./medical-staff/medical-staff.component"
+import {QuestionnaireComponent} from "./questionnaire/questionnaire.component";
 
 const routes: Routes = [
   {
@@ -26,6 +27,9 @@ const routes: Routes = [
   },
   {
     path: 'medical-staff', component: MedicalStaffComponent
+  },
+  {
+    path: 'questionnaire', component: QuestionnaireComponent
   }
 ]
 

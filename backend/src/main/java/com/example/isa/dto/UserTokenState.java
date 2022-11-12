@@ -2,14 +2,14 @@ package com.example.isa.dto;
 public class UserTokenState {
 
     private String accessToken;
-    private Long expiresIn;
+    private String expiresIn;
 
     public UserTokenState() {
         this.accessToken = null;
         this.expiresIn = null;
     }
 
-    public UserTokenState(String accessToken, long expiresIn) {
+    public UserTokenState(String accessToken, String expiresIn) {
         this.accessToken = accessToken;
         this.expiresIn = expiresIn;
     }
@@ -22,11 +22,11 @@ public class UserTokenState {
         this.accessToken = accessToken;
     }
 
-    public Long getExpiresIn() {
+    public String getExpiresIn() {
         return expiresIn;
     }
 
-    public void setExpiresIn(Long expiresIn) {
+    public void setExpiresIn(String expiresIn) {
         this.expiresIn = expiresIn;
     }
 

@@ -28,12 +28,13 @@ export class LoginComponent implements OnInit {
 
   onSubmit(): void {
     this.authService.login(this.form.value).subscribe((data) => {
-      this.userService.getMyInfo().subscribe( user => {
+      this.userService.getActiveUser().subscribe( user => {
           //    console.log(this.userService.currentUser)
               console.log(user)
-              // if(this.userService.currentUser.email == 'isidorapoznanovic1@gmail.com'){
-              //   this.logAndmin(this.form.value.email);
-              // }
+              this.userService.currentUser = user;
+              if(user.email == 'isidorapoznanovic1@gmail.com'){
+                this.logAndmin();
+              }
             })
     },
       (error) => {
@@ -56,7 +57,7 @@ export class LoginComponent implements OnInit {
     // })
   }
 
-  public logAndmin(email: string){
+  public logAndmin(){
     this.router.navigate(['/medical-staff'])
   }
 }

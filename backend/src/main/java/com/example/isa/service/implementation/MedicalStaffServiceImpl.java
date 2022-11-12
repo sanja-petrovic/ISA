@@ -5,6 +5,7 @@ import com.example.isa.repository.MedicalStaffRepository;
 import com.example.isa.service.interfaces.MedicalStaffService;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class MedicalStaffServiceImpl implements MedicalStaffService {
@@ -18,4 +19,19 @@ public class MedicalStaffServiceImpl implements MedicalStaffService {
     public List<MedicalStaff> getAll() {
         return repository.findAll();
     }
+
+    @Override
+    public MedicalStaff getById(UUID id) {
+        return repository.findById(id).orElse(null);
+    }
+
+    @Override
+    public MedicalStaff updateMedicalStaff(MedicalStaff medicalStaff) {
+        if (medicalStaff.getPassword() == null || medicalStaff.getPassword().trim().isEmpty()) {
+            //to do
+        }
+        System.out.printf(String.valueOf(medicalStaff));
+        return repository.save(medicalStaff);
+    }
+
 }
