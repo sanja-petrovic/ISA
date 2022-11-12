@@ -19,7 +19,6 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {LoginComponent} from './login/login.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
-import { VerificationComponent } from './verification/verification.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ChangePasswordDialogComponent } from './change-password-dialog/change-password-dialog.component';
 import {MatDialogModule, MatDialog, MatDialogRef,MAT_DIALOG_DATA, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
@@ -41,7 +40,8 @@ import {ApiService} from "./services/ApiService";
     LoginComponent,
     VerificationComponent,
     ProfileComponent,
-    ChangePasswordDialogComponent,
+	ChangePasswordDialogComponent,
+	QuestionnaireComponent
   ],
 	imports: [
 		HttpClientModule,
@@ -66,13 +66,13 @@ import {ApiService} from "./services/ApiService";
   providers: [
     {
 		provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}
-	}
-	 QuestionnaireComponent,
+	},
 	{
 		provide: HTTP_INTERCEPTORS,
 		useClass: TokenInterceptor,
 		multi: true
-    },
+	},
+	QuestionnaireComponent,
     AuthService,
     ApiService,
     UserService,

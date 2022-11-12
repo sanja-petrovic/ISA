@@ -28,6 +28,7 @@ const routes: Routes = [
   {
     path: 'profile', component: ProfileComponent
   },
+  {
     path: 'questionnaire', component: QuestionnaireComponent
   }
 ]
