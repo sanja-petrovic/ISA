@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface NewsService {
     public List<News> getAll();
-    public void create(News news);
+    public void create(News news) throws JsonProcessingException;
     public void send(NewsDto dto) throws JsonProcessingException;
 }

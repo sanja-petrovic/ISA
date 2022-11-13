@@ -1,11 +1,10 @@
 package com.example.isa.controller;
 
 import com.example.isa.dto.BloodBankDto;
-import com.example.isa.dto.BloodBankListDto;
 import com.example.isa.dto.BloodBankSearchSortDto;
 import com.example.isa.model.BloodBank;
 import com.example.isa.service.interfaces.BloodBankService;
-import com.example.isa.util.Converters.BloodBankConverter;
+import com.example.isa.util.converters.BloodBankConverter;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

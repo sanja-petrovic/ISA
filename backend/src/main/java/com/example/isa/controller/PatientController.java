@@ -1,11 +1,10 @@
 package com.example.isa.controller;
 
-import com.example.isa.dto.PasswordDto;
 import com.example.isa.dto.PatientDto;
 import com.example.isa.model.Patient;
 import com.example.isa.service.interfaces.PatientService;
 
-import com.example.isa.util.Converters.PatientConverter;
+import com.example.isa.util.converters.PatientConverter;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -14,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @Api(value = "/patients")

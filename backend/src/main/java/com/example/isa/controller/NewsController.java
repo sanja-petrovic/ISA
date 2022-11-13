@@ -4,12 +4,13 @@ import com.example.isa.dto.NewsDto;
 import com.example.isa.kafka.NewsProducer;
 import com.example.isa.model.News;
 import com.example.isa.service.interfaces.NewsService;
-import com.example.isa.util.Converters.NewsConverter;
+import com.example.isa.util.converters.NewsConverter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.annotations.Api;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,7 +22,7 @@ public class NewsController {
     private final NewsService newsService;
     private final NewsConverter newsConverter;
 
-    public NewsController(NewsService newsService, NewsConverter newsConverter, NewsProducer newsProducer) {
+    public NewsController(NewsService newsService, NewsConverter newsConverter) {
         this.newsService = newsService;
         this.newsConverter = newsConverter;
     }
@@ -32,15 +33,10 @@ public class NewsController {
     }
 
     @PostMapping
-    ResponseEntity<?> createNews(@RequestBody NewsDto dto){
+    ResponseEntity<?> createNews(@RequestBody NewsDto dto) throws JsonProcessingException {
         News news = newsConverter.dtoToEntity(dto);
+        news.setTimestamp(new Date());
         newsService.create(news);
-        return ResponseEntity.ok().build();
-    }
-
-    @PostMapping("/send")
-    ResponseEntity<?> sendNews(@RequestBody NewsDto dto) throws JsonProcessingException {
-        newsService.send(dto);
         return ResponseEntity.ok().build();
     }
 

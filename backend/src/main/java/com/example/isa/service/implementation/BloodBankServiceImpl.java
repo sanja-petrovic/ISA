@@ -28,4 +28,9 @@ public class BloodBankServiceImpl implements BloodBankService {
         //Searching to be implemented by student 2.
         return repository.findAll(sort);
     }
+
+    @Override
+    public BloodBank findByTitle(String title) {
+        return repository.findAllByTitleIgnoreCase(title).orElse(null);
+    }
 }

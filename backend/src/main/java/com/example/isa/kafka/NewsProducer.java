@@ -21,7 +21,7 @@ public class NewsProducer {
     }
 
     public void sendMessage(NewsDto newsDto) throws JsonProcessingException {
-        String topic = "";
+        String topic = "news.topic";
         String newsAsMessage = objectMapper.writeValueAsString(newsDto);
         kafkaTemplate.send(topic, newsAsMessage);
         log.info("news sent: {}", newsAsMessage);
