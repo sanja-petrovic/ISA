@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -26,6 +27,7 @@ public class BloodBank {
     private Interval workingHours;
     @Column
     private String description;
+    //add email and make title unique
     @Column
     private double averageGrade;
     @JsonBackReference
@@ -35,6 +37,9 @@ public class BloodBank {
     @JsonBackReference
     @OneToMany(mappedBy = "bloodBank", cascade = CascadeType.ALL)
     private Set<BloodSupply> bloodSupplies;
+
+    @OneToMany(mappedBy = "bloodBank", orphanRemoval = true)
+    private Set<News> news = new LinkedHashSet<>();
 
     public BloodBank(String title, Address address, String description) {
         this.id = UUID.randomUUID();
