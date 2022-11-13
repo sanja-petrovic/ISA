@@ -19,7 +19,7 @@ import java.util.UUID;
 public class BloodBank {
     @Id
     private UUID id;
-    @Column
+    @Column(unique = true)
     private String title;
     @Embedded
     private Address address;
@@ -27,7 +27,6 @@ public class BloodBank {
     private Interval workingHours;
     @Column
     private String description;
-    //add email and make title unique
     @Column
     private double averageGrade;
     @JsonBackReference

@@ -3,7 +3,7 @@ package com.example.isa.controller;
 import com.example.isa.dto.NewsDto;
 import com.example.isa.kafka.NewsProducer;
 import com.example.isa.model.News;
-import com.example.isa.service.NewsService;
+import com.example.isa.service.interfaces.NewsService;
 import com.example.isa.util.Converters.NewsConverter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.annotations.Api;
@@ -20,12 +20,10 @@ public class NewsController {
 
     private final NewsService newsService;
     private final NewsConverter newsConverter;
-    private final NewsProducer newsProducer;
 
     public NewsController(NewsService newsService, NewsConverter newsConverter, NewsProducer newsProducer) {
         this.newsService = newsService;
         this.newsConverter = newsConverter;
-        this.newsProducer = newsProducer;
     }
 
     @GetMapping
@@ -34,10 +32,15 @@ public class NewsController {
     }
 
     @PostMapping
-    ResponseEntity<?> createNews(@RequestBody NewsDto dto) throws JsonProcessingException {
+    ResponseEntity<?> createNews(@RequestBody NewsDto dto){
         News news = newsConverter.dtoToEntity(dto);
         newsService.create(news);
-        newsProducer.sendMessage(dto);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/send")
+    ResponseEntity<?> sendNews(@RequestBody NewsDto dto) throws JsonProcessingException {
+        newsService.send(dto);
         return ResponseEntity.ok().build();
     }
 

@@ -11,8 +11,6 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class NewsProducer {
-    @Value("{news.topic}")
-    private String topic;
 
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final ObjectMapper objectMapper;
@@ -23,6 +21,7 @@ public class NewsProducer {
     }
 
     public void sendMessage(NewsDto newsDto) throws JsonProcessingException {
+        String topic = "";
         String newsAsMessage = objectMapper.writeValueAsString(newsDto);
         kafkaTemplate.send(topic, newsAsMessage);
         log.info("news sent: {}", newsAsMessage);
