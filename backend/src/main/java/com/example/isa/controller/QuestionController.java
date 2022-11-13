@@ -32,7 +32,6 @@ public class QuestionController {
     public ResponseEntity<List<QuestionDto>> getAll() {
         List<Question> questions = service.getAll();
         List<QuestionDto> questionDtos = questions.stream().map(questionConverter::entityToDto).collect(Collectors.toList());
-        QuestionListDto dtoList = new QuestionListDto(questionDtos);
         return ResponseEntity.ok(questionDtos);
     }
 

@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  styleUrls: ['./profile.component.css', '../app.component.css']
 })
 export class ProfileComponent implements OnInit {
   profileForm: FormGroup = this.formBuilder.group({
@@ -109,7 +109,7 @@ export class ProfileComponent implements OnInit {
   updatePatientPassword():void{
     this.patientService.updatePatientPassword(this.passDto).subscribe((res: any)=>{
       console.log(res);
-      alert("Password change successfull, you will be redirected.")
+      alert("Password change successful, you will be redirected.")
       setTimeout(() =>
       {
           this.router.navigate(['/profile']);

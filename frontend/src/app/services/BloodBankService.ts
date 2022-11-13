@@ -1,15 +1,15 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import {config, Observable} from 'rxjs';
 import {ApiService} from "./ApiService";
 import {ConfigService} from "./ConfigService";
+import {BloodBank} from "../model/BloodBank";
 
 @Injectable({
   providedIn: 'root'
 })
 export class BloodBankService {
 
-  apiHost: string = 'http://localhost:8080/';
   headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   constructor(
@@ -17,6 +17,12 @@ export class BloodBankService {
     private config: ConfigService) {
   }
 
+  getAll(): Observable<BloodBank[]> {
+    return this.apiService.get(`${this.config.blood_banks_url}`);
+  }
 
+  searchSort(dto: any): any {
+    return this.apiService.post(`${this.config.blood_banks_url}/search`, dto);
+  }
 
 }

@@ -30,11 +30,10 @@ public class AnswerController {
     }
 
     @GetMapping
-    public ResponseEntity<AnswerListDto> getAll() {
+    public ResponseEntity<List<AnswerDto>> getAll() {
         List<Answer> answers = answerService.getAll();
         List<AnswerDto> answerDtos = answers.stream().map(answerConverter::entityToDto).collect(Collectors.toList());
-        AnswerListDto listDto = new AnswerListDto(answerDtos);
-        return ResponseEntity.ok(listDto);
+        return ResponseEntity.ok(answerDtos);
     }
 
     @PutMapping

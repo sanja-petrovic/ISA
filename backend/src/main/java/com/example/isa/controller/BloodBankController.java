@@ -32,22 +32,19 @@ public class BloodBankController {
 
     @GetMapping
     @ApiOperation(value = "Get all blood banks.", httpMethod = "GET")
-    public ResponseEntity<BloodBankListDto> getAll() {
+    public ResponseEntity<List<BloodBankDto>> getAll() {
         List<BloodBank> bloodBankList = service.getAll();
-        return ResponseEntity.ok(convertListToDto(bloodBankList));
+        List<BloodBankDto> bloodBankDtoList = bloodBankList.stream().map(bloodBankConverter::entityToDto).collect(Collectors.toList());
+        return ResponseEntity.ok(bloodBankDtoList);
     }
 
     @PostMapping(value = "/search")
     @ApiOperation(value = "Search, filter and sort blood banks.", httpMethod = "POST")
-    public ResponseEntity<BloodBankListDto> search(@RequestBody BloodBankSearchSortDto request) {
+    public ResponseEntity<List<BloodBankDto>> search(@RequestBody BloodBankSearchSortDto request) {
         //Search and filter to be implemented later on.
         Sort sort = Sort.by(Sort.Direction.fromString(request.getSortCriteria().getDirection()), request.getSortCriteria().getProperty());
         List<BloodBank> searchedData = service.search(sort, request.getSearchCriteria());
-        return ResponseEntity.ok(convertListToDto(searchedData));
-    }
-
-    private BloodBankListDto convertListToDto(List<BloodBank> bloodBankList) {
-        List<BloodBankDto> bloodBankDtoList = bloodBankList.stream().map(bloodBankConverter::entityToDto).collect(Collectors.toList());
-        return new BloodBankListDto(bloodBankDtoList);
+        List<BloodBankDto> dtos = searchedData.stream().map(bloodBankConverter::entityToDto).toList();
+        return ResponseEntity.ok(dtos);
     }
 }
