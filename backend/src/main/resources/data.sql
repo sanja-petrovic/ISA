@@ -8,9 +8,9 @@ INSERT INTO public.questions(id,text,type) VALUES ('3ef25d2e-9e39-4438-a6de-d311
 INSERT INTO public.questions(id,text,type) VALUES ('a88dceb9-8eb8-4f04-befa-e0fd016b4a37','Do you take Aspirin (Cardiopirin) often? Have you taken it in the past 5 days?','FOR_ALL');
 INSERT INTO public.questions(id,text,type) VALUES ('a48374fb-a3dc-41c1-a5f2-c33e89a3376e','Have you ever been treated in a hospital, or are currently being treated in a hospital?','FOR_ALL');
 INSERT INTO public.questions(id,text,type) VALUES ('a695d651-51ce-480b-9c7c-6e2740bb5407','Have you had a tooth extraction in the past 7 days?','FOR_ALL');
-INSERT INTO public.questions(id,text,type) VALUES ('43585871-4fbb-429c-9961-1c13512e9824','Have you had a fever over 38C, a runny nose, cold or taken antibiotics in the past 7-10 days?','FOR_ALL');
+INSERT INTO public.questions(id,text,type) VALUES ('43585871-4fbb-429c-9961-1c13512e9824','Have you had a fever over 38°C, a runny nose, cold or taken antibiotics in the past 7-10 days?','FOR_ALL');
 INSERT INTO public.questions(id,text,type) VALUES ('1fb576d3-0d92-4968-99bb-bfd522b1ab9a','Have you gotten any vaccines or serums in the past 12 months?','FOR_ALL');
-INSERT INTO public.questions(id,text,type) VALUES ('ee6f8eae-9a46-4679-a876-a5fbe9db0851','Have you gone through a sudden weight loss in the past 6 months?','FOR_ALL');
+INSERT INTO public.questions(id,text,type) VALUES ('ee6f8eae-9a46-4679-a876-a5fbe9db0851','Have you gone through sudden weight loss in the past 6 months?','FOR_ALL');
 INSERT INTO public.questions(id,text,type) VALUES ('7ad4907c-5561-4e4b-8255-6979f347cfc7','Have you been bitten by a tick in the past 12 months, and did you see a doctor about it?','FOR_ALL');
 INSERT INTO public.questions(id,text,type) VALUES ('7b05412b-6f73-42be-96c5-9a28226e8e41','Have you ever been treated for epilepsy, diabetes, asthma, tuberculosis, heart attack, stroke, malignant diseases, mental illness or malaria?','FOR_ALL');
 INSERT INTO public.questions(id,text,type) VALUES ('d9bc821b-6b12-4443-964c-87bffe5b8716','Do you suffer from some other chronic illness of: the heart, lungs, kidneys, liver, stomach, intestine, bone, nervous system, blood or blood vessels?','FOR_ALL');
@@ -32,7 +32,6 @@ INSERT INTO public.questions(id,text,type) VALUES ('3de8941c-82a2-4f32-83f7-5e12
 INSERT INTO public.questions(id,text,type) VALUES ('e266476f-6e5f-4df3-afd7-894f44941899','Have you had unprotected sex in the past 6 months with a person who has ever offered sexual services in exchange for money or drugs?','FOR_ALL');
 INSERT INTO public.questions(id,text,type) VALUES ('573d5cec-fe4f-48d8-ac2c-f02de27a97c9','Have you had unprotected sex in the past 6 months with a person who has ever done any kind of drugs?','FOR_ALL');
 INSERT INTO public.questions(id,text,type) VALUES ('a12a8726-7f64-4b19-90fa-60ca39eea7fe','Have you had unprotected sex in the past 6 months with a person whose risky behavior could''ve exposed you to getting sexually transmissive diseases?','FOR_ALL');
-INSERT INTO public.questions(id,text,type) VALUES ('5a9fece3-b7a5-4f3c-b8f7-58b255355f37','Have you had anal sex in the past 6 months?','FOR_ALL');
 INSERT INTO public.questions(id,text,type) VALUES ('5e45116f-b85d-4a49-af3b-79746cfe28f5','Are you currently pregnant?','FOR_WOMEN');
 INSERT INTO public.questions(id,text,type) VALUES ('9274a7eb-8c9e-4d50-badc-debd665f34b1','Are you currently on your period?','FOR_WOMEN');
 INSERT INTO public.questions(id,text,type) VALUES ('99cc9319-f99d-466a-b2e7-f589ec69f83d','Have you in the past 6 months given birth or had a pregnancy termination?','FOR_WOMEN');
