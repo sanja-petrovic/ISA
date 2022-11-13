@@ -1,5 +1,15 @@
 <div class="centered-content">
   <h1>Blood banks</h1>
+  <div class="search-div">
+    <mat-form-field appearance="outline">
+      <mat-label>Search by title</mat-label>
+      <input  matInput [(ngModel)]="searchCriteria[0]">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Search by city</mat-label>
+      <input  matInput [(ngModel)]="searchCriteria[1]">
+    </mat-form-field>
+  </div>
   <div class="sort-div">
     <mat-form-field>
       <mat-label>Sort by</mat-label>

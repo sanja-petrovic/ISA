@@ -9,7 +9,7 @@ import axios from 'axios';
 export class BanksPageComponent implements OnInit {
 
   public banks: any[] = [];
-  public searchCriteria: string[] = [];
+  public searchCriteria: string[] = ["",""];
 
   getBanks(): void {
     axios.get('http://localhost:8080/bloodbanks').then((response) => {

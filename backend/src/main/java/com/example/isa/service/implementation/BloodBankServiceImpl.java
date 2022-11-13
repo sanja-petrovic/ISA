@@ -28,16 +28,16 @@ public class BloodBankServiceImpl implements BloodBankService {
     	String titleString = searchCriteria.get(0);
     	String cityString = searchCriteria.get(1);
         if (titleString.equals("") && cityString.equals("")) {
-        	return repository.findAll();
+        	return repository.findAll(sort);
         }
         else if(titleString.equals("")){
-        	return repository.findByCityLike(cityString);
+        	return repository.findByAddressCityLike("%"+cityString+"%", sort);
         }
         else if(cityString.equals("")){
-        	return repository.findByTitleLike(titleString);
+        	return repository.findByTitleLike("%"+titleString+"%", sort);
         }
         else {
-        	return repository.findByTitleAndCityLike(titleString, cityString);
+        	return repository.findByTitleLikeAndAddressCityLike("%"+titleString+"%", "%"+cityString+"%", sort);
         }
     }
 }
