@@ -97,20 +97,20 @@ export class ProfileComponent implements OnInit {
     });
     pwDialog.afterClosed().subscribe(result => {
       this.newPass = result;
-      
+
       this.passDto.personalId = this.patient.personalId;
       this.passDto.oldPassword = this.patient.password;
       this.passDto.newPassword = this.newPass;
       console.log(this.passDto);
       this.updatePatientPassword();
-      
+
     });
   }
   updatePatientPassword():void{
     this.patientService.updatePatientPassword(this.passDto).subscribe((res: any)=>{
       console.log(res);
       alert("Password change successfull, you will be redirected.")
-      setTimeout(() => 
+      setTimeout(() =>
       {
           this.router.navigate(['/profile']);
       },

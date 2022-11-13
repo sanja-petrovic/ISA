@@ -1,4 +1,4 @@
-package com.example.isa.util;
+package com.example.isa.util.Converters;
 
 import com.example.isa.dto.PatientDto;
 import com.example.isa.model.Address;
@@ -7,17 +7,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class EntityDtoConverter {
+public class PatientConverter implements Converter<Patient, PatientDto> {
+
     private final EnumConverter enumConverter;
     private final PasswordEncoder passwordEncoder;
 
-    public EntityDtoConverter(EnumConverter enumConverter, PasswordEncoder passwordEncoder) {
+    public PatientConverter(EnumConverter enumConverter, PasswordEncoder passwordEncoder) {
         this.enumConverter = enumConverter;
         this.passwordEncoder = passwordEncoder;
     }
 
-    public PatientDto PatientToDto(Patient patient) {
-        PatientDto dto = PatientDto.builder()
+    @Override
+    public PatientDto entityToDto(Patient patient) {
+        return PatientDto.builder()
                 .personalId(patient.getPersonalId())
                 .firstName(patient.getFirstName())
                 .lastName(patient.getLastName())
@@ -30,24 +32,21 @@ public class EntityDtoConverter {
                 .country(patient.getAddress().getCountry())
                 .institution(patient.getInstitution())
                 .build();
-
-        return dto;
     }
 
-    public Patient DtoToPatient(PatientDto dto) {
-        Patient patient = Patient.builder()
-                .personalId(dto.getPersonalId())
-                .firstName(dto.getFirstName())
-                .lastName(dto.getLastName())
-                .email(dto.getEmail())
-                .password(passwordEncoder.encode(dto.getPassword()))
-                .phoneNumber(dto.getPhoneNumber())
-                .gender(enumConverter.StringToGender(dto.getGender()))
-                .occupation(dto.getOccupation())
-                .address(new Address(dto.getHomeAddress(), dto.getCity(), dto.getCountry()))
-                .institution(dto.getInstitution())
+    @Override
+    public Patient dtoToEntity(PatientDto patientDto) {
+        return Patient.builder()
+                .personalId(patientDto.getPersonalId())
+                .firstName(patientDto.getFirstName())
+                .lastName(patientDto.getLastName())
+                .email(patientDto.getEmail())
+                .password(passwordEncoder.encode(patientDto.getPassword()))
+                .phoneNumber(patientDto.getPhoneNumber())
+                .gender(enumConverter.stringToGender(patientDto.getGender()))
+                .occupation(patientDto.getOccupation())
+                .address(new Address(patientDto.getHomeAddress(), patientDto.getCity(), patientDto.getCountry()))
+                .institution(patientDto.getInstitution())
                 .build();
-
-        return patient;
     }
 }

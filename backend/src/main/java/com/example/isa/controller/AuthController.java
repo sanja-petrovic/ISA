@@ -8,7 +8,7 @@ import com.example.isa.model.*;
 import com.example.isa.security.TokenHandler;
 import com.example.isa.service.interfaces.RoleService;
 import com.example.isa.service.interfaces.UserService;
-import com.example.isa.util.EntityDtoConverter;
+import com.example.isa.util.Converters.PatientConverter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,14 +27,14 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final UserService userService;
     private final RoleService roleService;
-    private final EntityDtoConverter entityDtoConverter;
+    private final PatientConverter patientConverter;
 
-    public AuthController(TokenHandler tokenHandler, AuthenticationManager authenticationManager, UserService userService, RoleService roleService, PasswordEncoder passwordEncoder, EntityDtoConverter entityDtoConverter) {
+    public AuthController(TokenHandler tokenHandler, AuthenticationManager authenticationManager, UserService userService, RoleService roleService, PasswordEncoder passwordEncoder, PatientConverter patientConverter) {
         this.tokenHandler = tokenHandler;
         this.authenticationManager = authenticationManager;
         this.userService = userService;
         this.roleService = roleService;
-        this.entityDtoConverter = entityDtoConverter;
+        this.patientConverter = patientConverter;
     }
 
     @PostMapping("/login")
@@ -54,13 +54,12 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Patient> registerPatient(@RequestBody PatientDto dto) {
-        User user = userService.findByUsername(dto.getEmail());
-        if (user == null) {
-            Patient patient = entityDtoConverter.DtoToPatient(dto);
+    public ResponseEntity<PatientDto> registerPatient(@RequestBody PatientDto dto) {
+        if (userService.findByUsername(dto.getEmail()) == null) {
+            Patient patient = patientConverter.dtoToEntity(dto);
             patient.setRoles(roleService.findByName("ROLE_PATIENT"));
             userService.register(patient);
-            return new ResponseEntity<>(patient, HttpStatus.CREATED);
+            return new ResponseEntity<>(patientConverter.entityToDto(patient), HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>(null, HttpStatus.CONFLICT);
         }

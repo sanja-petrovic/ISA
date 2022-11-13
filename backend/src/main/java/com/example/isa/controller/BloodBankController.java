@@ -5,12 +5,12 @@ import com.example.isa.dto.BloodBankListDto;
 import com.example.isa.dto.BloodBankSearchSortDto;
 import com.example.isa.model.BloodBank;
 import com.example.isa.service.interfaces.BloodBankService;
+import com.example.isa.util.Converters.BloodBankConverter;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,10 +22,12 @@ import java.util.stream.Collectors;
 public class BloodBankController {
 
     private final BloodBankService service;
+    private final BloodBankConverter bloodBankConverter;
 
     @Autowired
-    public BloodBankController(BloodBankService service) {
+    public BloodBankController(BloodBankService service, BloodBankConverter bloodBankConverter) {
         this.service = service;
+        this.bloodBankConverter = bloodBankConverter;
     }
 
     @GetMapping
@@ -45,8 +47,7 @@ public class BloodBankController {
     }
 
     private BloodBankListDto convertListToDto(List<BloodBank> bloodBankList) {
-        List<BloodBankDto> bloodBankDtoList = bloodBankList.stream().map(bank -> new BloodBankDto(bank.getTitle(), bank.getAddress().getStreet(), bank.getAddress().getCity(), bank.getAddress().getCountry(), bank.getWorkingHours().getIntervalStart().toString(), bank.getWorkingHours().getIntervalEnd().toString(), bank.getDescription(), bank.getAverageGrade())).collect(Collectors.toList());
-        BloodBankListDto dto = new BloodBankListDto(bloodBankDtoList);
-        return dto;
+        List<BloodBankDto> bloodBankDtoList = bloodBankList.stream().map(bloodBankConverter::entityToDto).collect(Collectors.toList());
+        return new BloodBankListDto(bloodBankDtoList);
     }
 }

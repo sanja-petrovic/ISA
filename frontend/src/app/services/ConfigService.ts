@@ -12,7 +12,8 @@ export class ConfigService {
   public verification_url = this._auth_url + '/verify';
   public questions_url = this._api_url + '/questions'
   public answers_url = this._api_url + '/answers'
-  public blood_banks_url = this._api_url + '/bloodBanks'
+  public blood_banks_url = this._api_url + '/bloodBanks';
+
 
   get login_url(): string {
     return this._login_url;
