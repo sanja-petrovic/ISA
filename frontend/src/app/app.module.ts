@@ -34,6 +34,7 @@ import {ConfigService} from "./services/ConfigService";
 import {ApiService} from "./services/ApiService";
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MedicalStaffBloodBankComponent } from './medical-staff-blood-bank/medical-staff-blood-bank.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     ChangePasswordDialogComponent,
     QuestionnaireComponent,
     MedicalStaffComponent,
-    QuestionnaireComponent
+    QuestionnaireComponent,
+    MedicalStaffBloodBankComponent
   ],
     imports: [
         HttpClientModule,

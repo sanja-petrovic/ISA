@@ -1,5 +1,6 @@
 package com.example.isa.service.implementation;
 
+import com.example.isa.model.BloodBank;
 import com.example.isa.model.MedicalStaff;
 import com.example.isa.repository.MedicalStaffRepository;
 import com.example.isa.service.interfaces.MedicalStaffService;
@@ -30,8 +31,12 @@ public class MedicalStaffServiceImpl implements MedicalStaffService {
         if (medicalStaff.getPassword() == null || medicalStaff.getPassword().trim().isEmpty()) {
             //to do
         }
-        System.out.printf(String.valueOf(medicalStaff));
         return repository.save(medicalStaff);
+    }
+
+    @Override
+    public BloodBank getBloodBank(MedicalStaff medicalStaff) {
+        return medicalStaff.getBloodBank();
     }
 
 }

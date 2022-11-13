@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -46,7 +47,7 @@ public class MedicalStaffController {
     @GetMapping(value = "/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Get medical staff by id.", httpMethod = "GET")
     //@PreAuthorize("hasRole('ROLE_STAFF')")
-    public ResponseEntity<?> getMedicalStaffById(String id) {
+    public ResponseEntity<?> getMedicalStaffById(@PathVariable String id) {
         MedicalStaff medicalStaff = (MedicalStaff)userService.loadUserByUsername(id);
         if (medicalStaff == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -73,4 +74,14 @@ public class MedicalStaffController {
         return ResponseEntity.ok(medicalStaff);
     }
 
+    @GetMapping(value = "/bank")
+    @ApiOperation(value = "Get blood bank by medical staff id.", httpMethod = "GET")
+    //@PreAuthorize("hasRole('ROLE_STAFF')")
+    public ResponseEntity<?> getBloodBank(Principal user) {
+        MedicalStaff medicalStaff = (MedicalStaff)userService.loadUserByUsername(user.getName());
+        if (medicalStaff == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok( new BloodBankDto(medicalStaff.getBloodBank()));
+    }
 }

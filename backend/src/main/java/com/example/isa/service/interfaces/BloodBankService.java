@@ -10,4 +10,5 @@ public interface BloodBankService {
     public List<BloodBank> getAll();
     public BloodBank getById(UUID id);
     public List<BloodBank> search(Sort sort, List<String> searchCriteria);
+    public BloodBank updateBloodBank(BloodBank bloodBank);
 }

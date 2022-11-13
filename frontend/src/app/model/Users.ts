@@ -14,6 +14,7 @@ type Patient = {
 }
 
 type MedicalStaff = {
+  id: string,
   firstName: string,
   lastName: string,
   personalId: string,
