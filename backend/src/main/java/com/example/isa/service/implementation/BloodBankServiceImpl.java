@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class BloodBankServiceImpl implements BloodBankService {
@@ -21,6 +22,11 @@ public class BloodBankServiceImpl implements BloodBankService {
     @Override
     public List<BloodBank> getAll() {
         return repository.findAll();
+    }
+
+    @Override
+    public BloodBank getById(UUID id) {
+        return repository.findById(id).orElse(null);
     }
 
     @Override
