@@ -71,12 +71,19 @@
 
 .sort-div {
 }
+.search-wrapper{
+  display: flex;
+  flex-direction:row;
+  justify-content:space-evenly;
+  align-items: baseline;
+  margin-right: 2rem;
+}
 .search-div{
   display: flex;
   flex-direction:row;
   justify-content:space-evenly;
 }
-.search-div :nth-child(1){
+.search-wrapper :nth-child(1){
   padding-right:0.5rem;
   padding-left:0.3rem;
 }
