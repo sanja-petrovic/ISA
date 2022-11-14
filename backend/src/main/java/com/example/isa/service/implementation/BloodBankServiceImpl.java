@@ -34,4 +34,12 @@ public class BloodBankServiceImpl implements BloodBankService {
         //Searching to be implemented by student 2.
         return repository.findAll(sort);
     }
+
+    @Override
+    public BloodBank updateBloodBank(BloodBank bloodBank) {
+        if (bloodBank.getTitle() == null || bloodBank.getAddress() == null) {
+            return null;
+        }
+        return repository.save(bloodBank);
+    }
 }

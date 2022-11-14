@@ -9,6 +9,7 @@ import {VerificationComponent} from "./verification/verification.component";
 import {MedicalStaffComponent} from "./medical-staff/medical-staff.component"
 import { ProfileComponent } from './profile/profile.component';
 import {QuestionnaireComponent} from "./questionnaire/questionnaire.component";
+import { MedicalStaffBloodBankComponent } from './medical-staff-blood-bank/medical-staff-blood-bank.component';
 
 const routes: Routes = [
   {
@@ -34,6 +35,9 @@ const routes: Routes = [
   },
   {
     path: 'questionnaire', component: QuestionnaireComponent
+  },
+  {
+    path: 'medical-staff/bank', component: MedicalStaffBloodBankComponent
   }
 ]
 
