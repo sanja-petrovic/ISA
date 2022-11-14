@@ -1,0 +1,117 @@
+<div fxLayout="column" fxLayoutAlign="space-between stretch" fxFlexFil fxFill class="components-container-gt-xs " >
+
+	<div fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFil fxFill fxLayoutGap="20px">
+
+		<div fxFlex="35" fxLayout="column" class="mat-elevation-z2 medicalStaff-profile" >
+
+			<div fxFlex="10" fxLayout="row" fxLayoutAlign="space-between center" >
+					
+				<h3  class="mat-headline"  fxFill fxLayoutAlign="space-around center">Profile</h3> 
+
+			</div>
+			<mat-divider></mat-divider>
+
+			<div fxFlex="50"  fxLayout="row" fxLayoutAlign="space-between center" class="center-data">
+				
+				<!-- <div fxFlex="40" fxLayoutAlign="space-between center">
+					<img class="avatar" src="assets/images/pharmacist.png"/>
+				</div> -->
+
+				<div fxFlex="0" fxLayout="column" fxLayoutAlign="center start" >
+					<br>
+					<mat-form-field class="example-form-field">
+						<mat-label>Name</mat-label>
+						<input matInput type="text" [(ngModel)]="medicalStaff.firstName" required>
+						<button mat-button *ngIf="medicalStaff.firstName" matSuffix mat-icon-button aria-label="Clear" (click)="medicalStaff.firstName=''">
+						  <mat-icon>close</mat-icon>
+						</button>
+					  </mat-form-field>
+					  <mat-form-field class="example-form-field">
+						<mat-label>Surname</mat-label>
+						<input matInput type="text" [(ngModel)]="medicalStaff.lastName" required>
+						<button mat-button *ngIf="medicalStaff.lastName" matSuffix mat-icon-button aria-label="Clear" (click)="medicalStaff.lastName=''">
+						  <mat-icon>close</mat-icon>
+						</button>
+					  </mat-form-field>
+
+				</div>
+				
+			</div>
+
+			<div fxFlex="50"  fxLayout="row" fxLayoutAlign="space-between center" class="center-data">
+				
+				<div fxFlex="20" fxLayout="column" fxLayoutAlign="center start" >
+
+                    <mat-form-field class="example-form-field" style="width: 205px;">
+						<mat-label>Email</mat-label>
+						<input matInput type="text" disabled  [(ngModel)]="medicalStaff.email">
+					</mat-form-field>
+					  <mat-form-field class="example-form-field">
+						<mat-label>New password</mat-label>
+						<input matInput type="password" [(ngModel)]="password" >
+						<button mat-button *ngIf="password" matSuffix mat-icon-button aria-label="Clear" (click)="password=''">
+						  <mat-icon>close</mat-icon>
+						</button>
+					  </mat-form-field>
+
+				</div>
+
+				<div fxFlex="60" fxLayout="column" fxLayoutAlign="center start" >
+
+					<mat-form-field class="example-form-field">
+						<mat-label>Phone number</mat-label>
+						<input matInput type="tel" [(ngModel)]="medicalStaff.phoneNumber" required>
+						<button mat-button *ngIf="medicalStaff.phoneNumber" matSuffix mat-icon-button aria-label="Clear" (click)="medicalStaff.phoneNumber=''">
+						  <mat-icon>close</mat-icon>
+						</button>
+					  </mat-form-field>
+					<mat-form-field class="example-form-field">
+						<mat-label>Confirm password</mat-label>
+						<input matInput type="password" [(ngModel)]="repeatPassword">
+						<button mat-button *ngIf="repeatPassword" matSuffix mat-icon-button aria-label="Clear" (click)="repeatPassword=''">
+						  <mat-icon>close</mat-icon>
+						</button>
+					  </mat-form-field>
+
+				</div>
+				
+			</div>
+
+			<div fxFlex="50"  fxLayout="row" fxLayoutAlign="space-between center" class="center-data" style="margin-bottom: 30px;">
+
+				<div fxFlex="60" fxLayout="column" fxLayoutAlign="center start" >
+
+					<mat-form-field class="example-form-field" style="margin-bottom: 10px;">
+						<mat-label>Gender</mat-label>
+                        <mat-select [(ngModel)]="medicalStaff.gender"  name="gender" value="medicalStaff.gender" required>
+                            <mat-option value="FEMALE">
+                              Female
+                            </mat-option>
+                            <mat-option value="MALE">
+                              Male
+                            </mat-option>
+                          </mat-select>
+						<!-- <input matInput type="tel" [(ngModel)]="medicalStaff.gender" required> -->
+						<button mat-button *ngIf="medicalStaff.gender" matSuffix mat-icon-button aria-label="Clear" (click)="medicalStaff.gender=''">
+						  <mat-icon>close</mat-icon>
+						</button>
+					</mat-form-field>
+
+					<button mat-stroked-button color="basic" (click)="openBloodBank()" class="modal-dialog" style="margin-bottom: 18px;width: 180px;">Blood bank</button>
+
+				</div>
+				
+			</div> 
+			
+			<div fxFlex fxLayout="column" fxLayoutAlign="end stretch" >
+				<div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center stretch" >
+					<button mat-raised-button color="warn" (click)="cancelClick()">Cancel</button>
+					<button mat-raised-button color="primary" (click)="saveClick()">Save</button>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+	
+</div>

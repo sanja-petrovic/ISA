@@ -3,7 +3,11 @@ package com.example.isa.controller;
 import com.example.isa.dto.BloodBankDto;
 import com.example.isa.dto.BloodBankListDto;
 import com.example.isa.dto.BloodBankSearchSortDto;
+import com.example.isa.dto.MedicalStaffDto;
+import com.example.isa.model.Address;
 import com.example.isa.model.BloodBank;
+import com.example.isa.model.Gender;
+import com.example.isa.model.MedicalStaff;
 import com.example.isa.service.interfaces.BloodBankService;
 import com.example.isa.util.Converters.BloodBankConverter;
 import io.swagger.annotations.Api;
@@ -14,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -43,8 +48,20 @@ public class BloodBankController {
     public ResponseEntity<List<BloodBankDto>> search(@RequestBody BloodBankSearchSortDto request) {
         //Search and filter to be implemented later on.
         Sort sort = Sort.by(Sort.Direction.fromString(request.getSortCriteria().getDirection()), request.getSortCriteria().getProperty());
-        List<BloodBank> searchedData = service.search(sort, request.getSearchCriteria());
+        List<BloodBank> searchedData = service.search(sort, request.getSearchCriteria(), request.getFilterGrade());
         List<BloodBankDto> dtos = searchedData.stream().map(bloodBankConverter::entityToDto).toList();
         return ResponseEntity.ok(dtos);
+    }
+
+    @PostMapping(value = "/update")
+    @ApiOperation(value = "Update blood bank.", httpMethod = "POST")
+    public ResponseEntity<?> update(@RequestBody BloodBankDto bloodBankDto) {
+        BloodBank bloodBank = service.getById(UUID.fromString(bloodBankDto.getId()));
+        bloodBank.setAddress(new Address(bloodBankDto.getStreet(), bloodBankDto.getCity(), bloodBankDto.getCountry()));
+        bloodBank.setDescription(bloodBankDto.getDescription());
+        bloodBank.setTitle(bloodBankDto.getTitle());
+        bloodBank.setAverageGrade(bloodBankDto.getAverageGrade());
+        service.updateBloodBank(bloodBank);
+        return ResponseEntity.ok(bloodBank);
     }
 }
