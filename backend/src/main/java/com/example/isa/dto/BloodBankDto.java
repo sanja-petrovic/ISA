@@ -38,16 +38,5 @@ public class BloodBankDto {
         this.averageGrade = averageGrade;
     }
 
-    public BloodBankDto(BloodBank bloodBank){
-        this.id = bloodBank.getId().toString();
-        this.title = bloodBank.getTitle();
-        this.street = bloodBank.getAddress().getStreet();
-        this.city = bloodBank.getAddress().getCity();
-        this.country = bloodBank.getAddress().getCountry();
-        this.workingHoursStart = bloodBank.getWorkingHours().getIntervalStart().toString();
-        this.workingHoursEnd = bloodBank.getWorkingHours().getIntervalEnd().toString();
-        this.description = bloodBank.getDescription();
-        this.averageGrade = bloodBank.getAverageGrade();
-    }
 
 }
