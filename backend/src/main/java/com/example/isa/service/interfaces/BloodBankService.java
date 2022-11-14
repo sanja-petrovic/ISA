@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface BloodBankService {
     public List<BloodBank> getAll();
-    public List<BloodBank> search(Sort sort, List<String> searchCriteria);
+    public List<BloodBank> search(Sort sort, List<String> searchCriteria, String filterGrade);
 }

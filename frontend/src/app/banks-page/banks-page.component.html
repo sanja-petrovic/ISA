@@ -23,6 +23,17 @@
       </mat-select>
     </mat-form-field>
   </div>
+  <div class="filter-div">
+    <mat-form-field>
+      <mat-label>filter by grade: </mat-label>
+      <mat-select [(ngModel)]="gradeFilter">
+        <mat-option value="1">1.0+</mat-option>
+        <mat-option value="2">2.0+</mat-option>
+        <mat-option value="3">3.0+</mat-option>
+        <mat-option value="4">4.0+</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
   <div class="cards">
     <mat-card *ngFor="let bank of banks" class="bank-card">
       <mat-card-title class="bank-title">{{bank.title}}

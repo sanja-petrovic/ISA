@@ -24,20 +24,20 @@ public class BloodBankServiceImpl implements BloodBankService {
     }
 
     @Override
-    public List<BloodBank> search(Sort sort, List<String> searchCriteria) {
+    public List<BloodBank> search(Sort sort, List<String> searchCriteria, String filterGrade) {
     	String titleString = searchCriteria.get(0);
     	String cityString = searchCriteria.get(1);
         if (titleString.equals("") && cityString.equals("")) {
-        	return repository.findAll(sort);
+        	return repository.findAllWithFilter(Double.parseDouble(filterGrade),sort);
         }
         else if(titleString.equals("")){
-        	return repository.findByAddressCityLike("%"+cityString+"%", sort);
+        	return repository.findByAddressCityLike("%"+cityString+"%",Double.parseDouble(filterGrade),sort);
         }
         else if(cityString.equals("")){
-        	return repository.findByTitleLike("%"+titleString+"%", sort);
+        	return repository.findByTitleLike("%"+titleString+"%",Double.parseDouble(filterGrade), sort);
         }
         else {
-        	return repository.findByTitleLikeAndAddressCityLike("%"+titleString+"%", "%"+cityString+"%", sort);
+        	return repository.findByTitleLikeAndAddressCityLike("%"+titleString+"%", "%"+cityString+"%",Double.parseDouble(filterGrade), sort);
         }
     }
 }

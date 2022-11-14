@@ -10,7 +10,7 @@ export class BanksPageComponent implements OnInit {
 
   public banks: any[] = [];
   public searchCriteria: string[] = ["",""];
-
+  public gradeFilter: string = "0";
   getBanks(): void {
     axios.get('http://localhost:8080/bloodbanks').then((response) => {
       this.banks = response.data?.bloodBanks;
@@ -22,6 +22,7 @@ export class BanksPageComponent implements OnInit {
     const sort: string[] = sortCriteria.split('-');
     const dto = {
       searchCriteria: this.searchCriteria,
+      filterGrade: this.gradeFilter,
       sortCriteria: {
         direction: sort[1],
         property: sort[0]

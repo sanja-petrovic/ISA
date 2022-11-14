@@ -40,7 +40,7 @@ public class BloodBankController {
     public ResponseEntity<BloodBankListDto> search(@RequestBody BloodBankSearchSortDto request) {
         //Search and filter to be implemented later on.
         Sort sort = Sort.by(Sort.Direction.fromString(request.getSortCriteria().getDirection()), request.getSortCriteria().getProperty());
-        List<BloodBank> searchedData = service.search(sort, request.getSearchCriteria());
+        List<BloodBank> searchedData = service.search(sort, request.getSearchCriteria(), request.getFilterGrade());
         return ResponseEntity.ok(convertListToDto(searchedData));
     }
 
