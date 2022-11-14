@@ -6,7 +6,7 @@ import com.example.isa.model.Answer;
 import com.example.isa.service.interfaces.AnswerService;
 import com.example.isa.service.interfaces.PatientService;
 import com.example.isa.service.interfaces.QuestionService;
-import com.example.isa.service.interfaces.UserService;
+import com.example.isa.util.Converters.AnswerConverter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,19 +20,20 @@ public class AnswerController {
     private final AnswerService answerService;
     private final QuestionService questionService;
     private final PatientService patientService;
+    private final AnswerConverter answerConverter;
 
-    public AnswerController(AnswerService answerService, QuestionService questionService, PatientService patientService) {
+    public AnswerController(AnswerService answerService, QuestionService questionService, PatientService patientService, AnswerConverter answerConverter) {
         this.answerService = answerService;
         this.questionService = questionService;
         this.patientService = patientService;
+        this.answerConverter = answerConverter;
     }
 
     @GetMapping
-    public ResponseEntity<AnswerListDto> getAll() {
+    public ResponseEntity<List<AnswerDto>> getAll() {
         List<Answer> answers = answerService.getAll();
-        List<AnswerDto> answerDtos = answers.stream().map(answer -> AnswerDto.builder().questionId(answer.getQuestion().getId()).answerValue(answer.isValue()).user(answer.getUser().getEmail()).build()).collect(Collectors.toList());
-        AnswerListDto listDto = new AnswerListDto(answerDtos);
-        return ResponseEntity.ok(listDto);
+        List<AnswerDto> answerDtos = answers.stream().map(answerConverter::entityToDto).collect(Collectors.toList());
+        return ResponseEntity.ok(answerDtos);
     }
 
     @PutMapping
