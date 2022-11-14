@@ -17,7 +17,7 @@ export class ConfigService {
     return this._login_url;
   }
 
-  private _current_url = this._auth_url + '/current';
+  private _current_url = this.users_url + '/current';
 
   get current_url(): string {
     return this._current_url;

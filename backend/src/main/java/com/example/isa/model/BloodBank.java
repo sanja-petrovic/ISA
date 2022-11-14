@@ -1,6 +1,7 @@
 package com.example.isa.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @Entity
+@AllArgsConstructor
 @Table(name = "blood_banks")
 public class BloodBank {
     @Id
@@ -35,6 +37,13 @@ public class BloodBank {
     private Set<BloodSupply> bloodSupplies;
 
     public BloodBank(String title, Address address, String description) {
+        this.id = UUID.randomUUID();
+        this.title = title;
+        this.address = address;
+        this.description = description;
+    }
+
+    public BloodBank(UUID id, String title, Address address, String description) {
         this.id = UUID.randomUUID();
         this.title = title;
         this.address = address;

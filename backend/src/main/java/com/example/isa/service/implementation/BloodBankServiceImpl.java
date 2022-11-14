@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class BloodBankServiceImpl implements BloodBankService {
@@ -24,6 +25,11 @@ public class BloodBankServiceImpl implements BloodBankService {
     }
 
     @Override
+    public BloodBank getById(UUID id) {
+        return repository.findById(id).orElse(null);
+
+    }
+    @Override
     public List<BloodBank> search(Sort sort, List<String> searchCriteria, String filterGrade) {
     	String titleString = searchCriteria.get(0);
     	String cityString = searchCriteria.get(1);
@@ -39,5 +45,13 @@ public class BloodBankServiceImpl implements BloodBankService {
         else {
         	return repository.findByTitleLikeAndAddressCityLike("%"+titleString+"%", "%"+cityString+"%",Double.parseDouble(filterGrade), sort);
         }
+    }
+
+    @Override
+    public BloodBank updateBloodBank(BloodBank bloodBank) {
+        if (bloodBank.getTitle() == null || bloodBank.getAddress() == null) {
+            return null;
+        }
+        return repository.save(bloodBank);
     }
 }
