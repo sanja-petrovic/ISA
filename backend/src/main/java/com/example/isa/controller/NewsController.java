@@ -34,7 +34,6 @@ public class NewsController {
     @PostMapping
     ResponseEntity<?> createNews(@RequestBody NewsDto dto) throws JsonProcessingException {
         News news = newsConverter.dtoToEntity(dto);
-        news.setMilliseconds(Instant.now().toEpochMilli());
         newsService.create(news);
         return ResponseEntity.ok().build();
     }

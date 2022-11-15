@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.util.UUID;
 
 @Getter
@@ -27,10 +28,10 @@ public class News {
     private long milliseconds;
 
     @Builder
-    public News(BloodBank bloodBank, String title, String body, Long milliseconds) {
+    public News(BloodBank bloodBank, String title, String body) {
         this.bloodBank = bloodBank;
         this.title = title;
         this.body = body;
-        this.milliseconds = milliseconds;
+        this.milliseconds = Instant.now().toEpochMilli();
     }
 }
