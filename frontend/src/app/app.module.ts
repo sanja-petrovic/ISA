@@ -19,7 +19,12 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {LoginComponent} from './login/login.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
-import {VerificationComponent} from './verification/verification.component';
+import { VerificationComponent } from './verification/verification.component';
+import { MedicalStaffComponent } from './medical-staff/medical-staff.component';
+import { MatDividerModule } from '@angular/material/divider';
+import { ProfileComponent } from './profile/profile.component';
+import { ChangePasswordDialogComponent } from './change-password-dialog/change-password-dialog.component';
+import {MatDialogModule, MatDialog, MatDialogRef,MAT_DIALOG_DATA, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
 import {QuestionnaireComponent} from './questionnaire/questionnaire.component';
 import {MatRadioModule} from "@angular/material/radio";
 import {TokenInterceptor} from './interceptor/TokenInterceptor';
@@ -27,7 +32,9 @@ import {AuthService} from "./services/AuthService";
 import {UserService} from "./services/UserService";
 import {ConfigService} from "./services/ConfigService";
 import {ApiService} from "./services/ApiService";
-
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MedicalStaffBloodBankComponent } from './medical-staff-blood-bank/medical-staff-blood-bank.component';
 
 @NgModule({
   declarations: [
@@ -37,33 +44,64 @@ import {ApiService} from "./services/ApiService";
     RegistrationComponent,
     LoginComponent,
     VerificationComponent,
-    QuestionnaireComponent
+    ProfileComponent,
+    ChangePasswordDialogComponent,
+    QuestionnaireComponent,
+    MedicalStaffComponent,
+    QuestionnaireComponent,
+    MedicalStaffBloodBankComponent
   ],
-  imports: [
-    HttpClientModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    MatButtonModule,
-    AppRoutingModule,
-    MatMenuModule,
-    MatToolbarModule,
-    MatChipsModule,
-    MatCardModule,
-    MatIconModule,
-    MatSelectModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatCheckboxModule,
-    ReactiveFormsModule,
-    MatRadioModule
-  ],
+    imports: [
+        HttpClientModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        MatButtonModule,
+        AppRoutingModule,
+        MatMenuModule,
+        MatToolbarModule,
+        MatChipsModule,
+        MatCardModule,
+        MatIconModule,
+        MatSelectModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatCheckboxModule,
+        ReactiveFormsModule,
+        MatDividerModule,
+        HttpClientModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        MatButtonModule,
+        AppRoutingModule,
+        MatMenuModule,
+        MatToolbarModule,
+        MatChipsModule,
+        MatCardModule,
+        MatIconModule,
+        MatSelectModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatCheckboxModule,
+        ReactiveFormsModule,
+        MatRadioModule,
+        MatSnackBarModule,
+        MatDialogModule,
+        FlexLayoutModule,
+        MatDialogModule,
+        MatRadioModule
+    ],
   providers: [
     {
-      provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
-      multi: true
-    },
+		provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}
+	},
+	{
+		provide: HTTP_INTERCEPTORS,
+		useClass: TokenInterceptor,
+		multi: true
+	},
+	QuestionnaireComponent,
     AuthService,
     ApiService,
     UserService,
