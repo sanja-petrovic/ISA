@@ -38,7 +38,25 @@ INSERT INTO public.questions(id,text,type) VALUES ('99cc9319-f99d-466a-b2e7-f589
 
 TRUNCATE  public.patients;
 
--- INSERT INTO public.patients (
--- id, email, first_name, gender, last_name, password, personal_id, phone_number, city, country, "number", street, institution_info, occupation, account_status, is_verified) VALUES (
--- uuid_generate_v4()::uuid, 'gugma@gugma.rs'::character varying, 'Gugma'::character varying, 'MALE'::character varying, 'Gugmic'::character varying, '1324'::character varying, 'supersus1'::character varying, '0612406374'::character varying, 'New Now'::character varying, 'Birbia'::character varying, '8'::character varying, 'Markova'::character varying, 'Info stvarno'::character varying, 'Zaposlen'::character varying, 'VERIFIED'::character varying, true::boolean)
---  returning id;
+INSERT INTO public.patients (
+id, email, first_name, gender, last_name, password, personal_id, phone_number, city, country, street, occupation, is_verified) VALUES (
+uuid_generate_v4()::uuid, 'gugma@gugma.rs'::character varying, 'Gugma'::character varying, 'MALE'::character varying, 'Gugmic'::character varying, '$2a$10$UMV1931RusgV5EAqW6tIuerzMxAn6Bch7idfB1wEAQZpPrULyWdlK'::character varying, 'supersus1'::character varying, '0612406374'::character varying, 'New Now'::character varying, 'Birbia'::character varying, 'Markova'::character varying, 'Zaposlen'::character varying, true::boolean)
+returning id;
+
+
+insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'San Patricio', 'Monument', 3.9, 'Cost Accountant', 'Female Perversions', '2022-02-27 23:11:56', '2022-10-01 06:00:21');
+insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Xiaoxi', 'Charing Cross', 4.32, 'Help Desk Operator', 'Miss Representation', '2022-01-05 22:02:15', '2022-10-18 01:43:25');
+insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Mengjia', 'Scoville', 1.11, 'Desktop Support Technician', 'A Matador''s Mistress', '2021-11-18 10:10:39', '2022-07-30 20:15:58');
+insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Phra Pradaeng', 'Maryland', 1.17, 'Food Chemist', 'Union Station', '2022-07-13 16:28:54', '2022-07-21 00:16:00');
+insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Senggreng', 'Mccormick', 4.66, 'Environmental Specialist', 'Every Man for Himself (Slow Motion) (Sauve qui peut (la vie))', '2021-11-16 06:52:10', '2022-06-09 14:32:40');
+insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Cascavel', 'Northwestern', 3.91, 'Technical Writer', 'Perfectly Normal', '2022-07-28 21:08:53', '2022-11-08 21:22:19');
+insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Kohtla-Järve', 'Monterey', 2.09, 'Help Desk Technician', 'Goya in Bordeaux (Goya en Burdeos)', '2022-04-10 17:52:36', '2022-08-13 07:24:31');
+insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Ziway', 'Porter', 2.7, 'Help Desk Operator', '1941', '2021-12-03 15:58:41', '2022-08-15 15:04:24');
+insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Złota', 'Mayer', 4.37, 'Analyst Programmer', 'Die Hard', '2021-12-08 08:05:41', '2022-06-19 18:17:55');
+insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Takefu', 'Johnson', 4.68, 'Chemical Engineer', 'Punishment Park', '2022-04-17 13:03:10', '2022-04-26 23:19:17');
+insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Nartkala', 'Lake View', 4.25, 'Software Test Engineer IV', 'Lords of Discipline, The', '2022-05-25 11:18:54', '2022-10-30 07:30:53');
+insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Tegina', 'Banding', 3.94, 'Civil Engineer', 'Farmer''s Daughter, The', '2022-05-12 16:46:17', '2022-05-17 13:36:24');
+insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Gangshangji', 'Gulseth', 4.34, 'Programmer I', 'Kinky Boots', '2022-05-01 18:16:24', '2022-07-22 11:59:58');
+insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Rendeng', 'Porter', 3.1, 'Geological Engineer', 'Witchboard', '2022-06-24 14:54:12', '2022-11-04 02:13:20');
+insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Sutysky', 'Helena', 1.48, 'Database Administrator III', 'Tiger''s Tail, The', '2022-01-04 09:56:07', '2021-12-01 14:48:08');
+
