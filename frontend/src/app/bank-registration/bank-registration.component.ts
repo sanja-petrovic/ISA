@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Address } from '../model/Address';
 import { BloodBank } from '../model/BloodBank';
+import { BloodBankRegistrationDto } from '../model/BloodBankRegistrationDto';
 import { BloodBankService } from '../services/BloodBankService';
 
 @Component({
@@ -10,7 +11,7 @@ import { BloodBankService } from '../services/BloodBankService';
   styleUrls: ['./bank-registration.component.css']
 })
 export class BankRegistrationComponent implements OnInit {
-  bloodBank : BloodBank = new BloodBank();
+  bloodBank : BloodBankRegistrationDto = new BloodBankRegistrationDto();
   constructor( private bloodBankService : BloodBankService, private router: Router ) { }
 
   ngOnInit(): void {

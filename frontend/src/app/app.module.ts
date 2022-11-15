@@ -32,14 +32,10 @@ import {AuthService} from "./services/AuthService";
 import {UserService} from "./services/UserService";
 import {ConfigService} from "./services/ConfigService";
 import {ApiService} from "./services/ApiService";
-<<<<<<< HEAD
 import { BankRegistrationComponent } from './bank-registration/bank-registration.component';
-
-=======
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MedicalStaffBloodBankComponent } from './medical-staff-blood-bank/medical-staff-blood-bank.component';
->>>>>>> development
 
 @NgModule({
   declarations: [
@@ -49,9 +45,14 @@ import { MedicalStaffBloodBankComponent } from './medical-staff-blood-bank/medic
     RegistrationComponent,
     LoginComponent,
     VerificationComponent,
-<<<<<<< HEAD
     QuestionnaireComponent,
-    BankRegistrationComponent
+    BankRegistrationComponent,
+    ProfileComponent,
+    ChangePasswordDialogComponent,
+    QuestionnaireComponent,
+    MedicalStaffComponent,
+    QuestionnaireComponent,
+    MedicalStaffBloodBankComponent
   ],
   imports: [
     HttpClientModule,
@@ -70,57 +71,31 @@ import { MedicalStaffBloodBankComponent } from './medical-staff-blood-bank/medic
     MatInputModule,
     MatCheckboxModule,
     ReactiveFormsModule,
+    MatDividerModule,
+    HttpClientModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    AppRoutingModule,
+    MatMenuModule,
+    MatToolbarModule,
+    MatChipsModule,
+    MatCardModule,
+    MatIconModule,
+    MatSelectModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCheckboxModule,
+    ReactiveFormsModule,
+    MatRadioModule,
+    MatSnackBarModule,
+    MatDialogModule,
+    FlexLayoutModule,
+    MatDialogModule,
     MatRadioModule
-=======
-    ProfileComponent,
-    ChangePasswordDialogComponent,
-    QuestionnaireComponent,
-    MedicalStaffComponent,
-    QuestionnaireComponent,
-    MedicalStaffBloodBankComponent
->>>>>>> development
   ],
-    imports: [
-        HttpClientModule,
-        BrowserModule,
-        BrowserAnimationsModule,
-        MatButtonModule,
-        AppRoutingModule,
-        MatMenuModule,
-        MatToolbarModule,
-        MatChipsModule,
-        MatCardModule,
-        MatIconModule,
-        MatSelectModule,
-        FormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatCheckboxModule,
-        ReactiveFormsModule,
-        MatDividerModule,
-        HttpClientModule,
-        BrowserModule,
-        BrowserAnimationsModule,
-        MatButtonModule,
-        AppRoutingModule,
-        MatMenuModule,
-        MatToolbarModule,
-        MatChipsModule,
-        MatCardModule,
-        MatIconModule,
-        MatSelectModule,
-        FormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatCheckboxModule,
-        ReactiveFormsModule,
-        MatRadioModule,
-        MatSnackBarModule,
-        MatDialogModule,
-        FlexLayoutModule,
-        MatDialogModule,
-        MatRadioModule
-    ],
+    
   providers: [
     {
 		provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}
