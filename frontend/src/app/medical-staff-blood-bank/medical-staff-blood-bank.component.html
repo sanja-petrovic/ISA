@@ -1,0 +1,90 @@
+<div fxLayout="column" fxLayoutAlign="space-between stretch" fxFlexFil fxFill class="components-container-gt-xs " >
+
+	<div fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFil fxFill fxLayoutGap="20px">
+
+		<div fxFlex="35" fxLayout="column" class="mat-elevation-z2 medicalStaff-profile" >
+
+			<div fxFlex="10" fxLayout="row" fxLayoutAlign="space-between center" >
+					
+				<h3  class="mat-headline"  fxFill fxLayoutAlign="space-around center">Blood bank</h3> 
+
+			</div>
+			<mat-divider></mat-divider>
+
+			<div fxFlex="50"  fxLayout="row" fxLayoutAlign="space-between center" class="center-data">
+
+				<div fxFlex="0" fxLayout="column" fxLayoutAlign="center start" >
+					<br>
+					<mat-form-field class="example-form-field">
+						<mat-label>Title</mat-label>
+						<input matInput type="text" [(ngModel)]="bloodBank.title" required>
+						<button mat-button *ngIf="bloodBank.title" matSuffix mat-icon-button aria-label="Clear" (click)="bloodBank.title=''">
+						  <mat-icon>close</mat-icon>
+						</button>
+					  </mat-form-field>
+					  <mat-form-field class="example-form-field">
+						<mat-label>Description</mat-label>
+						<input matInput type="text" [(ngModel)]="bloodBank.description" required>
+						<button mat-button *ngIf="bloodBank.description" matSuffix mat-icon-button aria-label="Clear" (click)="bloodBank.description=''">
+						  <mat-icon>close</mat-icon>
+						</button>
+					  </mat-form-field>
+
+				</div>
+				
+			</div>
+
+			<div fxFlex="50"  fxLayout="row" fxLayoutAlign="space-between center" class="center-data">
+				
+				<div fxFlex="20" fxLayout="column" fxLayoutAlign="center start" >
+
+                    <mat-form-field class="example-form-field">
+						<mat-label>Street</mat-label>
+						<input matInput type="text" [(ngModel)]="bloodBank.street" required>
+						<button mat-button *ngIf="bloodBank.street" matSuffix mat-icon-button aria-label="Clear" (click)="bloodBank.street=''">
+						  <mat-icon>close</mat-icon>
+						</button>
+					  </mat-form-field>
+					  <mat-form-field class="example-form-field">
+						<mat-label>City</mat-label>
+						<input matInput type="text" [(ngModel)]="bloodBank.city" required >
+						<button mat-button *ngIf="bloodBank.city" matSuffix mat-icon-button aria-label="Clear" (click)="bloodBank.city=''">
+						  <mat-icon>close</mat-icon>
+						</button>
+					  </mat-form-field>
+                      <mat-form-field class="example-form-field">
+						<mat-label>Country</mat-label>
+						<input matInput type="text" [(ngModel)]="bloodBank.country" required >
+						<button mat-button *ngIf="bloodBank.country" matSuffix mat-icon-button aria-label="Clear" (click)="bloodBank.country=''">
+						  <mat-icon>close</mat-icon>
+						</button>
+					  </mat-form-field>
+
+				</div>
+
+				<div fxFlex="60" fxLayout="column" fxLayoutAlign="center start" >
+
+					<mat-form-field class="example-form-field">
+						<mat-label>Average grade</mat-label>
+						<input matInput type="tel" [(ngModel)]="bloodBank.averageGrade" required>
+						<button mat-button *ngIf="bloodBank.averageGrade" matSuffix mat-icon-button aria-label="Clear" (click)="bloodBank.averageGrade=''">
+						  <mat-icon>close</mat-icon>
+						</button>
+					  </mat-form-field>
+
+				</div>
+				
+			</div>
+			
+			<div fxFlex fxLayout="column" fxLayoutAlign="end stretch" >
+				<div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center stretch" >
+					<button mat-raised-button color="warn" (click)="cancelClick()">Cancel</button>
+					<button mat-raised-button color="primary" (click)="saveClick()">Save</button>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+	
+</div>

@@ -2,7 +2,11 @@ package com.example.isa.controller;
 
 import com.example.isa.dto.BloodBankDto;
 import com.example.isa.dto.BloodBankSearchSortDto;
+import com.example.isa.dto.MedicalStaffDto;
+import com.example.isa.model.Address;
 import com.example.isa.model.BloodBank;
+import com.example.isa.model.Gender;
+import com.example.isa.model.MedicalStaff;
 import com.example.isa.service.interfaces.BloodBankService;
 import com.example.isa.util.converters.BloodBankConverter;
 import io.swagger.annotations.Api;
@@ -13,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController

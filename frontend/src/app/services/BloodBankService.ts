@@ -25,4 +25,7 @@ export class BloodBankService {
     return this.apiService.post(`${this.config.blood_banks_url}/search`, dto);
   }
 
+  updateBloodBank (bloodBank: BloodBank){
+    return this.apiService.post(`${this.config.blood_banks_url}/update`, bloodBank);
+  }
 }

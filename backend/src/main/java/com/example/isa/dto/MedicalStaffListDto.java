@@ -11,8 +11,6 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class BloodBankSearchSortDto {
-    List<String> searchCriteria;
-    SortDto sortCriteria;
-    String filterGrade;
+public class MedicalStaffListDto {
+    List<MedicalStaffDto> medicalStaff;
 }
