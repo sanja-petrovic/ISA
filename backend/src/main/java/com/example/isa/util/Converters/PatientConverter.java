@@ -25,6 +25,7 @@ public class PatientConverter implements Converter<Patient, PatientDto> {
                 .lastName(patient.getLastName())
                 .email(patient.getEmail())
                 .phoneNumber(patient.getPhoneNumber())
+                .password(patient.getPassword())
                 .gender(patient.getGender().toString())
                 .occupation(patient.getOccupation())
                 .homeAddress(patient.getAddress().getStreet())
