@@ -7,7 +7,7 @@ import {RegistrationComponent} from "./registration/registration.component";
 import {LoginComponent} from "./login/login.component";
 import {VerificationComponent} from "./verification/verification.component";
 import {QuestionnaireComponent} from "./questionnaire/questionnaire.component";
-
+import { BankRegistrationComponent } from './bank-registration/bank-registration.component';
 const routes: Routes = [
   {
     path: 'home', component: HomeComponent
@@ -26,6 +26,9 @@ const routes: Routes = [
   },
   {
     path: 'questionnaire', component: QuestionnaireComponent
+  },
+  {
+    path: 'registerBank', component: BankRegistrationComponent
   }
 ]
 

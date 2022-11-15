@@ -27,6 +27,7 @@ import {AuthService} from "./services/AuthService";
 import {UserService} from "./services/UserService";
 import {ConfigService} from "./services/ConfigService";
 import {ApiService} from "./services/ApiService";
+import { BankRegistrationComponent } from './bank-registration/bank-registration.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import {ApiService} from "./services/ApiService";
     RegistrationComponent,
     LoginComponent,
     VerificationComponent,
-    QuestionnaireComponent
+    QuestionnaireComponent,
+    BankRegistrationComponent
   ],
   imports: [
     HttpClientModule,

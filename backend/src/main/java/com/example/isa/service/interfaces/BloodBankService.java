@@ -8,4 +8,5 @@ import java.util.List;
 public interface BloodBankService {
     public List<BloodBank> getAll();
     public List<BloodBank> search(Sort sort, List<String> searchCriteria);
+    public boolean registerBank (BloodBank bank);
 }
