@@ -2,7 +2,6 @@ package com.example.isa.dto;
 
 import lombok.*;
 
-import java.util.Date;
 import java.util.UUID;
 
 @Getter
@@ -15,5 +14,5 @@ public class NewsDto {
     private String bloodBank;
     private String title;
     private String body;
-    private String timestamp;
+    private long milliseconds;
 }

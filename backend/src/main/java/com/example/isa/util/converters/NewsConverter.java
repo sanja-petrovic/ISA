@@ -5,8 +5,6 @@ import com.example.isa.model.News;
 import com.example.isa.service.interfaces.BloodBankService;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-
 @Service
 public class NewsConverter implements Converter<News, NewsDto> {
     private final BloodBankService bloodBankService;
@@ -22,7 +20,7 @@ public class NewsConverter implements Converter<News, NewsDto> {
                 .bloodBank(news.getBloodBank().getTitle())
                 .title(news.getTitle())
                 .body(news.getBody())
-                .timestamp(news.getTimestamp().toString())
+                .milliseconds(news.getMilliseconds())
                 .build();
     }
 

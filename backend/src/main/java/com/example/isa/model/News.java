@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.UUID;
 
 @Getter
@@ -25,14 +24,13 @@ public class News {
     @Column
     private String body;
     @Column
-    @Temporal(TemporalType.DATE)
-    private Date timestamp;
+    private long milliseconds;
 
     @Builder
-    public News(BloodBank bloodBank, String title, String body, Date timestamp) {
+    public News(BloodBank bloodBank, String title, String body, Long milliseconds) {
         this.bloodBank = bloodBank;
         this.title = title;
         this.body = body;
-        this.timestamp = timestamp;
+        this.milliseconds = milliseconds;
     }
 }

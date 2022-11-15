@@ -1,7 +1,6 @@
 package com.example.isa.controller;
 
 import com.example.isa.dto.NewsDto;
-import com.example.isa.kafka.NewsProducer;
 import com.example.isa.model.News;
 import com.example.isa.service.interfaces.NewsService;
 import com.example.isa.util.converters.NewsConverter;
@@ -10,7 +9,7 @@ import io.swagger.annotations.Api;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
+import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,7 +34,7 @@ public class NewsController {
     @PostMapping
     ResponseEntity<?> createNews(@RequestBody NewsDto dto) throws JsonProcessingException {
         News news = newsConverter.dtoToEntity(dto);
-        news.setTimestamp(new Date());
+        news.setMilliseconds(Instant.now().toEpochMilli());
         newsService.create(news);
         return ResponseEntity.ok().build();
     }
