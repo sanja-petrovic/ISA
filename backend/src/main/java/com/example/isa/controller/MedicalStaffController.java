@@ -7,6 +7,8 @@ import com.example.isa.model.Gender;
 import com.example.isa.model.MedicalStaff;
 import com.example.isa.service.interfaces.MedicalStaffService;
 import com.example.isa.service.interfaces.UserService;
+import com.example.isa.util.Converters.BloodBankConverter;
+import com.example.isa.util.Converters.MedicalStaffConverter;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.security.Principal;
 import java.util.List;
@@ -29,19 +30,23 @@ public class MedicalStaffController {
     private final MedicalStaffService medicalStaffService;
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
+    private final MedicalStaffConverter converter;
+    private final BloodBankConverter bloodBankConverter;
 
     @Autowired
-    public MedicalStaffController(MedicalStaffService medicalStaffService, UserService userService, PasswordEncoder passwordEncoder) {
+    public MedicalStaffController(MedicalStaffService medicalStaffService, UserService userService, PasswordEncoder passwordEncoder, MedicalStaffConverter converter, BloodBankConverter bloodBankConverter) {
         this.medicalStaffService = medicalStaffService;
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
+        this.converter = converter;
+        this.bloodBankConverter = bloodBankConverter;
     }
 
     @GetMapping
     @ApiOperation(value = "Get all medical staff.", httpMethod = "GET")
     public ResponseEntity<?> getAll() {
         List<MedicalStaff> medicalStaff = medicalStaffService.getAll();
-        return ResponseEntity.ok(medicalStaff);
+        return ResponseEntity.ok(convertListToDto(medicalStaff));
     }
 
     @GetMapping(value = "/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -52,13 +57,12 @@ public class MedicalStaffController {
         if (medicalStaff == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.ok(medicalStaff);
+        return ResponseEntity.ok(new MedicalStaffDto(medicalStaff));
     }
 
     private MedicalStaffListDto convertListToDto(List<MedicalStaff> medicalStaffList) {
-        List<MedicalStaffDto> medicalStaffDtoList = medicalStaffList.stream().map(medicalStaff -> new MedicalStaffDto(medicalStaff.getId().toString() ,medicalStaff.getPersonalId(), medicalStaff.getFirstName(), medicalStaff.getLastName(), medicalStaff.getEmail(), medicalStaff.getPassword(), medicalStaff.getPhoneNumber(), medicalStaff.getGender().toString(), "",  "", "","", "","", "", "", "", "", "", "", "")).collect(Collectors.toList());
-        MedicalStaffListDto dto = new MedicalStaffListDto(medicalStaffDtoList);
-        return dto;
+        List<MedicalStaffDto> medicalStaffDtoList = medicalStaffList.stream().map(converter::entityToDto).collect(Collectors.toList());
+        return new MedicalStaffListDto(medicalStaffDtoList);
     }
 
     @PostMapping
@@ -82,6 +86,6 @@ public class MedicalStaffController {
         if (medicalStaff == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.ok( new BloodBankDto(medicalStaff.getBloodBank()));
+        return ResponseEntity.ok(bloodBankConverter.entityToDto(medicalStaff.getBloodBank()));
     }
 }

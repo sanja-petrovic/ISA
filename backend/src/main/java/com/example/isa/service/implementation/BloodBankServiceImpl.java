@@ -29,6 +29,12 @@ public class BloodBankServiceImpl implements BloodBankService {
         return repository.findById(id).orElse(null);
 
     }
+
+    @Override
+    public List<BloodBank> search(Sort sort, List<String> searchCriteria) {
+        return null;
+    }
+
     @Override
     public List<BloodBank> search(Sort sort, List<String> searchCriteria, String filterGrade) {
     	String titleString = searchCriteria.get(0);
