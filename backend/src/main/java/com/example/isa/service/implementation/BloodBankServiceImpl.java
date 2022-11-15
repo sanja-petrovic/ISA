@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class BloodBankServiceImpl implements BloodBankService {
@@ -24,9 +25,34 @@ public class BloodBankServiceImpl implements BloodBankService {
     }
 
     @Override
-    public List<BloodBank> search(Sort sort, List<String> searchCriteria) {
-        //Searching to be implemented by student 2.
-        return repository.findAll(sort);
+    public BloodBank getById(UUID id) {
+        return repository.findById(id).orElse(null);
+
+    }
+    @Override
+    public List<BloodBank> search(Sort sort, List<String> searchCriteria, String filterGrade) {
+    	String titleString = searchCriteria.get(0);
+    	String cityString = searchCriteria.get(1);
+        if (titleString.equals("") && cityString.equals("")) {
+        	return repository.findAllWithFilter(Double.parseDouble(filterGrade),sort);
+        }
+        else if(titleString.equals("")){
+        	return repository.findByAddressCityLike("%"+cityString+"%",Double.parseDouble(filterGrade),sort);
+        }
+        else if(cityString.equals("")){
+        	return repository.findByTitleLike("%"+titleString+"%",Double.parseDouble(filterGrade), sort);
+        }
+        else {
+        	return repository.findByTitleLikeAndAddressCityLike("%"+titleString+"%", "%"+cityString+"%",Double.parseDouble(filterGrade), sort);
+        }
+    }
+
+    @Override
+    public BloodBank updateBloodBank(BloodBank bloodBank) {
+        if (bloodBank.getTitle() == null || bloodBank.getAddress() == null) {
+            return null;
+        }
+        return repository.save(bloodBank);
     }
     @Override
     public boolean registerBank (BloodBank bank){

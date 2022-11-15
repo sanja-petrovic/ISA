@@ -12,10 +12,16 @@ export class BloodBankService {
   headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   constructor(private http: HttpClient) { }
+<<<<<<< HEAD
   getBloodBanks(): Observable<BloodBank[]> {
     return this.http.get<BloodBank[]>(this.apiHost + 'api/BloodBank', {headers: this.headers});
   }
   createBloodBank(bloodBank: any): Observable<any> {
     return this.http.post<any>(this.apiHost + 'bloodbanks/registerBank', bloodBank, {headers: this.headers});
+=======
+
+  updateBloodBank (bloodBank: BloodBank){
+    return this.http.post<BloodBank>(this.apiHost + 'bloodbanks/update', bloodBank, {headers: this.headers});
+>>>>>>> development
   }
 }

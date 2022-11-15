@@ -1,18 +1,43 @@
 <div class="centered-content">
   <h1>Blood banks</h1>
-  <div class="sort-div">
-    <mat-form-field>
-      <mat-label>Sort by</mat-label>
-      <mat-select (selectionChange)="searchBanks($event.value)">
-        <mat-option value="title-asc">Title, ascending</mat-option>
-        <mat-option value="title-desc">Title, descending</mat-option>
-        <mat-option value="averageGrade-asc">Rating, ascending</mat-option>
-        <mat-option value="averageGrade-desc">Rating, descending</mat-option>
-        <mat-option value="address.city-asc">City, ascending</mat-option>
-        <mat-option value="address.city-desc">City, descending</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
+  <div class="search-wrapper">
+    <div class="search-div">
+      <mat-form-field appearance="standard">
+        <mat-label>Search by title</mat-label>
+        <input  matInput [(ngModel)]="searchCriteria[0]">
+      </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label>Search by city</mat-label>
+        <input  matInput [(ngModel)]="searchCriteria[1]">
+      </mat-form-field>
+    </div>
+    <div class="sort-div">
+      <mat-form-field>
+        <mat-label>Sort by</mat-label>
+        <mat-select [(ngModel)]="sortFilter">
+          <mat-option value="title-asc">Title, ascending</mat-option>
+          <mat-option value="title-desc">Title, descending</mat-option>
+          <mat-option value="averageGrade-asc">Rating, ascending</mat-option>
+          <mat-option value="averageGrade-desc">Rating, descending</mat-option>
+          <mat-option value="address.city-asc">City, ascending</mat-option>
+          <mat-option value="address.city-desc">City, descending</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="filter-div">
+      <mat-form-field>
+        <mat-label>filter by grade: </mat-label>
+        <mat-select [(ngModel)]="gradeFilter">
+          <mat-option value="0">0.0+</mat-option>
+          <mat-option value="1">1.0+</mat-option>
+          <mat-option value="2">2.0+</mat-option>
+          <mat-option value="3">3.0+</mat-option>
+          <mat-option value="4">4.0+</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <input type="submit" value="ApplyFilters" class="submit-button" (click)="searchBanks()">
+  </div>>
   <div class="cards">
     <mat-card *ngFor="let bank of banks" class="bank-card">
       <mat-card-title class="bank-title">{{bank.title}}

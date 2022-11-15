@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Address } from "./Address"
 import { Interval } from "./Interval"
 
@@ -26,3 +27,17 @@ export class BloodBank {
         }
     }
 }
+=======
+type BloodBank = {
+    id: string,
+    title: string,
+    street: string,
+    city: string,
+    country: string,
+    description: string,
+    averageGrade: string
+  }
+  
+  export { BloodBank };
+  
+>>>>>>> development

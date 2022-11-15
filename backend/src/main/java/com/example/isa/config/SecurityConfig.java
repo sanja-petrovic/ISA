@@ -72,6 +72,7 @@ public class SecurityConfig {
                 .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
                 .authorizeRequests().antMatchers("/auth/**").permitAll()
                 .antMatchers("/**").permitAll()
+//                .antMatchers("/api/medicalStaff/bank/*").permitAll()
                 .anyRequest().authenticated().and()
                 .cors().and()
                 .addFilterBefore(new TokenAuthenticationFilter(tokenHandler, userService), BasicAuthenticationFilter.class);

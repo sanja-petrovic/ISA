@@ -14,4 +14,5 @@ import java.util.List;
 public class BloodBankSearchSortDto {
     List<String> searchCriteria;
     SortDto sortCriteria;
+    String filterGrade;
 }
