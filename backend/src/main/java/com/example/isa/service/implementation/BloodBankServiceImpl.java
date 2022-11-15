@@ -60,4 +60,9 @@ public class BloodBankServiceImpl implements BloodBankService {
         }
         return repository.save(bloodBank);
     }
+
+    @Override
+    public BloodBank findByTitle(String title) {
+        return repository.findAllByTitleIgnoreCase(title).orElse(null);
+    }
 }

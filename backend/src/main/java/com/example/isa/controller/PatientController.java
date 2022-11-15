@@ -1,16 +1,12 @@
 package com.example.isa.controller;
 
-import com.example.isa.dto.PasswordDto;
 import com.example.isa.dto.PatientDto;
 import com.example.isa.model.Patient;
 import com.example.isa.service.interfaces.PatientService;
 
-import com.example.isa.util.Converters.PatientConverter;
+import com.example.isa.util.converters.PatientConverter;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.models.media.MediaType;
-//import lombok.experimental.var;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

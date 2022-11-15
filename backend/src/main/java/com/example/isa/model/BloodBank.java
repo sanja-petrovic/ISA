@@ -1,6 +1,7 @@
 package com.example.isa.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.Builder;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -20,7 +22,7 @@ import java.util.UUID;
 public class BloodBank {
     @Id
     private UUID id;
-    @Column
+    @Column(unique = true)
     private String title;
     @Embedded
     private Address address;
@@ -38,14 +40,10 @@ public class BloodBank {
     @OneToMany(mappedBy = "bloodBank", cascade = CascadeType.ALL)
     private Set<BloodSupply> bloodSupplies;
 
-    public BloodBank(String title, Address address, String description) {
-        this.id = UUID.randomUUID();
-        this.title = title;
-        this.address = address;
-        this.description = description;
-    }
+    @OneToMany(mappedBy = "bloodBank", orphanRemoval = true)
+    private Set<News> news = new LinkedHashSet<>();
 
-    public BloodBank(UUID id, String title, Address address, String description) {
+    public BloodBank(String title, Address address, String description) {
         this.id = UUID.randomUUID();
         this.title = title;
         this.address = address;
