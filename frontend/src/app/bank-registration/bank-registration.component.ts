@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Address } from '../model/Address';
 import { BloodBank } from '../model/BloodBank';
-import { BloodBankRegistrationDto } from '../model/BloodBankRegistrationDto';
 import { BloodBankService } from '../services/BloodBankService';
 
 @Component({
@@ -11,7 +10,7 @@ import { BloodBankService } from '../services/BloodBankService';
   styleUrls: ['./bank-registration.component.css']
 })
 export class BankRegistrationComponent implements OnInit {
-  bloodBank : BloodBankRegistrationDto = new BloodBankRegistrationDto();
+  bloodBank : any ;
   constructor( private bloodBankService : BloodBankService, private router: Router ) { }
 
   ngOnInit(): void {
@@ -19,7 +18,7 @@ export class BankRegistrationComponent implements OnInit {
   public createBloodBank() {
     if (!this.isValidInput()) return;
     this.bloodBankService.createBloodBank(this.bloodBank).subscribe(res => {
-      this.router.navigate(['/bloodbanks']);
+      this.router.navigate(['/banks']);
     });
   }
 
