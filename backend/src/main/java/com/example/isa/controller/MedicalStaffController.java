@@ -46,8 +46,7 @@ public class MedicalStaffController {
     @ApiOperation(value = "Get all medical staff.", httpMethod = "GET")
     public ResponseEntity<?> getAll() {
         List<MedicalStaff> medicalStaff = medicalStaffService.getAll();
-        //convert to List<MedicalStaffDto> please
-        return ResponseEntity.ok(medicalStaff);
+        return ResponseEntity.ok(convertListToDto(medicalStaff));
     }
 
     @GetMapping(value = "/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -55,11 +54,10 @@ public class MedicalStaffController {
     //@PreAuthorize("hasRole('ROLE_STAFF')")
     public ResponseEntity<?> getMedicalStaffById(@PathVariable String id) {
         MedicalStaff medicalStaff = (MedicalStaff)userService.loadUserByUsername(id);
-        //convert to MedicalStaffDto
         if (medicalStaff == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.ok(medicalStaff);
+        return ResponseEntity.ok(new MedicalStaffDto(medicalStaff));
     }
 
     private MedicalStaffListDto convertListToDto(List<MedicalStaff> medicalStaffList) {
