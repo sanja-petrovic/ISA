@@ -19,4 +19,8 @@ export class AppComponent {
   isLoggedIn(): boolean {
     return this.authService.tokenIsPresent();
   }
+
+  logOut() {
+    this.authService.logout();
+  }
 }

@@ -83,7 +83,7 @@ public class AuthController {
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
                 .header(HttpHeaders.SET_COOKIE, jwtRefreshCookie.toString())
-                .body("You've been signed out!");
+                .build();
     }
 
     @PostMapping("/refreshtoken")
@@ -100,14 +100,14 @@ public class AuthController {
                     return ResponseEntity.ok()
                             .header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
                             .header(HttpHeaders.SET_COOKIE, refreshToken)
-                            .body("Token is refreshed successfully!");
+                            .build();
                 }
             } else {
-                return ResponseEntity.badRequest().body("Refresh Token does not exist!");
+                return ResponseEntity.badRequest().build();
             }
         }
 
-        return ResponseEntity.badRequest().body("Refresh Token is empty!");
+        return ResponseEntity.badRequest().build();
     }
 
     @GetMapping("/current")

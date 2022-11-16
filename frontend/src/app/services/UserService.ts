@@ -24,8 +24,12 @@ export class UserService {
       return this.apiService.get(this.config.current_url);
   }
 
+  setActiveUser() {
+    this.getActiveUser().subscribe(data => this.currentUser = data);
+  }
+
   getAll() {
     return this.apiService.get(this.config.users_url);
   }
-    
+
 }

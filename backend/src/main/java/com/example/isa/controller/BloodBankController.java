@@ -44,7 +44,7 @@ public class BloodBankController {
     @ApiOperation(value = "Search, filter and sort blood banks.", httpMethod = "POST")
     public ResponseEntity<List<BloodBankDto>> search(@RequestBody BloodBankSearchSortDto request) {
         Sort sort = Sort.by(Sort.Direction.fromString(request.getSortCriteria().getDirection()), request.getSortCriteria().getProperty());
-        List<BloodBank> searchedData = service.search(sort, request.getSearchCriteria());
+        List<BloodBank> searchedData = service.search(sort, request.getSearchCriteria(), request.getFilterGrade());
         if(searchedData != null) {
             List<BloodBankDto> dtos = searchedData.stream().map(bloodBankConverter::entityToDto).toList();
             return ResponseEntity.ok(dtos);

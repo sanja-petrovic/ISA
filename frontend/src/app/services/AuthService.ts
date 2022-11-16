@@ -37,7 +37,10 @@ export class AuthService {
       .pipe(map((res) => {
         console.log(res);
         this.access_token = res.accessToken;
+        this.userService.getActiveUser();
         localStorage.setItem("jwt", res.accessToken)
+        window.location.href = "/";
+
       }));
   }
 
@@ -60,8 +63,9 @@ export class AuthService {
     this.userService.currentUser = null;
     this.access_token = null;
     localStorage.clear();
-    this.router.navigate(['/login']);
-    return this.apiService.post(`${this.config.log_out_url}`, "").subscribe();
+    return this.apiService.post(`${this.config.log_out_url}`, "").subscribe(result => {
+      window.location.href = "/";
+    });
   }
 
   tokenIsPresent() {
