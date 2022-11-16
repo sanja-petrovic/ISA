@@ -40,7 +40,7 @@ export class MedicalStaffRegistrationComponent implements OnInit {
     homeAddress: ['', Validators.compose([Validators.required])],
     city: ['', Validators.compose([Validators.required])],
     country: ['', Validators.compose([Validators.required])],
-    bloodBank: []
+    bloodBank: ['']
   }, {
     validators: this.ConfirmedValidator('password', 'passwordCheck')
   });

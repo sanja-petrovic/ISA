@@ -45,7 +45,7 @@
       <mat-form-field required appearance="outline">
         <mat-label>Blood Bank</mat-label>
         <mat-select formControlName="bloodBank"  name="bloodBank" >
-        <mat-option *ngFor="let bank of bloodBanks" [value]="bank.title" >
+        <mat-option *ngFor="let bank of bloodBanks" [value]="bank.id" >
           {{this.bank.title}}
         </mat-option>
         </mat-select>

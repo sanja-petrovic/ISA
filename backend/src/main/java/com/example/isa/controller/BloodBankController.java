@@ -54,9 +54,9 @@ public class BloodBankController {
     public ResponseEntity<List<BloodBankDto>> search(@RequestBody BloodBankSearchSortDto request) {
         //Search and filter to be implemented later on.
         Sort sort = Sort.by(Sort.Direction.fromString(request.getSortCriteria().getDirection()), request.getSortCriteria().getProperty());
-<<<<<<< HEAD
-        List<BloodBank> searchedData = service.search(sort, request.getSearchCriteria(), request.getFilterGrade());
-        return ResponseEntity.ok(convertListToDto(searchedData));
+        List<BloodBank> searchedData = service.search(sort, request.getSearchCriteria());
+        List<BloodBankDto> dtos = searchedData.stream().map(bloodBankConverter::entityToDto).toList();
+        return ResponseEntity.ok(dtos);
     }
 
     @PostMapping(value = "/registerBank")
@@ -71,11 +71,6 @@ public class BloodBankController {
         }
         return ResponseEntity.ok(service.registerBank(bank));
     }
-    private BloodBankListDto convertListToDto(List<BloodBank> bloodBankList) {
-        List<BloodBankDto> bloodBankDtoList = bloodBankList.stream().map(bank -> new BloodBankDto(bank.getTitle(), bank.getAddress().getStreet(), bank.getAddress().getCity(), bank.getAddress().getCountry(), bank.getWorkingHours().getIntervalStart().toString(), bank.getWorkingHours().getIntervalEnd().toString(), bank.getDescription(), bank.getAverageGrade())).collect(Collectors.toList());
-        BloodBankListDto dto = new BloodBankListDto(bloodBankDtoList);
-        return dto;
-    }
 
     @PostMapping(value = "/update")
     @ApiOperation(value = "Update blood bank.", httpMethod = "POST")
@@ -87,10 +82,5 @@ public class BloodBankController {
         bloodBank.setAverageGrade(bloodBankDto.getAverageGrade());
         service.updateBloodBank(bloodBank);
         return ResponseEntity.ok(bloodBank);
-=======
-        List<BloodBank> searchedData = service.search(sort, request.getSearchCriteria());
-        List<BloodBankDto> dtos = searchedData.stream().map(bloodBankConverter::entityToDto).toList();
-        return ResponseEntity.ok(dtos);
->>>>>>> development
     }
 }

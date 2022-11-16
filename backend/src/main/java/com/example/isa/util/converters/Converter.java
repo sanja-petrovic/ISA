@@ -1,4 +1,4 @@
-package com.example.isa.util.converters;
+package com.example.isa.util.Converters;
 
 public interface Converter<Entity, Dto> {
 

@@ -106,8 +106,7 @@ public class MedicalStaffController {
         medicalStaff.setPhoneNumber(medicalStaffDto.getPhoneNumber());
         medicalStaff.setEmail(medicalStaffDto.getEmail());
         medicalStaff.setBloodBank(new BloodBank());
-        //medicalStaff.getBloodBank().setId(UUID.fromString(medicalStaffDto.getBloodBankId()));
-        medicalStaff.getBloodBank().setAddress(new Address(medicalStaffDto.getBloodBankAddressNumber(),medicalStaffDto.getBloodBankAddressCity(),medicalStaffDto.getBloodBankAddressCountry()));
+        medicalStaff.getBloodBank().setId(UUID.fromString(medicalStaffDto.getBloodBankId()));
         return medicalStaff;
     }
 }
