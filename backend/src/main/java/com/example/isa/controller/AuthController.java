@@ -42,7 +42,7 @@ public class AuthController {
     private final RefreshTokenService refreshTokenService;
     private final PasswordEncoder passwordEncoder;
 
-    public AuthController(TokenHandler tokenHandler, AuthenticationManager authenticationManager, UserService userService, RoleService roleService, PasswordEncoder passwordEncoder, RefreshTokenService refreshTokenService) {
+    public AuthController(TokenHandler tokenHandler, AuthenticationManager authenticationManager, PatientConverter patientConverter, UserService userService, RoleService roleService, PasswordEncoder passwordEncoder, RefreshTokenService refreshTokenService) {
         this.tokenHandler = tokenHandler;
         this.authenticationManager = authenticationManager;
         this.userService = userService;
