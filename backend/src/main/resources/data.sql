@@ -36,8 +36,6 @@ INSERT INTO public.questions(id,text,type) VALUES ('5e45116f-b85d-4a49-af3b-7974
 INSERT INTO public.questions(id,text,type) VALUES ('9274a7eb-8c9e-4d50-badc-debd665f34b1','Are you currently on your period?','FOR_WOMEN');
 INSERT INTO public.questions(id,text,type) VALUES ('99cc9319-f99d-466a-b2e7-f589ec69f83d','Have you in the past 6 months given birth or had a pregnancy termination?','FOR_WOMEN');
 
-TRUNCATE  public.patients;
-
 INSERT INTO public.patients (
 id, email, first_name, gender, last_name, password, personal_id, phone_number, city, country, street, occupation, is_verified) VALUES (
 uuid_generate_v4()::uuid, 'gugma@gugma.rs'::character varying, 'Gugma'::character varying, 'MALE'::character varying, 'Gugmic'::character varying, '$2a$10$UMV1931RusgV5EAqW6tIuerzMxAn6Bch7idfB1wEAQZpPrULyWdlK'::character varying, 'supersus1'::character varying, '0612406374'::character varying, 'New Now'::character varying, 'Birbia'::character varying, 'Markova'::character varying, 'Zaposlen'::character varying, true::boolean)
