@@ -60,6 +60,7 @@ export class AuthService {
     this.userService.currentUser = null;
     this.access_token = null;
     this.router.navigate(['/login']);
+    return this.apiService.post(`${this.config.log_out_url}`).subscribe();
   }
 
   tokenIsPresent() {

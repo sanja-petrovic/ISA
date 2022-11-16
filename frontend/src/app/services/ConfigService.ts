@@ -13,6 +13,7 @@ export class ConfigService {
   public questions_url = this._api_url + '/questions'
   public answers_url = this._api_url + '/answers'
   public blood_banks_url = this._api_url + '/bloodbanks';
+  public log_out_url = this._auth_url + '/logout';
 
   get login_url(): string {
     return this._login_url;
