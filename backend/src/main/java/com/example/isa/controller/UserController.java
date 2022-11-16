@@ -1,6 +1,7 @@
 package com.example.isa.controller;
 
 import com.example.isa.dto.PasswordDto;
+import com.example.isa.dto.UserSearchDto;
 import com.example.isa.model.*;
 import com.example.isa.service.interfaces.UserService;
 import io.swagger.annotations.Api;
@@ -54,5 +55,9 @@ public class UserController {
         }
         return ResponseEntity.ok().build();
     }
-
+    @PostMapping("/search")
+    @ApiOperation(value ="Search for user", httpMethod = "POST")
+    public ResponseEntity<?> search(@RequestBody String[] parameters){
+        return ResponseEntity.ok(service.search(parameters[0], parameters[1]));
+    }
 }

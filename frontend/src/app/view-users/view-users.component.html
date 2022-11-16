@@ -1,0 +1,29 @@
+<div class="centered-content">
+    <h1>Users</h1>
+    <div class="search-wrapper">
+      <div class="search-div">
+        <mat-form-field appearance="standard">
+          <mat-label>Search by name</mat-label>
+          <input  matInput [(ngModel)]="searchParam[0]">
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+          <mat-label>Search by last name</mat-label>
+          <input  matInput [(ngModel)]="searchParam[1]">
+        </mat-form-field>
+      </div>
+      <input type="submit" value="Search" class="submit-button" (click)="searchUsers()">
+    </div>
+    <br>
+    <div class="cards">
+      <mat-card *ngFor="let user of users" class="user-card">
+        <mat-card-title class="user-name">{{user.firstName}} {{user.lastName}}
+        </mat-card-title>
+        <mat-card-subtitle>{{user.gender}} {{user.phoneNumber}}<br>
+            {{user.personalId}}<br></mat-card-subtitle>
+        <mat-card-content>
+          <p>{{user.email}}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  

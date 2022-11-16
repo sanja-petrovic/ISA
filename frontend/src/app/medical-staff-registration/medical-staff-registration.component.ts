@@ -35,7 +35,7 @@ export class MedicalStaffRegistrationComponent implements OnInit {
     lastName: ['', Validators.compose([Validators.required])],
     occupation: ['', Validators.compose([Validators.required])],
     institution: ['', Validators.compose([Validators.required])],
-    gender: ['', Validators.compose([Validators.required])],
+    gender: ['male', Validators.compose([Validators.required])],
     phoneNumber: ['', Validators.compose([Validators.required, Validators.pattern("[0-9]\+")])],
     personalId: ['', Validators.compose([Validators.required, Validators.pattern("[0-9]{13}")] )],
     homeAddress: ['', Validators.compose([Validators.required])],

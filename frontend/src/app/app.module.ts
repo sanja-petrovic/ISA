@@ -38,6 +38,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MedicalStaffBloodBankComponent } from './medical-staff-blood-bank/medical-staff-blood-bank.component';
 import { MedicalStaffRegistrationComponent } from './medical-staff-registration/medical-staff-registration.component';
 import {MatListModule} from '@angular/material/list';
+import { ViewUsersComponent } from './view-users/view-users.component';
 import { NavbarComponent } from './navbar/navbar.component';
 
 
@@ -57,6 +58,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     MedicalStaffComponent,
     QuestionnaireComponent,
     MedicalStaffBloodBankComponent,
+    MedicalStaffRegistrationComponent,
+    ViewUsersComponent
     MedicalStaffRegistrationComponent,
     NavbarComponent
   ],

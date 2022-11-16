@@ -1,0 +1,81 @@
+
+
+.user-card {
+    width: 400px !important;
+    border: 1px solid white;
+    border-radius: 12px;
+    box-shadow: 0 5px 30px rgba(217, 79, 111, 0.2);
+    background-color: rgba(255, 255, 255, 0.5) !important;
+    transition: 0.5s;
+    margin-bottom: 2rem;
+    margin-right: 2rem;
+  }
+  
+  .user-name {
+    display: flex;
+    align-items: center;
+  
+  }
+  
+  .user-card:hover {
+    background-color: white !important;
+  }
+  
+  .icons {
+    display: flex;
+  }
+  
+  .icons > div {
+    display: flex;
+    margin: 0 0.5rem;
+    padding-right: 0.5rem;
+    background: #ffcbd2;
+    border: 1px solid transparent;
+    border-radius: 16px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+  
+  }
+  
+  .icon {
+    color: #e82d4a;
+    transform: scale(0.7);
+    font-weight: bold;
+  }
+  
+  .tag > span {
+    color: #e82d4a;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  
+  .tag {
+    background-color: rgba(255, 161, 178, 0.58);
+    display: flex;
+    align-items: center;
+    border: 1px solid transparent;
+    border-radius: 16px;
+    padding-right: 1rem;
+    padding-left: 0.3rem;
+    margin-left: 0.6rem;
+  }
+  
+  .cards {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50vw;
+    flex-wrap: wrap;
+  }
+  
+  .search-div{
+    display: flex;
+    flex-direction:row;
+    justify-content:space-evenly;
+  }
+  .search-wrapper :nth-child(1){
+    padding-right:0.5rem;
+    padding-left:0.3rem;
+  }
+  
