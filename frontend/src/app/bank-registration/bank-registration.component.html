@@ -1,0 +1,38 @@
+<div class="container">
+    <div>
+        <h2>Blood Bank Registration</h2>
+        <form class="form-wrapper" [formGroup]="form" (ngSubmit)="createBloodBank()">
+        <mat-form-field appearance="fill">
+            <mat-label>Title</mat-label>
+            <input formControlName="title" matInput type="text">
+        </mat-form-field><br>
+        <mat-form-field appearance="fill">
+            <mat-label>Description</mat-label>
+            <input formControlName="description" matInput type="text">
+        </mat-form-field><br>
+        <mat-form-field appearance="fill">
+            <mat-label>Working hours start</mat-label>
+            <input formControlName="workingHoursStart" matInput type="text">
+        </mat-form-field><br>
+        <mat-form-field appearance="fill">
+            <mat-label>working Hours End</mat-label>
+            <input formControlName="workingHoursEnd" matInput type="text">
+        </mat-form-field><br>
+        <mat-form-field appearance="fill">
+            <mat-label>Street</mat-label>
+            <input formControlName="street" matInput type="text">
+        </mat-form-field><br>
+        <mat-form-field appearance="fill">
+            <mat-label>City</mat-label>
+            <input formControlName="city" matInput type="text">
+        </mat-form-field><br>
+        <mat-form-field appearance="fill">
+            <mat-label>Country</mat-label>
+            <input formControlName="country" matInput type="text">
+        </mat-form-field><br>
+        <button mat-stroked-button value="Register blood bank"  >
+            Submit
+        </button>
+    </form>
+    </div>
+</div>

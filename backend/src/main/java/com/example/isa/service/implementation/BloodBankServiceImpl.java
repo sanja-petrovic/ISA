@@ -62,7 +62,14 @@ public class BloodBankServiceImpl implements BloodBankService {
     }
 
     @Override
+    public boolean registerBank (BloodBank bank) {
+        repository.save(bank);
+        return true;
+    }
+
+    @Override
     public BloodBank findByTitle(String title) {
         return repository.findAllByTitleIgnoreCase(title).orElse(null);
+
     }
 }
