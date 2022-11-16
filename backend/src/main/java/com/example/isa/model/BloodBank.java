@@ -58,4 +58,13 @@ public class BloodBank {
         this.description = description;
         this.averageGrade = averageGrade;
     }
+
+    @Builder
+    public BloodBank(String title, Address address, Interval workingHours, String description, double averageGrade) {
+        this.title = title;
+        this.address = address;
+        this.workingHours = workingHours;
+        this.description = description;
+        this.averageGrade = averageGrade;
+    }
 }
