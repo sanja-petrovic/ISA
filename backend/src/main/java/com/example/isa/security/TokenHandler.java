@@ -17,7 +17,7 @@ import org.springframework.web.util.WebUtils;
 @Component
 @Slf4j
 public class TokenHandler {
-    @Value("${spring.app.name}")
+    @Value("${spring.application.name}")
     private String APP_NAME;
     @Value("${jwt.access.secret}")
     public String SECRET;

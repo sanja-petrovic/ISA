@@ -1,5 +1,5 @@
+CREATE DATABASE isa;
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-
 TRUNCATE  public.patients;
 
 -- INSERT INTO public.patients (
