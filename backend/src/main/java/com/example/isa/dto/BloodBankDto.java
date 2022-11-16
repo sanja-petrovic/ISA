@@ -4,6 +4,7 @@ import com.example.isa.model.Address;
 import com.example.isa.model.BloodBank;
 import com.example.isa.model.Interval;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +15,7 @@ import java.util.UUID;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class BloodBankDto {
     private String id;
     private String title;
@@ -36,16 +38,5 @@ public class BloodBankDto {
         this.averageGrade = averageGrade;
     }
 
-    public BloodBankDto(BloodBank bloodBank){
-        this.id = bloodBank.getId().toString();
-        this.title = bloodBank.getTitle();
-        this.street = bloodBank.getAddress().getStreet();
-        this.city = bloodBank.getAddress().getCity();
-        this.country = bloodBank.getAddress().getCountry();
-        this.workingHoursStart = bloodBank.getWorkingHours().getIntervalStart().toString();
-        this.workingHoursEnd = bloodBank.getWorkingHours().getIntervalEnd().toString();
-        this.description = bloodBank.getDescription();
-        this.averageGrade = bloodBank.getAverageGrade();
-    }
 
 }

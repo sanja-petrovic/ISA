@@ -35,7 +35,6 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-
     @Override
     public List<User> getAll() {
         return repository.findAll();
@@ -60,4 +59,17 @@ public class UserServiceImpl implements UserService {
         User user = repository.findByEmail(username);
         return user;
     }
+
+    @Override
+    public User findByPersonalId(String personalId) throws Exception {
+        return repository.findAllByPersonalId(personalId).orElseThrow(() -> new Exception(String.format("No user found with personalId '%s'.", personalId)));
+    }
+
+    @Override
+    public void updatePassword(User user, String newPassword) {
+        user.setPassword(newPassword);
+        repository.save(user);
+    }
+
+
 }

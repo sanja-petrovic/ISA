@@ -29,6 +29,12 @@ public class BloodBankServiceImpl implements BloodBankService {
         return repository.findById(id).orElse(null);
 
     }
+
+    @Override
+    public List<BloodBank> search(Sort sort, List<String> searchCriteria) {
+        return null;
+    }
+
     @Override
     public List<BloodBank> search(Sort sort, List<String> searchCriteria, String filterGrade) {
     	String titleString = searchCriteria.get(0);
@@ -54,9 +60,16 @@ public class BloodBankServiceImpl implements BloodBankService {
         }
         return repository.save(bloodBank);
     }
+<<<<<<< HEAD
     @Override
     public boolean registerBank (BloodBank bank){
          repository.save(bank);
          return true;
+=======
+
+    @Override
+    public BloodBank findByTitle(String title) {
+        return repository.findAllByTitleIgnoreCase(title).orElse(null);
+>>>>>>> development
     }
 }
