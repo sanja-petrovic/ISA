@@ -3,11 +3,9 @@ package com.example.isa.controller;
 import com.example.isa.dto.BloodBankDto;
 import com.example.isa.dto.MedicalStaffDto;
 import com.example.isa.dto.MedicalStaffListDto;
-import com.example.isa.model.Address;
-import com.example.isa.model.BloodBank;
-import com.example.isa.model.Gender;
-import com.example.isa.model.MedicalStaff;
+import com.example.isa.model.*;
 import com.example.isa.service.interfaces.MedicalStaffService;
+import com.example.isa.service.interfaces.RoleService;
 import com.example.isa.service.interfaces.UserService;
 import com.example.isa.util.Converters.BloodBankConverter;
 import com.example.isa.util.Converters.MedicalStaffConverter;
@@ -35,14 +33,18 @@ public class MedicalStaffController {
     private final UserService userService;
     private final MedicalStaffConverter converter;
     private final BloodBankConverter bloodBankConverter;
+    private final RoleService roleService;
 
+    private final MedicalStaffConverter medicalStaffConverter;
     @Autowired
-    public MedicalStaffController(MedicalStaffService medicalStaffService, UserService userService, PasswordEncoder passwordEncoder, MedicalStaffConverter converter, BloodBankConverter bloodBankConverter) {
+    public MedicalStaffController(MedicalStaffService medicalStaffService, UserService userService, PasswordEncoder passwordEncoder, MedicalStaffConverter converter, BloodBankConverter bloodBankConverter, RoleService roleService, MedicalStaffConverter medicalStaffConverter) {
         this.medicalStaffService = medicalStaffService;
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
         this.converter = converter;
         this.bloodBankConverter = bloodBankConverter;
+        this.medicalStaffConverter = medicalStaffConverter;
+        this.roleService = roleService;
     }
 
     @GetMapping
@@ -95,7 +97,14 @@ public class MedicalStaffController {
     @ApiOperation(value = "Register medical staff profile.", httpMethod = "POST")
     public ResponseEntity<?> register(@RequestBody MedicalStaffDto medicalStaffDto){
         MedicalStaff medicalStaff = mapMedicalStaff(medicalStaffDto);
-        return ResponseEntity.ok(medicalStaffService.register(medicalStaff));
+        if (userService.findByUsername(medicalStaffDto.getEmail()) == null) {
+            medicalStaff.setRoles(roleService.findByName("ROLE_STAFF"));
+            medicalStaffService.register(medicalStaff);
+            userService.registerMedicalStaff(medicalStaff);
+            return new ResponseEntity<>((medicalStaff), HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.CONFLICT);
+        }
     }
     public MedicalStaff mapMedicalStaff(MedicalStaffDto medicalStaffDto){
         MedicalStaff medicalStaff = new MedicalStaff();

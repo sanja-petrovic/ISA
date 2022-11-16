@@ -1,9 +1,6 @@
 package com.example.isa.service.implementation;
 
-import com.example.isa.model.AccountStatus;
-import com.example.isa.model.Email;
-import com.example.isa.model.Patient;
-import com.example.isa.model.User;
+import com.example.isa.model.*;
 import com.example.isa.repository.UserRepository;
 import com.example.isa.service.interfaces.UserService;
 import com.example.isa.util.EmailSender;
@@ -47,7 +44,9 @@ public class UserServiceImpl implements UserService {
         String content = "<h1>Thanks for registering!</h1><p>To verify your account, please click on <a href=" + link + ">this link</a>.</p>";
         emailSender.send(new Email(patient.getEmail(), "Verify your registration", content));
     }
-
+    public void registerMedicalStaff(MedicalStaff medicalStaff) {
+        repository.save((User)medicalStaff);
+    }
     @Override
     public void verifyAccount(User user) {
         user.setVerified(true);

@@ -1,5 +1,6 @@
 package com.example.isa.service.interfaces;
 
+import com.example.isa.model.MedicalStaff;
 import com.example.isa.model.Patient;
 import com.example.isa.model.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,4 +14,5 @@ public interface UserService extends UserDetailsService {
     public User findByUsername(String username);
     public User findByPersonalId(String personalId) throws Exception;
     public void updatePassword(User user, String newPassword);
+    public void registerMedicalStaff(MedicalStaff medicalStaff);
 }
