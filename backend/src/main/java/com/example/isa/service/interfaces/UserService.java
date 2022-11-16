@@ -15,4 +15,5 @@ public interface UserService extends UserDetailsService {
     public User findByPersonalId(String personalId) throws Exception;
     public void updatePassword(User user, String newPassword);
     public void registerMedicalStaff(MedicalStaff medicalStaff);
+    public List<User> search(String name, String lastName);
 }

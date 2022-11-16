@@ -47,6 +47,12 @@ public class UserServiceImpl implements UserService {
     public void registerMedicalStaff(MedicalStaff medicalStaff) {
         repository.save((User)medicalStaff);
     }
+
+    @Override
+    public List<User> search(String name, String lastName) {
+        return repository.search(name.toLowerCase(), lastName.toLowerCase());
+    }
+
     @Override
     public void verifyAccount(User user) {
         user.setVerified(true);
