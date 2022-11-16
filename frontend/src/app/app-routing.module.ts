@@ -19,7 +19,7 @@ const routes: Routes = [
     path: 'home', component: HomeComponent
   },
   {
-    path: 'banks', component: BanksPageComponent
+    path: '', component: BanksPageComponent
   },
   {
     path: 'register', component: RegistrationComponent

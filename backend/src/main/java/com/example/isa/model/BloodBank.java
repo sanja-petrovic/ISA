@@ -21,7 +21,7 @@ import java.util.UUID;
 @Table(name = "blood_banks")
 public class BloodBank {
     @Id
-    private UUID id;
+    private UUID id = UUID.randomUUID();
     @Column(unique = true)
     private String title;
     @Embedded
@@ -59,12 +59,4 @@ public class BloodBank {
         this.averageGrade = averageGrade;
     }
 
-    @Builder
-    public BloodBank(String title, Address address, Interval workingHours, String description, double averageGrade) {
-        this.title = title;
-        this.address = address;
-        this.workingHours = workingHours;
-        this.description = description;
-        this.averageGrade = averageGrade;
-    }
 }

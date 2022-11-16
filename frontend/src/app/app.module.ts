@@ -39,6 +39,7 @@ import { MedicalStaffBloodBankComponent } from './medical-staff-blood-bank/medic
 import { MedicalStaffRegistrationComponent } from './medical-staff-registration/medical-staff-registration.component';
 import {MatListModule} from '@angular/material/list';
 import { ViewUsersComponent } from './view-users/view-users.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 
 @NgModule({
@@ -58,7 +59,9 @@ import { ViewUsersComponent } from './view-users/view-users.component';
     QuestionnaireComponent,
     MedicalStaffBloodBankComponent,
     MedicalStaffRegistrationComponent,
-    ViewUsersComponent
+    ViewUsersComponent,
+    MedicalStaffRegistrationComponent,
+    NavbarComponent
   ],
   imports: [
     HttpClientModule,
@@ -102,8 +105,8 @@ import { ViewUsersComponent } from './view-users/view-users.component';
     MatRadioModule,
     MatListModule
   ],
-    
-    
+
+
   providers: [
     {
 		provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}

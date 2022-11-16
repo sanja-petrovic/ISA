@@ -1,0 +1,22 @@
+<mat-toolbar class="nav-bar">
+  <div class="title">{{title}}</div>
+  <div class="links">
+    <a href="/">Blood banks</a>
+    <a href="/questionnaire" *ngIf="isLoggedIn">Questionnaire</a>
+  </div>
+  <div class="buttons" *ngIf="!isLoggedIn; else loggedIn">
+    <a href="/register"><button class="register-button">Register</button></a>
+    <a href="/login"><button class="login-button">Login</button></a>
+  </div>
+  <ng-template #loggedIn>
+    <div class="buttons">
+      <mat-chip-list class="buttons">
+        <mat-chip class="chip">
+          <img matChipAvatar src="https://media.istockphoto.com/vectors/cute-cartoon-cat-icon-vector-illustration-vector-id1171786505?k=20&m=1171786505&s=170667a&w=0&h=vozvrIObc_LErhOGtThRnuMa2lQjhfmVh2XO4Q2z5hM="/>
+          Welcome!
+        </mat-chip>
+      </mat-chip-list>
+      <button class="login-button" (click)="logOut()">Log out</button>
+    </div>
+  </ng-template>
+</mat-toolbar>
