@@ -13,6 +13,7 @@ public class BloodBankConverter implements Converter<BloodBank, BloodBankDto> {
     @Override
     public BloodBankDto entityToDto(BloodBank bloodBank) {
         return BloodBankDto.builder()
+                .id(bloodBank.getId().toString())
                 .title(bloodBank.getTitle())
                 .street(bloodBank.getAddress().getStreet())
                 .city(bloodBank.getAddress().getCity())

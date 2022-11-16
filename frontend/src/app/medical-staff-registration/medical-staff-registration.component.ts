@@ -5,6 +5,7 @@ import axios from 'axios';
 import { BloodBank } from '../model/BloodBank';
 import { MedicalStaff } from '../model/Users';
 import { AuthService } from '../services/AuthService';
+import { BloodBankService } from '../services/BloodBankService';
 import { MedicalStaffService } from '../services/MedicalStaffService';
 import { UserService } from '../services/UserService';
 
@@ -40,7 +41,7 @@ export class MedicalStaffRegistrationComponent implements OnInit {
     homeAddress: ['', Validators.compose([Validators.required])],
     city: ['', Validators.compose([Validators.required])],
     country: ['', Validators.compose([Validators.required])],
-    bloodBank: ['']
+    bloodBankId: ['']
   }, {
     validators: this.ConfirmedValidator('password', 'passwordCheck')
   });
@@ -67,13 +68,13 @@ export class MedicalStaffRegistrationComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private medicalStaffService: MedicalStaffService,
-    private router: Router) {
+    private router: Router,
+    private bloodBankService: BloodBankService) {
   }
 
   ngOnInit(): void {
-    axios.get('http://localhost:8080/bloodbanks').then((response) => {
-      this.bloodBanks = response.data?.bloodBanks;
-      console.log(response.data);
+    this.bloodBankService.getAll().subscribe(data => {
+      this.bloodBanks = data;
     })
   }
 

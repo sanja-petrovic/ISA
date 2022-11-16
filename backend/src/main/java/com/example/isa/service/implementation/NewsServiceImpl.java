@@ -5,7 +5,7 @@ import com.example.isa.kafka.NewsProducer;
 import com.example.isa.model.News;
 import com.example.isa.repository.NewsRepository;
 import com.example.isa.service.interfaces.NewsService;
-import com.example.isa.util.converters.NewsConverter;
+import com.example.isa.util.Converters.NewsConverter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.stereotype.Service;
 

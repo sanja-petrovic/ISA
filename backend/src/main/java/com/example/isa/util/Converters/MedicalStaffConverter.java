@@ -1,4 +1,4 @@
-package com.example.isa.util.converters;
+package com.example.isa.util.Converters;
 
 import com.example.isa.dto.MedicalStaffDto;
 import com.example.isa.model.MedicalStaff;
