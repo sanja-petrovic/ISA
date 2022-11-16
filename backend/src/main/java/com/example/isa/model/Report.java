@@ -17,8 +17,6 @@ public class Report {
     private boolean penalty;
     @Column
     private String information;
-    @Column
-    private Map<String, Double> amountOfUsedEquipment;
 
 
 }

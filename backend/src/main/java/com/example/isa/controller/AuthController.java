@@ -60,7 +60,7 @@ public class AuthController {
         User user = (User) authentication.getPrincipal();
         String jwt = this.tokenHandler.generateToken(user.getUsername());
         ResponseCookie jwtCookie = tokenHandler.generateJwtCookie(user);
-        List<String> roles = user.getAuthorities().stream()
+        List<String> roles = user.getRoles().stream()
                 .map(GrantedAuthority::getAuthority).toList();
         RefreshToken refreshToken = refreshTokenService.createRefreshToken(user.getId());
         ResponseCookie jwtRefreshCookie = tokenHandler.generateRefreshJwtCookie(refreshToken.getToken());

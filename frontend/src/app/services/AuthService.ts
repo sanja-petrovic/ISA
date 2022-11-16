@@ -59,9 +59,9 @@ export class AuthService {
   logout() {
     this.userService.currentUser = null;
     this.access_token = null;
-    this.localStorage.clear();
+    localStorage.clear();
     this.router.navigate(['/login']);
-    return this.apiService.post(`${this.config.log_out_url}`).subscribe();
+    return this.apiService.post(`${this.config.log_out_url}`, "").subscribe();
   }
 
   tokenIsPresent() {
@@ -73,7 +73,7 @@ export class AuthService {
   }
 
   refreshToken() {
-    return this.apiService.post(`${this.config.refresh_token_url}`).subscribe();
+    return this.apiService.post(`${this.config.refresh_token_url}`, "");
   }
 
 }

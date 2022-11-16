@@ -29,11 +29,11 @@ public class TokenHandler {
     private String AUTH_HEADER;
     private static final String AUDIENCE_WEB = "web";
     private SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS512;
-    private String jwtCookie;
-    private String jwtRefreshCookie;
+    private String jwtCookie = "accessToken";
+    private String jwtRefreshCookie = "refreshToken";
 
     public ResponseCookie generateJwtCookie(User user) {
-        String jwt = generateTokenFromUsername(user.getUsername());
+        String jwt = generateTokenFromUsername(user.getEmail());
         return generateCookie(jwtCookie, jwt, "/");
     }
 
@@ -92,8 +92,7 @@ public class TokenHandler {
     }
 
     private ResponseCookie generateCookie(String name, String value, String path) {
-        ResponseCookie cookie = ResponseCookie.from(name, value).path(path).maxAge(24 * 60 * 60).httpOnly(true).build();
-        return cookie;
+        return ResponseCookie.from(name, value).path(path).maxAge(24 * 60 * 60).httpOnly(true).build();
     }
 
     private String getCookieValueByName(HttpServletRequest request, String name) {

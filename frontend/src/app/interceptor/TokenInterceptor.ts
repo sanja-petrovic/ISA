@@ -4,17 +4,14 @@ import {AuthService} from "../services/AuthService";
 
 import { Observable, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
-
-import { EventBusService } from '../_shared/event-bus.service';
-import { EventData } from '../_shared/event.class';
+import {Token} from "@angular/compiler";
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
   private isRefreshing = false;
 
   constructor(
-    private authService: AuthService,
-    private eventBusService: EventBusService
+    private authService: AuthService
   ) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -22,6 +19,7 @@ export class TokenInterceptor implements HttpInterceptor {
       withCredentials: true,
     });
 
+    // @ts-ignore
     return next.handle(req).pipe(
       catchError((error) => {
         if (
@@ -66,5 +64,5 @@ export class TokenInterceptor implements HttpInterceptor {
 }
 
 export const httpInterceptorProviders = [
-  { provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true },
+  { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
 ];
