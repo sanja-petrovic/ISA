@@ -20,6 +20,9 @@ export class BloodBankService {
   getAll(): Observable<BloodBank[]> {
     return this.apiService.get(`${this.config.blood_banks_url}`);
   }
+  createBloodBank(bloodBank: any): Observable<any> {
+    return this.apiService.post(`${this.config.blood_banks_url}/registerBank`, bloodBank);
+  }
 
   searchSort(dto: any): any {
     return this.apiService.post(`${this.config.blood_banks_url}/search`, dto);

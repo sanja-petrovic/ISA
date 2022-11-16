@@ -9,7 +9,9 @@ import {VerificationComponent} from "./verification/verification.component";
 import {MedicalStaffComponent} from "./medical-staff/medical-staff.component"
 import { ProfileComponent } from './profile/profile.component';
 import {QuestionnaireComponent} from "./questionnaire/questionnaire.component";
+import { BankRegistrationComponent } from './bank-registration/bank-registration.component';
 import { MedicalStaffBloodBankComponent } from './medical-staff-blood-bank/medical-staff-blood-bank.component';
+import { MedicalStaffRegistrationComponent } from './medical-staff-registration/medical-staff-registration.component';
 
 const routes: Routes = [
   {
@@ -37,7 +39,13 @@ const routes: Routes = [
     path: 'questionnaire', component: QuestionnaireComponent
   },
   {
+    path: 'registerBank', component: BankRegistrationComponent
+  },
+  {
     path: 'medical-staff/bank', component: MedicalStaffBloodBankComponent
+  },
+  {
+    path: 'medical-staff/register', component: MedicalStaffRegistrationComponent
   }
 ]
 

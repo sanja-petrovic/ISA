@@ -5,7 +5,9 @@ type BloodBank = {
     city: string,
     country: string,
     description: string,
-    averageGrade: string
+    averageGrade: string,
+    workingHoursStart : string,
+    workingHoursEnd : string
   }
   
   export { BloodBank };

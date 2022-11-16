@@ -1,9 +1,7 @@
 package com.example.isa.controller;
 
 import com.example.isa.dto.QuestionDto;
-import com.example.isa.dto.QuestionListDto;
 import com.example.isa.model.Question;
-import com.example.isa.model.QuestionType;
 import com.example.isa.service.interfaces.QuestionService;
 import com.example.isa.util.Converters.QuestionConverter;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController

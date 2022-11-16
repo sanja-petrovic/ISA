@@ -27,7 +27,7 @@ public class BloodBankDto {
     private String description;
     private double averageGrade;
 
-    public BloodBankDto(String title, String street, String city, String country, String workingHoursStart, String workingHoursEnd, String description, double averageGrade){
+    public BloodBankDto( String title, String street, String city, String country, String workingHoursStart, String workingHoursEnd, String description, double averageGrade){
         this.title = title;
         this.street = street;
         this.city = city;

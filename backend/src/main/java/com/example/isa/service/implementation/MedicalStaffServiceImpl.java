@@ -1,5 +1,13 @@
 package com.example.isa.service.implementation;
 
+
+import com.example.isa.model.MedicalStaff;
+import com.example.isa.model.User;
+import com.example.isa.repository.BloodBankRepository;
+import com.example.isa.repository.MedicalStaffRepository;
+import com.example.isa.service.interfaces.BloodBankService;
+import com.example.isa.service.interfaces.MedicalStaffService;
+import java.util.List;
 import com.example.isa.model.BloodBank;
 import com.example.isa.model.MedicalStaff;
 import com.example.isa.repository.MedicalStaffRepository;
@@ -16,7 +24,13 @@ public class MedicalStaffServiceImpl implements MedicalStaffService {
         this.repository = repository;
     }
 
+
     @Override
+    public boolean register(MedicalStaff medicalStaff) {
+         repository.save(medicalStaff);
+         return true;
+    }
+
     public List<MedicalStaff> getAll() {
         return repository.findAll();
     }

@@ -1,7 +1,6 @@
 package com.example.isa.controller;
 
 import com.example.isa.dto.AnswerDto;
-import com.example.isa.dto.AnswerListDto;
 import com.example.isa.model.Answer;
 import com.example.isa.service.interfaces.AnswerService;
 import com.example.isa.service.interfaces.PatientService;

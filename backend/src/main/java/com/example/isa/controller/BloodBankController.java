@@ -1,8 +1,10 @@
 package com.example.isa.controller;
 
 import com.example.isa.dto.BloodBankDto;
-import com.example.isa.dto.BloodBankListDto;
 import com.example.isa.dto.BloodBankSearchSortDto;
+import com.example.isa.model.Address;
+import com.example.isa.model.BloodBank;
+import com.example.isa.model.Interval;
 import com.example.isa.dto.MedicalStaffDto;
 import com.example.isa.model.Address;
 import com.example.isa.model.BloodBank;
@@ -17,6 +19,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.DateFormatter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -48,9 +54,22 @@ public class BloodBankController {
     public ResponseEntity<List<BloodBankDto>> search(@RequestBody BloodBankSearchSortDto request) {
         //Search and filter to be implemented later on.
         Sort sort = Sort.by(Sort.Direction.fromString(request.getSortCriteria().getDirection()), request.getSortCriteria().getProperty());
-        List<BloodBank> searchedData = service.search(sort, request.getSearchCriteria(), request.getFilterGrade());
+        List<BloodBank> searchedData = service.search(sort, request.getSearchCriteria());
         List<BloodBankDto> dtos = searchedData.stream().map(bloodBankConverter::entityToDto).toList();
         return ResponseEntity.ok(dtos);
+    }
+
+    @PostMapping(value = "/registerBank")
+    @ApiOperation(value = "register blood bank.", httpMethod = "POST")
+    public ResponseEntity registerBank(@RequestBody BloodBankDto bankDto) {
+        BloodBank bank = new BloodBank(bankDto.getTitle(),new Address(bankDto.getStreet(), bankDto.getCity(), bankDto.getCountry()), bankDto.getDescription());
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        try {
+            bank.setWorkingHours(new Interval( format.parse("2022-03-03 " + bankDto.getWorkingHoursStart()), format.parse("2022-03-03 " + bankDto.getWorkingHoursEnd())));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        return ResponseEntity.ok(service.registerBank(bank));
     }
 
     @PostMapping(value = "/update")

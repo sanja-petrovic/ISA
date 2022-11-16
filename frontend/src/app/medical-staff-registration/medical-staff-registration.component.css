@@ -1,0 +1,31 @@
+.form-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 50vw;
+    padding: 2vw;
+  }
+  .centered-content {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+  h2, h1 {
+    font-family: "Poppins SemiBold", sans-serif;
+    color: #ee435d;
+  }
+  .needs-space {
+    margin-top: 1rem;
+  }
+  h1 {
+    font-size: 29px;
+  }
+  
+  
+  
+  .password-input {
+    color: #e82d4a;
+    font-weight: bold;
+    font-size: 12px;
+    margin-top: -1rem;
+    margin-bottom: 0.5rem;
+  }
+  
