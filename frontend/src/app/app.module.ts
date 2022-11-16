@@ -36,6 +36,9 @@ import { BankRegistrationComponent } from './bank-registration/bank-registration
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MedicalStaffBloodBankComponent } from './medical-staff-blood-bank/medical-staff-blood-bank.component';
+import { MedicalStaffRegistrationComponent } from './medical-staff-registration/medical-staff-registration.component';
+import {MatListModule} from '@angular/material/list';
+
 
 @NgModule({
   declarations: [
@@ -52,7 +55,8 @@ import { MedicalStaffBloodBankComponent } from './medical-staff-blood-bank/medic
     QuestionnaireComponent,
     MedicalStaffComponent,
     QuestionnaireComponent,
-    MedicalStaffBloodBankComponent
+    MedicalStaffBloodBankComponent,
+    MedicalStaffRegistrationComponent
   ],
   imports: [
     HttpClientModule,
@@ -93,7 +97,8 @@ import { MedicalStaffBloodBankComponent } from './medical-staff-blood-bank/medic
     MatDialogModule,
     FlexLayoutModule,
     MatDialogModule,
-    MatRadioModule
+    MatRadioModule,
+    MatListModule
   ],
     
     

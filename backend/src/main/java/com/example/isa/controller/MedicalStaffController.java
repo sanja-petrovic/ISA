@@ -3,12 +3,15 @@ package com.example.isa.controller;
 import com.example.isa.dto.BloodBankDto;
 import com.example.isa.dto.MedicalStaffDto;
 import com.example.isa.dto.MedicalStaffListDto;
+import com.example.isa.model.Address;
+import com.example.isa.model.BloodBank;
 import com.example.isa.model.Gender;
 import com.example.isa.model.MedicalStaff;
 import com.example.isa.service.interfaces.MedicalStaffService;
 import com.example.isa.service.interfaces.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.models.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -83,5 +86,24 @@ public class MedicalStaffController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok( new BloodBankDto(medicalStaff.getBloodBank()));
+    }
+    @PostMapping(value ="/register")
+    @ApiOperation(value = "Register medical staff profile.", httpMethod = "POST")
+    public ResponseEntity<?> register(@RequestBody MedicalStaffDto medicalStaffDto){
+        MedicalStaff medicalStaff = mapMedicalStaff(medicalStaffDto);
+        return ResponseEntity.ok(medicalStaffService.register(medicalStaff));
+    }
+    public MedicalStaff mapMedicalStaff(MedicalStaffDto medicalStaffDto){
+        MedicalStaff medicalStaff = new MedicalStaff();
+        medicalStaff.setPersonalId(medicalStaffDto.getPersonalId());
+        medicalStaff.setFirstName(medicalStaffDto.getFirstName());
+        medicalStaff.setLastName(medicalStaffDto.getLastName());
+        medicalStaff.setPassword(passwordEncoder.encode(medicalStaffDto.getPassword()));
+        medicalStaff.setPhoneNumber(medicalStaffDto.getPhoneNumber());
+        medicalStaff.setEmail(medicalStaffDto.getEmail());
+        medicalStaff.setBloodBank(new BloodBank());
+        //medicalStaff.getBloodBank().setId(UUID.fromString(medicalStaffDto.getBloodBankId()));
+        medicalStaff.getBloodBank().setAddress(new Address(medicalStaffDto.getBloodBankAddressNumber(),medicalStaffDto.getBloodBankAddressCity(),medicalStaffDto.getBloodBankAddressCountry()));
+        return medicalStaff;
     }
 }

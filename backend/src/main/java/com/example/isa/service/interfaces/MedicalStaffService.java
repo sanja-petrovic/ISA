@@ -14,7 +14,7 @@ public interface MedicalStaffService {
     public MedicalStaff getById(UUID id);
 
     public MedicalStaff updateMedicalStaff(MedicalStaff medicalStaff);
-    public void register(MedicalStaff medicalStaff);
+    public boolean register(MedicalStaff medicalStaff);
 
     public BloodBank getBloodBank(MedicalStaff medicalStaff);
 
