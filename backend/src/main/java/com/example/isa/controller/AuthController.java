@@ -8,7 +8,7 @@ import com.example.isa.model.*;
 import com.example.isa.security.TokenHandler;
 import com.example.isa.service.interfaces.RoleService;
 import com.example.isa.service.interfaces.UserService;
-import com.example.isa.util.Converters.PatientConverter;
+import com.example.isa.util.converters.PatientConverter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

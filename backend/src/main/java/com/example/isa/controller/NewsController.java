@@ -3,7 +3,7 @@ package com.example.isa.controller;
 import com.example.isa.dto.NewsDto;
 import com.example.isa.model.News;
 import com.example.isa.service.interfaces.NewsService;
-import com.example.isa.util.Converters.NewsConverter;
+import com.example.isa.util.converters.NewsConverter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.annotations.Api;
 import org.springframework.http.ResponseEntity;

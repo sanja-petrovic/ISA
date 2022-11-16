@@ -11,7 +11,7 @@ import com.example.isa.model.BloodBank;
 import com.example.isa.model.Gender;
 import com.example.isa.model.MedicalStaff;
 import com.example.isa.service.interfaces.BloodBankService;
-import com.example.isa.util.Converters.BloodBankConverter;
+import com.example.isa.util.converters.BloodBankConverter;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
