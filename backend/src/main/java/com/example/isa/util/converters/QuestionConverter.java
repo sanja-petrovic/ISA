@@ -1,4 +1,4 @@
-package com.example.isa.util.converters;
+package com.example.isa.util.Converters;
 
 import com.example.isa.dto.QuestionDto;
 import com.example.isa.model.Question;

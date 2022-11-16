@@ -1,4 +1,4 @@
-package com.example.isa.util.converters;
+package com.example.isa.util.Converters;
 
 import com.example.isa.dto.BloodBankDto;
 import com.example.isa.model.Address;
@@ -13,6 +13,7 @@ public class BloodBankConverter implements Converter<BloodBank, BloodBankDto> {
     @Override
     public BloodBankDto entityToDto(BloodBank bloodBank) {
         return BloodBankDto.builder()
+                .id(bloodBank.getId().toString())
                 .title(bloodBank.getTitle())
                 .street(bloodBank.getAddress().getStreet())
                 .city(bloodBank.getAddress().getCity())

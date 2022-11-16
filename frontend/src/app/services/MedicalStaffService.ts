@@ -26,7 +26,9 @@ export class MedicalStaffService {
   updateMedicalStaff (mediclStaff: MedicalStaff){
     return this.apiService.post(`${this.medicalStaffUrl}`, mediclStaff);
   }
-
+  registerMedicalStaff (medicalStaff: MedicalStaff){
+    return this.apiService.post(this.medicalStaffUrl+'register', medicalStaff);
+  }
   getBloodBank (): Observable<BloodBank>{
     return this.http.get<BloodBank>(this.medicalStaffUrl + 'bank',{headers :this.headers});
   }

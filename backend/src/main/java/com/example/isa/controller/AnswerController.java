@@ -5,7 +5,7 @@ import com.example.isa.model.Answer;
 import com.example.isa.service.interfaces.AnswerService;
 import com.example.isa.service.interfaces.PatientService;
 import com.example.isa.service.interfaces.QuestionService;
-import com.example.isa.util.converters.AnswerConverter;
+import com.example.isa.util.Converters.AnswerConverter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
