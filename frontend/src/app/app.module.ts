@@ -59,7 +59,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     QuestionnaireComponent,
     MedicalStaffBloodBankComponent,
     MedicalStaffRegistrationComponent,
-    ViewUsersComponent
+    ViewUsersComponent,
     MedicalStaffRegistrationComponent,
     NavbarComponent
   ],
@@ -105,8 +105,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     MatRadioModule,
     MatListModule
   ],
-    
-    
+
+
   providers: [
     {
 		provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}
