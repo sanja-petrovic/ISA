@@ -57,6 +57,9 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
+    public User(String personalId, String email, String password, String firstName, String lastName, String phoneNumber, Gender gender) {
+    }
+
     @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

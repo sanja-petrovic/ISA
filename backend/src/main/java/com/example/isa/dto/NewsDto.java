@@ -1,6 +1,5 @@
 package com.example.isa.dto;
 
-import com.example.isa.model.Question;
 import lombok.*;
 
 import java.util.UUID;
@@ -10,9 +9,10 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class QuestionDto {
+public class NewsDto {
     private UUID id;
-    private String text;
-    private String type;
+    private String bloodBank;
+    private String title;
+    private String body;
+    private long milliseconds;
 }
-
