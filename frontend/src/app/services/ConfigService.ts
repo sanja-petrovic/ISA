@@ -12,6 +12,9 @@ export class ConfigService {
   public verification_url = this._auth_url + '/verify';
   public questions_url = this._api_url + '/questions'
   public answers_url = this._api_url + '/answers'
+  public blood_banks_url = this._api_url + '/bloodbanks';
+  public log_out_url = this._auth_url + '/logout';
+  public refresh_token_url = this._auth_url + '/refreshtoken';
 
   get login_url(): string {
     return this._login_url;

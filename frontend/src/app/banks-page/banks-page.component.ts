@@ -15,9 +15,8 @@ export class BanksPageComponent implements OnInit {
   public sortFilter: string = "title-asc";
 
   getBanks(): void {
-    axios.get('http://localhost:8080/bloodbanks').then((response) => {
-      this.banks = response.data?.bloodBanks;
-      console.log(response.data);
+    this.bloodBankService.getAll().subscribe(data => {
+      this.banks = data;
     })
   }
 
@@ -31,11 +30,10 @@ export class BanksPageComponent implements OnInit {
         property: sort[0]
       }
     }
-    axios.post('http://localhost:8080/bloodbanks/search', dto)
-      .then((response) => {
-        this.banks = response.data?.bloodBanks;
-        console.log(response.data);
-      })
+    this.bloodBankService.searchSort(dto).subscribe(data => {
+      console.log(data);
+      this.banks = data;
+    })
   }
 
   constructor(private bloodBankService: BloodBankService) {

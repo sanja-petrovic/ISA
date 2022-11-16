@@ -1,19 +1,34 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { BloodBank } from '../model/BloodBank';
+import {config, Observable} from 'rxjs';
+import {ApiService} from "./ApiService";
+import {ConfigService} from "./ConfigService";
+import {BloodBank} from "../model/BloodBank";
 
 @Injectable({
   providedIn: 'root'
 })
 export class BloodBankService {
 
-  apiHost: string = 'http://localhost:8080/';
   headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private apiService: ApiService,
+    private config: ConfigService) {
+  }
+
+  getAll(): Observable<BloodBank[]> {
+    return this.apiService.get(`${this.config.blood_banks_url}`);
+  }
+  createBloodBank(bloodBank: any): Observable<any> {
+    return this.apiService.post(`${this.config.blood_banks_url}/registerBank`, bloodBank);
+  }
+
+  searchSort(dto: any): any {
+    return this.apiService.post(`${this.config.blood_banks_url}/search`, dto);
+  }
 
   updateBloodBank (bloodBank: BloodBank){
-    return this.http.post<BloodBank>(this.apiHost + 'bloodbanks/update', bloodBank, {headers: this.headers});
+    return this.apiService.post(`${this.config.blood_banks_url}/update`, bloodBank);
   }
 }

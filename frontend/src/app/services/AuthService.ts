@@ -59,15 +59,21 @@ export class AuthService {
   logout() {
     this.userService.currentUser = null;
     this.access_token = null;
+    this.localStorage.clear();
     this.router.navigate(['/login']);
+    return this.apiService.post(`${this.config.log_out_url}`).subscribe();
   }
 
   tokenIsPresent() {
-    return this.access_token != undefined && this.access_token != null;
+    return localStorage.getItem("jwt");
   }
 
   getToken() {
     return this.access_token;
+  }
+
+  refreshToken() {
+    return this.apiService.post(`${this.config.refresh_token_url}`).subscribe();
   }
 
 }

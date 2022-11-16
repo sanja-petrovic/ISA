@@ -6,7 +6,7 @@ type Patient = {
   occupation: string,
   institution: string,
   phoneNumber: string,
-  homeAddress: string,
+  street: string,
   city: string,
   country: string,
   email: string,
@@ -27,7 +27,7 @@ type MedicalStaff = {
   country: string,
   email: string,
   password: string,
-  bloodBank: string
+  bloodBank: any
 }
 
 type User = {

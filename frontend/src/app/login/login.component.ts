@@ -34,6 +34,8 @@ export class LoginComponent implements OnInit {
               this.userService.currentUser = user;
               if(user.email == 'isidorapoznanovic1@gmail.com'){
                 this.logAndmin();
+              } else {
+                this.router.navigate(['/bloodBanks'])
               }
             })
     },
@@ -52,7 +54,7 @@ export class LoginComponent implements OnInit {
     //   },
     //   error: (e) => console.error(e),
     //   complete: () => {
-        
+
     //   }
     // })
   }
