@@ -1,4 +1,4 @@
-package com.example.isa.util.Converters;
+package com.example.isa.util.converters;
 
 import com.example.isa.dto.NewsDto;
 import com.example.isa.model.News;

@@ -4,7 +4,7 @@ import com.example.isa.dto.PatientDto;
 import com.example.isa.model.Patient;
 import com.example.isa.service.interfaces.PatientService;
 
-import com.example.isa.util.Converters.PatientConverter;
+import com.example.isa.util.converters.PatientConverter;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 

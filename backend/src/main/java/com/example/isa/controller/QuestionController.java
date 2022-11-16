@@ -3,7 +3,7 @@ package com.example.isa.controller;
 import com.example.isa.dto.QuestionDto;
 import com.example.isa.model.Question;
 import com.example.isa.service.interfaces.QuestionService;
-import com.example.isa.util.Converters.QuestionConverter;
+import com.example.isa.util.converters.QuestionConverter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
