@@ -71,8 +71,6 @@
             <artifactId>modelmapper</artifactId>
             <version>2.4.4</version>
         </dependency>
-<<<<<<< HEAD
-=======
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
@@ -87,7 +85,6 @@
             <artifactId>spring-kafka-test</artifactId>
             <scope>test</scope>
         </dependency>
->>>>>>> e18c460a9eea48277411f7edc2aa480e8e8717b1
     </dependencies>
 
     <build>
