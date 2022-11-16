@@ -27,5 +27,9 @@ export class UserService {
   getAll() {
     return this.apiService.get(this.config.users_url);
   }
+  search(searchParam : string[]){
+    return this.apiService.get(this.config.current_url + 'search',searchParam );
+  }
+
     
 }
