@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
               if(user.email == 'isidorapoznanovic1@gmail.com'){
                 this.logAndmin();
               } else {
-                this.router.navigate(['/bloodBanks'])
+                this.router.navigate(['/banks'])
               }
             })
     },

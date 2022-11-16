@@ -31,8 +31,11 @@ public class UserController {
     @GetMapping("/current")
     @ApiOperation(value = "Get the logged in user.", httpMethod = "GET")
     public User user(Principal user) {
-        System.out.println(user);
-        return this.service.findByUsername(user.getName());
+        if (user != null) {
+            return this.service.findByUsername(user.getName());
+        } else {
+            return null;
+        }
     }
 
     @PostMapping("/update/password")

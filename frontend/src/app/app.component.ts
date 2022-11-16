@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {AuthService} from "./services/AuthService";
+import {UserService} from "./services/UserService";
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'howtosavealife';
+  user = '';
+  constructor(
+    private authService: AuthService,
+    private userService: UserService) {
+  }
+
+
+  isLoggedIn(): boolean {
+    return this.authService.tokenIsPresent();
+  }
 }

@@ -65,11 +65,7 @@ export class AuthService {
   }
 
   tokenIsPresent() {
-    return localStorage.getItem("jwt");
-  }
-
-  getToken() {
-    return this.access_token;
+    return localStorage.getItem("jwt") !== null;
   }
 
   refreshToken() {

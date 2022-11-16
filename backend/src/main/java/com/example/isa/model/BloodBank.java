@@ -21,7 +21,7 @@ import java.util.UUID;
 @Table(name = "blood_banks")
 public class BloodBank {
     @Id
-    private UUID id;
+    private UUID id = UUID.randomUUID();
     @Column(unique = true)
     private String title;
     @Embedded

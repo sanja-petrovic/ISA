@@ -38,6 +38,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MedicalStaffBloodBankComponent } from './medical-staff-blood-bank/medical-staff-blood-bank.component';
 import { MedicalStaffRegistrationComponent } from './medical-staff-registration/medical-staff-registration.component';
 import {MatListModule} from '@angular/material/list';
+import { NavbarComponent } from './navbar/navbar.component';
 
 
 @NgModule({
@@ -56,7 +57,8 @@ import {MatListModule} from '@angular/material/list';
     MedicalStaffComponent,
     QuestionnaireComponent,
     MedicalStaffBloodBankComponent,
-    MedicalStaffRegistrationComponent
+    MedicalStaffRegistrationComponent,
+    NavbarComponent
   ],
   imports: [
     HttpClientModule,
