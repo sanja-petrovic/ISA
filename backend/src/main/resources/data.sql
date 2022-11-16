@@ -42,7 +42,6 @@ uuid_generate_v4()::uuid, 'gugma@gugma.rs'::character varying, 'Gugma'::characte
 returning id;
 
 
-insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'San Patricio', 'Monument', 3.9, 'Cost Accountant', 'Female Perversions', '2022-02-27 23:11:56', '2022-10-01 06:00:21');
 insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Xiaoxi', 'Charing Cross', 4.32, 'Help Desk Operator', 'Miss Representation', '2022-01-05 22:02:15', '2022-10-18 01:43:25');
 insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Mengjia', 'Scoville', 1.11, 'Desktop Support Technician', 'A Matador''s Mistress', '2021-11-18 10:10:39', '2022-07-30 20:15:58');
 insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Phra Pradaeng', 'Maryland', 1.17, 'Food Chemist', 'Union Station', '2022-07-13 16:28:54', '2022-07-21 00:16:00');

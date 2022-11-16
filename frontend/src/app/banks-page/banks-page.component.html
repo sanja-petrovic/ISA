@@ -13,7 +13,7 @@
     <div class="sort-div">
       <mat-form-field>
         <mat-label>Sort by</mat-label>
-        <mat-select [(ngModel)]="sortFilter">
+        <mat-select (selectionChange)="searchBanks()" [(ngModel)]="sortFilter">
           <mat-option value="title-asc">Title, ascending</mat-option>
           <mat-option value="title-desc">Title, descending</mat-option>
           <mat-option value="averageGrade-asc">Rating, ascending</mat-option>
