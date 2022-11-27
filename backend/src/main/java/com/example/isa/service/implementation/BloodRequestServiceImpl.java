@@ -2,6 +2,7 @@ package com.example.isa.service.implementation;
 
 import com.example.isa.dto.BloodRequestDto;
 import com.example.isa.dto.BloodRequestResponseDto;
+import com.example.isa.dto.BloodSupplyDto;
 import com.example.isa.kafka.Producer;
 import com.example.isa.model.BloodBank;
 import com.example.isa.model.BloodRequest;
@@ -34,9 +35,12 @@ public class BloodRequestServiceImpl implements BloodRequestService {
         BloodBank bloodBank = bloodBankService.findByTitle((bloodRequestDto.getBank()));
         BloodType bloodType = BloodType.valueOf(bloodRequestDto.getBloodType() + "_" + bloodRequestDto.getRhFactor());
         if(bloodBank != null) {
-            boolean updated = bloodBankService.updateBloodSupplies(bloodBank, bloodType, bloodRequestDto.getAmount());
-            this.save(bloodRequestDto, bloodType, bloodBank, updated);
-            this.respond(bloodRequestDto.getId(), updated ? "Approved" : "Rejected: The bank could not fulfill this request due to low supplies.");
+            boolean canSend = bloodBankService.updateBloodSupplies(bloodBank, bloodType, bloodRequestDto.getAmount());
+            this.save(bloodRequestDto, bloodType, bloodBank, canSend);
+            this.respond(bloodRequestDto.getId(), canSend ? "Approved" : "Rejected: The bank could not fulfill this request due to low supplies.");
+            if(canSend && bloodRequestDto.isUrgent()) {
+                producer.sendUrgent(new BloodSupplyDto(bloodRequestDto.getId(), bloodRequestDto.getBank(), bloodRequestDto.getBloodType(), bloodRequestDto.getRhFactor(), bloodRequestDto.getAmount()));
+            }
         } else {
             this.respond(bloodRequestDto.getId(), "Rejected: Bank does not exist.");
         }

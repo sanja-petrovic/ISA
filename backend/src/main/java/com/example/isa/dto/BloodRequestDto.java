@@ -17,6 +17,6 @@ public class BloodRequestDto {
     private String BloodType;
     private String RhFactor;
     private double Amount;
-    private boolean IsUrgent;
+    private boolean Urgent;
     private String SendOnDate;
 }

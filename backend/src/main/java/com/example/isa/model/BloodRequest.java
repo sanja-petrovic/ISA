@@ -32,4 +32,6 @@ public class BloodRequest {
     @Column
     @Temporal(TemporalType.TIMESTAMP)
     private Date sendOnDate;
+    @Column
+    private boolean urgent;
 }

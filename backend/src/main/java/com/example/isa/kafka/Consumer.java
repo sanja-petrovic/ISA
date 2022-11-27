@@ -1,6 +1,7 @@
 package com.example.isa.kafka;
 
 import com.example.isa.dto.BloodRequestDto;
+import com.example.isa.service.interfaces.BloodRequestService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,16 +12,18 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class Consumer {
-    private static final String topic = "blood.requests.topic";
     private final ObjectMapper objectMapper;
+    private final BloodRequestService bloodRequestService;
 
-    public Consumer(ObjectMapper objectMapper) {
+    public Consumer(ObjectMapper objectMapper, BloodRequestService bloodRequestService) {
         this.objectMapper = objectMapper;
+        this.bloodRequestService = bloodRequestService;
         this.objectMapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
     }
 
-    @KafkaListener(topics = topic, groupId = "bloodRequests")
+    @KafkaListener(topics = "blood.requests.topic", groupId = "bloodRequests")
     public void consumeMessage(String message) throws JsonProcessingException {
         log.info("message consumed {}", message);
+        bloodRequestService.handleBloodRequest(objectMapper.readValue(message, BloodRequestDto.class));
     }
 }
