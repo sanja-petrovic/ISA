@@ -1,6 +1,7 @@
 package com.example.isa.service.interfaces;
 
 import com.example.isa.model.BloodBank;
+import com.example.isa.model.BloodType;
 import org.springframework.data.domain.Sort;
 
 import java.util.List;
@@ -14,4 +15,5 @@ public interface BloodBankService {
     public List<BloodBank> search(Sort sort, List<String> searchCriteria);
     public BloodBank updateBloodBank(BloodBank bloodBank);
     public BloodBank findByTitle(String title);
+    public boolean updateBloodSupplies(BloodBank bloodBank, BloodType type, Double amount);
 }
