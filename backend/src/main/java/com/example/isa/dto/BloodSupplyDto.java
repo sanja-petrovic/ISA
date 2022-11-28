@@ -11,8 +11,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BloodSupplyDto {
-    private UUID requestId;
-    private String Bank;
+    private UUID RequestId;
     private String BloodType;
     private String RhFactor;
     private double Amount;

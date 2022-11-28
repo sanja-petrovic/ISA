@@ -37,12 +37,13 @@ public class BloodRequestServiceImpl implements BloodRequestService {
         if(bloodBank != null) {
             boolean canSend = bloodBankService.updateBloodSupplies(bloodBank, bloodType, bloodRequestDto.getAmount());
             this.save(bloodRequestDto, bloodType, bloodBank, canSend);
-            this.respond(bloodRequestDto.getId(), canSend ? "Approved" : "Rejected: The bank could not fulfill this request due to low supplies.");
+            this.respond(bloodRequestDto.getId(), canSend ? "APPROVED" : "REJECTED");
             if(canSend && bloodRequestDto.isUrgent()) {
-                producer.sendUrgent(new BloodSupplyDto(bloodRequestDto.getId(), bloodRequestDto.getBank(), bloodRequestDto.getBloodType(), bloodRequestDto.getRhFactor(), bloodRequestDto.getAmount()));
+                producer.sendUrgent(new BloodSupplyDto(bloodRequestDto.getId(), bloodRequestDto.getBloodType(), bloodRequestDto.getRhFactor(), bloodRequestDto.getAmount()));
+                this.respond(bloodRequestDto.getId(), "FULFILLED");
             }
         } else {
-            this.respond(bloodRequestDto.getId(), "Rejected: Bank does not exist.");
+            this.respond(bloodRequestDto.getId(), "FAILED");
         }
     }
 
