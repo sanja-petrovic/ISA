@@ -9,6 +9,7 @@ import com.example.isa.model.BloodRequest;
 import com.example.isa.model.BloodRequestStatus;
 import com.example.isa.model.BloodType;
 import com.example.isa.repository.BloodRequestRepository;
+import com.example.isa.scheduler.Scheduler;
 import com.example.isa.service.interfaces.BloodBankService;
 import com.example.isa.service.interfaces.BloodRequestService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -23,11 +24,13 @@ public class BloodRequestServiceImpl implements BloodRequestService {
     private final BloodBankService bloodBankService;
     private final Producer producer;
     private final BloodRequestRepository bloodRequestRepository;
+    private final Scheduler scheduler;
 
-    public BloodRequestServiceImpl(BloodBankService bloodBankService, Producer producer, BloodRequestRepository bloodRequestRepository) {
+    public BloodRequestServiceImpl(BloodBankService bloodBankService, Producer producer, BloodRequestRepository bloodRequestRepository, Scheduler scheduler) {
         this.bloodBankService = bloodBankService;
         this.producer = producer;
         this.bloodRequestRepository = bloodRequestRepository;
+        this.scheduler = scheduler;
     }
 
     @Override
@@ -37,10 +40,15 @@ public class BloodRequestServiceImpl implements BloodRequestService {
         if(bloodBank != null) {
             boolean canSend = bloodBankService.updateBloodSupplies(bloodBank, bloodType, bloodRequestDto.getAmount());
             this.save(bloodRequestDto, bloodType, bloodBank, canSend);
-            this.respond(bloodRequestDto.getId(), canSend ? "APPROVED" : "REJECTED");
-            if(canSend && bloodRequestDto.isUrgent()) {
-                producer.sendUrgent(new BloodSupplyDto(bloodRequestDto.getId(), bloodRequestDto.getBloodType(), bloodRequestDto.getRhFactor(), bloodRequestDto.getAmount()));
-                this.respond(bloodRequestDto.getId(), "FULFILLED");
+            this.respond(bloodRequestDto.getId(), canSend ? "APPROVED_BY_BANK" : "REJECTED_BY_BANK");
+            if(canSend) {
+                BloodSupplyDto bloodSupplyDto = new BloodSupplyDto(bloodRequestDto.getId(), bloodRequestDto.getBloodType(), bloodRequestDto.getRhFactor(), bloodRequestDto.getAmount());
+                if(bloodRequestDto.isUrgent()) {
+                    producer.send(bloodSupplyDto);
+                    this.respond(bloodRequestDto.getId(), "FULFILLED");
+                } else {
+                    scheduler.sendScheduledBloodSupply(producer, bloodSupplyDto, bloodRequestDto.getSendOnDate());
+                }
             }
         } else {
             this.respond(bloodRequestDto.getId(), "FAILED");
@@ -62,7 +70,7 @@ public class BloodRequestServiceImpl implements BloodRequestService {
                 .amount(bloodRequestDto.getAmount())
                 .bloodBank(bloodBank)
                 .receivedDate(new Date(System.currentTimeMillis()))
-                .sendOnDate(new Date(bloodRequestDto.getSendOnDate())) //TODO: parse date properly
+                .sendOnDate(bloodRequestDto.getSendOnDate()) //TODO: parse date properly
                 .status(updated ? BloodRequestStatus.APPROVED : BloodRequestStatus.REJECTED)
                 .build();
         bloodRequestRepository.save(bloodRequest);

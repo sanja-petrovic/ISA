@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Getter
@@ -18,5 +19,5 @@ public class BloodRequestDto {
     private String RhFactor;
     private double Amount;
     private boolean Urgent;
-    private String SendOnDate;
+    private Date SendOnDate;
 }
