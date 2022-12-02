@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
+import java.text.ParseException;
+
 @Component
 @Slf4j
 public class Consumer {
@@ -18,11 +20,10 @@ public class Consumer {
     public Consumer(ObjectMapper objectMapper, BloodRequestService bloodRequestService) {
         this.objectMapper = objectMapper;
         this.bloodRequestService = bloodRequestService;
-        this.objectMapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
     }
 
     @KafkaListener(topics = "blood.requests.topic", groupId = "bloodRequests")
-    public void consumeMessage(String message) throws JsonProcessingException {
+    public void consumeMessage(String message) throws JsonProcessingException, ParseException {
         log.info("message consumed {}", message);
         bloodRequestService.handleBloodRequest(objectMapper.readValue(message, BloodRequestDto.class));
     }

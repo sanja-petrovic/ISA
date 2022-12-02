@@ -18,6 +18,8 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
@@ -41,27 +43,22 @@ public class BloodRequestServiceImpl implements BloodRequestService {
     }
 
     @Override
-    public void handleBloodRequest(BloodRequestDto bloodRequestDto) throws JsonProcessingException {
-        BloodBank bloodBank = bloodBankService.findByTitle((bloodRequestDto.getBank()));
-        BloodType bloodType = BloodType.valueOf(bloodRequestDto.getBloodType() + "_" + bloodRequestDto.getRhFactor());
+    public void handleBloodRequest(BloodRequestDto bloodRequestDto) throws JsonProcessingException, ParseException {
+        BloodBank bloodBank = bloodBankService.findByTitle((bloodRequestDto.getBloodBank()));
+
+        BloodType bloodType = BloodType.valueOf(bloodRequestDto.getBloodType().split(" ")[0] + "_" + bloodRequestDto.getBloodType().split(" ")[1]);
+        System.out.println(bloodType);
         if(bloodBank != null) {
             boolean canSend = bloodBankService.updateBloodSupplies(bloodBank, bloodType, bloodRequestDto.getAmount());
             this.save(bloodRequestDto, bloodType, bloodBank, canSend);
             this.respond(bloodRequestDto.getId(), canSend ? "APPROVED_BY_BANK" : "REJECTED_BY_BANK");
             if(canSend) {
-                BloodSupplyDto bloodSupplyDto = new BloodSupplyDto(bloodRequestDto.getId(), bloodRequestDto.getBloodType(), bloodRequestDto.getRhFactor(), bloodRequestDto.getAmount());
+                BloodSupplyDto bloodSupplyDto = new BloodSupplyDto(bloodRequestDto.getId(), bloodRequestDto.getBloodType(), bloodRequestDto.getAmount());
                 if(bloodRequestDto.isUrgent()) {
                     producer.send(bloodSupplyDto);
                     this.respond(bloodRequestDto.getId(), "FULFILLED");
                 } else {
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.set(Calendar.YEAR, 2022);
-                    calendar.set(Calendar.MONTH, Calendar.DECEMBER);
-                    calendar.set(Calendar.DAY_OF_MONTH, 2);
-                    calendar.set(Calendar.HOUR_OF_DAY, 20);
-                    calendar.set(Calendar.MINUTE, 00);
-                    calendar.set(Calendar.SECOND, 0);
-                    Date date = calendar.getTime();
+                    Date date = new SimpleDateFormat("dd-MM-yyyy HH:mm").parse(bloodRequestDto.getSendOnDate());
                     scheduler.sendScheduledBloodSupply(producer, bloodSupplyDto, date);
                 }
             }
@@ -90,15 +87,15 @@ public class BloodRequestServiceImpl implements BloodRequestService {
         producer.send(response);
     }
 
-    public void save(BloodRequestDto bloodRequestDto, BloodType bloodType, BloodBank bloodBank, boolean updated) {
+    public void save(BloodRequestDto bloodRequestDto, BloodType bloodType, BloodBank bloodBank, boolean canSend) throws ParseException {
         BloodRequest bloodRequest = BloodRequest.builder()
                 .id(bloodRequestDto.getId())
                 .bloodType(bloodType)
                 .amount(bloodRequestDto.getAmount())
                 .bloodBank(bloodBank)
                 .receivedDate(new Date(System.currentTimeMillis()))
-                .sendOnDate(bloodRequestDto.getSendOnDate()) //TODO: parse date properly
-                .status(updated ? BloodRequestStatus.APPROVED : BloodRequestStatus.REJECTED)
+                .sendOnDate(new SimpleDateFormat("dd-MM-yyyy HH:mm").parse(bloodRequestDto.getSendOnDate()))
+                .status(canSend ? BloodRequestStatus.APPROVED : BloodRequestStatus.REJECTED)
                 .build();
         bloodRequestRepository.save(bloodRequest);
     }

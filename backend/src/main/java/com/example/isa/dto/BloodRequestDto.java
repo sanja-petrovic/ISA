@@ -13,11 +13,10 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BloodRequestDto {
-    private UUID Id;
-    private String Bank;
-    private String BloodType;
-    private String RhFactor;
-    private double Amount;
-    private boolean Urgent;
-    private Date SendOnDate;
+    private UUID id;
+    private String bloodBank;
+    private String bloodType;
+    private double amount;
+    private boolean isUrgent;
+    private String sendOnDate;
 }
