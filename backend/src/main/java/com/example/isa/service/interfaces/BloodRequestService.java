@@ -5,4 +5,5 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 public interface BloodRequestService {
     void handleBloodRequest(BloodRequestDto bloodRequestDto) throws JsonProcessingException;
+    void test();
 }

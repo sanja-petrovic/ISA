@@ -16,7 +16,8 @@ public class Scheduler {
         this.threadPoolTaskScheduler = threadPoolTaskScheduler;
     }
 
-    @PostConstruct
+
+    //@PostConstruct
     public void sendScheduledBloodSupply(Producer producer, BloodSupplyDto message, Date date) {
         threadPoolTaskScheduler.schedule(new ScheduledMessageSender(producer, message), date);
     }

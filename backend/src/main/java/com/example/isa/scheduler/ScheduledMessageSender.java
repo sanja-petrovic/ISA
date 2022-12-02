@@ -15,10 +15,7 @@ public class ScheduledMessageSender implements Runnable {
 
     @Override
     public void run() {
-        try {
-            this.producer.send(message);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+        System.out.println("It's me, hi");
+        //this.producer.send(message);
     }
 }
