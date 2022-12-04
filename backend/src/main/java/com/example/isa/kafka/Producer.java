@@ -36,9 +36,9 @@ public class Producer {
     }
 
     public void send(BloodSupplyDto bloodSupplyDto) throws JsonProcessingException {
-        String topic = "blood.supplies.topic";
+        String topic = "requested.blood.topic";
         String responseAsMessage = objectMapper.writeValueAsString(bloodSupplyDto);
         kafkaTemplate.send(topic, responseAsMessage);
-        log.info("Blood supply to hospital, request id {}, sent: {}", bloodSupplyDto.getRequestId(), responseAsMessage);
+        log.info("Blood supply to hospital, sent: {}", responseAsMessage);
     }
 }

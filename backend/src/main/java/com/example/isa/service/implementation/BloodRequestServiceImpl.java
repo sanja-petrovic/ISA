@@ -53,13 +53,14 @@ public class BloodRequestServiceImpl implements BloodRequestService {
             this.save(bloodRequestDto, bloodType, bloodBank, canSend);
             this.respond(bloodRequestDto.getId(), canSend ? "APPROVED_BY_BANK" : "REJECTED_BY_BANK");
             if(canSend) {
-                BloodSupplyDto bloodSupplyDto = new BloodSupplyDto(bloodRequestDto.getId(), bloodRequestDto.getBloodType(), bloodRequestDto.getAmount());
+                BloodSupplyDto bloodSupplyDto = new BloodSupplyDto(bloodRequestDto.getBloodType(), bloodRequestDto.getAmount());
                 if(bloodRequestDto.isUrgent()) {
                     producer.send(bloodSupplyDto);
                     this.respond(bloodRequestDto.getId(), "FULFILLED");
                 } else {
-                    Date date = new SimpleDateFormat("dd-MM-yyyy HH:mm").parse(bloodRequestDto.getSendOnDate());
+                    Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(bloodRequestDto.getSendOnDate());
                     scheduler.sendScheduledBloodSupply(producer, bloodSupplyDto, date);
+                    this.respond(bloodRequestDto.getId(), "FULFILLED");
                 }
             }
         } else {

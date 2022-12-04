@@ -17,6 +17,7 @@ public class Scheduler {
     }
 
     public void sendScheduledBloodSupply(Producer producer, BloodSupplyDto message, Date date) {
+        System.out.println(date);
         threadPoolTaskScheduler.schedule(new ScheduledMessageSender(producer, message), date);
     }
 }
