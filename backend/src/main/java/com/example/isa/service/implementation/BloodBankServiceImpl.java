@@ -1,6 +1,8 @@
 package com.example.isa.service.implementation;
 
 import com.example.isa.model.BloodBank;
+import com.example.isa.model.BloodSupply;
+import com.example.isa.model.BloodType;
 import com.example.isa.repository.BloodBankRepository;
 import com.example.isa.service.interfaces.BloodBankService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,6 +72,20 @@ public class BloodBankServiceImpl implements BloodBankService {
     @Override
     public BloodBank findByTitle(String title) {
         return repository.findAllByTitleIgnoreCase(title).orElse(null);
-
     }
+
+    @Override
+    public boolean updateBloodSupplies(BloodBank bloodBank, BloodType type, Double amount) {
+        for(BloodSupply bloodSupply : bloodBank.getBloodSupplies()) {
+            if(bloodSupply.getType().equals(type) && bloodSupply.getAmount() - amount >= 0) {
+                bloodSupply.setAmount(bloodSupply.getAmount() - amount);
+                repository.save(bloodBank);
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
 }

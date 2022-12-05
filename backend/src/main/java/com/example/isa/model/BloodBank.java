@@ -3,7 +3,6 @@ package com.example.isa.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Builder;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -37,7 +36,7 @@ public class BloodBank {
     private Set<MedicalStaff> medicalStaff;
 
     @JsonBackReference
-    @OneToMany(mappedBy = "bloodBank", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "bloodBank", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<BloodSupply> bloodSupplies;
 
     @OneToMany(mappedBy = "bloodBank", orphanRemoval = true)
