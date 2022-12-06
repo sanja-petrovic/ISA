@@ -35,6 +35,8 @@ public class BloodSubscription {
     private double amount;
     @Column
     private Date deliveryDate;
+    @Column
+    private boolean active;
     @ManyToOne
     @JoinColumn(name = "blood_bank_id")
     private BloodBank bloodBank;
