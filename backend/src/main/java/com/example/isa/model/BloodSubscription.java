@@ -17,6 +17,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import springfox.documentation.swagger.web.SwaggerApiListingReader;
 @Getter
 @Setter
 @AllArgsConstructor
@@ -27,18 +28,30 @@ uniqueConstraints = {@UniqueConstraint(columnNames = {"blood_bank_id", "type"})}
 
 public class BloodSubscription {
 	@Id
-    private UUID id;
+    private UUID id = UUID.randomUUID();
 	@Column
     @Enumerated(EnumType.STRING)
     private BloodType type;
     @Column
     private double amount;
     @Column
-    private Date deliveryDate;
+    private int deliveryDate;
     @Column
     private boolean active;
+    @Column
+    private String originId; 
     @ManyToOne
     @JoinColumn(name = "blood_bank_id")
     private BloodBank bloodBank;
+	public BloodSubscription(BloodType type, double amount, int deliveryDate, boolean active,String originid, BloodBank bloodBank) {
+		super();
+		this.id = UUID.randomUUID();
+		this.type = type;
+		this.amount = amount;
+		this.deliveryDate = deliveryDate;
+		this.active = active;
+		this.originId = originid;
+		this.bloodBank = bloodBank;
+	}
 
 }
