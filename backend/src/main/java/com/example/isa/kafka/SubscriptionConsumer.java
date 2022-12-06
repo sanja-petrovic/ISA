@@ -19,12 +19,11 @@ import lombok.extern.slf4j.Slf4j;
 public class SubscriptionConsumer {
 	private final ObjectMapper objectMapper;
     private final BloodSubscriptionService bloodSubscriptionService;
-    private final SubscriptionSignUpConverter converter;
+
     
-    public SubscriptionConsumer(ObjectMapper objectMapper,BloodSubscriptionService bloodSubscriptionService,SubscriptionSignUpConverter converter) {
+    public SubscriptionConsumer(ObjectMapper objectMapper,BloodSubscriptionService bloodSubscriptionService) {
     	this.objectMapper = objectMapper;
     	this.bloodSubscriptionService = bloodSubscriptionService;
-    	this.converter = converter;
     }
     
     @KafkaListener(topics = "blood.subscriptions.topic", groupId = "bloodSubscriptions")
@@ -32,7 +31,7 @@ public class SubscriptionConsumer {
     	log.info("message consumed {}", message);
     	BloodSubscriptionSignUpDto dto = objectMapper.readValue(message, BloodSubscriptionSignUpDto.class);
     	try{
-    		bloodSubscriptionService.registerMultiple(converter.Convert(dto));
+    		bloodSubscriptionService.handleRegistration(dto);
     	}
     	catch(Exception e){
     		log.info(e.toString());

@@ -5,7 +5,9 @@ import java.util.UUID;
 
 import org.springframework.data.domain.Sort;
 
+import com.example.isa.dto.BloodSubscriptionSignUpDto;
 import com.example.isa.model.BloodSubscription;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 
 public interface BloodSubscriptionService {
@@ -15,4 +17,5 @@ public interface BloodSubscriptionService {
     public BloodSubscription getById(UUID id);
     public List<BloodSubscription> getByBankId(UUID id);
     public BloodSubscription updateBloodSubscription(BloodSubscription bloodSubscription);
+    public void handleRegistration(BloodSubscriptionSignUpDto dto) throws JsonProcessingException;
 }
