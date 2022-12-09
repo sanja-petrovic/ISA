@@ -14,7 +14,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class SubscriptionSignUpResponceDto {
+public class SubscriptionResponceDto {
 	public String SubscriptionId;
 	public String messageString;
 }
