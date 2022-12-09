@@ -1,5 +1,6 @@
 package com.example.isa.service.implementation;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -62,6 +63,16 @@ public class BloodSubscriptionServiceImpl implements BloodSubscriptionService{
 	@Override
 	public BloodSubscription updateBloodSubscription(BloodSubscription bloodSubscription) {
 		return repository.save(bloodSubscription);
+	}
+
+	@Override
+	public List<BloodSubscription> findAllUpcomminActive(Date firstInMonth, int dayOffset) {
+		return repository.findAllUpcomminActive(firstInMonth, dayOffset);
+	}
+
+	@Override
+	public List<BloodSubscription> findAllTodayActive(Date firstInMonth) {
+		return repository.findAllTodayActive(firstInMonth);
 	}
 	
 
