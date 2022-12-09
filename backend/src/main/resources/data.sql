@@ -56,6 +56,7 @@ insert into public.blood_banks (id, city, street, average_grade, description, ti
 insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Kragujevac', 'Gulseth', 4.34, 'Programmer I', 'Kinky Boots', '2022-05-01 18:16:24', '2022-07-22 11:59:58');
 insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Belgrade', 'Porter', 3.1, 'Geological Engineer', 'Witchboard', '2022-06-24 14:54:12', '2022-11-04 02:13:20');
 insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Pančevo', 'Helena', 1.48, 'Database Administrator III', 'Tiger''s Tail, The', '2022-01-04 09:56:07', '2021-12-01 14:48:08');
+insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Pančevo', 'Helena', 1.48, 'Database Administrator III', 'string', '2022-01-04 09:56:07', '2021-12-01 14:48:08');
 INSERT INTO public.blood_supplies(
     id, amount, type, blood_bank_id)
 VALUES ('d8d728de-e763-40c3-b06c-e50695b29e34', 50000, 'A_POSITIVE', 'b860f75c-c83a-4fe3-ad52-b9344a106be1');
