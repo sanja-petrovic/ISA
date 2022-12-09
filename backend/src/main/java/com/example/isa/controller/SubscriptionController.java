@@ -37,7 +37,7 @@ public class SubscriptionController {
 		if(subscriptions != null) {
 			for(BloodSubscription subscription : subscriptions) {
 				if(!subscription.getBloodBank().checkBloodSupply(subscription.getType(), subscription.getAmount())) {
-					SubscriptionResponceDto responceDto = new SubscriptionResponceDto(subscription.getOriginId(),"UPCOMING-DELIVERY-FAIL");
+					SubscriptionResponceDto responceDto = new SubscriptionResponceDto(subscription.getOriginId(),"UPCOMING-DELIVERY-FAIL"+ ":"+subscription.getType());
 					producer.send(responceDto);
 				}
 			}
@@ -53,11 +53,11 @@ public class SubscriptionController {
 		for(BloodSubscription subscription : subscriptions) {
 			if(subscription.getBloodBank().checkBloodSupply(subscription.getType(), subscription.getAmount())) {
 				if(bankService.updateBloodSupplies(subscription.getBloodBank(), subscription.getType(), subscription.getAmount())) {
-					SubscriptionResponceDto responceDto = new SubscriptionResponceDto(subscription.getOriginId(),"DELIVERY-SUCCESS");
+					SubscriptionResponceDto responceDto = new SubscriptionResponceDto(subscription.getOriginId(),"DELIVERY-SUCCESS" + ":"+subscription.getType());
 					producer.send(responceDto);
 				}
 			}
-			SubscriptionResponceDto responceDto = new SubscriptionResponceDto(subscription.getOriginId(),"DELIVERY-FAIL");
+			SubscriptionResponceDto responceDto = new SubscriptionResponceDto(subscription.getOriginId(),"DELIVERY-FAIL"+ ":"+subscription.getType());
 			producer.send(responceDto);
 		}
 	}
