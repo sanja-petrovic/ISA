@@ -27,4 +27,7 @@ public class Appointment {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn
     private BloodBank bloodBank;
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "patient_id")
+    private Patient patient;
 }
