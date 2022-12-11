@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.example.isa.model.Appointment;
 import com.example.isa.repository.AppointmentRepository;
 import com.example.isa.service.interfaces.AppointmentService;
+import com.example.isa.util.DateConvertor;
 
 @Service
 public class AppointmentServiceImpl implements AppointmentService{
@@ -36,6 +37,12 @@ public class AppointmentServiceImpl implements AppointmentService{
 
 	@Override
 	public Appointment create(Appointment appointment) {
+		List<Appointment> listScheduled = repository.getByBloodBankForDate(appointment.getBloodBank().getId(), DateConvertor.convert(appointment.getDateTime()).toLocalDate());
+		for(Appointment scheduled : listScheduled) {
+			if(scheduled.hasDateTimeOverlap(DateConvertor.convert(appointment.getDateTime()), appointment.getDuration())) {
+				return null;
+			}
+		}
 		return repository.save(appointment);
 	}
 
