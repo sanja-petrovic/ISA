@@ -16,8 +16,10 @@ import com.example.isa.model.BloodSubscription;
 
 public interface BloodSubscriptionRepository extends JpaRepository<BloodSubscription, UUID>{
 	
-	@Query("from BloodSubscription sub where sub.active = true and ?1+sub.deliveryDate-?2-1 = current_date")
-	public List<BloodSubscription>findAllUpcomminActive(Date firstInMonth, int dayOffset);
-	@Query("from BloodSubscription sub where sub.active = true and ?1+sub.deliveryDate-1 = current_date")
-	public List<BloodSubscription>findAllTodayActive(Date firstInMonth);
+	@Query("from BloodSubscription sub where sub.active = true and"
+			+ " DATE(?1) +sub.deliveryDate-?2-1 = current_date")
+	public List<BloodSubscription>findAllUpcomminActive(String date, int dayOffset);
+	@Query("from BloodSubscription sub where sub.active = true and"
+			+ " DATE(?1)+sub.deliveryDate-1 = current_date")
+	public List<BloodSubscription>findAllTodayActive(String date);
 }

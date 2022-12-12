@@ -19,6 +19,6 @@ public interface BloodSubscriptionService {
     public List<BloodSubscription> getByBankId(UUID id);
     public BloodSubscription updateBloodSubscription(BloodSubscription bloodSubscription);
     public void handleRegistration(BloodSubscriptionSignUpDto dto) throws JsonProcessingException;
-    public List<BloodSubscription>findAllUpcomminActive(Date firstInMonth, int dayOffset);
-    public List<BloodSubscription>findAllTodayActive(Date firstInMonth);
+    public List<BloodSubscription>findAllUpcomminActive(String date, int dayOffset);
+    public List<BloodSubscription>findAllTodayActive(String date);
 }

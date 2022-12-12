@@ -28,32 +28,38 @@ public class SubscriptionController {
 		this.bankService = bankService;
 		this.producer = producer;
 	}
-	@Scheduled(cron = "$0 2 * * *")
+	//@Scheduled(cron = "$0 2 * * *")
+	@Scheduled(cron = "1 * * * * *")
 	public void checkUpcoming() throws JsonProcessingException {
+		System.out.println("Starter check");
 		ZoneId defaultZoneId = ZoneId.systemDefault();
 		LocalDate firstInMonthDate = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1);
-		List<BloodSubscription> subscriptions = service.findAllUpcomminActive(Date.from(firstInMonthDate.atStartOfDay(defaultZoneId).toInstant()), 3);
+		List<BloodSubscription> subscriptions = service.findAllUpcomminActive(firstInMonthDate.toString(), 3);
 		
 		if(subscriptions != null) {
 			for(BloodSubscription subscription : subscriptions) {
 				if(!subscription.getBloodBank().checkBloodSupply(subscription.getType(), subscription.getAmount())) {
 					SubscriptionResponceDto responceDto = new SubscriptionResponceDto(subscription.getOriginId(),"UPCOMING-DELIVERY-FAIL"+ ":"+subscription.getType());
+					System.out.println(responceDto.toString());
 					producer.send(responceDto);
 				}
 			}
 		}
 	}
-	@Scheduled(cron = "$0 4 * * *")
+	//@Scheduled(cron = "$0 4 * * *")
+	@Scheduled(cron = "1 * * * * *")
 	public void sendBlood() throws JsonProcessingException {
+		System.out.println("Started sending");
 		ZoneId defaultZoneId = ZoneId.systemDefault();
 		LocalDate firstInMonthDate = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1);
-		List<BloodSubscription> subscriptions = service.findAllTodayActive(Date.from(firstInMonthDate.atStartOfDay(defaultZoneId).toInstant()));
+		List<BloodSubscription> subscriptions = service.findAllTodayActive(firstInMonthDate.toString());
 		
 		if(subscriptions == null) return;
 		for(BloodSubscription subscription : subscriptions) {
 			if(subscription.getBloodBank().checkBloodSupply(subscription.getType(), subscription.getAmount())) {
 				if(bankService.updateBloodSupplies(subscription.getBloodBank(), subscription.getType(), subscription.getAmount())) {
 					SubscriptionResponceDto responceDto = new SubscriptionResponceDto(subscription.getOriginId(),"DELIVERY-SUCCESS" + ":"+subscription.getType());
+					System.out.println(responceDto.toString());
 					producer.send(responceDto);
 				}
 			}

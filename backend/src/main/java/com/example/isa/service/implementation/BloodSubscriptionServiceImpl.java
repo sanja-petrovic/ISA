@@ -35,6 +35,7 @@ public class BloodSubscriptionServiceImpl implements BloodSubscriptionService{
 	public void handleRegistration(BloodSubscriptionSignUpDto dto) throws JsonProcessingException {
 		this.registerMultiple(converter.Convert(dto));
 		SubscriptionResponceDto responceDto = new SubscriptionResponceDto(dto.SubscriptionId,"SUBSCRIPTION-SUCCESS");
+		System.out.println(responceDto.toString());
 		producer.send(responceDto);
 	}
 	@Override
@@ -66,13 +67,13 @@ public class BloodSubscriptionServiceImpl implements BloodSubscriptionService{
 	}
 
 	@Override
-	public List<BloodSubscription> findAllUpcomminActive(Date firstInMonth, int dayOffset) {
-		return repository.findAllUpcomminActive(firstInMonth, dayOffset);
+	public List<BloodSubscription> findAllUpcomminActive(String date, int dayOffset) {
+		return repository.findAllUpcomminActive(date, dayOffset);
 	}
 
 	@Override
-	public List<BloodSubscription> findAllTodayActive(Date firstInMonth) {
-		return repository.findAllTodayActive(firstInMonth);
+	public List<BloodSubscription> findAllTodayActive(String date) {
+		return repository.findAllTodayActive(date);
 	}
 	
 
