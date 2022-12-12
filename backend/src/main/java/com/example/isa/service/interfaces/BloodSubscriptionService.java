@@ -1,5 +1,6 @@
 package com.example.isa.service.interfaces;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,4 +19,6 @@ public interface BloodSubscriptionService {
     public List<BloodSubscription> getByBankId(UUID id);
     public BloodSubscription updateBloodSubscription(BloodSubscription bloodSubscription);
     public void handleRegistration(BloodSubscriptionSignUpDto dto) throws JsonProcessingException;
+    public List<BloodSubscription>findAllUpcomminActive(String date, int dayOffset);
+    public List<BloodSubscription>findAllTodayActive(String date);
 }
