@@ -14,6 +14,9 @@ import com.example.isa.scheduler.Scheduler;
 import com.example.isa.service.interfaces.BloodBankService;
 import com.example.isa.service.interfaces.BloodRequestService;
 import com.fasterxml.jackson.core.JsonProcessingException;
+
+import net.bytebuddy.asm.Advice.OffsetMapping.ForOrigin.Renderer.ForReturnTypeName;
+
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Service;
 
@@ -67,7 +70,23 @@ public class BloodRequestServiceImpl implements BloodRequestService {
             this.respond(bloodRequestDto.getId(), "FAILED");
         }
     }
+	@Override
+	public BloodSupplyDto handleManagerRequest(BloodRequestDto bloodRequestDto) throws ParseException {
+		BloodBank bloodBank = bloodBankService.findByTitle((bloodRequestDto.getBloodBank()));
 
+        BloodType bloodType = BloodType.valueOf(bloodRequestDto.getBloodType().split(" ")[0] + "_" + bloodRequestDto.getBloodType().split(" ")[1]);
+        System.out.println(bloodType);
+        if(bloodBank != null) {
+            boolean canSend = bloodBankService.updateBloodSupplies(bloodBank, bloodType, bloodRequestDto.getAmount());
+            this.save(bloodRequestDto, bloodType, bloodBank, canSend);
+            if(canSend) {
+                BloodSupplyDto bloodSupplyDto = new BloodSupplyDto(bloodRequestDto.getBloodType(), bloodRequestDto.getAmount());
+                return bloodSupplyDto;
+            }
+        } 
+        return null;
+		
+	}
     public void test() {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, 2022);
