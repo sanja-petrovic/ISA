@@ -16,5 +16,5 @@ public interface BloodBankService {
     BloodBank updateBloodBank(BloodBank bloodBank);
     BloodBank findByTitle(String title);
     BloodBank findBankWithMostSupplies(BloodType type, Double amount);
-    void updateBloodSupplies(BloodBank bloodBank, BloodType type, Double amount);
+    boolean updateBloodSupplies(BloodBank bloodBank, BloodType type, Double amount);
 }

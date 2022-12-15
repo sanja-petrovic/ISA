@@ -92,13 +92,16 @@ public class BloodBankServiceImpl implements BloodBankService {
     }
 
     @Override
-    public void updateBloodSupplies(BloodBank bloodBank, BloodType type, Double amount) {
+    public boolean updateBloodSupplies(BloodBank bloodBank, BloodType type, Double amount) {
         for(BloodSupply bloodSupply : bloodBank.getBloodSupplies()) {
             if(bloodSupply.getType().equals(type) && bloodSupply.getAmount() - amount >= 0) {
                 bloodSupply.setAmount(bloodSupply.getAmount() - amount);
                 repository.save(bloodBank);
+                return true;
             }
         }
+
+        return false;
     }
 
 

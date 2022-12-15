@@ -72,7 +72,7 @@ public class BloodRequestServiceImpl implements BloodRequestService {
             boolean canSend = bloodBankService.updateBloodSupplies(bloodBank, bloodType, bloodRequestDto.getAmount());
             this.save(bloodRequestDto, bloodType, bloodBank, canSend);
             if(canSend) {
-                BloodSupplyDto bloodSupplyDto = new BloodSupplyDto(bloodRequestDto.getBloodType(), bloodRequestDto.getAmount());
+                BloodSupplyDto bloodSupplyDto = new BloodSupplyDto(bloodRequestDto.getId(), bloodRequestDto.getBloodType(), bloodRequestDto.getAmount());
                 return bloodSupplyDto;
             }
         } 
