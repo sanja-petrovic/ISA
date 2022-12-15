@@ -42,7 +42,7 @@ uuid_generate_v4()::uuid, 'gugma@gugma.rs'::character varying, 'Gugma'::characte
 returning id;
 
 
-insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values ('b860f75c-c83a-4fe3-ad52-b9344a106be1', 'Novi Sad', 'Charing Cross', 4.32, 'Help Desk Operator', 'Bankica', '2022-01-05 22:02:15', '2022-10-18 01:43:25');
+insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Novi Sad', 'Charing Cross', 4.32, 'Help Desk Operator', 'Bankica', '2022-01-05 22:02:15', '2022-10-18 01:43:25');
 insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Belgrade', 'Scoville', 1.11, 'Desktop Support Technician', 'A Matador''s Mistress', '2021-11-18 10:10:39', '2022-07-30 20:15:58');
 insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Zrenjanin', 'Maryland', 1.17, 'Food Chemist', 'Union Station', '2022-07-13 16:28:54', '2022-07-21 00:16:00');
 insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Novi Sad', 'Mccormick', 4.66, 'Environmental Specialist', 'Every Man for Himself (Slow Motion) (Sauve qui peut (la vie))', '2021-11-16 06:52:10', '2022-06-09 14:32:40');
@@ -56,6 +56,7 @@ insert into public.blood_banks (id, city, street, average_grade, description, ti
 insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Kragujevac', 'Gulseth', 4.34, 'Programmer I', 'Kinky Boots', '2022-05-01 18:16:24', '2022-07-22 11:59:58');
 insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Belgrade', 'Porter', 3.1, 'Geological Engineer', 'Witchboard', '2022-06-24 14:54:12', '2022-11-04 02:13:20');
 insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Pančevo', 'Helena', 1.48, 'Database Administrator III', 'Tiger''s Tail, The', '2022-01-04 09:56:07', '2021-12-01 14:48:08');
+insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values ('b860f75c-c83a-4fe3-ad52-b9344a106be1', 'Pančevo', 'Helena', 1.48, 'Database Administrator III', 'string', '2022-01-04 09:56:07', '2021-12-01 14:48:08');
 INSERT INTO public.blood_supplies(
     id, amount, type, blood_bank_id)
 VALUES ('d8d728de-e763-40c3-b06c-e50695b29e34', 50000, 'A_POSITIVE', 'b860f75c-c83a-4fe3-ad52-b9344a106be1');

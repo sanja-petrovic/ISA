@@ -57,5 +57,14 @@ public class BloodBank {
         this.description = description;
         this.averageGrade = averageGrade;
     }
+    
+    public boolean checkBloodSupply(BloodType type, double amount) {
+    	for(BloodSupply supply : this.bloodSupplies) {
+    		if(supply.getType().equals(type) && supply.getAmount()>=amount) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
 
 }
