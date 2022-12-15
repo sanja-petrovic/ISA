@@ -14,7 +14,6 @@ import java.util.UUID;
 @NoArgsConstructor
 public class BloodRequestDto {
     private UUID id;
-    private String bloodBank;
     private String bloodType;
     private double amount;
     private boolean urgent;

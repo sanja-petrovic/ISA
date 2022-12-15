@@ -9,7 +9,6 @@ import com.example.isa.model.BloodRequest;
 import com.example.isa.model.BloodRequestStatus;
 import com.example.isa.model.BloodType;
 import com.example.isa.repository.BloodRequestRepository;
-import com.example.isa.scheduler.ScheduledMessageSender;
 import com.example.isa.scheduler.Scheduler;
 import com.example.isa.service.interfaces.BloodBankService;
 import com.example.isa.service.interfaces.BloodRequestService;
@@ -17,7 +16,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -44,27 +42,21 @@ public class BloodRequestServiceImpl implements BloodRequestService {
 
     @Override
     public void handleBloodRequest(BloodRequestDto bloodRequestDto) throws JsonProcessingException, ParseException {
-        BloodBank bloodBank = bloodBankService.findByTitle((bloodRequestDto.getBloodBank()));
-
         BloodType bloodType = BloodType.valueOf(bloodRequestDto.getBloodType().split(" ")[0] + "_" + bloodRequestDto.getBloodType().split(" ")[1]);
-        System.out.println(bloodType);
-        if(bloodBank != null) {
-            boolean canSend = bloodBankService.updateBloodSupplies(bloodBank, bloodType, bloodRequestDto.getAmount());
-            this.save(bloodRequestDto, bloodType, bloodBank, canSend);
-            this.respond(bloodRequestDto.getId(), canSend ? "APPROVED_BY_BANK" : "REJECTED_BY_BANK");
-            if(canSend) {
-                BloodSupplyDto bloodSupplyDto = new BloodSupplyDto(bloodRequestDto.getBloodType(), bloodRequestDto.getAmount());
-                if(bloodRequestDto.isUrgent()) {
-                    producer.send(bloodSupplyDto);
-                    this.respond(bloodRequestDto.getId(), "FULFILLED");
-                } else {
-                    Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(bloodRequestDto.getSendOnDate());
-                    scheduler.sendScheduledBloodSupply(producer, bloodSupplyDto, date);
-                    this.respond(bloodRequestDto.getId(), "FULFILLED");
-                }
+        BloodBank bloodBank = bloodBankService.findBankWithMostSupplies(bloodType, bloodRequestDto.getAmount());
+        boolean canSend = bloodBank != null;
+        this.save(bloodRequestDto, bloodType, bloodBank, canSend);
+        this.respond(bloodRequestDto.getId(), canSend ? "APPROVED_BY_BANK" : "REJECTED_BY_BANK");
+        if (canSend) {
+            bloodBankService.updateBloodSupplies(bloodBank, bloodType, bloodRequestDto.getAmount());
+            BloodSupplyDto bloodSupplyDto = new BloodSupplyDto(bloodRequestDto.getId(), bloodRequestDto.getBloodType(), bloodRequestDto.getAmount());
+            if (bloodRequestDto.isUrgent()) {
+                producer.send(bloodSupplyDto);
+                this.respond(bloodRequestDto.getId(), "FULFILLED");
+            } else {
+                Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(bloodRequestDto.getSendOnDate());
+                scheduler.sendScheduledBloodSupply(producer, bloodSupplyDto, date);
             }
-        } else {
-            this.respond(bloodRequestDto.getId(), "FAILED");
         }
     }
 
@@ -80,24 +72,14 @@ public class BloodRequestServiceImpl implements BloodRequestService {
         System.out.println(date);
         scheduler.sendScheduledBloodSupply(producer, null, date);
     }
+
     private void respond(UUID requestId, String status) throws JsonProcessingException {
-        BloodRequestResponseDto response = BloodRequestResponseDto.builder()
-                .requestId(requestId)
-                .status(status)
-                .build();
+        BloodRequestResponseDto response = BloodRequestResponseDto.builder().requestId(requestId).status(status).build();
         producer.send(response);
     }
 
     public void save(BloodRequestDto bloodRequestDto, BloodType bloodType, BloodBank bloodBank, boolean canSend) throws ParseException {
-        BloodRequest bloodRequest = BloodRequest.builder()
-                .id(bloodRequestDto.getId())
-                .bloodType(bloodType)
-                .amount(bloodRequestDto.getAmount())
-                .bloodBank(bloodBank)
-                .receivedDate(new Date(System.currentTimeMillis()))
-                .sendOnDate(new SimpleDateFormat("dd-MM-yyyy HH:mm").parse(bloodRequestDto.getSendOnDate()))
-                .status(canSend ? BloodRequestStatus.APPROVED : BloodRequestStatus.REJECTED)
-                .build();
+        BloodRequest bloodRequest = BloodRequest.builder().id(bloodRequestDto.getId()).bloodType(bloodType).amount(bloodRequestDto.getAmount()).bloodBank(bloodBank).receivedDate(new Date(System.currentTimeMillis())).sendOnDate(new SimpleDateFormat("dd-MM-yyyy HH:mm").parse(bloodRequestDto.getSendOnDate())).status(canSend ? BloodRequestStatus.APPROVED : BloodRequestStatus.REJECTED).build();
         bloodRequestRepository.save(bloodRequest);
     }
 }

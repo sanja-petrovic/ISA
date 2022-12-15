@@ -74,16 +74,31 @@ public class BloodBankServiceImpl implements BloodBankService {
         return repository.findAllByTitleIgnoreCase(title).orElse(null);
     }
 
+    public BloodBank findBankWithMostSupplies(BloodType type, Double amount) {
+        BloodBank bankWithMostBloodOfType = null;
+        double amountOfBloodOfType = 0;
+        for(BloodBank bloodBank : repository.findAll()) {
+            for(BloodSupply bloodSupply : bloodBank.getBloodSupplies()) {
+                if(bloodSupply.getType().equals(type) && bloodSupply.getAmount() - amount >= 0) {
+                    if(bloodSupply.getAmount() > amountOfBloodOfType) {
+                        bankWithMostBloodOfType = bloodBank;
+                        amountOfBloodOfType = bloodSupply.getAmount();
+                    }
+                }
+            }
+        }
+
+        return bankWithMostBloodOfType;
+    }
+
     @Override
-    public boolean updateBloodSupplies(BloodBank bloodBank, BloodType type, Double amount) {
+    public void updateBloodSupplies(BloodBank bloodBank, BloodType type, Double amount) {
         for(BloodSupply bloodSupply : bloodBank.getBloodSupplies()) {
             if(bloodSupply.getType().equals(type) && bloodSupply.getAmount() - amount >= 0) {
                 bloodSupply.setAmount(bloodSupply.getAmount() - amount);
                 repository.save(bloodBank);
-                return true;
             }
         }
-        return false;
     }
 
 
