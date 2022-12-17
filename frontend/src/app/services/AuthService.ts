@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import {ApiService} from "./ApiService";
 import {ConfigService} from "./ConfigService";
 import {UserService} from "./UserService";
-import {Credentials, Patient} from "../model/Users";
+import {Credentials, BloodDonor} from "../model/Users";
 
 @Injectable({
   providedIn: 'root'
@@ -44,7 +44,7 @@ export class AuthService {
       }));
   }
 
-  register(user: Patient) {
+  register(user: BloodDonor) {
     const registerHeaders = new HttpHeaders({
       'Accept': 'application/json',
       'Content-Type': 'application/json'

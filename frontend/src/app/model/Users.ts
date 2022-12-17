@@ -1,4 +1,4 @@
-type Patient = {
+type BloodDonor = {
   firstName: string,
   lastName: string,
   personalId: string,
@@ -52,4 +52,4 @@ type PasswordDto ={
   newPassword: string
 }
 
-export { Patient, Credentials, PasswordDto, User, MedicalStaff};
+export { BloodDonor, Credentials, PasswordDto, User, MedicalStaff };

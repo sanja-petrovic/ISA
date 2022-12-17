@@ -1,14 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PasswordDto, Patient } from '../model/Users';
+import { PasswordDto, BloodDonor } from '../model/Users';
 import {ApiService} from "./ApiService";
 import {ConfigService} from "./ConfigService";
 
 @Injectable({
   providedIn: 'root'
 })
-export class PatientService {
+export class BloodDonorService {
   headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   constructor(
@@ -16,14 +16,19 @@ export class PatientService {
     private config: ConfigService
     ) { }
 
-  getPatient(personalId : String) : Observable<Patient>{
+  getBloodDonor(personalId : String) : Observable<BloodDonor>{
     return this.apiService.get(`${this.config.blood_donors_url}/${personalId}`);
   }
-  updatePatient(patientDto : Patient): Observable<any>{
-    return this.apiService.put(`${this.config.blood_donors_url}/update`, patientDto);
+
+  getCurrentBloodDonor() : Observable<BloodDonor> {
+    return this.apiService.get(`${this.config.blood_donors_url}/current`);
   }
 
-  updatePatientPassword(passwordDto : PasswordDto): Observable<any>{
+  updateBloodDonor(BloodDonorDto : BloodDonor): Observable<any>{
+    return this.apiService.put(`${this.config.blood_donors_url}/update`, BloodDonorDto);
+  }
+
+  updateBloodDonorPassword(passwordDto : PasswordDto): Observable<any>{
     return this.apiService.put(`${this.config.users_url}/update`, passwordDto);
   }
 }

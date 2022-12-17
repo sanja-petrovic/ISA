@@ -1,7 +1,9 @@
 package com.example.isa.controller;
 
 import com.example.isa.dto.BloodDonorDto;
+import com.example.isa.dto.UserDto;
 import com.example.isa.model.BloodDonor;
+import com.example.isa.model.User;
 import com.example.isa.service.interfaces.BloodDonorService;
 
 import com.example.isa.util.converters.BloodDonorConverter;
@@ -10,6 +12,7 @@ import io.swagger.annotations.ApiOperation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -46,7 +49,12 @@ public class BloodDonorController {
 		}
 		return ResponseEntity.notFound().build();
     }
-    
+    @GetMapping("/current")
+    public ResponseEntity<BloodDonorDto> getCurrentBlolodDonor() {
+        BloodDonor bloodDonor = (BloodDonor) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return ResponseEntity.ok(bloodDonorConverter.entityToDto(bloodDonor));
+    }
+
     @PutMapping(value="/update")
     @ApiOperation(value = "Update a blood donor's information", httpMethod = "PUT")
     public ResponseEntity<BloodDonorDto> update(@RequestBody BloodDonorDto bloodDonorDto){

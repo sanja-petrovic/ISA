@@ -106,7 +106,7 @@ public class AuthController {
     }
 
     @GetMapping("/current")
-    public ResponseEntity<UserDto> createAuthenticationToken() {
+    public ResponseEntity<UserDto> getCurrentUser() {
         var user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return ResponseEntity.ok(new UserDto(user));
     }
