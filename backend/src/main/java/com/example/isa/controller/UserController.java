@@ -55,8 +55,8 @@ public class UserController {
         }
         return ResponseEntity.ok().build();
     }
-    @PostMapping("/search")
-    @ApiOperation(value ="Search for user", httpMethod = "POST")
+    @GetMapping("/search")
+    @ApiOperation(value ="Search for user", httpMethod = "GET")
     public ResponseEntity<?> search(@RequestBody String[] parameters){
         return ResponseEntity.ok(service.search(parameters[0], parameters[1]));
     }
