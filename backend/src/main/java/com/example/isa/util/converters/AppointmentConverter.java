@@ -34,7 +34,7 @@ public class AppointmentConverter implements Converter<Appointment, AppointmentD
 				entity.getDateTime().toString(),
 				entity.getDuration(),
 				entity.getBloodBank().getId().toString(),
-				entity.getBloodDonor().getPersonalId()
+				entity.getBloodDonor().getId().toString()
 				);
 	}
 
@@ -45,18 +45,14 @@ public class AppointmentConverter implements Converter<Appointment, AppointmentD
 		
 		try {
 			return new Appointment(
-					dto.getUuid(),
+					dto.getId(),
 					AppointmentStatus.valueOf(dto.getStatus()),
 					formatter.parse(dto.getDateTime()),
 					dto.getDuration(),
 					bankService.getById(UUID.fromString(dto.getBloodBankId())),
-					bloodDonorService.getByPersonalId(dto.getBloodDonorId()
-					));
+					bloodDonorService.getByPersonalId(dto.getBloodDonorId())
+					);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;

@@ -14,7 +14,7 @@ import lombok.Setter;
 @AllArgsConstructor
 
 public class AppointmentDto {
-    private UUID uuid;
+    private UUID id;
     private String status;
     private String dateTime;
     private Long duration;

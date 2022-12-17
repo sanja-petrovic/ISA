@@ -1,5 +1,6 @@
 package com.example.isa.service.implementation;
 
+import com.example.isa.exception.NotFoundException;
 import com.example.isa.model.*;
 import com.example.isa.repository.BloodDonorRepository;
 import com.example.isa.service.interfaces.BloodDonorService;
@@ -23,8 +24,8 @@ public class BloodDonorServiceImpl implements BloodDonorService {
         return repository.findAll();
     }
 	@Override
-	public BloodDonor getByPersonalId(String personalId) throws Exception {
-		return repository.findByPersonalId(personalId).orElseThrow(() -> new Exception(String.format("No user found with personalId '%s'.", personalId)));
+	public BloodDonor getByPersonalId(String personalId) {
+		return repository.findByPersonalId(personalId).orElse(null);
 	}
 
 	@Override

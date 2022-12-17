@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface BloodDonorService {
     List<BloodDonor> getAll();
-    BloodDonor getByPersonalId(String personalId) throws Exception;
+    BloodDonor getByPersonalId(String personalId);
     BloodDonor update(BloodDonor bloodDonor);
     BloodDonor getByEmail(String email);
 }

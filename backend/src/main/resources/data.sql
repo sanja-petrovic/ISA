@@ -36,6 +36,8 @@ insert into public.blood_banks (id, city, street, country, average_grade, descri
                                 interval_start)
 values (uuid_generate_v4(), 'Niš', 'Srbija', 'Zetska 2', 4.94, '--', 'Zavod "Milenko Hadžić"', '20:00:00', '08:00:00');
 
+
+
 -- questions
 INSERT INTO public.questions(id, text, type)
 VALUES ('60cfe366-8a12-453f-ae6c-78a22f90dbb5', 'Have you ever donated blood or blood components before?', 'FOR_ALL');
