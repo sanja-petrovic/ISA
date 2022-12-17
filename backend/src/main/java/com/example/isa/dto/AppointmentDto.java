@@ -1,6 +1,5 @@
 package com.example.isa.dto;
 
-import java.util.Date;
 import java.util.UUID;
 
 
@@ -19,5 +18,5 @@ public class AppointmentDto {
     private String dateTime;
     private Long duration;
     private String bloodBankId;
-    private String patientId;
+    private String bloodDonorId;
 }

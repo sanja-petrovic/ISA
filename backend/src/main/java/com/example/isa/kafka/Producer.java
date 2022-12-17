@@ -3,7 +3,7 @@ package com.example.isa.kafka;
 import com.example.isa.dto.BloodRequestResponseDto;
 import com.example.isa.dto.BloodSupplyDto;
 import com.example.isa.dto.NewsDto;
-import com.example.isa.dto.SubscriptionResponceDto;
+import com.example.isa.dto.SubscriptionResponseDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -43,7 +43,7 @@ public class Producer {
         log.info("Blood supply to hospital, sent: {}", responseAsMessage);
     }
     
-    public void send(SubscriptionResponceDto dto) throws JsonProcessingException{
+    public void send(SubscriptionResponseDto dto) throws JsonProcessingException{
     	String topic = "blood.subscriptions.response.topic";
         String responseAsMessage = objectMapper.writeValueAsString(dto);
         kafkaTemplate.send(topic, responseAsMessage);

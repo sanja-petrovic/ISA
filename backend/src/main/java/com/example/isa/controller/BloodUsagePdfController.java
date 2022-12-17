@@ -18,7 +18,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/bloodUsage" )
+@RequestMapping("/blood-usage" )
 public class BloodUsagePdfController {
 	public BloodUsagePdfController() {}
 	@PostMapping(path = "/upload")

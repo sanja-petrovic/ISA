@@ -1,6 +1,5 @@
 package com.example.isa.util.converters;
 
-import java.security.Provider.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -18,7 +17,9 @@ import com.example.isa.service.interfaces.BloodBankService;
 import com.example.isa.service.interfaces.BloodSubscriptionService;
 
 import net.bytebuddy.asm.Advice.This;
-@Component
+import org.springframework.stereotype.Service;
+
+@Service
 public class SubscriptionSignUpConverter {
 	private final BloodBankService service;
 	
@@ -26,7 +27,7 @@ public class SubscriptionSignUpConverter {
 		this.service = service;
 	}
 	public List<BloodSubscription> Convert(BloodSubscriptionSignUpDto dto){
-		List<BloodSubscription> retVal = new ArrayList<BloodSubscription>();
+		List<BloodSubscription> retVal = new ArrayList<>();
 		BloodBank bank = service.findByTitle(dto.BloodBank);
 		for(BloodProductDto type : dto.Blood){
 			

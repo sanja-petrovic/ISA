@@ -2,26 +2,26 @@ package com.example.isa.util.converters;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.SimpleTimeZone;
 import java.util.TimeZone;
 import java.util.UUID;
 
 import com.example.isa.dto.AppointmentDto;
 import com.example.isa.model.Appointment;
 import com.example.isa.service.interfaces.BloodBankService;
-import com.example.isa.service.interfaces.PatientService;
+import com.example.isa.service.interfaces.BloodDonorService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AppointmentConverter implements Converter<Appointment, AppointmentDto>{
 
-	private final PatientService patientService;
+	private final BloodDonorService bloodDonorService;
 	private final BloodBankService bankService;
 	
- 	public AppointmentConverter(PatientService patientService, BloodBankService bankService) {
- 		this.patientService = patientService;
+ 	public AppointmentConverter(BloodDonorService bloodDonorService, BloodBankService bankService) {
+ 		this.bloodDonorService = bloodDonorService;
  		this.bankService = bankService;
  	}
 	 
@@ -32,7 +32,7 @@ public class AppointmentConverter implements Converter<Appointment, AppointmentD
 				entity.getDateTime().toString(),
 				entity.getDuration(),
 				entity.getBloodBank().getId().toString(),
-				entity.getPatient().getPersonalId()
+				entity.getBloodDonor().getPersonalId()
 				);
 	}
 
@@ -47,7 +47,7 @@ public class AppointmentConverter implements Converter<Appointment, AppointmentD
 					formatter.parse(dto.getDateTime()),
 					dto.getDuration(),
 					bankService.getById(UUID.fromString(dto.getBloodBankId())),
-					patientService.getByPersonalId(dto.getPatientId())
+					bloodDonorService.getByPersonalId(dto.getBloodDonorId())
 					);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block

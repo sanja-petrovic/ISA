@@ -2,7 +2,7 @@ package com.example.isa.util.converters;
 
 import com.example.isa.dto.AnswerDto;
 import com.example.isa.model.Answer;
-import com.example.isa.service.interfaces.PatientService;
+import com.example.isa.service.interfaces.BloodDonorService;
 import com.example.isa.service.interfaces.QuestionService;
 import org.springframework.stereotype.Service;
 
@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
 public class AnswerConverter implements Converter<Answer, AnswerDto> {
 
     private final QuestionService questionService;
-    private final PatientService patientService;
+    private final BloodDonorService bloodDonorService;
 
-    public AnswerConverter(QuestionService questionService, PatientService patientService) {
+    public AnswerConverter(QuestionService questionService, BloodDonorService bloodDonorService) {
         this.questionService = questionService;
-        this.patientService = patientService;
+        this.bloodDonorService = bloodDonorService;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class AnswerConverter implements Converter<Answer, AnswerDto> {
         return Answer.builder()
                 .question(questionService.getById(answerDto.getQuestionId()))
                 .value(answerDto.isAnswerValue())
-                .user(patientService.getByEmail(answerDto.getUser()))
+                .user(bloodDonorService.getByEmail(answerDto.getUser()))
                 .build();
     }
 }

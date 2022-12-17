@@ -26,37 +26,15 @@ INSERT INTO public.questions(id,text,type) VALUES ('3d071331-1573-428f-bb8b-9de3
 INSERT INTO public.questions(id,text,type) VALUES ('a4b79885-5ffe-42a3-add0-c7573a170210','Do you think there was ever a possibility to contract HIV?','FOR_ALL');
 INSERT INTO public.questions(id,text,type) VALUES ('a8d7c2c5-3c0a-4edb-ac95-4558ee62e92a','Have you ever done any kind of drugs?','FOR_ALL');
 INSERT INTO public.questions(id,text,type) VALUES ('9e18c761-dd7d-442d-8ebc-77d7e1cb464d','Have you ever taken steroids or illegal medicine?','FOR_ALL');
-INSERT INTO public.questions(id,text,type) VALUES ('33b0804d-97ae-4be6-91a7-dc84db22a928','Have you ever offered sexual services in exchange for money or drugs?','FOR_ALL');
-INSERT INTO public.questions(id,text,type) VALUES ('7cf3cd14-1a04-4659-bef7-3f4d5c925984','Do you know all the ways you could''ve exposed yourself to contagious, bloodborne diseases?','FOR_ALL');
-INSERT INTO public.questions(id,text,type) VALUES ('3de8941c-82a2-4f32-83f7-5e12d38ef544','Have you had unprotected sex in the past 6 months with a HIV positive person?Have you had unprotected sex in the past 6 months with a person who has or has had in the past hepatitis B or C?','FOR_ALL');
-INSERT INTO public.questions(id,text,type) VALUES ('e266476f-6e5f-4df3-afd7-894f44941899','Have you had unprotected sex in the past 6 months with a person who has ever offered sexual services in exchange for money or drugs?','FOR_ALL');
-INSERT INTO public.questions(id,text,type) VALUES ('573d5cec-fe4f-48d8-ac2c-f02de27a97c9','Have you had unprotected sex in the past 6 months with a person who has ever done any kind of drugs?','FOR_ALL');
-INSERT INTO public.questions(id,text,type) VALUES ('a12a8726-7f64-4b19-90fa-60ca39eea7fe','Have you had unprotected sex in the past 6 months with a person whose risky behavior could''ve exposed you to getting sexually transmissive diseases?','FOR_ALL');
 INSERT INTO public.questions(id,text,type) VALUES ('5e45116f-b85d-4a49-af3b-79746cfe28f5','Are you currently pregnant?','FOR_WOMEN');
 INSERT INTO public.questions(id,text,type) VALUES ('9274a7eb-8c9e-4d50-badc-debd665f34b1','Are you currently on your period?','FOR_WOMEN');
 INSERT INTO public.questions(id,text,type) VALUES ('99cc9319-f99d-466a-b2e7-f589ec69f83d','Have you in the past 6 months given birth or had a pregnancy termination?','FOR_WOMEN');
 
-INSERT INTO public.patients (
-id, email, first_name, gender, last_name, password, personal_id, phone_number, city, country, street, occupation, is_verified) VALUES (
-uuid_generate_v4()::uuid, 'gugma@gugma.rs'::character varying, 'Gugma'::character varying, 'MALE'::character varying, 'Gugmic'::character varying, '$2a$10$UMV1931RusgV5EAqW6tIuerzMxAn6Bch7idfB1wEAQZpPrULyWdlK'::character varying, 'supersus1'::character varying, '0612406374'::character varying, 'New Now'::character varying, 'Birbia'::character varying, 'Markova'::character varying, 'Zaposlen'::character varying, true::boolean)
-returning id;
-
-
-insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Novi Sad', 'Charing Cross', 4.32, 'Help Desk Operator', 'Bankica', '2022-01-05 22:02:15', '2022-10-18 01:43:25');
-insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Belgrade', 'Scoville', 1.11, 'Desktop Support Technician', 'A Matador''s Mistress', '2021-11-18 10:10:39', '2022-07-30 20:15:58');
-insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Zrenjanin', 'Maryland', 1.17, 'Food Chemist', 'Union Station', '2022-07-13 16:28:54', '2022-07-21 00:16:00');
-insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Novi Sad', 'Mccormick', 4.66, 'Environmental Specialist', 'Every Man for Himself (Slow Motion) (Sauve qui peut (la vie))', '2021-11-16 06:52:10', '2022-06-09 14:32:40');
-insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Belgrade', 'Northwestern', 3.91, 'Technical Writer', 'Perfectly Normal', '2022-07-28 21:08:53', '2022-11-08 21:22:19');
-insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Belgrade', 'Monterey', 2.09, 'Help Desk Technician', 'Goya in Bordeaux (Goya en Burdeos)', '2022-04-10 17:52:36', '2022-08-13 07:24:31');
-insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Belgrade', 'Porter', 2.7, 'Help Desk Operator', '1941', '2021-12-03 15:58:41', '2022-08-15 15:04:24');
-insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Novi Sad', 'Mayer', 4.37, 'Analyst Programmer', 'Die Hard', '2021-12-08 08:05:41', '2022-06-19 18:17:55');
-insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Subotica', 'Johnson', 4.68, 'Chemical Engineer', 'Punishment Park', '2022-04-17 13:03:10', '2022-04-26 23:19:17');
-insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Niš', 'Lake View', 4.25, 'Software Test Engineer IV', 'Lords of Discipline, The', '2022-05-25 11:18:54', '2022-10-30 07:30:53');
-insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Niš', 'Banding', 3.94, 'Civil Engineer', 'Farmer''s Daughter, The', '2022-05-12 16:46:17', '2022-05-17 13:36:24');
-insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Kragujevac', 'Gulseth', 4.34, 'Programmer I', 'Kinky Boots', '2022-05-01 18:16:24', '2022-07-22 11:59:58');
-insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Belgrade', 'Porter', 3.1, 'Geological Engineer', 'Witchboard', '2022-06-24 14:54:12', '2022-11-04 02:13:20');
-insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Pančevo', 'Helena', 1.48, 'Database Administrator III', 'Tiger''s Tail, The', '2022-01-04 09:56:07', '2021-12-01 14:48:08');
-insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values ('b860f75c-c83a-4fe3-ad52-b9344a106be1', 'Pančevo', 'Helena', 1.48, 'Database Administrator III', 'string', '2022-01-04 09:56:07', '2021-12-01 14:48:08');
-INSERT INTO public.blood_supplies(
-    id, amount, type, blood_bank_id)
-VALUES ('d8d728de-e763-40c3-b06c-e50695b29e34', 50000, 'A_POSITIVE', 'b860f75c-c83a-4fe3-ad52-b9344a106be1');
+insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Novi Sad', 'Danila Kiša 15', 4.32, 'Bankica', 'Moja banka krvi', '22:00:00', '10:00:00');
+insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Belgrade', 'Ljube Jovanovića 12', 4.11, 'Najveća banka krvi u Beogradu', 'Institut za transfuziju krvi', '24:00:00', '00:00:00');
+insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Zrenjanin', 'Sremska 1', 3.17, 'Zrenjaninska banka krvi', 'Plasma Point', '20:00:00', '08:00:00');
+insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Novi Sad', 'Hajduk Veljkova 7', 4.66, 'Najveća banka krvi u Novom Sadu', 'Zavod za transfuziju krvi Vojvodine', '24:00:00', '00:00:00');
+insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Belgrade', 'Šekspirova 25', 3.91, '--', 'Crveni krst', '22:00:00', '10:00:00');
+insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Subotica', 'Ive Lole Ribara 20', 4.68, '--', 'Srce', '19:00:00', '07:00:00');
+insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Niš', 'Dušanova 39', 4.25, '--', 'Centar krvi', '19:00:00', '07:00:00');
+insert into public.blood_banks (id, city, street, average_grade, description, title, interval_end, interval_start) values (uuid_generate_v4(), 'Niš', 'Zetska 2', 4.94, '--', 'Zavod "Milenko Hadžić"', '20:00:00', '08:00:00');

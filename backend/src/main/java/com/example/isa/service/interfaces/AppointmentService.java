@@ -8,7 +8,8 @@ import com.example.isa.model.Appointment;
 public interface AppointmentService {
 	public List<Appointment> getAll();
 	public List<Appointment> getByBloodBank(UUID bankId);
-	public List<Appointment> getByPatient(UUID patientId);
+	public List<Appointment> getByBloodDonor(UUID bloodDonorId);
 	public Appointment create(Appointment appointment);
 	public Appointment update(Appointment appointment);
+	public void schedulePredefined(Appointment appointment);
 }

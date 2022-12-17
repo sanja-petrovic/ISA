@@ -10,7 +10,7 @@ public class Review {
     private UUID id;
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn
-    private Patient reviewer;
+    private BloodDonor reviewer;
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn
     private BloodBank bloodBank;

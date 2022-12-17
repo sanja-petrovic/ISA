@@ -3,12 +3,13 @@ package com.example.isa.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.List;
-
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
-public class PatientListDto {
-    private List<PatientDto> userDtos;
+@Setter
+public class SubscriptionResponseDto {
+	public String subscriptionId;
+	public String messageString;
 }

@@ -1,5 +1,6 @@
 package com.example.isa.service.implementation;
 
+import com.example.isa.exception.NotEnoughSupplyException;
 import com.example.isa.model.BloodBank;
 import com.example.isa.model.BloodSupply;
 import com.example.isa.model.BloodType;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,11 +35,6 @@ public class BloodBankServiceImpl implements BloodBankService {
     }
 
     @Override
-    public List<BloodBank> search(Sort sort, List<String> searchCriteria) {
-        return null;
-    }
-
-    @Override
     public List<BloodBank> search(Sort sort, List<String> searchCriteria, String filterGrade) {
     	String titleString = searchCriteria.get(0) == null ? "" : searchCriteria.get(0);
     	String cityString = searchCriteria.get(1) == null ? "" : searchCriteria.get(1);
@@ -56,7 +53,7 @@ public class BloodBankServiceImpl implements BloodBankService {
     }
 
     @Override
-    public BloodBank updateBloodBank(BloodBank bloodBank) {
+    public BloodBank update(BloodBank bloodBank) {
         if (bloodBank.getTitle() == null || bloodBank.getAddress() == null) {
             return null;
         }
@@ -64,9 +61,8 @@ public class BloodBankServiceImpl implements BloodBankService {
     }
 
     @Override
-    public boolean registerBank (BloodBank bank) {
+    public void register(BloodBank bank) {
         repository.save(bank);
-        return true;
     }
 
     @Override
@@ -92,18 +88,26 @@ public class BloodBankServiceImpl implements BloodBankService {
     }
 
     @Override
-    public boolean updateBloodSupplies(BloodBank bloodBank, BloodType type, Double amount) {
+    public boolean checkBloodSupply(BloodBank bloodBank, BloodType type, Double amount) {
         for(BloodSupply bloodSupply : bloodBank.getBloodSupplies()) {
             if(bloodSupply.getType().equals(type) && bloodSupply.getAmount() - amount >= 0) {
-                bloodSupply.setAmount(bloodSupply.getAmount() - amount);
-                repository.save(bloodBank);
                 return true;
             }
         }
-
         return false;
     }
 
+    @Override
+    @Transactional
+    public void updateBloodSupply(BloodBank bloodBank, BloodType type, Double amount) {
+        for(BloodSupply bloodSupply : bloodBank.getBloodSupplies()) {
+            if(bloodSupply.getType().equals(type) && bloodSupply.getAmount() - amount >= 0) {
+                bloodSupply.setAmount(bloodSupply.getAmount() - amount);
+            } else {
+                throw new NotEnoughSupplyException();
+            }
+        }
+    }
 
 
 }

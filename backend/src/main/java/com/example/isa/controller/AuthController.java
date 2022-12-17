@@ -1,7 +1,7 @@
 package com.example.isa.controller;
 
 import com.example.isa.dto.CredentialsDto;
-import com.example.isa.dto.PatientDto;
+import com.example.isa.dto.BloodDonorDto;
 import com.example.isa.dto.UserDto;
 import com.example.isa.dto.UserTokenState;
 import com.example.isa.model.*;
@@ -9,9 +9,8 @@ import com.example.isa.security.TokenHandler;
 import com.example.isa.service.interfaces.RefreshTokenService;
 import com.example.isa.service.interfaces.RoleService;
 import com.example.isa.service.interfaces.UserService;
-import com.nimbusds.openid.connect.sdk.UserInfoResponse;
 import org.springframework.http.HttpHeaders;
-import com.example.isa.util.converters.PatientConverter;
+import com.example.isa.util.converters.BloodDonorConverter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
@@ -28,8 +27,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/auth")
@@ -38,16 +35,16 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final UserService userService;
     private final RoleService roleService;
-    private final PatientConverter patientConverter;
+    private final BloodDonorConverter bloodDonorConverter;
     private final RefreshTokenService refreshTokenService;
     private final PasswordEncoder passwordEncoder;
 
-    public AuthController(TokenHandler tokenHandler, AuthenticationManager authenticationManager, PatientConverter patientConverter, UserService userService, RoleService roleService, PasswordEncoder passwordEncoder, RefreshTokenService refreshTokenService) {
+    public AuthController(TokenHandler tokenHandler, AuthenticationManager authenticationManager, BloodDonorConverter bloodDonorConverter, UserService userService, RoleService roleService, PasswordEncoder passwordEncoder, RefreshTokenService refreshTokenService) {
         this.tokenHandler = tokenHandler;
         this.authenticationManager = authenticationManager;
         this.userService = userService;
         this.roleService = roleService;
-        this.patientConverter = patientConverter;
+        this.bloodDonorConverter = bloodDonorConverter;
         this.passwordEncoder = passwordEncoder;
         this.refreshTokenService = refreshTokenService;
     }
@@ -117,12 +114,12 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<PatientDto> registerPatient(@RequestBody PatientDto dto) {
+    public ResponseEntity<BloodDonorDto> registerBloodDonor(@RequestBody BloodDonorDto dto) {
         if (userService.findByUsername(dto.getEmail()) == null) {
-            Patient patient = patientConverter.dtoToEntity(dto);
-            patient.setRoles(roleService.findByName("ROLE_PATIENT"));
-            userService.register(patient);
-            return new ResponseEntity<>(patientConverter.entityToDto(patient), HttpStatus.CREATED);
+            BloodDonor bloodDonor = bloodDonorConverter.dtoToEntity(dto);
+            bloodDonor.setRoles(roleService.findByName("ROLE_BLOOD_DONOR"));
+            userService.register(bloodDonor);
+            return new ResponseEntity<>(bloodDonorConverter.entityToDto(bloodDonor), HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>(null, HttpStatus.CONFLICT);
         }

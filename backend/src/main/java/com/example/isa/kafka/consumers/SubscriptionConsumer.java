@@ -1,4 +1,4 @@
-package com.example.isa.kafka;
+package com.example.isa.kafka.consumers;
 
 import java.security.Provider.Service;
 import java.text.ParseException;

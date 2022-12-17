@@ -25,8 +25,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
-@Api(value = "/medicalStaff")
-@RequestMapping(value = "/api/medicalStaff")
+@Api(value = "/medical-staff")
+@RequestMapping(value = "/medical-staff")
 public class MedicalStaffController {
     private final MedicalStaffService medicalStaffService;
     private final PasswordEncoder passwordEncoder;

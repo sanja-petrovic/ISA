@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.example.isa.model.Appointment;
 import com.example.isa.repository.AppointmentRepository;
 import com.example.isa.service.interfaces.AppointmentService;
-import com.example.isa.util.DateConvertor;
+import com.example.isa.util.converters.DateConverter;
 
 @Service
 public class AppointmentServiceImpl implements AppointmentService{
@@ -27,19 +27,19 @@ public class AppointmentServiceImpl implements AppointmentService{
 
 	@Override
 	public List<Appointment> getByBloodBank(UUID bloodBankId) {
-		return repository.getByBloodBank(bloodBankId);
+		return repository.findAllByBloodBank(bloodBankId);
 	}
 
 	@Override
-	public List<Appointment> getByPatient(UUID patientId) {
-		return repository.getByPatient(patientId);
+	public List<Appointment> getByBloodDonor(UUID bloodDonorId) {
+		return repository.findAllByBloodDonor(bloodDonorId);
 	}
 
 	@Override
 	public Appointment create(Appointment appointment) {
-		List<Appointment> listScheduled = repository.getByBloodBankForDate(appointment.getBloodBank().getId(), DateConvertor.convert(appointment.getDateTime()).toLocalDate());
+		List<Appointment> listScheduled = repository.findAllByBloodBankAndDateTime(appointment.getBloodBank(), appointment.getDateTime());
 		for(Appointment scheduled : listScheduled) {
-			if(scheduled.hasDateTimeOverlap(DateConvertor.convert(appointment.getDateTime()), appointment.getDuration())) {
+			if(scheduled.hasDateTimeOverlap(DateConverter.convert(appointment.getDateTime()), appointment.getDuration())) {
 				return null;
 			}
 		}
@@ -49,6 +49,11 @@ public class AppointmentServiceImpl implements AppointmentService{
 	@Override
 	public Appointment update(Appointment appointment) {
 		return repository.save(appointment);
+	}
+
+	@Override
+	public void schedulePredefined(Appointment appointment) {
+
 	}
 
 }
