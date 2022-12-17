@@ -18,9 +18,8 @@ export class VerificationComponent implements OnInit {
   ngOnInit(): void {
     this.authService.verify(this.route.snapshot.paramMap.get('email') as string).subscribe(
       (data) => {
-        if(data.status == 200) {
+        console.log(data);
           this.verifiedSuccessfully = true;
-        }
       },
       (error) => {
       this.verifiedSuccessfully = false;

@@ -2,31 +2,107 @@ package com.example.isa.security;
 
 import java.util.Date;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import com.example.isa.model.User;
+import io.jsonwebtoken.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.web.util.WebUtils;
 
 @Component
+@Slf4j
 public class TokenHandler {
-    @Value("blood-bank-center")
+    @Value("${spring.application.name}")
     private String APP_NAME;
-    @Value("123456789secreties")
+    @Value("${jwt.access.secret}")
     public String SECRET;
-    @Value("36000000")
+    @Value("${jwt.refresh.secret}")
+    public String REFRESH_SECRET;
+    @Value("900000")
     private int EXPIRES_IN;
     @Value("Authorization")
     private String AUTH_HEADER;
     private static final String AUDIENCE_WEB = "web";
     private SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS512;
+    private String jwtCookie = "accessToken";
+    private String jwtRefreshCookie = "refreshToken";
 
+    public ResponseCookie generateJwtCookie(User user) {
+        String jwt = generateTokenFromUsername(user.getEmail());
+        return generateCookie(jwtCookie, jwt, "/");
+    }
+
+    public ResponseCookie generateRefreshJwtCookie(String refreshToken) {
+        return generateCookie(jwtRefreshCookie, refreshToken, "/auth/refreshtoken");
+    }
+
+    public String getJwtFromCookies(HttpServletRequest request) {
+        return getCookieValueByName(request, jwtCookie);
+    }
+
+    public String getJwtRefreshFromCookies(HttpServletRequest request) {
+        return getCookieValueByName(request, jwtRefreshCookie);
+    }
+
+    public ResponseCookie getCleanJwtCookie() {
+        ResponseCookie cookie = ResponseCookie.from(jwtCookie, null).path("/").build();
+        return cookie;
+    }
+
+    public ResponseCookie getCleanJwtRefreshCookie() {
+        ResponseCookie cookie = ResponseCookie.from(jwtRefreshCookie, null).path("/auth/refreshtoken").build();
+        return cookie;
+    }
+
+    public String getUserNameFromJwtToken(String token) {
+        return Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody().getSubject();
+    }
+
+    public boolean validateJwtToken(String authToken) {
+        try {
+            Jwts.parser().setSigningKey(SECRET).parseClaimsJws(authToken);
+            return true;
+        } catch (SignatureException e) {
+            log.error("Invalid JWT signature: {}", e.getMessage());
+        } catch (MalformedJwtException e) {
+            log.error("Invalid JWT token: {}", e.getMessage());
+        } catch (ExpiredJwtException e) {
+            log.error("JWT token is expired: {}", e.getMessage());
+        } catch (UnsupportedJwtException e) {
+            log.error("JWT token is unsupported: {}", e.getMessage());
+        } catch (IllegalArgumentException e) {
+            log.error("JWT claims string is empty: {}", e.getMessage());
+        }
+
+        return false;
+    }
+
+    public String generateTokenFromUsername(String username) {
+        return Jwts.builder()
+                .setSubject(username)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date((new Date()).getTime() + EXPIRES_IN))
+                .signWith(SignatureAlgorithm.HS512, SECRET)
+                .compact();
+    }
+
+    private ResponseCookie generateCookie(String name, String value, String path) {
+        return ResponseCookie.from(name, value).path(path).maxAge(24 * 60 * 60).httpOnly(true).build();
+    }
+
+    private String getCookieValueByName(HttpServletRequest request, String name) {
+        Cookie cookie = WebUtils.getCookie(request, name);
+        if (cookie != null) {
+            return cookie.getValue();
+        } else {
+            return null;
+        }
+    }
     public String generateToken(String username) {
         return Jwts.builder()
                 .setIssuer(APP_NAME)
@@ -34,6 +110,16 @@ public class TokenHandler {
                 .setAudience(generateAudience())
                 .setIssuedAt(new Date())
                 .setExpiration(generateExpirationDate())
+                .signWith(SIGNATURE_ALGORITHM, SECRET).compact();
+    }
+
+    public String generateRefreshToken(String username) {
+        return Jwts.builder()
+                .setIssuer(APP_NAME)
+                .setSubject(username)
+                .setAudience(generateAudience())
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(new Date().getTime() + 2*24*60*60*1000))
                 .signWith(SIGNATURE_ALGORITHM, SECRET).compact();
     }
     private String generateAudience() {

@@ -41,6 +41,8 @@ export class QuestionnaireComponent implements OnInit {
   onSubmit(): void {
     console.log(this.answers);
     this.answerService.save(this.answers);
+    alert('Thanks for submitting!');
+    this.router.navigate(["/"]);
   }
 
   handleClick(questionId: string, index: number, value: boolean) {

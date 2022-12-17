@@ -1,6 +1,7 @@
 package com.example.isa.controller;
 
 import com.example.isa.dto.PasswordDto;
+import com.example.isa.dto.UserSearchDto;
 import com.example.isa.model.*;
 import com.example.isa.service.interfaces.UserService;
 import io.swagger.annotations.Api;
@@ -31,8 +32,11 @@ public class UserController {
     @GetMapping("/current")
     @ApiOperation(value = "Get the logged in user.", httpMethod = "GET")
     public User user(Principal user) {
-        System.out.println(user);
-        return this.service.findByUsername(user.getName());
+        if (user != null) {
+            return this.service.findByUsername(user.getName());
+        } else {
+            return null;
+        }
     }
 
     @PostMapping("/update/password")
@@ -51,7 +55,9 @@ public class UserController {
         }
         return ResponseEntity.ok().build();
     }
-    public ResponseEntity<?> search(String[] parameters){
-        return ResponseEntity.ok(service.search(parameters[0],parameters[1]));
+    @PostMapping("/search")
+    @ApiOperation(value ="Search for user", httpMethod = "POST")
+    public ResponseEntity<?> search(@RequestBody String[] parameters){
+        return ResponseEntity.ok(service.search(parameters[0], parameters[1]));
     }
 }

@@ -1,5 +1,4 @@
 <div class="centered-content">
-  <h1>Blood banks</h1>
   <div class="search-wrapper">
     <div class="search-div">
       <mat-form-field appearance="standard">
@@ -14,7 +13,7 @@
     <div class="sort-div">
       <mat-form-field>
         <mat-label>Sort by</mat-label>
-        <mat-select [(ngModel)]="sortFilter">
+        <mat-select (selectionChange)="searchBanks()" [(ngModel)]="sortFilter">
           <mat-option value="title-asc">Title, ascending</mat-option>
           <mat-option value="title-desc">Title, descending</mat-option>
           <mat-option value="averageGrade-asc">Rating, ascending</mat-option>
@@ -36,7 +35,7 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <input type="submit" value="ApplyFilters" class="submit-button" (click)="searchBanks()">
+    <input type="submit" value="Search" class="search-button" (click)="searchBanks()">
   </div>
   <div class="cards">
     <mat-card *ngFor="let bank of banks" class="bank-card">
@@ -45,8 +44,8 @@
           <mat-icon fontIcon="star" class="icon"></mat-icon>
           <span>{{bank.averageGrade}}</span></div>
       </mat-card-title>
-      <mat-card-subtitle>{{bank.street}} {{bank.number}}, {{bank.city}}, {{bank.country}}<br>{{bank.workingHoursEnd}}
-        -{{bank.workingHoursStart}}</mat-card-subtitle>
+      <mat-card-subtitle>{{bank.street}} {{bank.number}}, {{bank.city}}, {{bank.country}}<br>{{bank.workingHoursStart}}
+        - {{bank.workingHoursEnd}}</mat-card-subtitle>
       <mat-card-content>
         <p>{{bank.description}}</p>
       </mat-card-content>

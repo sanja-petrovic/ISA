@@ -1,6 +1,8 @@
 package com.example.isa.service.implementation;
 
 import com.example.isa.model.BloodBank;
+import com.example.isa.model.BloodSupply;
+import com.example.isa.model.BloodType;
 import com.example.isa.repository.BloodBankRepository;
 import com.example.isa.service.interfaces.BloodBankService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +39,8 @@ public class BloodBankServiceImpl implements BloodBankService {
 
     @Override
     public List<BloodBank> search(Sort sort, List<String> searchCriteria, String filterGrade) {
-    	String titleString = searchCriteria.get(0);
-    	String cityString = searchCriteria.get(1);
+    	String titleString = searchCriteria.get(0) == null ? "" : searchCriteria.get(0);
+    	String cityString = searchCriteria.get(1) == null ? "" : searchCriteria.get(1);
         if (titleString.equals("") && cityString.equals("")) {
         	return repository.findAllWithFilter(Double.parseDouble(filterGrade),sort);
         }
@@ -70,6 +72,38 @@ public class BloodBankServiceImpl implements BloodBankService {
     @Override
     public BloodBank findByTitle(String title) {
         return repository.findAllByTitleIgnoreCase(title).orElse(null);
-
     }
+
+    public BloodBank findBankWithMostSupplies(BloodType type, Double amount) {
+        BloodBank bankWithMostBloodOfType = null;
+        double amountOfBloodOfType = 0;
+        for(BloodBank bloodBank : repository.findAll()) {
+            for(BloodSupply bloodSupply : bloodBank.getBloodSupplies()) {
+                if(bloodSupply.getType().equals(type) && bloodSupply.getAmount() - amount >= 0) {
+                    if(bloodSupply.getAmount() > amountOfBloodOfType) {
+                        bankWithMostBloodOfType = bloodBank;
+                        amountOfBloodOfType = bloodSupply.getAmount();
+                    }
+                }
+            }
+        }
+
+        return bankWithMostBloodOfType;
+    }
+
+    @Override
+    public boolean updateBloodSupplies(BloodBank bloodBank, BloodType type, Double amount) {
+        for(BloodSupply bloodSupply : bloodBank.getBloodSupplies()) {
+            if(bloodSupply.getType().equals(type) && bloodSupply.getAmount() - amount >= 0) {
+                bloodSupply.setAmount(bloodSupply.getAmount() - amount);
+                repository.save(bloodBank);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+
 }

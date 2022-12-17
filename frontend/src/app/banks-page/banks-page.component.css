@@ -65,7 +65,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 50vw;
+  width: 70vw;
   flex-wrap: wrap;
 }
 
@@ -86,4 +86,26 @@
 .search-wrapper :nth-child(1){
   padding-right:0.5rem;
   padding-left:0.3rem;
+}
+
+
+.search-button {
+  padding: 0.3rem 1.5rem;
+  border: 1px solid transparent;
+  background-image: linear-gradient(to right, #ea283f 0%, #ff5e70 51%, #ea283f 100%);
+  text-align: center;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  box-shadow: 0 0 20px rgba(225, 59, 85, 0.4);
+  border-radius: 15px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+
+.search-button:hover {
+  background-position: right center; /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
 }
