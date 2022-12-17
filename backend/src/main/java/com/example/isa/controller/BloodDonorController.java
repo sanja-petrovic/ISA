@@ -18,7 +18,6 @@ import java.util.List;
 @Api(value = "/blood-donors")
 @RequestMapping(value = "/blood-donors")
 public class BloodDonorController {
-
     private final BloodDonorService bloodDonorService;
 	private final BloodDonorConverter bloodDonorConverter;
 
@@ -35,7 +34,7 @@ public class BloodDonorController {
 		List<BloodDonorDto> bloodDonorDtos = bloodDonors.stream().map(bloodDonorConverter::entityToDto).toList();
         return ResponseEntity.ok(bloodDonorDtos);
     }
-    @RequestMapping(value="/get/{personalId}")
+    @RequestMapping(value="/{personalId}")
     @ApiOperation(value = "Get a blood donor by personal ID.", httpMethod = "GET")
     public ResponseEntity<BloodDonorDto> getByPersonalId(@PathVariable String personalId){
 		try {

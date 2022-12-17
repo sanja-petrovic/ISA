@@ -37,7 +37,7 @@ public class SubscriptionController {
 			for(BloodSubscription subscription : subscriptions) {
 				if(!subscription.getBloodBank().checkBloodSupply(subscription.getType(), subscription.getAmount())) {
 					SubscriptionResponseDto responseDto = new SubscriptionResponseDto(subscription.getOriginId(),"UPCOMING-DELIVERY-FAIL"+ ":"+subscription.getType());
-					System.out.println(responseDto.toString());
+					System.out.println(responseDto);
 					producer.send(responseDto);
 				}
 			}
@@ -54,7 +54,7 @@ public class SubscriptionController {
 			if(subscription.getBloodBank().checkBloodSupply(subscription.getType(), subscription.getAmount())) {
 				if(bankService.checkBloodSupply(subscription.getBloodBank(), subscription.getType(), subscription.getAmount())) {
 					SubscriptionResponseDto responseDto = new SubscriptionResponseDto(subscription.getOriginId(),"DELIVERY-SUCCESS" + ":"+subscription.getType());
-					System.out.println(responseDto.toString());
+					System.out.println(responseDto);
 					producer.send(responseDto);
 				}
 			}

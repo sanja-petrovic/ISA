@@ -18,8 +18,8 @@ public interface BloodSubscriptionRepository extends JpaRepository<BloodSubscrip
 	
 	@Query("from BloodSubscription sub where sub.active = true and"
 			+ " DATE(?1) +sub.deliveryDate-?2-1 = current_date")
-	public List<BloodSubscription>findAllUpcomminActive(String date, int dayOffset);
+    List<BloodSubscription>findAllUpcomminActive(String date, int dayOffset);
 	@Query("from BloodSubscription sub where sub.active = true and"
 			+ " DATE(?1)+sub.deliveryDate-1 = current_date")
-	public List<BloodSubscription>findAllTodayActive(String date);
+    List<BloodSubscription>findAllTodayActive(String date);
 }

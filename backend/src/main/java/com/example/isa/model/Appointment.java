@@ -42,11 +42,8 @@ public class Appointment {
     
     public boolean hasDateTimeOverlap(LocalDateTime date, Long duration) {
     	LocalDateTime storedDateTime = DateConverter.convert(dateTime);
-    	
-    	if( (!storedDateTime.isAfter(date.plusMinutes(duration))) && (!storedDateTime.plusMinutes(this.duration).isAfter(date)) ){
-    		return true;
-    	}
-    	return false;
+
+        return (!storedDateTime.isAfter(date.plusMinutes(duration))) && (!storedDateTime.plusMinutes(this.duration).isAfter(date));
     }
 
     public Appointment(Appointment appointment) {

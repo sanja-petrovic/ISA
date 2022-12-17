@@ -12,13 +12,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 
 public interface BloodSubscriptionService {
-	public List<BloodSubscription> getAll();
-	public void registerMultiple (List<BloodSubscription> subscriptions); 
-    public void registerSubscription (BloodSubscription subscription);
-    public BloodSubscription getById(UUID id);
-    public List<BloodSubscription> getByBankId(UUID id);
-    public BloodSubscription updateBloodSubscription(BloodSubscription bloodSubscription);
-    public void handleRegistration(BloodSubscriptionSignUpDto dto) throws JsonProcessingException;
-    public List<BloodSubscription>findAllUpcomminActive(String date, int dayOffset);
-    public List<BloodSubscription>findAllTodayActive(String date);
+	List<BloodSubscription> getAll();
+	void registerMultiple (List<BloodSubscription> subscriptions);
+    void registerSubscription (BloodSubscription subscription);
+    BloodSubscription getById(UUID id);
+    List<BloodSubscription> getByBankId(UUID id);
+    BloodSubscription updateBloodSubscription(BloodSubscription bloodSubscription);
+    void handleRegistration(BloodSubscriptionSignUpDto dto) throws JsonProcessingException;
+    List<BloodSubscription>findAllUpcomminActive(String date, int dayOffset);
+    List<BloodSubscription>findAllTodayActive(String date);
 }

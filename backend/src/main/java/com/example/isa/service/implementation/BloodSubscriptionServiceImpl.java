@@ -34,7 +34,7 @@ public class BloodSubscriptionServiceImpl implements BloodSubscriptionService{
 	public void handleRegistration(BloodSubscriptionSignUpDto dto) throws JsonProcessingException {
 		this.registerMultiple(converter.Convert(dto));
 		SubscriptionResponseDto responseDto = new SubscriptionResponseDto(dto.SubscriptionId,"SUBSCRIPTION-SUCCESS");
-		System.out.println(responseDto.toString());
+		System.out.println(responseDto);
 		producer.send(responseDto);
 	}
 	@Override

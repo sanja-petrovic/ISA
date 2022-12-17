@@ -11,9 +11,9 @@ public interface UserService extends UserDetailsService {
     List<User> getAll();
     void register(BloodDonor bloodDonor);
     void verifyAccount(User user);
-    public User findByUsername(String username);
-    public User findByPersonalId(String personalId) throws Exception;
-    public void updatePassword(User user, String newPassword);
-    public void registerMedicalStaff(MedicalStaff medicalStaff);
-    public List<User> search(String name, String lastName);
+    User findByUsername(String username);
+    User findByPersonalId(String personalId) throws Exception;
+    void updatePassword(User user, String newPassword);
+    void registerMedicalStaff(MedicalStaff medicalStaff);
+    List<User> search(String name, String lastName);
 }

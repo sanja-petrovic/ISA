@@ -9,6 +9,6 @@ public class NotEnoughSupplyException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
     public NotEnoughSupplyException() {
-        super(String.format("Not enough supply for this blood type in the bank!"));
+        super("Not enough supply for this blood type in the bank!");
     }
 }

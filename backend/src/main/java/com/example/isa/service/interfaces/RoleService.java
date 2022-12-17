@@ -6,6 +6,6 @@ import java.util.List;
 import java.util.UUID;
 
 public interface RoleService {
-    public Role findById(UUID id);
-    public List<Role> findByName(String name);
+    Role findById(UUID id);
+    List<Role> findByName(String name);
 }
