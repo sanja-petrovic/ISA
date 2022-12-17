@@ -22,7 +22,12 @@ import java.util.UUID;
 public class Appointment {
     @Id
     @Column
-    private UUID uuid;
+    private UUID id;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private AppointmentStatus status;
+
     @Column
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateTime;
@@ -42,5 +47,13 @@ public class Appointment {
     		return true;
     	}
     	return false;
+    }
+
+    public Appointment(Appointment appointment) {
+        this.id = UUID.randomUUID();
+        status = AppointmentStatus.NOT_SCHEDULED;
+        dateTime = appointment.dateTime;
+        duration = appointment.duration;
+        bloodBank = appointment.bloodBank;
     }
 }

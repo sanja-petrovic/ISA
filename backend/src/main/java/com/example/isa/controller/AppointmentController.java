@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 
+import com.example.isa.service.interfaces.BloodDonorService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,10 +18,12 @@ import com.example.isa.util.converters.AppointmentConverter;
 @RequestMapping("/appointments")
 public class AppointmentController {
 	private final AppointmentService appointmentService;
+	private final BloodDonorService bloodDonorService;
 	private final AppointmentConverter converter;
 	
-	public AppointmentController(AppointmentService service, AppointmentConverter converter) {
+	public AppointmentController(AppointmentService service, BloodDonorService bloodDonorService, AppointmentConverter converter) {
 		appointmentService = service;
+		this.bloodDonorService = bloodDonorService;
 		this.converter = converter;
 	}
 	
@@ -33,6 +36,7 @@ public class AppointmentController {
 	@PostMapping("/schedule/{id}")
 	@ApiOperation(value = "Schedule one of the predefined appointments.", httpMethod = "POST")
 	public ResponseEntity schedulePredefined(@PathVariable UUID id, Principal user) {
+		appointmentService.schedulePredefined(appointmentService.getById(id), bloodDonorService.getByEmail(user.getName()));
 		return ResponseEntity.ok().build();
 	}
 

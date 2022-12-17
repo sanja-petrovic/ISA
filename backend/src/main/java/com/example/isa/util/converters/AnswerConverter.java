@@ -22,7 +22,7 @@ public class AnswerConverter implements Converter<Answer, AnswerDto> {
         return AnswerDto.builder().
                 questionId(answer.getQuestion().getId()).
                 answerValue(answer.isValue()).
-                user(answer.getUser().getEmail())
+                user(answer.getBloodDonor().getEmail())
                 .build();
     }
 

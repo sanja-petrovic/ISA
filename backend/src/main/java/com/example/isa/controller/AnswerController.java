@@ -40,7 +40,7 @@ public class AnswerController {
     @PutMapping
     @ApiOperation(value = "Save answers.", httpMethod = "PUT")
     public ResponseEntity<?> save(@RequestBody List<AnswerDto> list) {
-        List<Answer> answers = list.stream().map(dto -> Answer.builder().question(questionService.getById(dto.getQuestionId())).value(dto.isAnswerValue()).user(bloodDonorService.getByEmail(dto.getUser())).build()).collect(Collectors.toList());
+        List<Answer> answers = list.stream().map(dto -> Answer.builder().question(questionService.getById(dto.getQuestionId())).value(dto.isAnswerValue()).bloodDonor(bloodDonorService.getByEmail(dto.getUser())).build()).collect(Collectors.toList());
         answerService.save(answers);
         return ResponseEntity.ok().build();
     }

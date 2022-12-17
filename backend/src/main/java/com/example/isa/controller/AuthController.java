@@ -37,7 +37,6 @@ public class AuthController {
     private final RoleService roleService;
     private final BloodDonorConverter bloodDonorConverter;
     private final RefreshTokenService refreshTokenService;
-    private final PasswordEncoder passwordEncoder;
 
     public AuthController(TokenHandler tokenHandler, AuthenticationManager authenticationManager, BloodDonorConverter bloodDonorConverter, UserService userService, RoleService roleService, PasswordEncoder passwordEncoder, RefreshTokenService refreshTokenService) {
         this.tokenHandler = tokenHandler;
@@ -45,11 +44,10 @@ public class AuthController {
         this.userService = userService;
         this.roleService = roleService;
         this.bloodDonorConverter = bloodDonorConverter;
-        this.passwordEncoder = passwordEncoder;
         this.refreshTokenService = refreshTokenService;
     }
 
-    @PostMapping("/login")
+    @PostMapping("/log-in")
     public ResponseEntity<UserTokenState> createAuthenticationToken(
             @RequestBody CredentialsDto authenticationRequest, HttpServletResponse response) {
         Authentication authentication = this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
@@ -67,7 +65,7 @@ public class AuthController {
                 .body(new UserTokenState(jwt, user.getUsername()));
     }
 
-    @PostMapping("/logout")
+    @PostMapping("/log-out")
     public ResponseEntity<?> logoutUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (!Objects.equals(principal.toString(), "anonymousUser")) {
@@ -83,8 +81,8 @@ public class AuthController {
                 .build();
     }
 
-    @PostMapping("/refreshtoken")
-    public ResponseEntity<?> refreshtoken(HttpServletRequest request) {
+    @PostMapping("/refresh-token")
+    public ResponseEntity<?> refreshToken(HttpServletRequest request) {
         String refreshToken = tokenHandler.getJwtRefreshFromCookies(request);
 
         if ((refreshToken != null) && (refreshToken.length() > 0)) {
@@ -117,7 +115,7 @@ public class AuthController {
     public ResponseEntity<BloodDonorDto> registerBloodDonor(@RequestBody BloodDonorDto dto) {
         if (userService.findByUsername(dto.getEmail()) == null) {
             BloodDonor bloodDonor = bloodDonorConverter.dtoToEntity(dto);
-            bloodDonor.setRoles(roleService.findByName("ROLE_BLOOD_DONOR"));
+            bloodDonor.setRoles(roleService.findByName("ROLE_DONOR"));
             userService.register(bloodDonor);
             return new ResponseEntity<>(bloodDonorConverter.entityToDto(bloodDonor), HttpStatus.CREATED);
         } else {

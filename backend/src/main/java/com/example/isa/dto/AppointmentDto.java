@@ -15,6 +15,7 @@ import lombok.Setter;
 
 public class AppointmentDto {
     private UUID uuid;
+    private String status;
     private String dateTime;
     private Long duration;
     private String bloodBankId;
