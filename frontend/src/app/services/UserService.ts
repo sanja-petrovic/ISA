@@ -32,7 +32,7 @@ export class UserService {
     return this.apiService.get(this.config.users_url);
   }
   search(searchParam : string[]){
-    return this.apiService.post(this.config.users_url + '/search', searchParam );
+    return this.apiService.get(this.config.current_url + 'search',searchParam );
   }
 
     
