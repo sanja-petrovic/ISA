@@ -12,8 +12,6 @@ import { BloodBank } from '../model/BloodBank';
 })
 export class MedicalStaffService {
 
-  currentUser: any;
-  private readonly medicalStaffUrl = 'http://localhost:8080/api/medicalStaff/'
   headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   constructor(
@@ -23,14 +21,14 @@ export class MedicalStaffService {
   ) {
   }
 
-  updateMedicalStaff (mediclStaff: MedicalStaff){
-    return this.apiService.post(`${this.medicalStaffUrl}`, mediclStaff);
+  updateMedicalStaff (medicalStaff: MedicalStaff){
+    return this.apiService.post(this.config.medical_staff_url, medicalStaff);
   }
   registerMedicalStaff (medicalStaff: MedicalStaff){
-    return this.apiService.post(this.medicalStaffUrl+'register', medicalStaff);
+    return this.apiService.post(`${this.config.medical_staff_url}/register`, medicalStaff);
   }
   getBloodBank (): Observable<BloodBank>{
-    return this.http.get<BloodBank>(this.medicalStaffUrl + 'bank',{headers :this.headers});
+    return this.apiService.get(`${this.config.medical_staff_url}/bank`);
   }
 
 }
