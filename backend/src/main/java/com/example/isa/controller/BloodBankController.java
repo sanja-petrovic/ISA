@@ -55,7 +55,7 @@ public class BloodBankController {
 
 
     @PostMapping(value = "/register")
-    @ApiOperation(value = "register blood bank.", httpMethod = "POST")
+    @ApiOperation(value = "Register a new blood bank.", httpMethod = "POST")
     public ResponseEntity registerBank(@RequestBody BloodBankDto bankDto) {
         BloodBank bank = bloodBankConverter.dtoToEntity(bankDto);
         service.register(bank);
@@ -63,7 +63,7 @@ public class BloodBankController {
     }
 
     @PostMapping(value = "/update")
-    @ApiOperation(value = "Update blood bank.", httpMethod = "POST")
+    @ApiOperation(value = "Update a blood bank.", httpMethod = "POST")
     public ResponseEntity<?> update(@RequestBody BloodBankDto bloodBankDto) {
         BloodBank bloodBank = service.getById(UUID.fromString(bloodBankDto.getId()));
         bloodBank.setAddress(new Address(bloodBankDto.getStreet(), bloodBankDto.getCity(), bloodBankDto.getCountry()));

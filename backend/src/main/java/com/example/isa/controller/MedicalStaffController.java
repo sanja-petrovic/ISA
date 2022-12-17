@@ -55,8 +55,7 @@ public class MedicalStaffController {
     }
 
     @GetMapping(value = "/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "Get medical staff by id.", httpMethod = "GET")
-    //@PreAuthorize("hasRole('ROLE_STAFF')")
+    @ApiOperation(value = "Get a member of staff by id.", httpMethod = "GET")
     public ResponseEntity<?> getMedicalStaffById(@PathVariable String id) {
         MedicalStaff medicalStaff = (MedicalStaff)userService.loadUserByUsername(id);
         if (medicalStaff == null){
@@ -71,7 +70,7 @@ public class MedicalStaffController {
     }
 
     @PostMapping
-    @ApiOperation(value = "Update medical staff profile.", httpMethod = "POST")
+    @ApiOperation(value = "Update a medical staff member's profile.", httpMethod = "POST")
     public ResponseEntity<?> update(@RequestBody MedicalStaffDto medicalStaffDto) {
         MedicalStaff medicalStaff = medicalStaffService.getById(UUID.fromString(medicalStaffDto.getId()));
         medicalStaff.setGender(Gender.valueOf(medicalStaffDto.getGender()));
@@ -84,19 +83,15 @@ public class MedicalStaffController {
     }
 
     @GetMapping(value = "/bank")
-    @ApiOperation(value = "Get blood bank by medical staff id.", httpMethod = "GET")
-    //@PreAuthorize("hasRole('ROLE_STAFF')")
+    @ApiOperation(value = "Get the blood bank that the currently logged in medical staff member works in.", httpMethod = "GET")
     public ResponseEntity<?> getBloodBank(Principal user) {
         MedicalStaff medicalStaff = (MedicalStaff)userService.loadUserByUsername(user.getName());
-        if (medicalStaff == null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return ResponseEntity.ok(bloodBankConverter.entityToDto(medicalStaff.getBloodBank()));
+        return medicalStaff == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(bloodBankConverter.entityToDto(medicalStaff.getBloodBank()));
     }
     @PostMapping(value ="/register")
-    @ApiOperation(value = "Register medical staff profile.", httpMethod = "POST")
+    @ApiOperation(value = "Register a medical staff member.", httpMethod = "POST")
     public ResponseEntity<?> register(@RequestBody MedicalStaffDto medicalStaffDto){
-        MedicalStaff medicalStaff = mapMedicalStaff(medicalStaffDto);
+        MedicalStaff medicalStaff = medicalStaffConverter.dtoToEntity(medicalStaffDto);
         if (userService.findByUsername(medicalStaffDto.getEmail()) == null) {
             medicalStaff.setRoles(roleService.findByName("ROLE_STAFF"));
             medicalStaffService.register(medicalStaff);
@@ -105,17 +100,5 @@ public class MedicalStaffController {
         } else {
             return new ResponseEntity<>(null, HttpStatus.CONFLICT);
         }
-    }
-    public MedicalStaff mapMedicalStaff(MedicalStaffDto medicalStaffDto){
-        MedicalStaff medicalStaff = new MedicalStaff();
-        medicalStaff.setPersonalId(medicalStaffDto.getPersonalId());
-        medicalStaff.setFirstName(medicalStaffDto.getFirstName());
-        medicalStaff.setLastName(medicalStaffDto.getLastName());
-        medicalStaff.setPassword(passwordEncoder.encode(medicalStaffDto.getPassword()));
-        medicalStaff.setPhoneNumber(medicalStaffDto.getPhoneNumber());
-        medicalStaff.setEmail(medicalStaffDto.getEmail());
-        medicalStaff.setBloodBank(new BloodBank());
-        medicalStaff.getBloodBank().setId(UUID.fromString(medicalStaffDto.getBloodBankId()));
-        return medicalStaff;
     }
 }

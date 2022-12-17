@@ -21,9 +21,9 @@ public class BloodRequestConsumer {
         this.bloodRequestService = bloodRequestService;
     }
 
-    @KafkaListener(topics = "blood.requests.topic", groupId = "bloodRequests")
+    /*@KafkaListener(topics = "blood.requests.topic", groupId = "bloodRequests")
     public void consumeMessage(String message) throws JsonProcessingException, ParseException {
         log.info("message consumed {}", message);
         bloodRequestService.handleDoctorRequest(objectMapper.readValue(message, BloodRequestDto.class));
-    }
+    }*/
 }

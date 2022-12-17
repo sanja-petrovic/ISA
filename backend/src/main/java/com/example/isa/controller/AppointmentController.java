@@ -26,12 +26,26 @@ public class AppointmentController {
 		this.bloodDonorService = bloodDonorService;
 		this.converter = converter;
 	}
-	
+
 	@GetMapping
-	public ResponseEntity<List<AppointmentDto>> getAllByBloodBank(@RequestParam String bankId){
-		List<Appointment> appointments = appointmentService.getByBloodBank(UUID.fromString(bankId));
-		return ResponseEntity.ok(converter.listToDtoList(appointments));
+	@ApiOperation(value = "Get all appointments", httpMethod = "GET")
+	public ResponseEntity<List<AppointmentDto>> getAll(){
+		return ResponseEntity.ok(converter.listToDtoList(appointmentService.getAll()));
 	}
+
+	@GetMapping("/{id}")
+	@ApiOperation(value = "Get an appointment by id", httpMethod = "GET")
+	public ResponseEntity<AppointmentDto> getById(@PathVariable String id){
+		return ResponseEntity.ok(converter.entityToDto(appointmentService.getById(UUID.fromString(id))));
+	}
+	
+	@GetMapping("/blood-bank/{id}")
+	@ApiOperation(value = "Get all appointments in a blood bank.", httpMethod = "GET")
+	public ResponseEntity<List<AppointmentDto>> getAllByBloodBank(@PathVariable String id){
+		return ResponseEntity.ok(converter.listToDtoList(appointmentService.getByBloodBank(UUID.fromString(id))));
+	}
+
+
 
 	@PostMapping("/schedule/{id}")
 	@ApiOperation(value = "Schedule one of the predefined appointments.", httpMethod = "POST")

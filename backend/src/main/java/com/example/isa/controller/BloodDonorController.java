@@ -36,7 +36,7 @@ public class BloodDonorController {
         return ResponseEntity.ok(bloodDonorDtos);
     }
     @RequestMapping(value="/get/{personalId}")
-    @ApiOperation(value = "Get blood donor by personalId.", httpMethod = "GET")
+    @ApiOperation(value = "Get a blood donor by personal ID.", httpMethod = "GET")
     public ResponseEntity<BloodDonorDto> getByPersonalId(@PathVariable String personalId){
 		try {
 			BloodDonor bloodDonor = bloodDonorService.getByPersonalId(personalId);
@@ -49,7 +49,7 @@ public class BloodDonorController {
     }
     
     @PutMapping(value="/update")
-    @ApiOperation(value = "Update blood donor's information", httpMethod = "PUT")
+    @ApiOperation(value = "Update a blood donor's information", httpMethod = "PUT")
     public ResponseEntity<BloodDonorDto> update(@RequestBody BloodDonorDto bloodDonorDto){
     	BloodDonor retVal = bloodDonorService.update(bloodDonorConverter.dtoToEntity(bloodDonorDto));
 		return retVal == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(bloodDonorConverter.entityToDto(retVal));

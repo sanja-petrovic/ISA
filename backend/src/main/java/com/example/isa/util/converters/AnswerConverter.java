@@ -31,7 +31,7 @@ public class AnswerConverter implements Converter<Answer, AnswerDto> {
         return Answer.builder()
                 .question(questionService.getById(answerDto.getQuestionId()))
                 .value(answerDto.isAnswerValue())
-                .user(bloodDonorService.getByEmail(answerDto.getUser()))
+                .bloodDonor(bloodDonorService.getByEmail(answerDto.getUser()))
                 .build();
     }
 }

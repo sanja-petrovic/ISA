@@ -1,10 +1,8 @@
 package com.example.isa.service.implementation;
 
-import java.security.Principal;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -45,16 +43,16 @@ public class AppointmentServiceImpl implements AppointmentService {
 
 	@Override
     public List<Appointment> getByBloodBank(UUID bloodBankId) {
-        return repository.findAllByBloodBank(bloodBankId);
+        return repository.findAllByBloodBankId(bloodBankId);
     }
 
     @Override
     public List<Appointment> getByBloodDonor(UUID bloodDonorId) {
-        return repository.findAllByBloodDonor(bloodDonorId);
+        return repository.findAllByBloodDonorId(bloodDonorId);
     }
 
     public boolean canScheduleAppointment(BloodDonor bloodDonor) {
-        Optional<Appointment> mostRecentAppointment = repository.findTopByBloodDonorOrderByDateTimeDurationDesc(bloodDonor);
+        Optional<Appointment> mostRecentAppointment = repository.findTopByBloodDonorOrderByDateTimeDesc(bloodDonor);
         return mostRecentAppointment.isEmpty() || mostRecentAppointment.get().getDateTime().after(Date.from(Instant.from(LocalDate.now().minusMonths(6))));
     }
 
@@ -64,7 +62,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         List<Appointment> listScheduled = repository.findAllByBloodBankAndDateTime(appointment.getBloodBank(), appointment.getDateTime());
         for (Appointment scheduled : listScheduled) {
             if (scheduled.hasDateTimeOverlap(DateConverter.convert(appointment.getDateTime()), appointment.getDuration())) {
-                return null;
+                throw new AlreadyExistsException();
             }
         }
         return repository.save(appointment);
@@ -88,10 +86,10 @@ public class AppointmentServiceImpl implements AppointmentService {
                 if (CollectionUtils.isEmpty(donor.getAnswers())) {
                     throw new NoCompletedQuestionnaire();
                 }
-				if(!canScheduleAppointment(donor)) {
+				if (!canScheduleAppointment(donor)) {
 					throw new NewAppointmentTooSoonException();
 				}
-                if(repository.findAllByBloodBankAndBloodDonorAndDateTime(appointment.getBloodBank(), donor, appointment.getDateTime()).isPresent()) {
+                if (repository.findAllByBloodBankAndBloodDonorAndDateTime(appointment.getBloodBank(), donor, appointment.getDateTime()).isPresent()) {
                     throw new CantScheduleTwiceException();
                 }
 				appointment.setBloodDonor(donor);
@@ -108,7 +106,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public boolean canCancelAppointment(Appointment appointment) {
 		return Duration.between(LocalDate.now(), LocalDate.from(appointment.getDateTime().toInstant())).toHours() > 24;
 	}
-    
+
 	@Override
 	@Transactional
 	public void cancel(Appointment appointment) {

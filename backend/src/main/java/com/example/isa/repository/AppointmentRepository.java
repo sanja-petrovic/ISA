@@ -14,16 +14,16 @@ import com.example.isa.model.Appointment;
 
 @Repository
 public interface AppointmentRepository extends JpaRepository<Appointment, UUID> {
-    List<Appointment> findAllByBloodDonor(UUID bloodDonorId);
+    List<Appointment> findAllByBloodDonorId(UUID bloodDonorId);
 
     Optional<Appointment> findById(UUID appointmentId);
 
-    List<Appointment> findAllByBloodBank(UUID bloodBankId);
+    List<Appointment> findAllByBloodBankId(UUID bloodBankId);
 
     Optional<Appointment> findAllByBloodBankAndBloodDonorAndDateTime(BloodBank bloodBank, BloodDonor bloodDonor, Date dateTime);
 
     List<Appointment> findAllByDateTime(Date date);
-    Optional<Appointment> findTopByBloodDonorOrderByDateTimeDurationDesc(BloodDonor bloodDonor);
+    Optional<Appointment> findTopByBloodDonorOrderByDateTimeDesc(BloodDonor bloodDonor);
 
     List<Appointment> findAllByBloodBankAndDateTime(BloodBank bloodBank, Date dateTime);
 
