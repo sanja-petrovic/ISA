@@ -6,6 +6,7 @@ import com.example.isa.service.interfaces.NewsService;
 import com.example.isa.util.converters.NewsConverter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,11 +28,13 @@ public class NewsController {
     }
 
     @GetMapping
+    @ApiOperation(value = "Get all news.", httpMethod = "GET")
     ResponseEntity<List<NewsDto>> getAll() {
         return ResponseEntity.ok(newsService.getAll().stream().map(newsConverter::entityToDto).collect(Collectors.toList()));
     }
 
     @PostMapping
+    @ApiOperation(value = "Create news.", httpMethod = "POST")
     ResponseEntity<?> createNews(@RequestBody NewsDto dto) throws JsonProcessingException {
         News news = newsConverter.dtoToEntity(dto);
         newsService.create(news);

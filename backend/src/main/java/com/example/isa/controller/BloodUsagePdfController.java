@@ -1,5 +1,6 @@
 package com.example.isa.controller;
 
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,14 +19,14 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/bloodUsage" )
+@RequestMapping("/blood-usage" )
 public class BloodUsagePdfController {
 	public BloodUsagePdfController() {}
 	@PostMapping(path = "/upload")
+	@ApiOperation(value = "Upload a PDF to the local file system.", httpMethod = "POST")
 	public ResponseEntity<String> uploadToLocalFileSystem(@RequestParam("file") MultipartFile file) {
 		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 		Path path = Paths.get("BloodUsageReports" + File.separator + fileName);
-		//+
 		try {
 			Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 		} catch (IOException e) {

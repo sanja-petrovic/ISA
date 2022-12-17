@@ -28,9 +28,9 @@ public class TokenHandler {
     @Value("Authorization")
     private String AUTH_HEADER;
     private static final String AUDIENCE_WEB = "web";
-    private SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS512;
-    private String jwtCookie = "accessToken";
-    private String jwtRefreshCookie = "refreshToken";
+    private final SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS512;
+    private final String jwtCookie = "accessToken";
+    private final String jwtRefreshCookie = "refreshToken";
 
     public ResponseCookie generateJwtCookie(User user) {
         String jwt = generateTokenFromUsername(user.getEmail());

@@ -4,11 +4,15 @@ import java.util.List;
 import java.util.UUID;
 
 import com.example.isa.model.Appointment;
+import com.example.isa.model.BloodDonor;
 
 public interface AppointmentService {
-	public List<Appointment> getAll();
-	public List<Appointment> getByBloodBank(UUID bankId);
-	public List<Appointment> getByPatient(UUID patientId);
-	public Appointment create(Appointment appointment);
-	public Appointment update(Appointment appointment);
+	List<Appointment> getAll();
+	Appointment getById(UUID appointmentId);
+	List<Appointment> getByBloodBank(UUID bankId);
+	List<Appointment> getByBloodDonor(UUID bloodDonorId);
+	Appointment create(Appointment appointment);
+	Appointment update(Appointment appointment);
+	void schedulePredefined(Appointment appointment, BloodDonor donor);
+	void cancel(Appointment appointment);
 }

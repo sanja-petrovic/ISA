@@ -5,16 +5,18 @@ import {Injectable} from '@angular/core';
 })
 export class ConfigService {
 
-  private _api_url = 'http://localhost:8080';
-  private _auth_url = 'http://localhost:8080/auth';
+  private _api_url = 'http://localhost:8080/api';
+  private _auth_url = 'http://localhost:8080/api/auth';
   public users_url = this._api_url + '/users';
-  private _login_url = this._auth_url + '/login';
+  private _login_url = this._auth_url + '/log-in';
   public verification_url = this._auth_url + '/verify';
   public questions_url = this._api_url + '/questions'
   public answers_url = this._api_url + '/answers'
-  public blood_banks_url = this._api_url + '/bloodbanks';
-  public log_out_url = this._auth_url + '/logout';
-  public refresh_token_url = this._auth_url + '/refreshtoken';
+  public blood_banks_url = this._api_url + '/blood-banks';
+  public medical_staff_url = this._api_url + '/medical-stuff';
+  public blood_donors_url = this._api_url + '/blood-donors';
+  public log_out_url = this._auth_url + '/log-out';
+  public refresh_token_url = this._auth_url + '/refresh-token';
 
   get login_url(): string {
     return this._login_url;

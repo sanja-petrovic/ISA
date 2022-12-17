@@ -22,13 +22,13 @@ public class Answer {
     private Question question;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "blood_donor_id")
+    private BloodDonor bloodDonor;
 
     @Builder
-    public Answer(boolean value, Question question, User user) {
+    public Answer(boolean value, Question question, BloodDonor bloodDonor) {
         this.value = value;
         this.question = question;
-        this.user = user;
+        this.bloodDonor = bloodDonor;
     }
 }

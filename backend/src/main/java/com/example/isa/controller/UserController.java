@@ -30,7 +30,7 @@ public class UserController {
     }
 
     @GetMapping("/current")
-    @ApiOperation(value = "Get the logged in user.", httpMethod = "GET")
+    @ApiOperation(value = "Get the currently logged in user.", httpMethod = "GET")
     public User user(Principal user) {
         if (user != null) {
             return this.service.findByUsername(user.getName());
@@ -40,7 +40,7 @@ public class UserController {
     }
 
     @PostMapping("/update/password")
-    @ApiOperation(value = "Update user password", httpMethod = "POST")
+    @ApiOperation(value = "Update a user's password.", httpMethod = "POST")
     public ResponseEntity<?> updatePassword(@RequestBody PasswordDto passwordDto) {
         if(passwordDto == null) {
             return ResponseEntity.badRequest().build();
@@ -56,7 +56,7 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
     @GetMapping("/search")
-    @ApiOperation(value ="Search for user", httpMethod = "GET")
+    @ApiOperation(value ="Search users.", httpMethod = "GET")
     public ResponseEntity<?> search(@RequestBody String[] parameters){
         return ResponseEntity.ok(service.search(parameters[0], parameters[1]));
     }

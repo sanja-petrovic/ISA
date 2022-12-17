@@ -7,14 +7,10 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-import com.example.isa.util.DateConvertor;
-
-import ch.qos.logback.classic.pattern.DateConverter;
+import com.example.isa.util.converters.DateConverter;
 
 import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -26,7 +22,12 @@ import java.util.UUID;
 public class Appointment {
     @Id
     @Column
-    private UUID uuid;
+    private UUID id;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private AppointmentStatus status;
+
     @Column
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateTime;
@@ -36,15 +37,20 @@ public class Appointment {
     @JoinColumn
     private BloodBank bloodBank;
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "patient_id")
-    private Patient patient;
+    @JoinColumn(name = "blood_donor_id")
+    private BloodDonor bloodDonor;
     
     public boolean hasDateTimeOverlap(LocalDateTime date, Long duration) {
-    	LocalDateTime storedDateTime = DateConvertor.convert(dateTime);
-    	
-    	if( (storedDateTime.compareTo(date.plusMinutes(duration))<=0) && (storedDateTime.plusMinutes(this.duration).compareTo(date)<=0) ){
-    		return true;
-    	}
-    	return false;
+    	LocalDateTime storedDateTime = DateConverter.convert(dateTime);
+
+        return (!storedDateTime.isAfter(date.plusMinutes(duration))) && (!storedDateTime.plusMinutes(this.duration).isAfter(date));
+    }
+
+    public Appointment(Appointment appointment) {
+        this.id = UUID.randomUUID();
+        status = AppointmentStatus.NOT_SCHEDULED;
+        dateTime = appointment.dateTime;
+        duration = appointment.duration;
+        bloodBank = appointment.bloodBank;
     }
 }

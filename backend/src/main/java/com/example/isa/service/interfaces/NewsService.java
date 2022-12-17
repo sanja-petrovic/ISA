@@ -7,7 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.List;
 
 public interface NewsService {
-    public List<News> getAll();
-    public void create(News news) throws JsonProcessingException;
-    public void send(NewsDto dto) throws JsonProcessingException;
+    List<News> getAll();
+    void create(News news) throws JsonProcessingException;
+    void send(NewsDto dto) throws JsonProcessingException;
 }

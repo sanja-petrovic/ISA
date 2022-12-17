@@ -1,6 +1,5 @@
 package com.example.isa.dto;
 
-import java.util.Date;
 import java.util.UUID;
 
 
@@ -15,9 +14,10 @@ import lombok.Setter;
 @AllArgsConstructor
 
 public class AppointmentDto {
-    private UUID uuid;
+    private UUID id;
+    private String status;
     private String dateTime;
     private Long duration;
     private String bloodBankId;
-    private String patientId;
+    private String bloodDonorId;
 }

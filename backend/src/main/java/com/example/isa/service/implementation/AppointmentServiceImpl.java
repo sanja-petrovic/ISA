@@ -1,54 +1,123 @@
 package com.example.isa.service.implementation;
 
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
+import com.example.isa.exception.*;
+import com.example.isa.model.AppointmentStatus;
+import com.example.isa.model.BloodDonor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.isa.model.Appointment;
 import com.example.isa.repository.AppointmentRepository;
 import com.example.isa.service.interfaces.AppointmentService;
-import com.example.isa.util.DateConvertor;
+import com.example.isa.util.converters.DateConverter;
+import org.springframework.util.CollectionUtils;
+
+import javax.transaction.Transactional;
 
 @Service
-public class AppointmentServiceImpl implements AppointmentService{
-	private final AppointmentRepository repository;
-	
-	@Autowired
-	public AppointmentServiceImpl(AppointmentRepository repository) {
-		this.repository = repository;
-	}
-	
+public class AppointmentServiceImpl implements AppointmentService {
+    private final AppointmentRepository repository;
+
+    @Autowired
+    public AppointmentServiceImpl(AppointmentRepository repository) {
+        this.repository = repository;
+    }
+
+    @Override
+    public List<Appointment> getAll() {
+        return repository.findAll();
+    }
+
 	@Override
-	public List<Appointment> getAll() {
-		return repository.findAll();
+	public Appointment getById(UUID appointmentId) {
+		return repository.findById(appointmentId).orElse(null);
 	}
 
 	@Override
-	public List<Appointment> getByBloodBank(UUID bloodBankId) {
-		return repository.getByBloodBank(bloodBankId);
+    public List<Appointment> getByBloodBank(UUID bloodBankId) {
+        return repository.findAllByBloodBankId(bloodBankId);
+    }
+
+    @Override
+    public List<Appointment> getByBloodDonor(UUID bloodDonorId) {
+        return repository.findAllByBloodDonorId(bloodDonorId);
+    }
+
+    public boolean canScheduleAppointment(BloodDonor bloodDonor) {
+        Optional<Appointment> mostRecentAppointment = repository.findTopByBloodDonorOrderByDateTimeDesc(bloodDonor);
+        return mostRecentAppointment.isEmpty() || mostRecentAppointment.get().getDateTime().after(Date.from(Instant.from(LocalDate.now().minusMonths(6))));
+    }
+
+    @Override
+    @Transactional
+    public Appointment create(Appointment appointment) {
+        List<Appointment> listScheduled = repository.findAllByBloodBankAndDateTime(appointment.getBloodBank(), appointment.getDateTime());
+        for (Appointment scheduled : listScheduled) {
+            if (scheduled.hasDateTimeOverlap(DateConverter.convert(appointment.getDateTime()), appointment.getDuration())) {
+                throw new AlreadyExistsException();
+            }
+        }
+        return repository.save(appointment);
+    }
+
+    @Override
+    public Appointment update(Appointment appointment) {
+        return repository.save(appointment);
+    }
+
+
+
+    @Override
+    @Transactional
+    public void schedulePredefined(Appointment appointment, BloodDonor donor) {
+        if (appointment != null) {
+            if (appointment.getStatus() == AppointmentStatus.NOT_SCHEDULED) {
+                if (appointment.getDateTime().before(new Date())) {
+                    throw new PassedException();
+                }
+                if (CollectionUtils.isEmpty(donor.getAnswers())) {
+                    throw new NoCompletedQuestionnaire();
+                }
+				if (!canScheduleAppointment(donor)) {
+					throw new NewAppointmentTooSoonException();
+				}
+                if (repository.findAllByBloodBankAndBloodDonorAndDateTime(appointment.getBloodBank(), donor, appointment.getDateTime()).isPresent()) {
+                    throw new CantScheduleTwiceException();
+                }
+				appointment.setBloodDonor(donor);
+                appointment.setStatus(AppointmentStatus.SCHEDULED);
+				repository.save(appointment);
+            } else {
+                throw new AlreadyScheduledException();
+            }
+        } else {
+            throw new NotFoundException();
+        }
+    }
+
+	public boolean canCancelAppointment(Appointment appointment) {
+		return Duration.between(LocalDate.now(), LocalDate.from(appointment.getDateTime().toInstant())).toHours() > 24;
 	}
 
 	@Override
-	public List<Appointment> getByPatient(UUID patientId) {
-		return repository.getByPatient(patientId);
-	}
-
-	@Override
-	public Appointment create(Appointment appointment) {
-		List<Appointment> listScheduled = repository.getByBloodBankForDate(appointment.getBloodBank().getId(), DateConvertor.convert(appointment.getDateTime()).toLocalDate());
-		for(Appointment scheduled : listScheduled) {
-			if(scheduled.hasDateTimeOverlap(DateConvertor.convert(appointment.getDateTime()), appointment.getDuration())) {
-				return null;
-			}
+	@Transactional
+	public void cancel(Appointment appointment) {
+		if(canCancelAppointment(appointment)) {
+			appointment.setStatus(AppointmentStatus.CANCELLED);
+			repository.save(appointment);
+            repository.save(new Appointment(appointment));
+		} else {
+			throw new UnableToCancelException();
 		}
-		return repository.save(appointment);
 	}
 
-	@Override
-	public Appointment update(Appointment appointment) {
-		return repository.save(appointment);
-	}
 
 }

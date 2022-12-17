@@ -3,9 +3,10 @@ package com.example.isa.controller;
 import com.example.isa.dto.AnswerDto;
 import com.example.isa.model.Answer;
 import com.example.isa.service.interfaces.AnswerService;
-import com.example.isa.service.interfaces.PatientService;
+import com.example.isa.service.interfaces.BloodDonorService;
 import com.example.isa.service.interfaces.QuestionService;
 import com.example.isa.util.converters.AnswerConverter;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,17 +19,18 @@ public class AnswerController {
 
     private final AnswerService answerService;
     private final QuestionService questionService;
-    private final PatientService patientService;
+    private final BloodDonorService bloodDonorService;
     private final AnswerConverter answerConverter;
 
-    public AnswerController(AnswerService answerService, QuestionService questionService, PatientService patientService, AnswerConverter answerConverter) {
+    public AnswerController(AnswerService answerService, QuestionService questionService, BloodDonorService bloodDonorService, AnswerConverter answerConverter) {
         this.answerService = answerService;
         this.questionService = questionService;
-        this.patientService = patientService;
+        this.bloodDonorService = bloodDonorService;
         this.answerConverter = answerConverter;
     }
 
     @GetMapping
+    @ApiOperation(value = "Get all answers.", httpMethod = "GET")
     public ResponseEntity<List<AnswerDto>> getAll() {
         List<Answer> answers = answerService.getAll();
         List<AnswerDto> answerDtos = answers.stream().map(answerConverter::entityToDto).collect(Collectors.toList());
@@ -36,8 +38,9 @@ public class AnswerController {
     }
 
     @PutMapping
+    @ApiOperation(value = "Save answers.", httpMethod = "PUT")
     public ResponseEntity<?> save(@RequestBody List<AnswerDto> list) {
-        List<Answer> answers = list.stream().map(dto -> Answer.builder().question(questionService.getById(dto.getQuestionId())).value(dto.isAnswerValue()).user(patientService.getByEmail(dto.getUser())).build()).collect(Collectors.toList());
+        List<Answer> answers = list.stream().map(dto -> Answer.builder().question(questionService.getById(dto.getQuestionId())).value(dto.isAnswerValue()).bloodDonor(bloodDonorService.getByEmail(dto.getUser())).build()).collect(Collectors.toList());
         answerService.save(answers);
         return ResponseEntity.ok().build();
     }

@@ -2,10 +2,6 @@ package com.example.isa.dto;
 
 import lombok.Builder;
 
-import com.example.isa.model.Address;
-import com.example.isa.model.Gender;
-import com.example.isa.model.Patient;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 @Builder
-public class PatientDto {
+public class BloodDonorDto {
     private String personalId;
     private String firstName;
     private String lastName;

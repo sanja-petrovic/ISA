@@ -14,14 +14,11 @@ import com.example.isa.service.interfaces.BloodBankService;
 import com.example.isa.service.interfaces.BloodRequestService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import net.bytebuddy.asm.Advice.OffsetMapping.ForOrigin.Renderer.ForReturnTypeName;
-
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
@@ -44,14 +41,14 @@ public class BloodRequestServiceImpl implements BloodRequestService {
     }
 
     @Override
-    public void handleBloodRequest(BloodRequestDto bloodRequestDto) throws JsonProcessingException, ParseException {
+    public void handleDoctorRequest(BloodRequestDto bloodRequestDto) throws JsonProcessingException, ParseException {
         BloodType bloodType = BloodType.valueOf(bloodRequestDto.getBloodType().split(" ")[0] + "_" + bloodRequestDto.getBloodType().split(" ")[1]);
         BloodBank bloodBank = bloodBankService.findBankWithMostSupplies(bloodType, bloodRequestDto.getAmount());
         boolean canSend = bloodBank != null;
         this.save(bloodRequestDto, bloodType, bloodBank, canSend);
         this.respond(bloodRequestDto.getId(), canSend ? "APPROVED_BY_BANK" : "REJECTED_BY_BANK");
         if (canSend) {
-            bloodBankService.updateBloodSupplies(bloodBank, bloodType, bloodRequestDto.getAmount());
+            bloodBankService.updateBloodSupply(bloodBank, bloodType, bloodRequestDto.getAmount());
             BloodSupplyDto bloodSupplyDto = new BloodSupplyDto(bloodRequestDto.getId(), bloodRequestDto.getBloodType(), bloodRequestDto.getAmount());
             if (bloodRequestDto.isUrgent()) {
                 producer.send(bloodSupplyDto);
@@ -63,34 +60,22 @@ public class BloodRequestServiceImpl implements BloodRequestService {
         }
     }
 	@Override
-	public BloodSupplyDto handleManagerRequest(BloodRequestDto bloodRequestDto) throws ParseException {
+	public BloodSupplyDto handleManagerRequest(BloodRequestDto bloodRequestDto) throws ParseException, JsonProcessingException {
 		BloodBank bloodBank = bloodBankService.findByTitle((bloodRequestDto.getBloodBank()));
-
         BloodType bloodType = BloodType.valueOf(bloodRequestDto.getBloodType().split(" ")[0] + "_" + bloodRequestDto.getBloodType().split(" ")[1]);
         System.out.println(bloodType);
         if(bloodBank != null) {
-            boolean canSend = bloodBankService.updateBloodSupplies(bloodBank, bloodType, bloodRequestDto.getAmount());
+            boolean canSend = bloodBankService.checkBloodSupply(bloodBank, bloodType, bloodRequestDto.getAmount());
             this.save(bloodRequestDto, bloodType, bloodBank, canSend);
             if(canSend) {
-                BloodSupplyDto bloodSupplyDto = new BloodSupplyDto(bloodRequestDto.getId(), bloodRequestDto.getBloodType(), bloodRequestDto.getAmount());
-                return bloodSupplyDto;
+                bloodBankService.updateBloodSupply(bloodBank, bloodType, bloodRequestDto.getAmount());
+                return new BloodSupplyDto(bloodRequestDto.getId(), bloodRequestDto.getBloodType(), bloodRequestDto.getAmount());
             }
-        } 
+        }
+
         return null;
-		
 	}
-    public void test() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, 2022);
-        calendar.set(Calendar.MONTH, Calendar.DECEMBER);
-        calendar.set(Calendar.DAY_OF_MONTH, 2);
-        calendar.set(Calendar.HOUR_OF_DAY, 20);
-        calendar.set(Calendar.MINUTE, 2);
-        calendar.set(Calendar.SECOND, 0);
-        Date date = calendar.getTime();
-        System.out.println(date);
-        scheduler.sendScheduledBloodSupply(producer, null, date);
-    }
+
 
     private void respond(UUID requestId, String status) throws JsonProcessingException {
         BloodRequestResponseDto response = BloodRequestResponseDto.builder().requestId(requestId).status(status).build();

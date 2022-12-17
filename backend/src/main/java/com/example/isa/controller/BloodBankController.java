@@ -19,8 +19,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
-@Api(value = "/bloodbanks")
-@RequestMapping(value = "/bloodbanks")
+@Api(value = "/blood-banks")
+@RequestMapping(value = "/blood-banks")
 public class BloodBankController {
 
     private final BloodBankService service;
@@ -54,22 +54,23 @@ public class BloodBankController {
     }
 
 
-    @PostMapping(value = "/registerBank")
-    @ApiOperation(value = "register blood bank.", httpMethod = "POST")
+    @PostMapping(value = "/register")
+    @ApiOperation(value = "Register a new blood bank.", httpMethod = "POST")
     public ResponseEntity registerBank(@RequestBody BloodBankDto bankDto) {
         BloodBank bank = bloodBankConverter.dtoToEntity(bankDto);
-        return ResponseEntity.ok(service.registerBank(bank));
+        service.register(bank);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping(value = "/update")
-    @ApiOperation(value = "Update blood bank.", httpMethod = "POST")
+    @ApiOperation(value = "Update a blood bank.", httpMethod = "POST")
     public ResponseEntity<?> update(@RequestBody BloodBankDto bloodBankDto) {
         BloodBank bloodBank = service.getById(UUID.fromString(bloodBankDto.getId()));
         bloodBank.setAddress(new Address(bloodBankDto.getStreet(), bloodBankDto.getCity(), bloodBankDto.getCountry()));
         bloodBank.setDescription(bloodBankDto.getDescription());
         bloodBank.setTitle(bloodBankDto.getTitle());
         bloodBank.setAverageGrade(bloodBankDto.getAverageGrade());
-        service.updateBloodBank(bloodBank);
+        service.update(bloodBank);
         return ResponseEntity.ok(bloodBank);
     }
 }

@@ -4,6 +4,7 @@ import com.example.isa.dto.QuestionDto;
 import com.example.isa.model.Question;
 import com.example.isa.service.interfaces.QuestionService;
 import com.example.isa.util.converters.QuestionConverter;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +27,7 @@ public class QuestionController {
     }
 
     @GetMapping
+    @ApiOperation(value = "Get all questions.", httpMethod = "GET")
     public ResponseEntity<List<QuestionDto>> getAll() {
         List<Question> questions = service.getAll();
         List<QuestionDto> questionDtos = questions.stream().map(questionConverter::entityToDto).collect(Collectors.toList());
@@ -33,6 +35,7 @@ public class QuestionController {
     }
 
     @PostMapping
+    @ApiOperation(value = "Add a new question.", httpMethod = "POST")
     public ResponseEntity<?> add(QuestionDto questionDto) {
         Question question = questionConverter.dtoToEntity(questionDto);
         service.add(question);
