@@ -3,6 +3,7 @@ package com.example.isa.service.implementation;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -61,13 +62,34 @@ public class AppointmentServiceImpl implements AppointmentService {
     public Appointment create(Appointment appointment) {
         List<Appointment> listScheduled = repository.findAllByBloodBankAndDateTime(appointment.getBloodBank(), appointment.getDateTime());
         for (Appointment scheduled : listScheduled) {
-            if (scheduled.hasDateTimeOverlap(DateConverter.convert(appointment.getDateTime()), appointment.getDuration())) {
+            if (this.hasDateTimeOverlap(scheduled, appointment)) {
                 throw new AlreadyExistsException();
             }
         }
         return repository.save(appointment);
     }
-
+    @Override
+    @Transactional
+    public Appointment createScheduled(Appointment appointment) {
+    	if(appointment!=null) {
+    		LocalDateTime converteDateTime = DateConverter.convert(appointment.getDateTime());
+            List<Appointment> listScheduled = repository.findAllByBloodBankAndDate(appointment.getBloodBank(), converteDateTime.getYear(), converteDateTime.getMonthValue(), converteDateTime.getDayOfMonth());
+            for (Appointment scheduled : listScheduled) {
+                if (this.hasDateTimeOverlap(scheduled, appointment)) {
+                    throw new AlreadyExistsException();
+                }
+            }
+            return repository.save(appointment);
+    	}
+    	return null;
+    }
+    
+    private boolean hasDateTimeOverlap(Appointment a1, Appointment a2) {
+    	LocalDateTime a1DateTime = DateConverter.convert(a1.getDateTime());
+    	LocalDateTime a2DateTime = DateConverter.convert(a2.getDateTime());
+    	//A.end >= B.start AND A.start <= B.end
+        return (a1DateTime.plusMinutes(a1.getDuration()).isAfter(a2DateTime) && a1DateTime.isBefore(a2DateTime.plusMinutes(a2.getDuration())));
+    }
     @Override
     public Appointment update(Appointment appointment) {
         return repository.save(appointment);
@@ -119,5 +141,34 @@ public class AppointmentServiceImpl implements AppointmentService {
 		}
 	}
 
+	@Override
+	public Appointment createByDonor(Appointment appointment, BloodDonor donor) {
+		if(appointment!=null && donor!=null) {
+			if (appointment.getDateTime().before(new Date())) {
+	            throw new PassedException();
+	        }
+	        /*if (CollectionUtils.isEmpty(donor.getAnswers())) {
+	            throw new NoCompletedQuestionnaire();
+	        }*/
+			/*if (!canScheduleAppointment(donor)) {
+				throw new NewAppointmentTooSoonException();
+			}*/
+			//java.time.temporal.UnsupportedTemporalTypeException: Unsupported field: InstantSeconds
+			//probbably missing parameter
+			if(donorHasAtChosenTime(donor, appointment.getDateTime())) {
+				throw new DuplicateAppointmentException();
+			}
+			appointment.setStatus(AppointmentStatus.SCHEDULED);
+			appointment.setBloodDonor(donor);
+			repository.save(appointment);
+		}
+		else {
+			throw new NotFoundException();
+		}
+		return null;
+	}
+	private boolean donorHasAtChosenTime(BloodDonor donor, Date dateTime) {
+		return !repository.findAllByBloodDonorAndDateTime(donor, dateTime).isEmpty();
+	}
 
 }

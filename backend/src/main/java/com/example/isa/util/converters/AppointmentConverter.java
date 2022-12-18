@@ -11,6 +11,7 @@ import java.util.UUID;
 import com.example.isa.dto.AppointmentDto;
 import com.example.isa.model.Appointment;
 import com.example.isa.model.AppointmentStatus;
+import com.example.isa.model.BloodDonor;
 import com.example.isa.service.interfaces.BloodBankService;
 import com.example.isa.service.interfaces.BloodDonorService;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,7 @@ public class AppointmentConverter implements Converter<Appointment, AppointmentD
 				entity.getDateTime().toString(),
 				entity.getDuration(),
 				entity.getBloodBank().getId().toString(),
-				entity.getBloodDonor().getId().toString()
+				entity.getBloodDonor().getPersonalId().toString()
 				);
 	}
 
@@ -42,19 +43,38 @@ public class AppointmentConverter implements Converter<Appointment, AppointmentD
 	public Appointment dtoToEntity(AppointmentDto dto) {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss", Locale.ENGLISH);
 		formatter.setTimeZone(TimeZone.getDefault());
-		
-		try {
-			return new Appointment(
-					dto.getId(),
-					AppointmentStatus.valueOf(dto.getStatus()),
-					formatter.parse(dto.getDateTime()),
-					dto.getDuration(),
-					bankService.getById(UUID.fromString(dto.getBloodBankId())),
-					bloodDonorService.getByPersonalId(dto.getBloodDonorId())
-					);
-		} catch (ParseException e) {
-			e.printStackTrace();
+		BloodDonor donor = null;
+		if(!(dto.getBloodDonorId() == null)) {
+			donor = bloodDonorService.getByPersonalId(dto.getBloodDonorId());
 		}
+		if(dto.getId() == null) {
+			try {
+				return new Appointment(
+						AppointmentStatus.valueOf(dto.getStatus()),
+						formatter.parse(dto.getDateTime()),
+						dto.getDuration(),
+						bankService.getById(UUID.fromString(dto.getBloodBankId())),
+						donor
+						);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		else {
+			try {
+				return new Appointment(
+						dto.getId(),
+						AppointmentStatus.valueOf(dto.getStatus()),
+						formatter.parse(dto.getDateTime()),
+						dto.getDuration(),
+						bankService.getById(UUID.fromString(dto.getBloodBankId())),
+						donor
+						);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		return null;
 	}
 	

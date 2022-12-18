@@ -27,7 +27,7 @@ public class SubscriptionController {
 		this.bankService = bankService;
 		this.producer = producer;
 	}
-	@Scheduled(cron = "1 * * * * *")
+	@Scheduled(cron = "0 0 2 * * *")
 	public void checkUpcoming() throws JsonProcessingException {
 		System.out.println("Starter check");
 		LocalDate firstInMonthDate = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1);
@@ -43,7 +43,7 @@ public class SubscriptionController {
 			}
 		}
 	}
-	@Scheduled(cron = "1 * * * * *")
+	@Scheduled(cron = "0 0 2 * * *")
 	public void sendBlood() throws JsonProcessingException {
 		System.out.println("Started sending");
 		LocalDate firstInMonthDate = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1);
