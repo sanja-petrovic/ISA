@@ -8,6 +8,7 @@ import com.example.isa.service.interfaces.QuestionService;
 import com.example.isa.util.converters.AnswerConverter;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,6 +40,7 @@ public class AnswerController {
 
     @PutMapping
     @ApiOperation(value = "Save answers.", httpMethod = "PUT")
+    @PreAuthorize("hasRole('ROLE_DONOR')")
     public ResponseEntity<?> save(@RequestBody List<AnswerDto> list) {
         List<Answer> answers = list.stream().map(dto -> Answer.builder().question(questionService.getById(dto.getQuestionId())).value(dto.isAnswerValue()).bloodDonor(bloodDonorService.getByEmail(dto.getUser())).build()).collect(Collectors.toList());
         answerService.save(answers);

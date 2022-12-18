@@ -1,6 +1,5 @@
 import {Component, NgModule, OnInit} from '@angular/core';
 import {AuthService} from "../services/AuthService";
-import {UserService} from "../services/UserService";
 
 @Component({
   selector: 'app-navbar',
@@ -13,8 +12,7 @@ export class NavbarComponent implements OnInit {
   user = '';
   isLoggedIn = null;
   constructor(
-    private authService: AuthService,
-    private userService: UserService) {
+    private authService: AuthService) {
   }
 
   ngOnInit(): void {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { BloodDonorService } from '../services/blood-donor.service';
+import { BloodDonorService } from '../services/BloodDonor.service';
 import { PasswordDto, BloodDonor } from '../model/Users';
 import {MatDialog,MatDialogModule, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { ChangePasswordDialogComponent } from '../change-password-dialog/change-password-dialog.component';
@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./profile.component.css', '../app.component.css']
 })
 export class ProfileComponent implements OnInit {
+
   profileForm: FormGroup = this.formBuilder.group({
     email: [],
     password: [],
@@ -26,10 +27,10 @@ export class ProfileComponent implements OnInit {
     city: [],
     country: [],
   });
-  private bloodDonor : BloodDonor;
+  public bloodDonor : BloodDonor;
   public editEnabled : boolean = false;
-  private newPass : string ='';
-  private passDto : PasswordDto = {
+  private newPassword : string ='';
+  private passwordDto : PasswordDto = {
     personalId: "",
     oldPassword: "",
     newPassword: ""
@@ -46,8 +47,8 @@ export class ProfileComponent implements OnInit {
       this.bloodDonor = res;
       this.profileForm.setValue(this.bloodDonor);
     })
-    this.disableSensitive();
-    this.disableSafe();
+    //this.disableSensitive();
+    //this.disableSafe();
   }
   saveEditChanges() :void{
     this.bloodDonorService.updateBloodDonor(this.profileForm.getRawValue()).subscribe((res: any)=>{
@@ -96,18 +97,18 @@ export class ProfileComponent implements OnInit {
       data: { oldPass: this.bloodDonor.password ,oldPassCheck: '', newPass: '', newPassCheck:''},
     });
     pwDialog.afterClosed().subscribe(result => {
-      this.newPass = result;
+      this.newPassword = result;
 
-      this.passDto.personalId = this.bloodDonor.personalId;
-      this.passDto.oldPassword = this.bloodDonor.password;
-      this.passDto.newPassword = this.newPass;
-      console.log(this.passDto);
+      this.passwordDto.personalId = this.bloodDonor.personalId;
+      this.passwordDto.oldPassword = this.bloodDonor.password;
+      this.passwordDto.newPassword = this.newPassword;
+      console.log(this.passwordDto);
       this.updateBloodDonorPassword();
 
     });
   }
   updateBloodDonorPassword():void{
-    this.bloodDonorService.updateBloodDonorPassword(this.passDto).subscribe((res: any)=>{
+    this.bloodDonorService.updateBloodDonorPassword(this.passwordDto).subscribe((res: any)=>{
       console.log(res);
       alert("Password change successful, you will be redirected.")
       setTimeout(() =>

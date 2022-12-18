@@ -43,7 +43,7 @@ public class MedicalStaffServiceImpl implements MedicalStaffService {
     @Override
     public MedicalStaff updateMedicalStaff(MedicalStaff medicalStaff) {
         if (medicalStaff.getPassword() == null || medicalStaff.getPassword().trim().isEmpty()) {
-            //to do
+            //TODO
         }
         return repository.save(medicalStaff);
     }
