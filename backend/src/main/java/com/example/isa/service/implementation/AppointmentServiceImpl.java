@@ -71,16 +71,18 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     @Transactional
     public Appointment createScheduled(Appointment appointment) {
-    	LocalDateTime converteDateTime = DateConverter.convert(appointment.getDateTime());
-        List<Appointment> listScheduled = repository.findAllByBloodBankAndDate(appointment.getBloodBank(), converteDateTime.getYear(), converteDateTime.getMonthValue(), converteDateTime.getDayOfMonth());
-        for (Appointment scheduled : listScheduled) {
-            if (this.hasDateTimeOverlap(scheduled, appointment)) {
-                throw new AlreadyExistsException();
+    	if(appointment!=null) {
+    		LocalDateTime converteDateTime = DateConverter.convert(appointment.getDateTime());
+            List<Appointment> listScheduled = repository.findAllByBloodBankAndDate(appointment.getBloodBank(), converteDateTime.getYear(), converteDateTime.getMonthValue(), converteDateTime.getDayOfMonth());
+            for (Appointment scheduled : listScheduled) {
+                if (this.hasDateTimeOverlap(scheduled, appointment)) {
+                    throw new AlreadyExistsException();
+                }
             }
-        }
-        return repository.save(appointment);
+            return repository.save(appointment);
+    	}
+    	return null;
     }
-
     
     private boolean hasDateTimeOverlap(Appointment a1, Appointment a2) {
     	LocalDateTime a1DateTime = DateConverter.convert(a1.getDateTime());
@@ -139,5 +141,32 @@ public class AppointmentServiceImpl implements AppointmentService {
 		}
 	}
 
+	@Override
+	public Appointment createByDonor(Appointment appointment, BloodDonor donor) {
+		if(appointment!=null && donor!=null) {
+			if (appointment.getDateTime().before(new Date())) {
+	            throw new PassedException();
+	        }
+	        if (CollectionUtils.isEmpty(donor.getAnswers())) {
+	            throw new NoCompletedQuestionnaire();
+	        }
+			if (!canScheduleAppointment(donor)) {
+				throw new NewAppointmentTooSoonException();
+			}
+			if(donorHasAtChosenTime(donor, appointment.getDateTime())) {
+				throw new DuplicateAppointmentException();
+			}
+			appointment.setStatus(AppointmentStatus.SCHEDULED);
+			appointment.setBloodDonor(donor);
+			repository.save(appointment);
+		}
+		else {
+			throw new NotFoundException();
+		}
+		return null;
+	}
+	private boolean donorHasAtChosenTime(BloodDonor donor, Date dateTime) {
+		return !repository.findAllByBloodDonorAndDateTime(donor, dateTime).isEmpty();
+	}
 
 }

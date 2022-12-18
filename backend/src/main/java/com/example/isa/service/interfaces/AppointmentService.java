@@ -13,6 +13,7 @@ public interface AppointmentService {
 	List<Appointment> getByBloodDonor(UUID bloodDonorId);
 	Appointment create(Appointment appointment);
 	Appointment createScheduled(Appointment appointment);
+	Appointment createByDonor(Appointment appointment, BloodDonor donor);
 	Appointment update(Appointment appointment);
 	void schedulePredefined(Appointment appointment, BloodDonor donor);
 	void cancel(Appointment appointment);

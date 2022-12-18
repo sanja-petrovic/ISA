@@ -35,7 +35,7 @@ public class AppointmentConverter implements Converter<Appointment, AppointmentD
 				entity.getDateTime().toString(),
 				entity.getDuration(),
 				entity.getBloodBank().getId().toString(),
-				entity.getBloodDonor().getId().toString()
+				entity.getBloodDonor().getPersonalId().toString()
 				);
 	}
 

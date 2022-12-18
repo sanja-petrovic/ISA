@@ -54,6 +54,9 @@ public class AppointmentController {
 	@ResponseBody
 	public ResponseEntity<String> createPredefined(@RequestBody AppointmentDto dto) {
 		Appointment appointment = converter.dtoToEntity(dto);
+		if(appointment.getBloodDonor()!=null) {
+			appointmentService.createByDonor(appointment,bloodDonorService.getByPersonalId(dto.getBloodDonorId()));
+		}
 		try {
 			appointmentService.createScheduled(appointment);
 		}

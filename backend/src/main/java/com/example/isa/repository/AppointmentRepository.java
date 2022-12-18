@@ -28,6 +28,8 @@ public interface AppointmentRepository extends JpaRepository<Appointment, UUID> 
 
     List<Appointment> findAllByBloodBankAndDateTime(BloodBank bloodBank, Date dateTime);
     
+    List<Appointment> findAllByBloodDonorAndDateTime(BloodDonor bloodDonor, Date dateTime);
+    
     @Query("from Appointment a where a.bloodBank = ?1 and year(a.dateTime) = ?2 and month(a.dateTime) = ?3 and day(a.dateTime) = ?4")
     List<Appointment> findAllByBloodBankAndDate(BloodBank bloodBank, int year, int month, int day);
 }
