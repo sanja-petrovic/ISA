@@ -40,7 +40,7 @@ import { MedicalStaffRegistrationComponent } from './medical-staff-registration/
 import {MatListModule} from '@angular/material/list';
 import { ViewUsersComponent } from './view-users/view-users.component';
 import { NavbarComponent } from './navbar/navbar.component';
-
+import { AuthGuard } from './guards/auth-guard';
 
 @NgModule({
   declarations: [
@@ -61,7 +61,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     MedicalStaffRegistrationComponent,
     ViewUsersComponent,
     MedicalStaffRegistrationComponent,
-    NavbarComponent
+    NavbarComponent,
   ],
   imports: [
     HttpClientModule,
@@ -121,6 +121,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     ApiService,
     UserService,
     ConfigService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

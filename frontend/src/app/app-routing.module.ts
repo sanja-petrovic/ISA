@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {RouterModule, Routes} from "@angular/router";
 import {HomeComponent} from "./home/home.component";
 import {BanksPageComponent} from "./banks-page/banks-page.component";
@@ -13,10 +12,11 @@ import { BankRegistrationComponent } from './bank-registration/bank-registration
 import { MedicalStaffBloodBankComponent } from './medical-staff-blood-bank/medical-staff-blood-bank.component';
 import { MedicalStaffRegistrationComponent } from './medical-staff-registration/medical-staff-registration.component';
 import { ViewUsersComponent } from './view-users/view-users.component';
+import { AuthGuard } from './guards/auth-guard';
 
-const routes: Routes = [
+const appRoutes: Routes = [
   {
-    path: 'home', component: HomeComponent
+    path: 'home', component: HomeComponent, canActivate: [AuthGuard]
   },
   {
     path: '', component: BanksPageComponent
@@ -31,30 +31,35 @@ const routes: Routes = [
     path: 'verify/:email', component: VerificationComponent
   },
   {
-    path: 'medical-staff', component: MedicalStaffComponent
+    path: 'medical-staff', component: MedicalStaffComponent, canActivate: [AuthGuard]
   },
   {
-    path: 'profile', component: ProfileComponent
+    path: '**', redirectTo: '' 
   },
   {
-    path: 'questionnaire', component: QuestionnaireComponent
+    path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]
   },
   {
-    path: 'registerBank', component: BankRegistrationComponent
+    path: 'questionnaire', component: QuestionnaireComponent, canActivate: [AuthGuard]
   },
   {
-    path: 'medical-staff/bank', component: MedicalStaffBloodBankComponent
+    path: 'registerBank', component: BankRegistrationComponent, canActivate: [AuthGuard]
   },
   {
-    path: 'medical-staff/register', component: MedicalStaffRegistrationComponent
+    path: 'medical-staff/bank', component: MedicalStaffBloodBankComponent, canActivate: [AuthGuard]
   },
   {
-    path:'users', component: ViewUsersComponent
+    path: 'medical-staff/register', component: MedicalStaffRegistrationComponent, canActivate: [AuthGuard]
+  },
+  {
+    path:'users', component: ViewUsersComponent, canActivate: [AuthGuard]
   }
 ]
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(appRoutes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+
+export const routing = RouterModule.forRoot(appRoutes);
