@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -18,11 +19,12 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@ToString
 @Table(name = "appointments")
 public class Appointment {
     @Id
     @Column
-    private UUID id;
+    private UUID id  = UUID.randomUUID();
 
     @Column
     @Enumerated(EnumType.STRING)
@@ -53,4 +55,16 @@ public class Appointment {
         duration = appointment.duration;
         bloodBank = appointment.bloodBank;
     }
+
+	public Appointment(AppointmentStatus status, Date dateTime, Long duration, BloodBank bloodBank,
+			BloodDonor bloodDonor) {
+		super();
+		this.id = UUID.randomUUID();
+		this.status = status;
+		this.dateTime = dateTime;
+		this.duration = duration;
+		this.bloodBank = bloodBank;
+		this.bloodDonor = bloodDonor;
+	}
+    
 }

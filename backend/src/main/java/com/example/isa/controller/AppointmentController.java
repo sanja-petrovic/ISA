@@ -6,10 +6,14 @@ import java.util.UUID;
 
 import com.example.isa.service.interfaces.BloodDonorService;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.isa.dto.AppointmentDto;
+import com.example.isa.exception.AlreadyExistsException;
 import com.example.isa.model.Appointment;
 import com.example.isa.service.interfaces.AppointmentService;
 import com.example.isa.util.converters.AppointmentConverter;
@@ -45,8 +49,21 @@ public class AppointmentController {
 		return ResponseEntity.ok(converter.listToDtoList(appointmentService.getByBloodBank(UUID.fromString(id))));
 	}
 
-
-
+	@PostMapping("/create")
+	@ApiOperation(value = "Create appointment.", httpMethod = "POST")
+	@ResponseBody
+	public ResponseEntity<String> createPredefined(@RequestBody AppointmentDto dto) {
+		System.out.println(dto.toString());
+		Appointment appointment = converter.dtoToEntity(dto);
+		System.out.println(appointment.toString());
+		try {
+			appointmentService.create(appointment);
+		}
+		catch(AlreadyExistsException e){
+			return new ResponseEntity<>("AlreadyExistsException", HttpStatus.BAD_REQUEST);
+		}
+		return ResponseEntity.ok().build(); 
+	}
 	@PostMapping("/schedule/{id}")
 	@ApiOperation(value = "Schedule one of the predefined appointments.", httpMethod = "POST")
 	public ResponseEntity schedulePredefined(@PathVariable UUID id, Principal user) {
