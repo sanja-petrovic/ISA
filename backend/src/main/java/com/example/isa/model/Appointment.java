@@ -42,12 +42,6 @@ public class Appointment {
     @JoinColumn(name = "blood_donor_id")
     private BloodDonor bloodDonor;
     
-    public boolean hasDateTimeOverlap(LocalDateTime date, Long duration) {
-    	LocalDateTime storedDateTime = DateConverter.convert(dateTime);
-
-        return (!storedDateTime.isAfter(date.plusMinutes(duration))) && (!storedDateTime.plusMinutes(this.duration).isAfter(date));
-    }
-
     public Appointment(Appointment appointment) {
         this.id = UUID.randomUUID();
         status = AppointmentStatus.NOT_SCHEDULED;

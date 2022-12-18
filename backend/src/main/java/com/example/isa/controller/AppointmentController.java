@@ -53,11 +53,9 @@ public class AppointmentController {
 	@ApiOperation(value = "Create appointment.", httpMethod = "POST")
 	@ResponseBody
 	public ResponseEntity<String> createPredefined(@RequestBody AppointmentDto dto) {
-		System.out.println(dto.toString());
 		Appointment appointment = converter.dtoToEntity(dto);
-		System.out.println(appointment.toString());
 		try {
-			appointmentService.create(appointment);
+			appointmentService.createScheduled(appointment);
 		}
 		catch(AlreadyExistsException e){
 			return new ResponseEntity<>("AlreadyExistsException", HttpStatus.BAD_REQUEST);

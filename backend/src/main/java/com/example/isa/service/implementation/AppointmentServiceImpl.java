@@ -3,6 +3,7 @@ package com.example.isa.service.implementation;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -61,13 +62,32 @@ public class AppointmentServiceImpl implements AppointmentService {
     public Appointment create(Appointment appointment) {
         List<Appointment> listScheduled = repository.findAllByBloodBankAndDateTime(appointment.getBloodBank(), appointment.getDateTime());
         for (Appointment scheduled : listScheduled) {
-            if (scheduled.hasDateTimeOverlap(DateConverter.convert(appointment.getDateTime()), appointment.getDuration())) {
+            if (this.hasDateTimeOverlap(scheduled, appointment)) {
+                throw new AlreadyExistsException();
+            }
+        }
+        return repository.save(appointment);
+    }
+    @Override
+    @Transactional
+    public Appointment createScheduled(Appointment appointment) {
+    	LocalDateTime converteDateTime = DateConverter.convert(appointment.getDateTime());
+        List<Appointment> listScheduled = repository.findAllByBloodBankAndDate(appointment.getBloodBank(), converteDateTime.getYear(), converteDateTime.getMonthValue(), converteDateTime.getDayOfMonth());
+        for (Appointment scheduled : listScheduled) {
+            if (this.hasDateTimeOverlap(scheduled, appointment)) {
                 throw new AlreadyExistsException();
             }
         }
         return repository.save(appointment);
     }
 
+    
+    private boolean hasDateTimeOverlap(Appointment a1, Appointment a2) {
+    	LocalDateTime a1DateTime = DateConverter.convert(a1.getDateTime());
+    	LocalDateTime a2DateTime = DateConverter.convert(a2.getDateTime());
+    	//A.end >= B.start AND A.start <= B.end
+        return (a1DateTime.plusMinutes(a1.getDuration()).isAfter(a2DateTime) && a1DateTime.isBefore(a2DateTime.plusMinutes(a2.getDuration())));
+    }
     @Override
     public Appointment update(Appointment appointment) {
         return repository.save(appointment);
