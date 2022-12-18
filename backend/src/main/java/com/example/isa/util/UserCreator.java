@@ -27,9 +27,9 @@ public class UserCreator {
 
     @PostConstruct
     public void create() {
-        Role roleAdmin = new Role("ADMIN");
-        Role roleDonor = new Role("DONOR");
-        Role roleStaff = new Role("STAFF");
+        Role roleAdmin = new Role("ROLE_ADMIN");
+        Role roleDonor = new Role("ROLE_DONOR");
+        Role roleStaff = new Role("ROLE_STAFF");
         roleRepository.save(roleAdmin);
         roleRepository.save(roleDonor);
         roleRepository.save(roleStaff);

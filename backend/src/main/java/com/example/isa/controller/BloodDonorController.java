@@ -57,12 +57,14 @@ public class BloodDonorController {
 		return ResponseEntity.notFound().build();
     }
     @GetMapping("/current")
+    @PreAuthorize("hasRole('ROLE_DONOR')")
     public ResponseEntity<BloodDonorDto> getCurrentBloodDonor(Principal principal) {
         Optional<BloodDonor> bloodDonor = bloodDonorRepository.findAllByEmail(principal.getName());
-        return bloodDonor.isPresent() ? ResponseEntity.ok(bloodDonorConverter.entityToDto(bloodDonor.get())) : ResponseEntity.notFound().build();
+        return bloodDonor.map(donor -> ResponseEntity.ok(bloodDonorConverter.entityToDto(donor))).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PutMapping(value="/update")
+    @PreAuthorize("hasRole('ROLE_DONOR')")
     @ApiOperation(value = "Update a blood donor's information", httpMethod = "PUT")
     public ResponseEntity<BloodDonorDto> update(@RequestBody BloodDonorDto bloodDonorDto){
     	BloodDonor retVal = bloodDonorService.update(bloodDonorConverter.dtoToEntity(bloodDonorDto));

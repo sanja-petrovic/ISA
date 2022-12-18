@@ -13,7 +13,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name="roles")
+@Table(name="ROLE")
 @NoArgsConstructor
 public class Role implements GrantedAuthority {
     @Id
@@ -24,7 +24,7 @@ public class Role implements GrantedAuthority {
 
     @Override
     public String getAuthority() {
-        return name;
+        return this.name;
     }
     public Role(String name) {
         this.name = name;

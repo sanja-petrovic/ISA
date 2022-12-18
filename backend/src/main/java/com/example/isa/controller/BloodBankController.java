@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -55,6 +56,7 @@ public class BloodBankController {
 
 
     @PostMapping(value = "/register")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @ApiOperation(value = "Register a new blood bank.", httpMethod = "POST")
     public ResponseEntity registerBank(@RequestBody BloodBankDto bankDto) {
         BloodBank bank = bloodBankConverter.dtoToEntity(bankDto);

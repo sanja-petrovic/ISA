@@ -7,6 +7,7 @@ import java.util.UUID;
 import com.example.isa.service.interfaces.BloodDonorService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.isa.dto.AppointmentDto;
@@ -46,12 +47,14 @@ public class AppointmentController {
 	}
 
 	@GetMapping("/blood-donor/{id}")
+	@PreAuthorize("hasRole('ROLE_DONOR')")
 	@ApiOperation(value = "Get all appointments for a blood donor.", httpMethod = "GET")
 	public ResponseEntity<List<AppointmentDto>> getAllByBloodDonor(@PathVariable String id){
 		return ResponseEntity.ok(converter.listToDtoList(appointmentService.getByBloodDonor(UUID.fromString(id))));
 	}
 
 	@PostMapping("/schedule/{id}")
+	@PreAuthorize("hasRole('ROLE_DONOR')")
 	@ApiOperation(value = "Schedule one of the predefined appointments.", httpMethod = "POST")
 	public ResponseEntity schedulePredefined(@PathVariable UUID id, Principal user) {
 		appointmentService.schedulePredefined(appointmentService.getById(id), bloodDonorService.getByEmail(user.getName()));
@@ -59,6 +62,7 @@ public class AppointmentController {
 	}
 
 	@PostMapping("/cancel/{id}")
+	@PreAuthorize("hasRole('ROLE_DONOR')")
 	@ApiOperation(value = "Cancel a previously scheduled appointment.", httpMethod = "POST")
 	public ResponseEntity cancel(@PathVariable UUID id, Principal user) {
 		return ResponseEntity.ok().build();
