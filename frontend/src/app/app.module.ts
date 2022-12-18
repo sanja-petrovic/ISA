@@ -41,6 +41,8 @@ import {MatListModule} from '@angular/material/list';
 import { ViewUsersComponent } from './view-users/view-users.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { AuthGuard } from './guards/auth-guard';
+import { AppointmentsComponent } from './appointments/appointments.component';
+import { DonorsAppointmentsComponent } from './donors-appointments/donors-appointments.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +64,8 @@ import { AuthGuard } from './guards/auth-guard';
     ViewUsersComponent,
     MedicalStaffRegistrationComponent,
     NavbarComponent,
+    AppointmentsComponent,
+    DonorsAppointmentsComponent
   ],
   imports: [
     HttpClientModule,

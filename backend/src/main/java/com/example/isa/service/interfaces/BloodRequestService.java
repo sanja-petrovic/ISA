@@ -7,7 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import java.text.ParseException;
 
 public interface BloodRequestService {
-    void handleBloodRequest(BloodRequestDto bloodRequestDto) throws JsonProcessingException, ParseException;
-    void test();
-    BloodSupplyDto handleManagerRequest(BloodRequestDto bloodRequestDto) throws ParseException;
+    void handleDoctorRequest(BloodRequestDto bloodRequestDto) throws JsonProcessingException, ParseException;
+
+    BloodSupplyDto handleManagerRequest(BloodRequestDto bloodRequestDto) throws ParseException, JsonProcessingException;
 }

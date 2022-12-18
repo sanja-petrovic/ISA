@@ -14,15 +14,15 @@ import java.util.UUID;
 
 @Repository
 public interface BloodBankRepository extends JpaRepository<BloodBank, UUID> {
-    public Optional<BloodBank> findAllByTitleIgnoreCase(String title);
+    Optional<BloodBank> findAllByTitleIgnoreCase(String title);
 	@Query("from BloodBank b where b.title like CONCAT('%', ?1, '%') and b.averageGrade >= ?2")
-	public List<BloodBank> findByTitleLike(String title,double filterGrade, Sort sort);
+    List<BloodBank> findByTitleLike(String title, double filterGrade, Sort sort);
 	
 	@Query("from BloodBank b where b.address.city like CONCAT('%', ?1, '%') and b.averageGrade >= ?2")
-	public List<BloodBank> findByAddressCityLike(String city,double filterGrade, Sort sort); 
+    List<BloodBank> findByAddressCityLike(String city, double filterGrade, Sort sort);
 	
 	@Query("from BloodBank b where b.title like CONCAT('%', ?1, '%') and b.address.city like CONCAT('%', ?2, '%') and b.averageGrade >= ?3")
-	public List<BloodBank> findByTitleLikeAndAddressCityLike(String title,String city, double filterGrade, Sort sort );
+    List<BloodBank> findByTitleLikeAndAddressCityLike(String title, String city, double filterGrade, Sort sort );
 	@Query("from BloodBank b where b.averageGrade >= ?1")
-	public List<BloodBank> findAllWithFilter(double filterGrade, Sort sort);
+    List<BloodBank> findAllWithFilter(double filterGrade, Sort sort);
 }

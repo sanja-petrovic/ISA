@@ -6,7 +6,6 @@ import com.example.isa.service.interfaces.UserService;
 import com.example.isa.util.EmailSender;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,11 +37,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void register(Patient patient) {
-        repository.save(patient);
-        String link = "http://localhost:4200/verify/" + patient.getEmail();
+    public void register(BloodDonor bloodDonor) {
+        repository.save(bloodDonor);
+        String link = "http://localhost:4200/verify/" + bloodDonor.getEmail();
         String content = "<h1>Thanks for registering!</h1><p>To verify your account, please click on <a href=" + link + ">this link</a>.</p>";
-        emailSender.send(new Email(patient.getEmail(), "Verify your registration", content));
+        emailSender.send(new Email(bloodDonor.getEmail(), "Verify your registration", content));
     }
     public void registerMedicalStaff(MedicalStaff medicalStaff) {
         repository.save((User)medicalStaff);
@@ -61,8 +60,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByUsername(String username) {
-        User user = repository.findByEmail(username);
-        return user;
+        return repository.findByEmail(username);
     }
 
     @Override

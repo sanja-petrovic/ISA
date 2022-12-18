@@ -10,12 +10,12 @@ import java.util.List;
 import java.util.UUID;
 
 public interface MedicalStaffService {
-    public List<MedicalStaff> getAll();
-    public MedicalStaff getById(UUID id);
+    List<MedicalStaff> getAll();
+    MedicalStaff getById(UUID id);
 
-    public MedicalStaff updateMedicalStaff(MedicalStaff medicalStaff);
-    public boolean register(MedicalStaff medicalStaff);
+    MedicalStaff updateMedicalStaff(MedicalStaff medicalStaff);
+    boolean register(MedicalStaff medicalStaff);
 
-    public BloodBank getBloodBank(MedicalStaff medicalStaff);
+    BloodBank getBloodBank(MedicalStaff medicalStaff);
 
 }

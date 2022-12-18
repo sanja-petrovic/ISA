@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { PatientService } from '../services/PatientService';
-import { PasswordDto, Patient } from '../model/Users';
+import { BloodDonorService } from '../services/blood-donor.service';
+import { PasswordDto, BloodDonor } from '../model/Users';
 import {MatDialog,MatDialogModule, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { ChangePasswordDialogComponent } from '../change-password-dialog/change-password-dialog.component';
 import { Router } from '@angular/router';
@@ -26,7 +26,7 @@ export class ProfileComponent implements OnInit {
     city: [],
     country: [],
   });
-  private patient : Patient;
+  private bloodDonor : BloodDonor;
   public editEnabled : boolean = false;
   private newPass : string ='';
   private passDto : PasswordDto = {
@@ -36,21 +36,21 @@ export class ProfileComponent implements OnInit {
   };
   constructor(
     private formBuilder: FormBuilder,
-    private patientService : PatientService,
+    private bloodDonorService : BloodDonorService,
     public dialog: MatDialog,
     private router: Router
     ) { }
 
   ngOnInit(): void {
-    this.patientService.getPatient('supersus1').subscribe((res: any)=>{
-      this.patient = res;
-      this.profileForm.setValue(this.patient);
+    this.bloodDonorService.getCurrentBloodDonor().subscribe((res: any)=>{
+      this.bloodDonor = res;
+      this.profileForm.setValue(this.bloodDonor);
     })
     this.disableSensitive();
     this.disableSafe();
   }
   saveEditChanges() :void{
-    this.patientService.updatePatient(this.profileForm.getRawValue()).subscribe((res: any)=>{
+    this.bloodDonorService.updateBloodDonor(this.profileForm.getRawValue()).subscribe((res: any)=>{
       console.log(res);
     })
   }
@@ -93,21 +93,21 @@ export class ProfileComponent implements OnInit {
   openPasswordDialog():void{
     const pwDialog = this.dialog.open(ChangePasswordDialogComponent, {
       width: '250px',
-      data: { oldPass: this.patient.password ,oldPassCheck: '', newPass: '', newPassCheck:''},
+      data: { oldPass: this.bloodDonor.password ,oldPassCheck: '', newPass: '', newPassCheck:''},
     });
     pwDialog.afterClosed().subscribe(result => {
       this.newPass = result;
 
-      this.passDto.personalId = this.patient.personalId;
-      this.passDto.oldPassword = this.patient.password;
+      this.passDto.personalId = this.bloodDonor.personalId;
+      this.passDto.oldPassword = this.bloodDonor.password;
       this.passDto.newPassword = this.newPass;
       console.log(this.passDto);
-      this.updatePatientPassword();
+      this.updateBloodDonorPassword();
 
     });
   }
-  updatePatientPassword():void{
-    this.patientService.updatePatientPassword(this.passDto).subscribe((res: any)=>{
+  updateBloodDonorPassword():void{
+    this.bloodDonorService.updateBloodDonorPassword(this.passDto).subscribe((res: any)=>{
       console.log(res);
       alert("Password change successful, you will be redirected.")
       setTimeout(() =>

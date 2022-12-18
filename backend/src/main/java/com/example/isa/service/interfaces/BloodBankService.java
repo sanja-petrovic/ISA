@@ -9,12 +9,13 @@ import java.util.UUID;
 
 public interface BloodBankService {
     List<BloodBank> getAll();
-    boolean registerBank (BloodBank bank);
+    void register(BloodBank bank);
     List<BloodBank> search(Sort sort, List<String> searchCriteria, String filterGrade);
     BloodBank getById(UUID id);
-    List<BloodBank> search(Sort sort, List<String> searchCriteria);
-    BloodBank updateBloodBank(BloodBank bloodBank);
+
+    BloodBank update(BloodBank bloodBank);
     BloodBank findByTitle(String title);
     BloodBank findBankWithMostSupplies(BloodType type, Double amount);
-    boolean updateBloodSupplies(BloodBank bloodBank, BloodType type, Double amount);
+    boolean checkBloodSupply(BloodBank bloodBank, BloodType type, Double amount);
+    void updateBloodSupply(BloodBank bloodBank, BloodType type, Double amount);
 }
