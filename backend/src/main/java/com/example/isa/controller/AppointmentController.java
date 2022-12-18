@@ -54,16 +54,24 @@ public class AppointmentController {
 	@ResponseBody
 	public ResponseEntity<String> createPredefined(@RequestBody AppointmentDto dto) {
 		Appointment appointment = converter.dtoToEntity(dto);
-		if(appointment.getBloodDonor()!=null) {
-			appointmentService.createByDonor(appointment,bloodDonorService.getByPersonalId(dto.getBloodDonorId()));
+		if(dto.getBloodDonorId()!=null) {
+			try {
+				appointmentService.createByDonor(appointment,bloodDonorService.getByPersonalId(dto.getBloodDonorId()));
+			}
+			catch(AlreadyExistsException e){
+				return new ResponseEntity<>("AlreadyExistsException", HttpStatus.BAD_REQUEST);
+			}
+			return ResponseEntity.ok().build(); 
 		}
-		try {
-			appointmentService.createScheduled(appointment);
-		}
-		catch(AlreadyExistsException e){
-			return new ResponseEntity<>("AlreadyExistsException", HttpStatus.BAD_REQUEST);
-		}
-		return ResponseEntity.ok().build(); 
+		else {
+			try {
+				appointmentService.createScheduled(appointment);
+			}
+			catch(AlreadyExistsException e){
+				return new ResponseEntity<>("AlreadyExistsException", HttpStatus.BAD_REQUEST);
+			}
+			return ResponseEntity.ok().build(); 
+		}	
 	}
 	@PostMapping("/schedule/{id}")
 	@ApiOperation(value = "Schedule one of the predefined appointments.", httpMethod = "POST")
