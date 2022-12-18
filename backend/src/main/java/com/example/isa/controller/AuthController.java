@@ -55,8 +55,7 @@ public class AuthController {
         User user = (User) authentication.getPrincipal();
         String jwt = this.tokenHandler.generateToken(user.getUsername());
         ResponseCookie jwtCookie = tokenHandler.generateJwtCookie(user);
-        List<String> roles = user.getRoles().stream()
-                .map(GrantedAuthority::getAuthority).toList();
+        Role role = user.getRole();
         RefreshToken refreshToken = refreshTokenService.createRefreshToken(user.getId());
         ResponseCookie jwtRefreshCookie = tokenHandler.generateRefreshJwtCookie(refreshToken.getToken());
         return ResponseEntity.ok()
@@ -115,14 +114,13 @@ public class AuthController {
     public ResponseEntity<BloodDonorDto> registerBloodDonor(@RequestBody BloodDonorDto dto) {
         if (userService.findByUsername(dto.getEmail()) == null) {
             BloodDonor bloodDonor = bloodDonorConverter.dtoToEntity(dto);
-            bloodDonor.setRoles(roleService.findByName("ROLE_DONOR"));
+            bloodDonor.setRole(roleService.findByName("DONOR"));
             userService.register(bloodDonor);
             return new ResponseEntity<>(bloodDonorConverter.entityToDto(bloodDonor), HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>(null, HttpStatus.CONFLICT);
         }
     }
-
     @PostMapping("/verify/{email}")
     public ResponseEntity<?> verifyAccount(@PathVariable String email) {
         User user = userService.findByUsername(email);

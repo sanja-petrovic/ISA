@@ -13,6 +13,7 @@ import {BankRegistrationComponent} from './bank-registration/bank-registration.c
 import {MedicalStaffBloodBankComponent} from './medical-staff-blood-bank/medical-staff-blood-bank.component';
 import {MedicalStaffRegistrationComponent} from './medical-staff-registration/medical-staff-registration.component';
 import {ViewUsersComponent} from './view-users/view-users.component';
+import {AppointmentsComponent} from "./appointments/appointments.component";
 
 const routes: Routes = [{
   path: 'home', component: HomeComponent
@@ -31,13 +32,15 @@ const routes: Routes = [{
 }, {
   path: 'questionnaire', component: QuestionnaireComponent
 }, {
-  path: 'registerBank', component: BankRegistrationComponent
+  path: 'blood-banks/register', component: BankRegistrationComponent
 }, {
   path: 'medical-staff/bank', component: MedicalStaffBloodBankComponent
 }, {
   path: 'medical-staff/register', component: MedicalStaffRegistrationComponent
 }, {
   path: 'users', component: ViewUsersComponent
+}, {
+  path: 'blood-bank/:id/appointments', component: AppointmentsComponent
 }]
 
 @NgModule({

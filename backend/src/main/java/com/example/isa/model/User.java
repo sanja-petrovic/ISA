@@ -8,9 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -39,13 +37,11 @@ public class User implements UserDetails {
     private Gender gender;
     @Column
     private boolean isVerified;
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    private List<Role> roles = new ArrayList<>();
-    public User(String personalId, String email, String password, String firstName, String lastName, String phoneNumber, Gender gender, boolean verified, List<Role> roles) {
+    public User(String personalId, String email, String password, String firstName, String lastName, String phoneNumber, Gender gender, boolean verified, Role role) {
         this.personalId = personalId;
         this.email = email;
         this.password = password;
@@ -54,7 +50,7 @@ public class User implements UserDetails {
         this.phoneNumber = phoneNumber;
         this.gender = gender;
         this.isVerified = verified;
-        this.roles = roles;
+        this.role = role;
     }
 
     public User(String personalId, String email, String password, String firstName, String lastName, String phoneNumber, Gender gender) {

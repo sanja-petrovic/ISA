@@ -93,9 +93,8 @@ public class MedicalStaffController {
     public ResponseEntity<?> register(@RequestBody MedicalStaffDto medicalStaffDto){
         MedicalStaff medicalStaff = medicalStaffConverter.dtoToEntity(medicalStaffDto);
         if (userService.findByUsername(medicalStaffDto.getEmail()) == null) {
-            medicalStaff.setRoles(roleService.findByName("ROLE_STAFF"));
+            medicalStaff.setRole(roleService.findByName("STAFF"));
             medicalStaffService.register(medicalStaff);
-            userService.registerMedicalStaff(medicalStaff);
             return new ResponseEntity<>((medicalStaff), HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>(null, HttpStatus.CONFLICT);

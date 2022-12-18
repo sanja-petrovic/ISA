@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -18,7 +18,7 @@ public class MedicalStaff extends User {
     @JoinColumn(nullable = false)
     private BloodBank bloodBank;
 
-    public MedicalStaff(String personalId, String email, String password, String firstName, String lastName, String phoneNumber, Gender gender, boolean verified, List<Role> roles, BloodBank bloodBank) {
+    public MedicalStaff(String personalId, String email, String password, String firstName, String lastName, String phoneNumber, Gender gender, boolean verified, Role roles, BloodBank bloodBank) {
         super(personalId, email, password, firstName, lastName, phoneNumber, gender, verified, roles);
         this.bloodBank = bloodBank;
     }

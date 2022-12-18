@@ -1,1 +1,9 @@
-<p>appointments works!</p>
+<div class="centered-content">
+  <div class="cards">
+    <mat-card *ngFor="let appointment of appointments" class="bank-card">
+      <mat-card-title class="bank-title">{{appointment.dateTime}}, {{appointment.duration}} minutes
+      </mat-card-title>
+      <mat-card-subtitle>{{appointment.status}}</mat-card-subtitle>
+    </mat-card>
+  </div>
+</div>
