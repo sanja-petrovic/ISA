@@ -36,9 +36,14 @@ export class AdminSchedulingComponent implements OnInit {
     let item = this.form.getRawValue();
     let date = new Date(item.dateTime);
     //"dd-MM-yyyy hh:mm:ss"
-    item.dateTime = ('0'+date.getDay()).slice(-2)+"-"+date.getMonth()+1+"-"+date.getFullYear()+" "+('0'+date.getHours()).slice(-2)+":"+('0'+date.getMinutes()).slice(-2)+":00";
+    item.dateTime = ('0'+date.getDate()).slice(-2)+"-"+('0'+(date.getMonth()+1)).slice(-2)+"-"+date.getFullYear()+" "+('0'+date.getHours()).slice(-2)+":"+('0'+date.getMinutes()).slice(-2)+":00";
     this.appointmentService.createAppointment(item).subscribe(res=>{
-      res.toString();
+      if(res == null){
+        alert("Success");
+      }
+      else{
+        alert(res.error);
+      }
     });
   }
 
