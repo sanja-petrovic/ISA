@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -11,6 +12,7 @@ import java.util.UUID;
 
 import com.example.isa.exception.*;
 import com.example.isa.model.AppointmentStatus;
+import com.example.isa.model.BloodBank;
 import com.example.isa.model.BloodDonor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -147,6 +149,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 			if (appointment.getDateTime().before(new Date())) {
 	            throw new PassedException();
 	        }
+			if(!this.bloodBankIsWorking(appointment)) {
+				throw new BloodBankClosedException();
+			}
 	        /*if (CollectionUtils.isEmpty(donor.getAnswers())) {
 	            throw new NoCompletedQuestionnaire();
 	        }*/
@@ -170,5 +175,17 @@ public class AppointmentServiceImpl implements AppointmentService {
 	private boolean donorHasAtChosenTime(BloodDonor donor, Date dateTime) {
 		return !repository.findAllByBloodDonorAndDateTime(donor, dateTime).isEmpty();
 	}
+	private boolean bloodBankIsWorking(Appointment appointment) {
+		LocalDateTime appointmentDateTime = DateConverter.convert(appointment.getDateTime());
+		LocalTime appointmentTime = appointmentDateTime.toLocalTime();
+		BloodBank bank = appointment.getBloodBank();
+		if(bank == null) return false;
+		else {
+			LocalTime startTime =  DateConverter.convert(bank.getWorkingHours().getIntervalStart()).toLocalTime();
+			LocalTime endTime =  DateConverter.convert(bank.getWorkingHours().getIntervalEnd()).toLocalTime();
+			if(appointmentTime.isAfter(startTime) && appointmentTime.plusMinutes(appointment.getDuration()).isBefore(endTime)) return true;
 
+		}
+		return false;
+	}
 }
