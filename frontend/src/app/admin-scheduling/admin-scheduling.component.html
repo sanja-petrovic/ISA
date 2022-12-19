@@ -17,7 +17,7 @@
             <mat-label>Duration</mat-label>
             <input formControlName="duration" matInput type="number">
         </mat-form-field>
-        <input [disabled]="!form.valid" type="submit" value="Register" class="submit-button">
+        <input [disabled]="!form.valid" type="submit" (click)="onSubmit()" value="Register" class="submit-button">
         <div *ngIf="dateTime.errors?.['dateValidation']">
             Date must be atleast a day after tomorow.
         </div>

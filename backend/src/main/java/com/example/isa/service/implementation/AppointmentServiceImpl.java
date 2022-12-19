@@ -1,10 +1,14 @@
 package com.example.isa.service.implementation;
 
+import java.sql.SQLClientInfoException;
+import java.sql.Time;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +19,7 @@ import com.example.isa.model.AppointmentStatus;
 import com.example.isa.model.BloodBank;
 import com.example.isa.model.BloodDonor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.metrics.buffering.StartupTimeline;
 import org.springframework.stereotype.Service;
 
 import com.example.isa.model.Appointment;
@@ -74,6 +79,9 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Transactional
     public Appointment createScheduled(Appointment appointment) {
     	if(appointment!=null) {
+    		if(!this.bloodBankIsWorking(appointment)) {
+				throw new BloodBankClosedException();
+			}
     		LocalDateTime converteDateTime = DateConverter.convert(appointment.getDateTime());
             List<Appointment> listScheduled = repository.findAllByBloodBankAndDate(appointment.getBloodBank(), converteDateTime.getYear(), converteDateTime.getMonthValue(), converteDateTime.getDayOfMonth());
             for (Appointment scheduled : listScheduled) {
@@ -177,13 +185,21 @@ public class AppointmentServiceImpl implements AppointmentService {
 	}
 	private boolean bloodBankIsWorking(Appointment appointment) {
 		LocalDateTime appointmentDateTime = DateConverter.convert(appointment.getDateTime());
+		//appointmentDateTime = DateConverter.convert(appointment.getDateTime());
 		LocalTime appointmentTime = appointmentDateTime.toLocalTime();
+		Date appointmentDate = (Date) appointment.getDateTime().clone();
 		BloodBank bank = appointment.getBloodBank();
 		if(bank == null) return false;
-		else {
-			LocalTime startTime =  DateConverter.convert(bank.getWorkingHours().getIntervalStart()).toLocalTime();
-			LocalTime endTime =  DateConverter.convert(bank.getWorkingHours().getIntervalEnd()).toLocalTime();
-			if(appointmentTime.isAfter(startTime) && appointmentTime.plusMinutes(appointment.getDuration()).isBefore(endTime)) return true;
+		else {	
+			Date startTime = appointmentDate;
+			startTime.setTime(bank.getWorkingHours().getIntervalStart().getTime());
+			LocalTime startTimeLocal = DateConverter.convert(startTime).toLocalTime();
+			Date endTime = appointmentDate;
+			endTime.setTime(bank.getWorkingHours().getIntervalEnd().getTime());
+			LocalTime endTimeLocal = DateConverter.convert(endTime).toLocalTime();
+			
+			
+			if(appointmentTime.isAfter(startTimeLocal) && appointmentTime.plusMinutes(appointment.getDuration()).isBefore(endTimeLocal)) return true;
 
 		}
 		return false;

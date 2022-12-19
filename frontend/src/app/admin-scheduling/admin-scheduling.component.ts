@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AdminSchedulingService} from '../services/admin-scheduling.service';
 import { BloodBankService } from '../services/BloodBankService';
 import { ScheduleDurationValidator } from '../validators/ScheduleDurationValidator';
 import { SchedulingDateValidator } from '../validators/SchedulingDateValidator';
@@ -14,7 +15,8 @@ export class AdminSchedulingComponent implements OnInit {
   public banks: any[] = [];
   constructor(private bankService: BloodBankService,
               private formBuilder: FormBuilder,
-              private router: Router) { }
+              private router: Router,
+              private appointmentService: AdminSchedulingService) { }
   private today: Date = new Date();
   public form: FormGroup = this.formBuilder.group({
     dateTime: [this.today.toString(),[Validators.required,SchedulingDateValidator()]],
@@ -28,9 +30,18 @@ export class AdminSchedulingComponent implements OnInit {
   ngOnInit(): void {
     this.bankService.getAll().subscribe(res=>{
       this.banks = res;
-      console.log(this.banks);
     })
   }
+  onSubmit(): void {
+    let item = this.form.getRawValue();
+    let date = new Date(item.dateTime);
+    //"dd-MM-yyyy hh:mm:ss"
+    item.dateTime = ('0'+date.getDay()).slice(-2)+"-"+date.getMonth()+1+"-"+date.getFullYear()+" "+('0'+date.getHours()).slice(-2)+":"+('0'+date.getMinutes()).slice(-2)+":00";
+    this.appointmentService.createAppointment(item).subscribe(res=>{
+      res.toString();
+    });
+  }
+
   get dateTime() { return this.form.get('dateTime'); }
   get duration() { return this.form.get('duration'); }
 }
