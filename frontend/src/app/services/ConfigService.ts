@@ -17,6 +17,7 @@ export class ConfigService {
   public blood_donors_url = this._api_url + '/blood-donors';
   public log_out_url = this._auth_url + '/log-out';
   public refresh_token_url = this._auth_url + '/refresh-token';
+  public admin_scheduling_url = this._auth_url + '/admin-schedule'
 
   get login_url(): string {
     return this._login_url;

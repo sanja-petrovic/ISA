@@ -42,6 +42,7 @@ import { ViewUsersComponent } from './view-users/view-users.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { AppointmentsComponent } from './appointments/appointments.component';
 import { DonorsAppointmentsComponent } from './donors-appointments/donors-appointments.component';
+import { AdminSchedulingComponent } from './admin-scheduling/admin-scheduling.component';
 
 
 @NgModule({
@@ -65,7 +66,8 @@ import { DonorsAppointmentsComponent } from './donors-appointments/donors-appoin
     MedicalStaffRegistrationComponent,
     NavbarComponent,
     AppointmentsComponent,
-    DonorsAppointmentsComponent
+    DonorsAppointmentsComponent,
+    AdminSchedulingComponent
   ],
   imports: [
     HttpClientModule,
