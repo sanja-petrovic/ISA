@@ -30,3 +30,32 @@ h1 {
 margin-top: 2rem;
 margin-bottom: 2rem;
 }
+
+
+.profile-card {
+  width: 70vw !important;
+  border: 1px solid white;
+  border-radius: 12px;
+  box-shadow: 0 5px 30px rgba(217, 79, 111, 0.2);
+  background-color: rgba(255, 255, 255, 0.5) !important;
+  transition: 0.5s;
+  margin-bottom: 2rem;
+  margin-right: 2rem;
+}
+
+.profile-title {
+  font-weight: bold;
+}
+.mat-card-image {
+  max-height: 20vh;
+}
+
+.bank-title {
+  display: flex;
+  align-items: center;
+
+}
+
+.bank-card:hover {
+  background-color: white !important;
+}

@@ -1,11 +1,3 @@
--- roles
-INSERT INTO public.roles(id, name)
-VALUES (uuid_generate_v4(), 'ADMIN');
-INSERT INTO public.roles(id, name)
-VALUES (uuid_generate_v4(), 'STAFF');
-INSERT INTO public.roles(id, name)
-VALUES (uuid_generate_v4(), 'DONOR');
-
 -- blood banks
 insert into public.blood_banks (id, city, street, country, average_grade, description, title, interval_end,
                                 interval_start)

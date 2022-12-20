@@ -9,11 +9,13 @@ import {VerificationComponent} from "./verification/verification.component";
 import {MedicalStaffComponent} from "./medical-staff/medical-staff.component"
 import {ProfileComponent} from './profile/profile.component';
 import {QuestionnaireComponent} from "./questionnaire/questionnaire.component";
+import {AuthGuard} from './guards/auth-guard';
 import {BankRegistrationComponent} from './bank-registration/bank-registration.component';
 import {MedicalStaffBloodBankComponent} from './medical-staff-blood-bank/medical-staff-blood-bank.component';
 import {MedicalStaffRegistrationComponent} from './medical-staff-registration/medical-staff-registration.component';
 import {ViewUsersComponent} from './view-users/view-users.component';
 import { AdminSchedulingComponent } from './admin-scheduling/admin-scheduling.component';
+import {AppointmentsComponent} from "./appointments/appointments.component";
 
 const routes: Routes = [{
   path: 'home', component: HomeComponent
@@ -32,7 +34,7 @@ const routes: Routes = [{
 }, {
   path: 'questionnaire', component: QuestionnaireComponent
 }, {
-  path: 'registerBank', component: BankRegistrationComponent
+  path: 'blood-banks/register', component: BankRegistrationComponent
 }, {
   path: 'medical-staff/bank', component: MedicalStaffBloodBankComponent
 }, {
@@ -41,10 +43,14 @@ const routes: Routes = [{
   path: 'users', component: ViewUsersComponent
 }, {
   path: 'admin/scheduling', component: AdminSchedulingComponent
+}, {
+  path: 'blood-bank/:id/appointments', component: AppointmentsComponent
 }]
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)], exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
-export class AppRoutingModule {
-}
+export class AppRoutingModule { }
+
+export const routing = RouterModule.forRoot(routes);
