@@ -32,6 +32,8 @@ const routes: Routes = [{
 }, {
   path: 'profile', component: ProfileComponent
 }, {
+  path: 'profile/edit', component: ProfileComponent
+}, {
   path: 'questionnaire', component: QuestionnaireComponent
 }, {
   path: 'blood-banks/register', component: BankRegistrationComponent

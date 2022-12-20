@@ -40,29 +40,46 @@ export class ProfileComponent implements OnInit {
     private bloodDonorService : BloodDonorService,
     public dialog: MatDialog,
     private router: Router
-    ) { }
+    ) {
+     }
 
   ngOnInit(): void {
     this.bloodDonorService.getCurrentBloodDonor().subscribe((res: any)=>{
       this.bloodDonor = res;
       this.profileForm.setValue(this.bloodDonor);
     })
+    if(window.location.href.indexOf("edit") > -1) {
+      this.editEnabled = true;
+    } else {
+      this.editEnabled = false;
+    }
     //this.disableSensitive();
     //this.disableSafe();
   }
   saveEditChanges() :void{
     this.bloodDonorService.updateBloodDonor(this.profileForm.getRawValue()).subscribe((res: any)=>{
       console.log(res);
+      this.disableSafe();
+      window.location.href = window.location.origin + "/profile";
     })
   }
   editClicked(): void{
     this.editEnabled = !this.editEnabled;
+    console.log(this.editEnabled);
     if(this.editEnabled){
+      window.history.pushState('edit', 'Edit', '/profile/edit');
       this.enableSafe();
     }
     else{
+      window.history.pushState('profile', 'Profile', '/profile');
       this.disableSafe();
     }
+  }
+
+  goBack() {
+    this.editEnabled = false;
+    window.history.pushState('profile', 'Profile', '/profile');
+    this.disableSafe();
   }
   disableSensitive():void{
     this.profileForm.get('personalId').disable();
