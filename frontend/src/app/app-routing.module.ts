@@ -18,8 +18,8 @@ import { AdminRegistrationComponent } from './admin-registration/admin-registrat
 import { AdminSchedulingComponent } from './admin-scheduling/admin-scheduling.component';
 import {AppointmentsComponent} from "./appointments/appointments.component";
 
-const routes: Routes = [{
-  path: 'home', component: HomeComponent
+const appRoutes: Routes = [{
+  path: 'home', component: HomeComponent, canActivate: [AuthGuard]
 }, {
   path: '', component: BanksPageComponent
 }, {
@@ -29,33 +29,35 @@ const routes: Routes = [{
 }, {
   path: 'verify/:email', component: VerificationComponent
 }, {
-  path: 'medical-staff', component: MedicalStaffComponent
+  path: 'medical-staff', component: MedicalStaffComponent, canActivate: [AuthGuard]
 }, {
   path: 'profile', component: ProfileComponent
 }, {
-  path: 'profile/edit', component: ProfileComponent
+  path: 'profile/edit', component: ProfileComponent, canActivate: [AuthGuard]
 }, {
-  path: 'questionnaire', component: QuestionnaireComponent
+  path: 'questionnaire', component: QuestionnaireComponent, canActivate: [AuthGuard]
 }, {
-  path: 'blood-banks/register', component: BankRegistrationComponent
+  path: 'blood-banks/register', component: BankRegistrationComponent, canActivate: [AuthGuard]
 }, {
-  path: 'medical-staff/bank', component: MedicalStaffBloodBankComponent
+  path: 'medical-staff/bank', component: MedicalStaffBloodBankComponent, canActivate: [AuthGuard]
 }, {
-  path: 'medical-staff/register', component: MedicalStaffRegistrationComponent
+  path: 'medical-staff/register', component: MedicalStaffRegistrationComponent, canActivate: [AuthGuard]
 }, {
-  path: 'users', component: ViewUsersComponent
+  path: 'users', component: ViewUsersComponent, canActivate: [AuthGuard]
 }, {
-  path: 'admin/register', component: AdminRegistrationComponent
+  path: 'admin/register', component: AdminRegistrationComponent, canActivate: [AuthGuard]
 }, {
-  path: 'admin/scheduling', component: AdminSchedulingComponent
+  path: 'admin/scheduling', component: AdminSchedulingComponent, canActivate: [AuthGuard]
 }, {
-  path: 'blood-banks/:id/appointments', component: AppointmentsComponent
+  path: 'blood-banks/:id/appointments', component: AppointmentsComponent, canActivate: [AuthGuard]
+},{
+  path: '**', redirectTo: ''
 }]
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(appRoutes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
 
-export const routing = RouterModule.forRoot(routes);
+export const routing = RouterModule.forRoot(appRoutes);
