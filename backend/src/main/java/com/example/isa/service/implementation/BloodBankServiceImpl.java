@@ -38,20 +38,17 @@ public class BloodBankServiceImpl implements BloodBankService {
     public List<BloodBank> search(Sort sort, List<String> searchCriteria, String filterGrade) {
     	String titleString = searchCriteria.get(0) == null ? "" : searchCriteria.get(0);
     	String cityString = searchCriteria.get(1) == null ? "" : searchCriteria.get(1);
-        if (titleString.equals("") && cityString.equals("")) {
-        	return repository.findAllWithFilter(Double.parseDouble(filterGrade),sort);
-        }
-        else if(titleString.equals("")){
-        	return repository.findByAddressCityLike("%"+cityString+"%",Double.parseDouble(filterGrade),sort);
-        }
-        else if(cityString.equals("")){
-        	return repository.findByTitleLike("%"+titleString+"%",Double.parseDouble(filterGrade), sort);
-        }
-        else {
-        	return repository.findByTitleLikeAndAddressCityLike("%"+titleString+"%", "%"+cityString+"%",Double.parseDouble(filterGrade), sort);
-        }
+
+        return this.repository.findAllByTitleIgnoreCaseContainingAndAddress_CityIgnoreCaseContainingAndAverageGradeGreaterThanEqual(titleString, cityString, parseGrade(filterGrade), sort);
     }
 
+    private Double parseGrade(String filterGrade) {
+        try {
+            return Double.parseDouble(filterGrade);
+        } catch (NumberFormatException e) {
+            return 0.0;
+        }
+    }
     @Override
     public BloodBank update(BloodBank bloodBank) {
         if (bloodBank.getTitle() == null || bloodBank.getAddress() == null) {

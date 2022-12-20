@@ -46,6 +46,7 @@ import { DonorsAppointmentsComponent } from './donors-appointments/donors-appoin
 import { AdminRegistrationComponent } from './admin-registration/admin-registration/admin-registration.component';
 
 import { AdminSchedulingComponent } from './admin-scheduling/admin-scheduling.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -117,6 +118,7 @@ import { AdminSchedulingComponent } from './admin-scheduling/admin-scheduling.co
 
 
   providers: [
+    [DatePipe],
     {
 		provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}
 	},

@@ -33,6 +33,8 @@ const routes: Routes = [{
 }, {
   path: 'profile', component: ProfileComponent
 }, {
+  path: 'profile/edit', component: ProfileComponent
+}, {
   path: 'questionnaire', component: QuestionnaireComponent
 }, {
   path: 'blood-banks/register', component: BankRegistrationComponent
@@ -47,7 +49,7 @@ const routes: Routes = [{
 }, {
   path: 'admin/scheduling', component: AdminSchedulingComponent
 }, {
-  path: 'blood-bank/:id/appointments', component: AppointmentsComponent
+  path: 'blood-banks/:id/appointments', component: AppointmentsComponent
 }]
 
 @NgModule({
