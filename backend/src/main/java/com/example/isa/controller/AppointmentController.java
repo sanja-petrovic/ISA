@@ -66,9 +66,9 @@ public class AppointmentController {
 		return ResponseEntity.ok(converter.listToDtoList(appointmentService.getByBloodDonor(UUID.fromString(id))));
 	}
 	
-	@GetMapping("/blood-donor/check-available")
-	//@PreAuthorize("hasRole('ROLE_DONOR')")
-	@ApiOperation(value = "Check availability of banks for date.", httpMethod = "GET")
+	@PostMapping("/blood-donor/check-available")
+	@PreAuthorize("hasRole('ROLE_DONOR')")
+	@ApiOperation(value = "Check availability of banks for date.", httpMethod = "POST")
 	public ResponseEntity<List<BloodBankDto>> checkAvailableForDate(@RequestBody AvailabilityDto dto){
 		Sort sort = Sort.by(Sort.Direction.fromString(dto.getSortCriteria().getDirection()), dto.getSortCriteria().getProperty());
 		List<BloodBank> banks = null;

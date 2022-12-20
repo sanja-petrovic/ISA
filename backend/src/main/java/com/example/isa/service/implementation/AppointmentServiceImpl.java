@@ -236,6 +236,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 			endTime.setTime(bank.getWorkingHours().getIntervalEnd().getTime());
 			LocalTime endTimeLocal = DateConverter.convert(endTime).toLocalTime();
 			
+			if(startTimeLocal.equals(LocalTime.of(0,0, 0)) && endTimeLocal.equals(LocalTime.of(0,0, 0))) return true;
 			
 			if(appointmentTime.isAfter(startTimeLocal) && appointmentTime.plusMinutes(duration).isBefore(endTimeLocal)) return true;
 
@@ -247,15 +248,15 @@ public class AppointmentServiceImpl implements AppointmentService {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.ENGLISH);
 		formatter.setTimeZone(TimeZone.getDefault());
 		Date dateTime = formatter.parse(dateTimeString);
-		List<BloodBank> banks = bankService.getAll();
+		List<BloodBank> banks = bankService.search(sort, null, "0");
 		if(banks!=null) {
 			List<BloodBank> retVal = new ArrayList<BloodBank>();
 			LocalDateTime converteDateTime = DateConverter.convert(dateTime);
 			for (BloodBank bank : banks) {
-				if(!this.bloodBankIsWorking(bank, dateTime, duration)) {
+				if(!this.bloodBankIsWorking(bank,(Date)dateTime.clone(), duration)) {
 					continue;
 				}
-				List<Appointment> listScheduled = repository.findAllByBloodBankAndDate( bank, converteDateTime.getYear(), converteDateTime.getMonthValue(), converteDateTime.getDayOfMonth(), sort);
+				List<Appointment> listScheduled = repository.findAllByBloodBankAndDate( bank, converteDateTime.getYear(), converteDateTime.getMonthValue(), converteDateTime.getDayOfMonth());
 				if(listScheduled == null) {//bank is free for that day
 					retVal.add(bank);
 					continue;

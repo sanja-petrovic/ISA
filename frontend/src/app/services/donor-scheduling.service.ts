@@ -1,9 +1,19 @@
+import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ApiService } from './ApiService';
+import { ConfigService } from './ConfigService';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DonorSchedulingService {
+  headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+  constructor(
+    private apiService: ApiService,
+    private config: ConfigService) { }
 
-  constructor() { }
+    checkBanks(dto: any): Observable<any> {
+      return this.apiService.post(`${this.config.donor_scheduling_url}`, dto);
+    }
 }

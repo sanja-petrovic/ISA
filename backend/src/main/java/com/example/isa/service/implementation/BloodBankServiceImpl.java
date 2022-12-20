@@ -36,8 +36,17 @@ public class BloodBankServiceImpl implements BloodBankService {
 
     @Override
     public List<BloodBank> search(Sort sort, List<String> searchCriteria, String filterGrade) {
-    	String titleString = searchCriteria.get(0) == null ? "" : searchCriteria.get(0);
-    	String cityString = searchCriteria.get(1) == null ? "" : searchCriteria.get(1);
+    	String titleString;
+    	String cityString;
+    	if(searchCriteria == null) {
+    		titleString = "";
+    		cityString = "";
+    	}
+    	else {
+    		 titleString = searchCriteria.get(0) == null ? "" : searchCriteria.get(0);
+        	 cityString = searchCriteria.get(1) == null ? "" : searchCriteria.get(1);
+    	}
+    	
         if (titleString.equals("") && cityString.equals("")) {
         	return repository.findAllWithFilter(Double.parseDouble(filterGrade),sort);
         }
