@@ -4,6 +4,7 @@ import com.example.isa.dto.BloodDonorDto;
 import com.example.isa.dto.UserDto;
 import com.example.isa.model.BloodDonor;
 import com.example.isa.model.User;
+import com.example.isa.repository.BloodDonorRepository;
 import com.example.isa.service.interfaces.BloodDonorService;
 
 import com.example.isa.util.converters.BloodDonorConverter;
@@ -12,10 +13,13 @@ import io.swagger.annotations.ApiOperation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @Api(value = "/blood-donors")
@@ -23,12 +27,15 @@ import java.util.List;
 public class BloodDonorController {
     private final BloodDonorService bloodDonorService;
 	private final BloodDonorConverter bloodDonorConverter;
+    private final BloodDonorRepository bloodDonorRepository;
 
-	@Autowired
-    public BloodDonorController(BloodDonorService bloodDonorService, BloodDonorConverter bloodDonorConverter) {
+    @Autowired
+    public BloodDonorController(BloodDonorService bloodDonorService, BloodDonorConverter bloodDonorConverter,
+                                BloodDonorRepository bloodDonorRepository) {
         this.bloodDonorService = bloodDonorService;
 		this.bloodDonorConverter = bloodDonorConverter;
-	}
+        this.bloodDonorRepository = bloodDonorRepository;
+    }
 
     @GetMapping
     @ApiOperation(value = "Get all blood donors.", httpMethod = "GET")
@@ -50,12 +57,14 @@ public class BloodDonorController {
 		return ResponseEntity.notFound().build();
     }
     @GetMapping("/current")
-    public ResponseEntity<BloodDonorDto> getCurrentBlolodDonor() {
-        BloodDonor bloodDonor = (BloodDonor) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return ResponseEntity.ok(bloodDonorConverter.entityToDto(bloodDonor));
+    @PreAuthorize("hasRole('ROLE_DONOR')")
+    public ResponseEntity<BloodDonorDto> getCurrentBloodDonor(Principal principal) {
+        Optional<BloodDonor> bloodDonor = bloodDonorRepository.findAllByEmail(principal.getName());
+        return bloodDonor.map(donor -> ResponseEntity.ok(bloodDonorConverter.entityToDto(donor))).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PutMapping(value="/update")
+    @PreAuthorize("hasRole('ROLE_DONOR')")
     @ApiOperation(value = "Update a blood donor's information", httpMethod = "PUT")
     public ResponseEntity<BloodDonorDto> update(@RequestBody BloodDonorDto bloodDonorDto){
     	BloodDonor retVal = bloodDonorService.update(bloodDonorConverter.dtoToEntity(bloodDonorDto));

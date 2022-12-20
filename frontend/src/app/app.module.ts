@@ -40,10 +40,12 @@ import { MedicalStaffRegistrationComponent } from './medical-staff-registration/
 import {MatListModule} from '@angular/material/list';
 import { ViewUsersComponent } from './view-users/view-users.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { AuthGuard } from './guards/auth-guard';
 import { AppointmentsComponent } from './appointments/appointments.component';
 import { DonorsAppointmentsComponent } from './donors-appointments/donors-appointments.component';
 import { AdminRegistrationComponent } from './admin-registration/admin-registration/admin-registration.component';
 
+import { AdminSchedulingComponent } from './admin-scheduling/admin-scheduling.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +69,8 @@ import { AdminRegistrationComponent } from './admin-registration/admin-registrat
     NavbarComponent,
     AppointmentsComponent,
     DonorsAppointmentsComponent,
-    AdminRegistrationComponent
+    AdminRegistrationComponent,
+    AdminSchedulingComponent
   ],
   imports: [
     HttpClientModule,
@@ -127,6 +130,7 @@ import { AdminRegistrationComponent } from './admin-registration/admin-registrat
     ApiService,
     UserService,
     ConfigService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

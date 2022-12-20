@@ -1,9 +1,8 @@
 <div class="centered-content">
-    <h1><b>Profile</b></h1>
-    <form class="form-wrapper" [formGroup]="profileForm">
+    <form class="form-wrapper" [formGroup]="profileForm" *ngIf="editEnabled">
         <div class="form-header-wrapper">
           <h2><b>Personal</b></h2>
-          <button (click)="editClicked()"> Edit Profile </button>
+          <button (click)="editClicked()" class="login-button"> Edit Profile </button>
         </div>
         <mat-form-field required appearance="outline">
             <mat-label>First name</mat-label>
@@ -17,7 +16,7 @@
           <mat-label>Personal ID</mat-label>
           <input formControlName="personalId" matInput type="text">
         </mat-form-field>
-        <mat-form-field required appearance="outline">
+        <mat-form-field required appearance="outline" *ngIf="editEnabled">
           <mat-label>Gender</mat-label>
           <mat-select formControlName="gender"  name="gender">
             <mat-option value="female">
@@ -60,13 +59,20 @@
           <input formControlName="email" matInput type="email">
         </mat-form-field>
         <div class="password-field-wrapper">
-          <mat-form-field class="password-field-input" required appearance="outline">
-            <mat-label>Password</mat-label>
-            <input formControlName="password" matInput type="password">
-          </mat-form-field>
           <button class="password-field-button" (click)="openPasswordDialog()" [disabled]="!editEnabled">Change password </button>
         </div>
-        <input type="submit" value="Save changes" (click)="saveEditChanges()" [disabled]="!editEnabled">
-        
+        <input type="submit" value="Save changes" class="submit-button" (click)="saveEditChanges()" *ngIf="editEnabled">
+
     </form>
+  <div class="cards" *ngIf="!editEnabled">
+    <mat-card class="profile-card">
+      <img mat-card-image src="https://digitalsynopsis.com/wp-content/uploads/2017/07/beautiful-color-ui-gradients-backgrounds-roseanna.png" alt="Photo of a Shiba Inu">
+      <mat-card-title class="profile-title">{{bloodDonor.firstName}} {{bloodDonor.lastName}}
+      </mat-card-title>
+      <mat-card-subtitle>{{bloodDonor.homeAddress}}, {{bloodDonor.city}}, {{bloodDonor.country}}</mat-card-subtitle>
+      <mat-card-content>
+        <p>Contact: {{bloodDonor.phoneNumber}}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>

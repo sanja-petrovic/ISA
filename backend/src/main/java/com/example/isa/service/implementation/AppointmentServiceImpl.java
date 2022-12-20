@@ -1,8 +1,14 @@
 package com.example.isa.service.implementation;
 
+import java.sql.SQLClientInfoException;
+import java.sql.Time;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -10,8 +16,10 @@ import java.util.UUID;
 
 import com.example.isa.exception.*;
 import com.example.isa.model.AppointmentStatus;
+import com.example.isa.model.BloodBank;
 import com.example.isa.model.BloodDonor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.metrics.buffering.StartupTimeline;
 import org.springframework.stereotype.Service;
 
 import com.example.isa.model.Appointment;
@@ -61,13 +69,37 @@ public class AppointmentServiceImpl implements AppointmentService {
     public Appointment create(Appointment appointment) {
         List<Appointment> listScheduled = repository.findAllByBloodBankAndDateTime(appointment.getBloodBank(), appointment.getDateTime());
         for (Appointment scheduled : listScheduled) {
-            if (scheduled.hasDateTimeOverlap(DateConverter.convert(appointment.getDateTime()), appointment.getDuration())) {
+            if (this.hasDateTimeOverlap(scheduled, appointment)) {
                 throw new AlreadyExistsException();
             }
         }
         return repository.save(appointment);
     }
-
+    @Override
+    @Transactional
+    public Appointment createScheduled(Appointment appointment) {
+    	if(appointment!=null) {
+    		if(!this.bloodBankIsWorking(appointment)) {
+				throw new BloodBankClosedException();
+			}
+    		LocalDateTime converteDateTime = DateConverter.convert(appointment.getDateTime());
+            List<Appointment> listScheduled = repository.findAllByBloodBankAndDate(appointment.getBloodBank(), converteDateTime.getYear(), converteDateTime.getMonthValue(), converteDateTime.getDayOfMonth());
+            for (Appointment scheduled : listScheduled) {
+                if (this.hasDateTimeOverlap(scheduled, appointment)) {
+                    throw new AlreadyExistsException();
+                }
+            }
+            return repository.save(appointment);
+    	}
+    	return null;
+    }
+    
+    private boolean hasDateTimeOverlap(Appointment a1, Appointment a2) {
+    	LocalDateTime a1DateTime = DateConverter.convert(a1.getDateTime());
+    	LocalDateTime a2DateTime = DateConverter.convert(a2.getDateTime());
+    	//A.end >= B.start AND A.start <= B.end
+        return (a1DateTime.plusMinutes(a1.getDuration()).isAfter(a2DateTime) && a1DateTime.isBefore(a2DateTime.plusMinutes(a2.getDuration())));
+    }
     @Override
     public Appointment update(Appointment appointment) {
         return repository.save(appointment);
@@ -119,5 +151,57 @@ public class AppointmentServiceImpl implements AppointmentService {
 		}
 	}
 
+	@Override
+	public Appointment createByDonor(Appointment appointment, BloodDonor donor) {
+		if(appointment!=null && donor!=null) {
+			if (appointment.getDateTime().before(new Date())) {
+	            throw new PassedException();
+	        }
+			if(!this.bloodBankIsWorking(appointment)) {
+				throw new BloodBankClosedException();
+			}
+	        /*if (CollectionUtils.isEmpty(donor.getAnswers())) {
+	            throw new NoCompletedQuestionnaire();
+	        }*/
+			/*if (!canScheduleAppointment(donor)) {
+				throw new NewAppointmentTooSoonException();
+			}*/
+			//java.time.temporal.UnsupportedTemporalTypeException: Unsupported field: InstantSeconds
+			//probbably missing parameter
+			if(donorHasAtChosenTime(donor, appointment.getDateTime())) {
+				throw new DuplicateAppointmentException();
+			}
+			appointment.setStatus(AppointmentStatus.SCHEDULED);
+			appointment.setBloodDonor(donor);
+			repository.save(appointment);
+		}
+		else {
+			throw new NotFoundException();
+		}
+		return null;
+	}
+	private boolean donorHasAtChosenTime(BloodDonor donor, Date dateTime) {
+		return !repository.findAllByBloodDonorAndDateTime(donor, dateTime).isEmpty();
+	}
+	private boolean bloodBankIsWorking(Appointment appointment) {
+		LocalDateTime appointmentDateTime = DateConverter.convert(appointment.getDateTime());
+		//appointmentDateTime = DateConverter.convert(appointment.getDateTime());
+		LocalTime appointmentTime = appointmentDateTime.toLocalTime();
+		Date appointmentDate = (Date) appointment.getDateTime().clone();
+		BloodBank bank = appointment.getBloodBank();
+		if(bank == null) return false;
+		else {	
+			Date startTime = appointmentDate;
+			startTime.setTime(bank.getWorkingHours().getIntervalStart().getTime());
+			LocalTime startTimeLocal = DateConverter.convert(startTime).toLocalTime();
+			Date endTime = appointmentDate;
+			endTime.setTime(bank.getWorkingHours().getIntervalEnd().getTime());
+			LocalTime endTimeLocal = DateConverter.convert(endTime).toLocalTime();
+			
+			
+			if(appointmentTime.isAfter(startTimeLocal) && appointmentTime.plusMinutes(appointment.getDuration()).isBefore(endTimeLocal)) return true;
 
+		}
+		return false;
+	}
 }

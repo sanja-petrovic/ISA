@@ -38,4 +38,5 @@ public class AdminServiceImpl implements AdminService {
         repository.save(admin);
         return true;
     }
+
 }

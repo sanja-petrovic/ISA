@@ -13,7 +13,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="refresh_tokens")
-@Entity(name = "refreshtoken")
+@Entity
 @Builder
 public class RefreshToken {
     @OneToOne

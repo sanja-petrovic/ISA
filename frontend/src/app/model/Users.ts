@@ -6,11 +6,12 @@ type BloodDonor = {
   occupation: string,
   institution: string,
   phoneNumber: string,
-  street: string,
+  homeAddress: string,
   city: string,
   country: string,
   email: string,
-  password: string
+  password: string,
+  loyaltyStatus: string
 }
 
 type MedicalStaff = {

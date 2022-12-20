@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -18,11 +19,12 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@ToString
 @Table(name = "appointments")
 public class Appointment {
     @Id
     @Column
-    private UUID id;
+    private UUID id  = UUID.randomUUID();
 
     @Column
     @Enumerated(EnumType.STRING)
@@ -40,12 +42,6 @@ public class Appointment {
     @JoinColumn(name = "blood_donor_id")
     private BloodDonor bloodDonor;
     
-    public boolean hasDateTimeOverlap(LocalDateTime date, Long duration) {
-    	LocalDateTime storedDateTime = DateConverter.convert(dateTime);
-
-        return (!storedDateTime.isAfter(date.plusMinutes(duration))) && (!storedDateTime.plusMinutes(this.duration).isAfter(date));
-    }
-
     public Appointment(Appointment appointment) {
         this.id = UUID.randomUUID();
         status = AppointmentStatus.NOT_SCHEDULED;
@@ -53,4 +49,16 @@ public class Appointment {
         duration = appointment.duration;
         bloodBank = appointment.bloodBank;
     }
+
+	public Appointment(AppointmentStatus status, Date dateTime, Long duration, BloodBank bloodBank,
+			BloodDonor bloodDonor) {
+		super();
+		this.id = UUID.randomUUID();
+		this.status = status;
+		this.dateTime = dateTime;
+		this.duration = duration;
+		this.bloodBank = bloodBank;
+		this.bloodDonor = bloodDonor;
+	}
+    
 }

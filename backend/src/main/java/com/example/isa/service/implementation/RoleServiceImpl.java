@@ -5,7 +5,6 @@ import com.example.isa.repository.RoleRepository;
 import com.example.isa.service.interfaces.RoleService;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -24,7 +23,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<Role> findByName(String name) {
-        return repository.findByName(name);
+    public Role findByName(String name) {
+        return repository.findByNameIgnoreCase(name);
     }
 }

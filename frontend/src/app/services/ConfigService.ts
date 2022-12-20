@@ -12,12 +12,15 @@ export class ConfigService {
   public verification_url = this._auth_url + '/verify';
   public questions_url = this._api_url + '/questions'
   public answers_url = this._api_url + '/answers'
+  public appointments_url = this._api_url + '/appointments'
   public blood_banks_url = this._api_url + '/blood-banks';
   public medical_staff_url = this._api_url + '/medical-stuff';
   public blood_donors_url = this._api_url + '/blood-donors';
   public log_out_url = this._auth_url + '/log-out';
   public refresh_token_url = this._auth_url + '/refresh-token';
   public admin_url = this._api_url+'/admin';
+  public admin_scheduling_url = this._api_url + '/appointments/create'
+
   get login_url(): string {
     return this._login_url;
   }

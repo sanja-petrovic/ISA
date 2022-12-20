@@ -59,7 +59,7 @@ public class AdminController {
     public ResponseEntity<?> register(@RequestBody AdminDto adminDto){
         Admin admin = converter.dtoToEntity(adminDto);
         if (userService.findByUsername(adminDto.getEmail()) == null) {
-            admin.setRoles(roleService.findByName("ROLE_ADMIN"));
+            admin.setRole(roleService.findByName("ROLE_ADMIN"));
             adminService.register(admin);
             userService.registerAdmin(admin);
             return new ResponseEntity<>((admin), HttpStatus.CREATED);

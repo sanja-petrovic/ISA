@@ -34,11 +34,11 @@ public class TokenHandler {
 
     public ResponseCookie generateJwtCookie(User user) {
         String jwt = generateTokenFromUsername(user.getEmail());
-        return generateCookie(jwtCookie, jwt, "/");
+        return generateCookie(jwtCookie, jwt, "/api");
     }
 
     public ResponseCookie generateRefreshJwtCookie(String refreshToken) {
-        return generateCookie(jwtRefreshCookie, refreshToken, "/auth/refreshtoken");
+        return generateCookie(jwtRefreshCookie, refreshToken, "/api/auth/refresh-token");
     }
 
     public String getJwtFromCookies(HttpServletRequest request) {
@@ -50,12 +50,12 @@ public class TokenHandler {
     }
 
     public ResponseCookie getCleanJwtCookie() {
-        ResponseCookie cookie = ResponseCookie.from(jwtCookie, null).path("/").build();
+        ResponseCookie cookie = ResponseCookie.from(jwtCookie, null).path("/api").build();
         return cookie;
     }
 
     public ResponseCookie getCleanJwtRefreshCookie() {
-        ResponseCookie cookie = ResponseCookie.from(jwtRefreshCookie, null).path("/auth/refreshtoken").build();
+        ResponseCookie cookie = ResponseCookie.from(jwtRefreshCookie, null).path("/api/auth/refresh-token").build();
         return cookie;
     }
 

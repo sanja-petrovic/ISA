@@ -1,0 +1,28 @@
+<div class="centered-content">
+    <h1> Administrator predefined appointments scheduling </h1>
+    <form class="form-wrapper" [formGroup]="form">
+        <mat-form-field required appearance="outline">
+            <mat-label>Date</mat-label>
+            <input formControlName="dateTime" matInput type="datetime-local">
+        </mat-form-field>
+        <mat-form-field required appearance="outline">
+            <mat-label>Blood Bank</mat-label>
+            <mat-select formControlName="bloodBankId">
+                <mat-option *ngFor="let item of banks" [value]="item.id">
+                    {{item.title}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field required appearance="outline">
+            <mat-label>Duration</mat-label>
+            <input formControlName="duration" matInput type="number">
+        </mat-form-field>
+        <input [disabled]="!form.valid" type="submit" (click)="onSubmit()" value="Register" class="submit-button">
+        <div *ngIf="dateTime.errors?.['dateValidation']">
+            Date must be atleast a day after tomorow.
+        </div>
+        <div *ngIf="duration.errors?.['durationValidation']">
+            Duration must be between 15 and 60 mins.
+        </div>
+    </form>
+</div>
