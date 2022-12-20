@@ -2,10 +2,7 @@ package com.example.isa.advice;
 
 import java.util.Date;
 
-import com.example.isa.exception.CantScheduleTwiceException;
-import com.example.isa.exception.NewAppointmentTooSoonException;
-import com.example.isa.exception.NoCompletedQuestionnaire;
-import com.example.isa.exception.TokenRefreshException;
+import com.example.isa.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -51,6 +48,16 @@ public class ControllerAdvice {
                 HttpStatus.NOT_ACCEPTABLE.value(),
                 new Date(),
                 "You've already scheduled this appointment before.",
+                request.getDescription(false));
+    }
+
+    @ExceptionHandler(value = UnableToCancelException.class)
+    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
+    public ErrorMessage handleUnableToCancelException(UnableToCancelException ex, WebRequest request) {
+        return new ErrorMessage(
+                HttpStatus.NOT_ACCEPTABLE.value(),
+                new Date(),
+                "Cancellations can only be made up to 24 hours before the scheduled appointment time.",
                 request.getDescription(false));
     }
 }

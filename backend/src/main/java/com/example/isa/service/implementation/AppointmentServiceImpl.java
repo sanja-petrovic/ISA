@@ -3,6 +3,7 @@ package com.example.isa.service.implementation;
 import java.sql.SQLClientInfoException;
 import java.sql.Time;
 import java.time.*;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -78,7 +79,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         Optional<Appointment> mostRecentAppointment = repository.findTopByBloodDonorOrderByDateTimeDesc(bloodDonor);
 		LocalDateTime sixMonthsAgo = DateConverter.convert(date).minusMonths(6);
 		Instant milliseconds = sixMonthsAgo.toInstant(ZoneOffset.UTC);
-        return mostRecentAppointment.isEmpty() || !mostRecentAppointment.get().getDateTime().after(Date.from(milliseconds));
+        return mostRecentAppointment.isEmpty() || mostRecentAppointment.get().getStatus() == AppointmentStatus.CANCELLED || !mostRecentAppointment.get().getDateTime().after(Date.from(milliseconds));
     }
 
     @Override
@@ -136,7 +137,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 				if (!canScheduleAppointment(donor, appointment.getDateTime())) {
 					throw new NewAppointmentTooSoonException();
 				}
-                if (repository.findAllByBloodBankAndBloodDonorAndDateTime(appointment.getBloodBank(), donor, appointment.getDateTime()).isPresent()) {
+                if (repository.findAllByBloodBankIdAndBloodDonorIdAndDateTime(appointment.getBloodBank().getId(), donor.getId(), appointment.getDateTime()).isPresent()) {
                     throw new CantScheduleTwiceException();
                 }
 				appointment.setBloodDonor(donor);
@@ -151,7 +152,9 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
 	public boolean canCancelAppointment(Appointment appointment) {
-		return Duration.between(LocalDate.now(), LocalDate.from(appointment.getDateTime().toInstant())).toHours() > 24;
+		LocalDateTime appointmentDateTime = DateConverter.convert(appointment.getDateTime());
+		long hours = ChronoUnit.HOURS.between(appointmentDateTime, LocalDateTime.now());
+		return Math.abs(hours) > 24;
 	}
 
 	@Override
@@ -175,14 +178,12 @@ public class AppointmentServiceImpl implements AppointmentService {
 			if(!this.bloodBankIsWorking(appointment)) {
 				throw new BloodBankClosedException();
 			}
-	        /*if (CollectionUtils.isEmpty(donor.getAnswers())) {
+	        if (CollectionUtils.isEmpty(donor.getAnswers())) {
 	            throw new NoCompletedQuestionnaire();
 	        }
-			/*if (!canScheduleAppointment(donor)) {
+			if (!canScheduleAppointment(donor, appointment.getDateTime())) {
 				throw new NewAppointmentTooSoonException();
-			}*/
-			//java.time.temporal.UnsupportedTemporalTypeException: Unsupported field: InstantSeconds
-			//probbably missing parameter
+			}
 			if(donorHasAtChosenTime(donor, appointment.getDateTime())) {
 				throw new DuplicateAppointmentException();
 			}

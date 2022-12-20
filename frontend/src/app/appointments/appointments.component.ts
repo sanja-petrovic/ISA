@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AppointmentService} from "../services/AppointmentService";
 import {Appointment} from "../model/Appointment";
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {DatePipe} from '@angular/common';
 @Component({
   selector: 'app-appointments',
@@ -9,7 +9,7 @@ import {DatePipe} from '@angular/common';
   styleUrls: ['./appointments.component.css', '../banks-page/banks-page.component.css']
 })
 export class AppointmentsComponent implements OnInit {
-  constructor(private appointmentService: AppointmentService, private route: ActivatedRoute, private datePipe: DatePipe) { }
+  constructor(private appointmentService: AppointmentService, private route: ActivatedRoute, private router: Router, private datePipe: DatePipe) { }
 
   public appointments: Appointment[] = [];
 
@@ -37,6 +37,7 @@ export class AppointmentsComponent implements OnInit {
   schedule(appointment: Appointment): void {
     this.appointmentService.schedule(appointment.id).subscribe(res => {
       console.log(res);
+      this.router.navigate(["/appointments"]);
     },
     error => {
       alert(error.error.message);

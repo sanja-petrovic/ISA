@@ -99,7 +99,7 @@ public class AppointmentController {
 		return ResponseEntity.ok(converter.listToDtoList(appointmentService.getByBloodDonor(user.getId(), AppointmentStatus.CANCELLED)));
 	}
 	@PostMapping("/create")
-	@ApiOperation(value = "Create appointment.", httpMethod = "POST")
+	@ApiOperation(value = "Create an appointment.", httpMethod = "POST")
 	@ResponseBody
 	public ResponseEntity<String> createPredefined(@RequestBody AppointmentDto dto) {
 		Appointment appointment = converter.dtoToEntity(dto);
@@ -137,6 +137,7 @@ public class AppointmentController {
 	@PreAuthorize("hasRole('ROLE_DONOR')")
 	@ApiOperation(value = "Cancel a previously scheduled appointment.", httpMethod = "POST")
 	public ResponseEntity cancel(@PathVariable UUID id, Principal user) {
+		appointmentService.cancel(appointmentService.getById(id));
 		return ResponseEntity.ok().build();
 	}
 

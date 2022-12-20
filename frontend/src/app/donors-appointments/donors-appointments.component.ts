@@ -44,6 +44,7 @@ export class DonorsAppointmentsComponent implements OnInit {
   cancel(appointment: Appointment): void {
     this.appointmentService.cancel(appointment.id).subscribe(res => {
         console.log(res);
+        window.location.reload();
       },
       error => {
         alert(error.error.message);
