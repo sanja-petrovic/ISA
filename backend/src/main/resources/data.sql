@@ -112,10 +112,8 @@ VALUES ('9274a7eb-8c9e-4d50-badc-debd665f34b1', 'Are you currently on your perio
 INSERT INTO public.questions(id, text, type)
 VALUES ('99cc9319-f99d-466a-b2e7-f589ec69f83d',
         'Have you in the past 6 months given birth or had a pregnancy termination?', 'FOR_WOMEN');
-
 -- blood donors
-INSERT INTO public.blood_donors
-VALUES ('120cec82-39f4-482c-a13f-509d49980b0f','gugma@gugma.rs','Gugma','MALE',true,'Gugmic','$2a$10$UMV1931RusgV5EAqW6tIuerzMxAn6Bch7idfB1wEAQZpPrULyWdlK','supersus1','0612406374','New Now','Birbia','Markova',null,null,'Zaposlen');
+
 
 --appointments
 insert into public.appointments(id,date_time,duration,status,blood_bank_id,blood_donor_id)
@@ -124,7 +122,4 @@ insert into public.appointments(id,date_time,duration,status,blood_bank_id,blood
 values (uuid_generate_v4(),'2022-02-02 9:30:00',15,'NOT_SCHEDULED','16e4a8c2-3e86-4e93-825f-24e36cb29669',null);
 insert into public.appointments(id,date_time,duration,status,blood_bank_id,blood_donor_id)
 values (uuid_generate_v4(),'2022-02-02 18:00:00',30,'NOT_SCHEDULED','16e4a8c2-3e86-4e93-825f-24e36cb29669',null);
-insert into public.appointments(id,date_time,duration,status,blood_bank_id,blood_donor_id)
-values (uuid_generate_v4(),'2022-02-02 18:00:00',30,'SCHEDULED','16e4a8c2-3e86-4e93-825f-24e36cb29669','120cec82-39f4-482c-a13f-509d49980b0f');
-
 
