@@ -16,6 +16,7 @@ import {MedicalStaffRegistrationComponent} from './medical-staff-registration/me
 import {ViewUsersComponent} from './view-users/view-users.component';
 import { AdminSchedulingComponent } from './admin-scheduling/admin-scheduling.component';
 import {AppointmentsComponent} from "./appointments/appointments.component";
+import { DonorSchedulingComponent } from './donor-scheduling/donor-scheduling.component';
 
 const routes: Routes = [{
   path: 'home', component: HomeComponent
@@ -43,7 +44,9 @@ const routes: Routes = [{
   path: 'users', component: ViewUsersComponent
 }, {
   path: 'admin/scheduling', component: AdminSchedulingComponent
-}, {
+},{
+  path: 'donor/scheduling', component: DonorSchedulingComponent
+},{
   path: 'blood-bank/:id/appointments', component: AppointmentsComponent
 }]
 

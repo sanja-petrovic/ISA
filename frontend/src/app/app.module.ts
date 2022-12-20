@@ -44,6 +44,7 @@ import { AuthGuard } from './guards/auth-guard';
 import { AppointmentsComponent } from './appointments/appointments.component';
 import { DonorsAppointmentsComponent } from './donors-appointments/donors-appointments.component';
 import { AdminSchedulingComponent } from './admin-scheduling/admin-scheduling.component';
+import { DonorSchedulingComponent } from './donor-scheduling/donor-scheduling.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { AdminSchedulingComponent } from './admin-scheduling/admin-scheduling.co
     NavbarComponent,
     AppointmentsComponent,
     DonorsAppointmentsComponent,
-    AdminSchedulingComponent
+    AdminSchedulingComponent,
+    DonorSchedulingComponent
   ],
   imports: [
     HttpClientModule,

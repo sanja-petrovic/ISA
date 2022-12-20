@@ -1,0 +1,13 @@
+<div class="centered-content">
+    <h1> Donor appointments scheduling </h1>
+    <form class="form-wrapper" [formGroup]="querry_form">
+        <mat-form-field required appearance="outline">
+            <mat-label>Date</mat-label>
+            <input formControlName="dateTime" matInput type="datetime-local">
+        </mat-form-field>
+        <div *ngIf="dateTime.errors?.['dateValidation']">
+            Date must be atleast a day after tomorow.
+        </div>
+        <input [disabled]="!querry_form.valid" type="submit" (click)="checkBanks()" value="Search" class="submit-button">
+    </form>
+</div>
