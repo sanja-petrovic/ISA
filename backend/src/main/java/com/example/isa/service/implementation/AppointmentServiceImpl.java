@@ -105,8 +105,6 @@ public class AppointmentServiceImpl implements AppointmentService {
         return repository.save(appointment);
     }
 
-
-
     @Override
     @Transactional
     public void schedulePredefined(Appointment appointment, BloodDonor donor) {
@@ -162,7 +160,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 			}
 	        /*if (CollectionUtils.isEmpty(donor.getAnswers())) {
 	            throw new NoCompletedQuestionnaire();
-	        }*/
+	        }
 			/*if (!canScheduleAppointment(donor)) {
 				throw new NewAppointmentTooSoonException();
 			}*/
