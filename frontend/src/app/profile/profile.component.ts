@@ -31,7 +31,6 @@ export class ProfileComponent implements OnInit {
   public editEnabled : boolean = false;
   private newPassword : string ='';
   private passwordDto : PasswordDto = {
-    personalId: "",
     oldPassword: "",
     newPassword: ""
   };
@@ -114,11 +113,10 @@ export class ProfileComponent implements OnInit {
       data: { oldPass: this.bloodDonor.password ,oldPassCheck: '', newPass: '', newPassCheck:''},
     });
     pwDialog.afterClosed().subscribe(result => {
-      this.newPassword = result;
-
-      this.passwordDto.personalId = this.bloodDonor.personalId;
-      this.passwordDto.oldPassword = this.bloodDonor.password;
-      this.passwordDto.newPassword = this.newPassword;
+      console.log(result);
+      this.newPassword = result.newPassConfirm;
+      this.passwordDto.oldPassword = result.oldPassConfirm;
+      this.passwordDto.newPassword = result.newPassConfirm;
       console.log(this.passwordDto);
       this.updateBloodDonorPassword();
 
@@ -126,7 +124,6 @@ export class ProfileComponent implements OnInit {
   }
   updateBloodDonorPassword():void{
     this.bloodDonorService.updateBloodDonorPassword(this.passwordDto).subscribe((res: any)=>{
-      console.log(res);
       alert("Password change successful, you will be redirected.")
       setTimeout(() =>
       {

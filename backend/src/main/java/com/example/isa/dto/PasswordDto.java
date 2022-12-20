@@ -9,7 +9,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PasswordDto {
-		private String personalId;
-	    private String oldPassword;
-	    private String newPassword;
+	private String oldPassword;
+	private String newPassword;
 }
