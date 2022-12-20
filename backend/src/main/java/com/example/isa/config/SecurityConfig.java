@@ -81,7 +81,7 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().antMatchers(HttpMethod.POST, "/auth/log-in").and().ignoring().antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "favicon.ico", "/**/*.html", "/**/*.css", "/**/*.js");
+        return (web) -> web.ignoring().antMatchers(HttpMethod.POST, "/auth/log-in").and().ignoring().antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "favicon.ico", "/swagger-ui.html/**", "/configuration/**","/swagger-resources/**", "/v2/api-docs", "/**/*.html", "/**/*.css", "/**/*.js");
     }
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
