@@ -44,6 +44,7 @@ import { AuthGuard } from './guards/auth-guard';
 import { AppointmentsComponent } from './appointments/appointments.component';
 import { DonorsAppointmentsComponent } from './donors-appointments/donors-appointments.component';
 import { AdminSchedulingComponent } from './admin-scheduling/admin-scheduling.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -114,6 +115,7 @@ import { AdminSchedulingComponent } from './admin-scheduling/admin-scheduling.co
 
 
   providers: [
+    [DatePipe],
     {
 		provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}
 	},

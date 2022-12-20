@@ -10,6 +10,8 @@ public interface AppointmentService {
 	List<Appointment> getAll();
 	Appointment getById(UUID appointmentId);
 	List<Appointment> getByBloodBank(UUID bankId);
+	List<Appointment> getByBloodBank(String title);
+	List<Appointment> getUnscheduledByBloodBank(UUID bloodBankId);
 	List<Appointment> getByBloodDonor(UUID bloodDonorId);
 	Appointment create(Appointment appointment);
 	Appointment createScheduled(Appointment appointment);

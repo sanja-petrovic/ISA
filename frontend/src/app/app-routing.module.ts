@@ -46,7 +46,7 @@ const routes: Routes = [{
 }, {
   path: 'admin/scheduling', component: AdminSchedulingComponent
 }, {
-  path: 'blood-bank/:id/appointments', component: AppointmentsComponent
+  path: 'blood-banks/:id/appointments', component: AppointmentsComponent
 }]
 
 @NgModule({

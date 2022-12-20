@@ -54,7 +54,17 @@ public class AppointmentServiceImpl implements AppointmentService {
         return repository.findAllByBloodBankId(bloodBankId);
     }
 
-    @Override
+	@Override
+	public List<Appointment> getByBloodBank(String title) {
+		return null;
+	}
+
+	@Override
+	public List<Appointment> getUnscheduledByBloodBank(UUID bloodBankId) {
+		return repository.findAllByBloodBankIdAndStatus(bloodBankId, AppointmentStatus.NOT_SCHEDULED);
+	}
+
+	@Override
     public List<Appointment> getByBloodDonor(UUID bloodDonorId) {
         return repository.findAllByBloodDonorId(bloodDonorId);
     }
