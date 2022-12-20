@@ -1,0 +1,72 @@
+<div class="centered-content">
+    <h1>Welcome to <b>howtosavealife</b>!</h1>
+    <form class="form-wrapper" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <h2><b>Personal</b></h2>
+      <mat-form-field required appearance="outline">
+        <mat-label>First name</mat-label>
+        <input formControlName="firstName" matInput type="text" >
+      </mat-form-field>
+      <mat-form-field required appearance="outline">
+        <mat-label>Last name</mat-label>
+        <input formControlName="lastName" matInput type="text" >
+      </mat-form-field>
+      <mat-form-field required appearance="outline">
+        <mat-label>Personal ID</mat-label>
+        <input formControlName="personalId" matInput type="text">
+      </mat-form-field>
+      <mat-form-field required appearance="outline">
+        <mat-label>Gender</mat-label>
+        <mat-select formControlName="gender"  name="gender">
+          <mat-option value="FEMALE">
+            Female
+          </mat-option>
+          <mat-option value="MALE">
+            Male
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <h2 class="needs-space"><b>Contact</b></h2>
+      <mat-form-field required appearance="outline">
+        <mat-label>Phone number</mat-label>
+        <input formControlName="phoneNumber" matInput type="text">
+      </mat-form-field>
+      <mat-form-field required appearance="outline">
+        <mat-label>Home address (street, number)</mat-label>
+        <input formControlName="homeAddress" matInput type="text">
+      </mat-form-field>
+      <mat-form-field required appearance="outline">
+        <mat-label>City</mat-label>
+        <input formControlName="city" matInput type="text">
+      </mat-form-field>
+      <mat-form-field required appearance="outline">
+        <mat-label>Country</mat-label>
+        <input formControlName="country" matInput type="text">
+      </mat-form-field>
+      <h2><b>Account</b></h2>
+      <mat-form-field required appearance="outline">
+        <mat-label>Email</mat-label>
+        <input formControlName="email" matInput type="email">
+      </mat-form-field>
+      <mat-form-field required appearance="outline">
+        <mat-label>Password</mat-label>
+        <input formControlName="password" matInput type="password">
+      </mat-form-field>
+      <mat-form-field required appearance="outline" required>
+        <mat-label>Password, again</mat-label>
+        <input formControlName="passwordCheck" matInput type="password">
+      </mat-form-field>
+      <div class="password-input">
+        <div *ngIf="password.errors?.['pattern']">
+          Password must contain at least one number, one uppercase and a
+          lowercase letter and at least 8 characters<br />Password cannot
+          contain whitespace
+        </div>
+        <div *ngIf="passwordCheck.errors?.['confirmedValidator']">
+          Passwords did not match
+        </div>
+      </div>
+  
+      <input  type="submit" value="RegisterAdmin" class="submit-button">
+    </form>
+  </div>
+  

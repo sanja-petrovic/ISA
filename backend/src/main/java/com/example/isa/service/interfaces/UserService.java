@@ -1,5 +1,6 @@
 package com.example.isa.service.interfaces;
 
+import com.example.isa.model.Admin;
 import com.example.isa.model.MedicalStaff;
 import com.example.isa.model.BloodDonor;
 import com.example.isa.model.User;
@@ -15,5 +16,6 @@ public interface UserService extends UserDetailsService {
     User findByPersonalId(String personalId) throws Exception;
     void updatePassword(User user, String newPassword);
     void registerMedicalStaff(MedicalStaff medicalStaff);
+    void registerAdmin(Admin admin);
     List<User> search(String name, String lastName);
 }
