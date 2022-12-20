@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.isa.dto.AppointmentDto;
 import com.example.isa.exception.AlreadyExistsException;
+import com.example.isa.exception.BloodBankClosedException;
 import com.example.isa.model.Appointment;
 import com.example.isa.service.interfaces.AppointmentService;
 import com.example.isa.util.converters.AppointmentConverter;
@@ -56,7 +57,6 @@ public class AppointmentController {
 	public ResponseEntity<List<AppointmentDto>> getAllByBloodDonor(@PathVariable String id){
 		return ResponseEntity.ok(converter.listToDtoList(appointmentService.getByBloodDonor(UUID.fromString(id))));
 	}
-
 	@PostMapping("/create")
 	@ApiOperation(value = "Create appointment.", httpMethod = "POST")
 	@ResponseBody
@@ -77,6 +77,9 @@ public class AppointmentController {
 			}
 			catch(AlreadyExistsException e){
 				return new ResponseEntity<>("AlreadyExistsException", HttpStatus.BAD_REQUEST);
+			}
+			catch(BloodBankClosedException e){
+				return new ResponseEntity<>("BankClosed", HttpStatus.BAD_REQUEST);
 			}
 			return ResponseEntity.ok().build(); 
 		}	

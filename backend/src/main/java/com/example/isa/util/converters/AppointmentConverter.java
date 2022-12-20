@@ -41,7 +41,7 @@ public class AppointmentConverter implements Converter<Appointment, AppointmentD
 
 	@Override
 	public Appointment dtoToEntity(AppointmentDto dto) {
-		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss", Locale.ENGLISH);
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.ENGLISH);
 		formatter.setTimeZone(TimeZone.getDefault());
 		BloodDonor donor = null;
 		if(!(dto.getBloodDonorId() == null)) {

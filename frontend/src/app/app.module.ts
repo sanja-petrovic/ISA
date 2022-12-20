@@ -43,6 +43,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { AuthGuard } from './guards/auth-guard';
 import { AppointmentsComponent } from './appointments/appointments.component';
 import { DonorsAppointmentsComponent } from './donors-appointments/donors-appointments.component';
+import { AdminSchedulingComponent } from './admin-scheduling/admin-scheduling.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { DonorsAppointmentsComponent } from './donors-appointments/donors-appoin
     MedicalStaffRegistrationComponent,
     NavbarComponent,
     AppointmentsComponent,
-    DonorsAppointmentsComponent
+    DonorsAppointmentsComponent,
+    AdminSchedulingComponent
   ],
   imports: [
     HttpClientModule,
