@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@Api(value = "/admin")
+@Api(value = "/admin", tags = "Admins")
 @RequestMapping(value = "/admin")
 public class AdminController {
     private final AdminService adminService;

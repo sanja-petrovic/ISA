@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.example.isa.service.interfaces.BloodDonorService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -22,6 +23,7 @@ import com.example.isa.util.converters.AppointmentConverter;
 
 @RestController
 @RequestMapping("/appointments")
+@Api(value = "/appointments", tags = "Appointments")
 public class AppointmentController {
 	private final AppointmentService appointmentService;
 	private final BloodDonorService bloodDonorService;

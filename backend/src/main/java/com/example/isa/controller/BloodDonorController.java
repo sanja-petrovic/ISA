@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@Api(value = "/blood-donors")
+@Api(value = "/blood-donors", tags = "Blood donors")
 @RequestMapping(value = "/blood-donors")
 public class BloodDonorController {
     private final BloodDonorService bloodDonorService;

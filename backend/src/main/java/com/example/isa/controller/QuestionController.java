@@ -4,6 +4,7 @@ import com.example.isa.dto.QuestionDto;
 import com.example.isa.model.Question;
 import com.example.isa.service.interfaces.QuestionService;
 import com.example.isa.util.converters.QuestionConverter;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/questions")
+@Api(value = "/questions", tags = "Questionnaire questions")
 public class QuestionController {
 
     private final QuestionService service;

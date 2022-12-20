@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 
 @RestController
-@Api(value = "/users")
+@Api(value = "/users", tags = "Users")
 @RequestMapping(value = "/users")
 public class UserController {
     private final UserService service;
