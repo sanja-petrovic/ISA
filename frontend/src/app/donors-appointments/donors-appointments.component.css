@@ -1,0 +1,32 @@
+.centered-content {
+  flex-direction: column;
+}
+
+.cards {
+  display: flex;
+  flex-direction: column;
+}
+
+.bank-card {
+  margin-top: 2rem;
+}
+
+.mat-tab-body-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.mat-tab-group {
+  width: 70vw;
+}
+
+.tab {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+p {
+  text-align: center;
+  padding: 2rem;
+}

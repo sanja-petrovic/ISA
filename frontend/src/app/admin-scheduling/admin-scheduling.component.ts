@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AdminSchedulingService} from '../services/admin-scheduling.service';
+import { AdminSchedulingService} from '../services/AdminSchedulingService';
 import { BloodBankService } from '../services/BloodBankService';
 import { ScheduleDurationValidator } from '../validators/ScheduleDurationValidator';
 import { SchedulingDateValidator } from '../validators/SchedulingDateValidator';
@@ -21,7 +21,7 @@ export class AdminSchedulingComponent implements OnInit {
   public form: FormGroup = this.formBuilder.group({
     dateTime: [this.today.toString(),[Validators.required,SchedulingDateValidator()]],
     bloodBankId: [null, [Validators.required]],
-    bloodDonorId: null, 
+    bloodDonorId: null,
     duration: [30,[Validators.required,ScheduleDurationValidator()]],
     id: null,
     status: "NOT_SCHEDULED",

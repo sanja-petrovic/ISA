@@ -61,9 +61,15 @@ public class AppointmentServiceImpl implements AppointmentService {
 	}
 
 	@Override
-    public List<Appointment> getByBloodDonor(UUID bloodDonorId) {
-        return repository.findAllByBloodDonorId(bloodDonorId);
-    }
+	public List<Appointment> getByBloodDonor(UUID bloodDonorId) {
+		return repository.findAllByBloodDonorId(bloodDonorId);
+	}
+
+	@Override
+	public List<Appointment> getByBloodDonor(UUID bloodDonorId, AppointmentStatus status) {
+		return repository.findAllByBloodDonorIdAndStatus(bloodDonorId, status);
+	}
+
 	@Override
 	public List<Appointment> getUpcomingByBloodDonor(UUID bloodDonorId) {
 		return repository.findAllByBloodDonorIdAndStatus(bloodDonorId, AppointmentStatus.SCHEDULED);
@@ -124,9 +130,9 @@ public class AppointmentServiceImpl implements AppointmentService {
                 if (appointment.getDateTime().before(new Date())) {
                     throw new PassedException();
                 }
-                if (CollectionUtils.isEmpty(donor.getAnswers())) {
+                /*if (CollectionUtils.isEmpty(donor.getAnswers())) {
                     throw new NoCompletedQuestionnaire();
-                }
+                }*/
 				if (!canScheduleAppointment(donor, appointment.getDateTime())) {
 					throw new NewAppointmentTooSoonException();
 				}

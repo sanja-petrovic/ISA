@@ -4,9 +4,12 @@ import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 
+import com.example.isa.model.AppointmentStatus;
+import com.example.isa.model.User;
 import com.example.isa.service.interfaces.BloodDonorService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import org.springframework.http.HttpStatus;
@@ -68,11 +71,32 @@ public class AppointmentController {
 		return ResponseEntity.ok(converter.listToDtoList(appointmentService.getByBloodDonor(UUID.fromString(id))));
 	}
 
-	@GetMapping("/blood-donor/{id}/upcoming")
+	@GetMapping("/blood-donor")
+	@PreAuthorize("hasRole('ROLE_DONOR')")
+	@ApiOperation(value = "Get all appointments by the logged in blood donor.", httpMethod = "GET")
+	public ResponseEntity<List<AppointmentDto>> getAllByLoggedInBloodDonor(@AuthenticationPrincipal User user) {
+		return ResponseEntity.ok(converter.listToDtoList(appointmentService.getByBloodDonor(user.getId())));
+	}
+
+	@GetMapping("/blood-donor/upcoming")
 	@PreAuthorize("hasRole('ROLE_DONOR')")
 	@ApiOperation(value = "Get all upcoming appointments for a blood donor.", httpMethod = "GET")
-	public ResponseEntity<List<AppointmentDto>> getAllUpcomingByBloodDonor(@PathVariable String id){
-		return ResponseEntity.ok(converter.listToDtoList(appointmentService.getByBloodDonor(UUID.fromString(id))));
+	public ResponseEntity<List<AppointmentDto>> getAllUpcomingByBloodDonor(@AuthenticationPrincipal User user){
+		return ResponseEntity.ok(converter.listToDtoList(appointmentService.getByBloodDonor(user.getId(), AppointmentStatus.SCHEDULED)));
+	}
+
+	@GetMapping("/blood-donor/past")
+	@PreAuthorize("hasRole('ROLE_DONOR')")
+	@ApiOperation(value = "Get all past appointments for a blood donor.", httpMethod = "GET")
+	public ResponseEntity<List<AppointmentDto>> getAllPastByBloodDonor(@AuthenticationPrincipal User user){
+		return ResponseEntity.ok(converter.listToDtoList(appointmentService.getByBloodDonor(user.getId(), AppointmentStatus.COMPLETED)));
+	}
+
+	@GetMapping("/blood-donor/cancelled")
+	@PreAuthorize("hasRole('ROLE_DONOR')")
+	@ApiOperation(value = "Get all cancelled appointments for a blood donor.", httpMethod = "GET")
+	public ResponseEntity<List<AppointmentDto>> getAllCancelledByBloodDonor(@AuthenticationPrincipal User user){
+		return ResponseEntity.ok(converter.listToDtoList(appointmentService.getByBloodDonor(user.getId(), AppointmentStatus.CANCELLED)));
 	}
 	@PostMapping("/create")
 	@ApiOperation(value = "Create appointment.", httpMethod = "POST")

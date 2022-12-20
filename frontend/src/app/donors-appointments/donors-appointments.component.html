@@ -1,1 +1,49 @@
-<p>donors-appointments works!</p>
+<div class="centered-content">
+  <div class="cards">
+    <mat-tab-group dynamicHeight mat-stretch-tabs="true" mat-align-tabs="center">
+      <mat-tab label="Upcoming">
+        <div class="tab">
+          <mat-card *ngFor="let appointment of upcoming" class="bank-card">
+            <mat-card-title class="bank-title">{{(this.formatDate(appointment))}}
+            </mat-card-title>
+            <mat-card-subtitle>{{this.formatStatus(appointment)}}</mat-card-subtitle>
+            <mat-card-content>
+              <p>Duration: <b>{{appointment.duration}} minutes</b></p>
+              <button class="schedule-button" (click)="this.cancel(appointment)">Cancel</button>
+            </mat-card-content>
+          </mat-card>
+        </div>
+        <p *ngIf="upcoming.length == 0">No appointments yet!</p>
+      </mat-tab>
+      <mat-tab label="Past">
+        <div class="tab">
+          <mat-card *ngFor="let appointment of past" class="bank-card">
+            <mat-card-title class="bank-title">{{(this.formatDate(appointment))}}
+            </mat-card-title>
+            <mat-card-subtitle>{{this.formatStatus(appointment)}}</mat-card-subtitle>
+            <mat-card-content>
+              <p>Duration: <b>{{appointment.duration}} minutes</b></p>
+              <button class="schedule-button" (click)="this.cancel(appointment)">Cancel</button>
+            </mat-card-content>
+          </mat-card>
+        </div>
+        <p *ngIf="past.length == 0">No appointments yet!</p>
+      </mat-tab>
+      <mat-tab label="Cancelled">
+        <div class="tab">
+          <mat-card *ngFor="let appointment of cancelled" class="bank-card">
+            <mat-card-title class="bank-title">{{(this.formatDate(appointment))}}
+            </mat-card-title>
+            <mat-card-subtitle>{{this.formatStatus(appointment)}}</mat-card-subtitle>
+            <mat-card-content>
+              <p>Duration: <b>{{appointment.duration}} minutes</b></p>
+              <button class="schedule-button" (click)="this.cancel(appointment)">Cancel</button>
+            </mat-card-content>
+          </mat-card>
+        </div>
+        <p *ngIf="cancelled.length == 0">No appointments yet!</p>
+      </mat-tab>
+    </mat-tab-group>
+
+  </div>
+</div>

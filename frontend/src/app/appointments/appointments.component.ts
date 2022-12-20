@@ -9,7 +9,6 @@ import {DatePipe} from '@angular/common';
   styleUrls: ['./appointments.component.css', '../banks-page/banks-page.component.css']
 })
 export class AppointmentsComponent implements OnInit {
-  providers: [DatePipe]
   constructor(private appointmentService: AppointmentService, private route: ActivatedRoute, private datePipe: DatePipe) { }
 
   public appointments: Appointment[] = [];
