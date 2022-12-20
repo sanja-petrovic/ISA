@@ -56,6 +56,18 @@ public class BloodDonorController {
 		}
 		return ResponseEntity.notFound().build();
     }
+    @RequestMapping(value="questions/{personalId}")
+    @ApiOperation(value = "Get info about filled questions by personal ID.", httpMethod = "GET")
+    public ResponseEntity<Boolean> filledOutQuestions(@PathVariable String personalId){
+		try {
+			if(bloodDonorService.filledOutQuestions(personalId)) return ResponseEntity.ok(true);
+			return ResponseEntity.ok(false);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ResponseEntity.notFound().build();
+    }
+    
     @GetMapping("/current")
     @PreAuthorize("hasRole('ROLE_DONOR')")
     public ResponseEntity<BloodDonorDto> getCurrentBloodDonor(Principal principal) {
