@@ -48,6 +48,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void registerAdmin(Admin admin) {
+        repository.save((User)admin);
+    }
+
+    @Override
     public List<User> search(String name, String lastName) {
         return repository.search(name.toLowerCase(), lastName.toLowerCase());
     }

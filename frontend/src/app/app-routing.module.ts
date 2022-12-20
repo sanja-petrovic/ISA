@@ -14,6 +14,7 @@ import {BankRegistrationComponent} from './bank-registration/bank-registration.c
 import {MedicalStaffBloodBankComponent} from './medical-staff-blood-bank/medical-staff-blood-bank.component';
 import {MedicalStaffRegistrationComponent} from './medical-staff-registration/medical-staff-registration.component';
 import {ViewUsersComponent} from './view-users/view-users.component';
+import { AdminRegistrationComponent } from './admin-registration/admin-registration/admin-registration.component';
 import { AdminSchedulingComponent } from './admin-scheduling/admin-scheduling.component';
 import {AppointmentsComponent} from "./appointments/appointments.component";
 
@@ -41,6 +42,8 @@ const routes: Routes = [{
   path: 'medical-staff/register', component: MedicalStaffRegistrationComponent
 }, {
   path: 'users', component: ViewUsersComponent
+}, {
+  path: 'admin/register', component: AdminRegistrationComponent
 }, {
   path: 'admin/scheduling', component: AdminSchedulingComponent
 }, {

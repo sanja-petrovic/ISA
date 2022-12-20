@@ -43,6 +43,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { AuthGuard } from './guards/auth-guard';
 import { AppointmentsComponent } from './appointments/appointments.component';
 import { DonorsAppointmentsComponent } from './donors-appointments/donors-appointments.component';
+import { AdminRegistrationComponent } from './admin-registration/admin-registration/admin-registration.component';
+
 import { AdminSchedulingComponent } from './admin-scheduling/admin-scheduling.component';
 
 @NgModule({
@@ -67,6 +69,7 @@ import { AdminSchedulingComponent } from './admin-scheduling/admin-scheduling.co
     NavbarComponent,
     AppointmentsComponent,
     DonorsAppointmentsComponent,
+    AdminRegistrationComponent,
     AdminSchedulingComponent
   ],
   imports: [
