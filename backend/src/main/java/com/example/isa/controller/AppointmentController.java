@@ -65,6 +65,13 @@ public class AppointmentController {
 	public ResponseEntity<List<AppointmentDto>> getAllByBloodDonor(@PathVariable String id){
 		return ResponseEntity.ok(converter.listToDtoList(appointmentService.getByBloodDonor(UUID.fromString(id))));
 	}
+
+	@GetMapping("/blood-donor/{id}/upcoming")
+	@PreAuthorize("hasRole('ROLE_DONOR')")
+	@ApiOperation(value = "Get all upcoming appointments for a blood donor.", httpMethod = "GET")
+	public ResponseEntity<List<AppointmentDto>> getAllUpcomingByBloodDonor(@PathVariable String id){
+		return ResponseEntity.ok(converter.listToDtoList(appointmentService.getByBloodDonor(UUID.fromString(id))));
+	}
 	@PostMapping("/create")
 	@ApiOperation(value = "Create appointment.", httpMethod = "POST")
 	@ResponseBody

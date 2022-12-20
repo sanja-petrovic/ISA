@@ -38,6 +38,9 @@ export class AppointmentsComponent implements OnInit {
   schedule(appointment: Appointment): void {
     this.appointmentService.schedule(appointment.id).subscribe(res => {
       console.log(res);
+    },
+    error => {
+      alert(error.error.message);
     })
   }
 }
