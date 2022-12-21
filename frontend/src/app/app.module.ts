@@ -46,6 +46,7 @@ import { DonorsAppointmentsComponent } from './donors-appointments/donors-appoin
 import { AdminRegistrationComponent } from './admin-registration/admin-registration/admin-registration.component';
 
 import { AdminSchedulingComponent } from './admin-scheduling/admin-scheduling.component';
+import { AdminProfileComponent } from './admin-profile/admin-profile.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { AdminSchedulingComponent } from './admin-scheduling/admin-scheduling.co
     AppointmentsComponent,
     DonorsAppointmentsComponent,
     AdminRegistrationComponent,
-    AdminSchedulingComponent
+    AdminSchedulingComponent,
+    AdminProfileComponent
   ],
   imports: [
     HttpClientModule,

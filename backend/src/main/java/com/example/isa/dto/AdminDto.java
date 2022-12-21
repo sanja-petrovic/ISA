@@ -17,6 +17,7 @@ public class AdminDto {
     private String email;
 
     private String password;
+    private String firstPassword;
     private String firstName;
     private String lastName;
     private String phoneNumber;
@@ -28,6 +29,7 @@ public class AdminDto {
         this.personalId = admin.getPersonalId();
         this.email = admin.getEmail();
         this.password = admin.getPassword();
+        this.firstPassword = admin.getFirstPassword();
         this.firstName = admin.getFirstName();
         this.lastName = admin.getLastName();
         this.phoneNumber = admin.getPhoneNumber();

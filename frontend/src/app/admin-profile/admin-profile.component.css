@@ -1,0 +1,53 @@
+.form-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 50vw;
+    padding: 2vw;
+}
+.form-header-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+}
+.password-field-wrapper{
+    display: flex;
+    flex-direction: row;
+}
+.password-field-input{
+    flex-grow: 4
+}
+.password-field-button{
+    flex-grow: 1
+}
+h2, h1 {
+    font-family: "Poppins SemiBold", sans-serif;
+    color: #ee435d;
+}
+h1 {
+    font-size: 29px;
+}
+.centered-content {
+margin-top: 2rem;
+margin-bottom: 2rem;
+}
+.admin-button{
+    color: darkorchid;
+}
+
+.profile-card {
+  width: 70vw !important;
+  border: 1px solid white;
+  border-radius: 12px;
+  box-shadow: 0 5px 30px rgba(217, 79, 111, 0.2);
+  background-color: rgba(255, 255, 255, 0.5) !important;
+  transition: 0.5s;
+  margin-bottom: 2rem;
+  margin-right: 2rem;
+}
+
+.profile-title {
+  font-weight: bold;
+}
+.mat-card-image {
+  max-height: 20vh;
+}
