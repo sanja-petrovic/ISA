@@ -54,9 +54,7 @@ const appRoutes: Routes = [{
   path: 'admin/scheduling', component: AdminSchedulingComponent, canActivate: [AuthGuard]
 }, {
   path: 'blood-banks/:id/appointments', component: AppointmentsComponent, canActivate: [AuthGuard]
-},{
-  path: '**', redirectTo: ''
-},  {
+}, {
   path: 'blood-banks/:id/appointments', component: AppointmentsComponent, canActivate: [AuthGuard]
 }, {
   path: 'appointments', component: DonorsAppointmentsComponent, canActivate: [AuthGuard]
@@ -64,7 +62,9 @@ const appRoutes: Routes = [{
   path: 'donor/scheduling', component: DonorSchedulingComponent
 },{
   path: 'medical-staff/schedule', component: MedicalStaffScheduleComponent, canActivate: [AuthGuard]
-}]
+},{
+  path: '**', redirectTo: 'login'
+},]
 
 @NgModule({
   imports: [RouterModule.forRoot(appRoutes)],
