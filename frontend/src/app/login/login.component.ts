@@ -29,13 +29,15 @@ export class LoginComponent implements OnInit {
   onSubmit(): void {
     this.authService.login(this.form.value).subscribe((data) => {
       this.userService.getActiveUser().subscribe( user => {
-          //    console.log(this.userService.currentUser)
+              console.log(this.userService.currentUser)
               console.log(user)
               this.userService.currentUser = user;
               if(user.email == 'isidorapoznanovic1@gmail.com'){
                 this.logAndmin();
-              } else {
-                this.router.navigate(['/banks'])
+              } else if(user.role == '0'){
+                this.router.navigate(['/admin'])
+              } else{
+                //this.router.navigate(['/banks'])
               }
             })
     },

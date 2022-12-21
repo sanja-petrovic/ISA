@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Admin } from 'src/app/model/Users';
-import { AdminService } from 'src/app/services/AdminService';
+import { AdminService } from 'src/app/services/admin.service';
 import { AuthService } from 'src/app/services/AuthService';
 
 @Component({
@@ -25,6 +25,7 @@ export class AdminRegistrationComponent implements OnInit {
   form: FormGroup = this.formBuilder.group({
     email: ['', Validators.compose([Validators.required, Validators.email],)],
     password: this.password,
+    firstPassword: this.password,
     passwordCheck: this.passwordCheck,
     firstName: ['', Validators.compose([Validators.required])],
     lastName: ['', Validators.compose([Validators.required])],

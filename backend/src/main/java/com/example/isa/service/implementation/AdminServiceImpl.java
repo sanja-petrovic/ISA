@@ -6,6 +6,7 @@ import com.example.isa.service.interfaces.AdminService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -37,6 +38,11 @@ public class AdminServiceImpl implements AdminService {
     public boolean register(Admin admin) {
         repository.save(admin);
         return true;
+    }
+
+    @Override
+    public Optional<Admin> findByEmail(String email) {
+        return repository.findByEmail(email);
     }
 
 }

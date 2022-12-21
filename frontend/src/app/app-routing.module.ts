@@ -20,6 +20,7 @@ import {AppointmentsComponent} from "./appointments/appointments.component";
 import { DonorSchedulingComponent } from './donor-scheduling/donor-scheduling.component';
 import {DonorsAppointmentsComponent} from "./donors-appointments/donors-appointments.component";
 
+import { AdminProfileComponent } from './admin-profile/admin-profile.component';
 const routes: Routes = [{
   path: 'home', component: HomeComponent, canActivate: [AuthGuard]
 }, {
@@ -50,7 +51,7 @@ const routes: Routes = [{
   path: 'admin/register', component: AdminRegistrationComponent, canActivate: [AuthGuard]
 }, {
   path: 'admin/scheduling', component: AdminSchedulingComponent, canActivate: [AuthGuard]
-}, {
+},  {
   path: 'blood-banks/:id/appointments', component: AppointmentsComponent, canActivate: [AuthGuard]
 }, {
   path: 'appointments', component: DonorsAppointmentsComponent, canActivate: [AuthGuard]

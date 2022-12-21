@@ -39,7 +39,8 @@ type User = {
   gender: string,
   phoneNumber: string,
   email: string,
-  isVerified: boolean
+  isVerified: boolean,
+  role: string
 }
 type Admin ={
   id: string,
@@ -49,6 +50,8 @@ type Admin ={
   gender: string,
   phoneNumber: string,
   email: string,
+  firstPassword: string,
+  password: string,
   isVerified: boolean
 }
 type Credentials = {
