@@ -1,5 +1,8 @@
 package com.example.isa.service.implementation;
 
+import java.awt.image.RenderedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.sql.SQLClientInfoException;
 import java.sql.Time;
 import java.text.ParseException;
@@ -31,6 +34,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.metrics.buffering.StartupTimeline;
 import org.springframework.kafka.listener.ListenerMetadata;
 import org.springframework.mail.MailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.example.isa.model.Appointment;
@@ -38,12 +42,14 @@ import com.example.isa.repository.AppointmentRepository;
 import com.example.isa.service.interfaces.AppointmentService;
 import com.example.isa.service.interfaces.BloodBankService;
 import com.example.isa.util.EmailSender;
+import com.example.isa.util.QrCodeGenerator;
 import com.example.isa.util.converters.DateConverter;
 
 import org.springframework.data.domain.Sort;
 
 import org.springframework.util.CollectionUtils;
 
+import javax.imageio.ImageIO;
 import javax.transaction.Transactional;
 
 @Service
@@ -220,21 +226,36 @@ public class AppointmentServiceImpl implements AppointmentService {
 			appointment.setStatus(AppointmentStatus.SCHEDULED);
 			appointment.setBloodDonor(donor);
 			repository.save(appointment);
-			sendDetails(appointment, donor);
+			try {
+				sendDetails(appointment, donor);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		else {
 			throw new NotFoundException();
 		}
 		return null;
 	}
-
-	private void sendDetails(Appointment appointment, BloodDonor donor) {
+	@Async
+	private void sendDetails(Appointment appointment, BloodDonor donor) throws IOException, Exception {
 		StringBuilder mailBodyBuilder = new StringBuilder();
 		mailBodyBuilder.append("Your appointment at bank: ");
 		mailBodyBuilder.append(appointment.getBloodBank().getTitle());
 		mailBodyBuilder.append(",has been succesfully scheduled for ");
 		mailBodyBuilder.append(appointment.getDateTime().toString());
-		mailSender.send(new Email(donor.getEmail(),"Appointment scheduled", mailBodyBuilder.toString()));
+		
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ImageIO.write(QrCodeGenerator.generateQRCodeImage(mailBodyBuilder.toString()), "png", baos);
+		baos.flush();
+		byte[] imageBytes= baos.toByteArray();
+		baos.close();
+		
+		mailSender.sendWithImage(new Email(donor.getEmail(),"Appointment scheduled", mailBodyBuilder.toString()),imageBytes);
 	}
 	private boolean donorHasAtChosenTime(BloodDonor donor, Date dateTime) {
 		return !repository.findAllByBloodDonorAndDateTime(donor, dateTime).isEmpty();
@@ -287,7 +308,10 @@ public class AppointmentServiceImpl implements AppointmentService {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.ENGLISH);
 		formatter.setTimeZone(TimeZone.getDefault());
 		Date dateTime = formatter.parse(dateTimeString);
-		List<BloodBank> banks = bankService.search(sort, null, "0");
+		List<String> searchCriteria = new ArrayList<String>();
+		searchCriteria.add("");
+		searchCriteria.add("");
+		List<BloodBank> banks = bankService.search(sort, searchCriteria, "0");
 		if(banks!=null) {
 			List<BloodBank> retVal = new ArrayList<BloodBank>();
 			LocalDateTime converteDateTime = DateConverter.convert(dateTime);

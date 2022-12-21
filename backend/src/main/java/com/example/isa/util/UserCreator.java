@@ -35,7 +35,7 @@ public class UserCreator {
         roleRepository.save(roleStaff);
         Admin admin = new Admin("0000000000000", "isaproject202223@gmail.com", passwordEncoder.encode("ISA202223"),passwordEncoder.encode("ISA202223"), "Admin", "Admin", "0000000000", Gender.FEMALE, true, roleAdmin);
         adminRepository.save(admin);
-        BloodDonor bloodDonor = new BloodDonor("2801001123456", "blooddonor@gmail.com", passwordEncoder.encode("BLOODDONOR"), "Jane", "Doe", "0681234567", Gender.FEMALE, true, "Student", new Address("Ulica 15", "Novi Sad", "Srbija"), "FTN", roleDonor);
+        BloodDonor bloodDonor = new BloodDonor("2801001123456", "matijamedic@hotmail.com", passwordEncoder.encode("BLOODDONOR"), "Jane", "Doe", "0681234567", Gender.FEMALE, true, "Student", new Address("Ulica 15", "Novi Sad", "Srbija"), "FTN", roleDonor);
         bloodDonorRepository.save(bloodDonor);
         //MedicalStaff medicalStaff = new MedicalStaff("0101010101010", "staff@gmail.com", passwordEncoder.encode("STAFF"), "Good", "Doctor", "0101010101", Gender.FEMALE, true, roleRepository.findByName("STAFF"), null);
         //medicalStaffRepository.save(medicalStaff);
