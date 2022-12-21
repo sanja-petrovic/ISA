@@ -1,5 +1,7 @@
 import {Component, NgModule, OnInit} from '@angular/core';
+import { User } from '../model/Users';
 import {AuthService} from "../services/AuthService";
+import { UserService } from '../services/UserService';
 
 @Component({
   selector: 'app-navbar',
@@ -9,14 +11,17 @@ import {AuthService} from "../services/AuthService";
 export class NavbarComponent implements OnInit {
 
   title = 'howtosavealife';
-  user = '';
+  public user: User;
   isLoggedIn = null;
   constructor(
-    private authService: AuthService) {
+    private authService: AuthService, private userService: UserService) {
   }
 
   ngOnInit(): void {
     this.isLoggedIn = this.authService.tokenIsPresent();
+    this.userService.getActiveUser().subscribe((user) => {
+      this.user = user;
+    });
   }
 
   logOut() {

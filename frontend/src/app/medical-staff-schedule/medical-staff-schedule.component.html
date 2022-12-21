@@ -1,0 +1,25 @@
+<div class="centered-content">
+    <div class="cards">
+        <button class="staff-button" (click)="getAppointments('week')" >Weekly Schedule</button>
+        <button class="staff-button" (click)="getAppointments('month')" >monthly Schedule</button>
+        <button class="staff-button" (click)="getAppointments('year')" >yearly Schedule</button>
+      <mat-tab-group dynamicHeight mat-stretch-tabs="true" mat-align-tabs="center">
+        <mat-tab label="All">
+          <div class="tab">
+            <mat-card *ngFor="let appointment of appointments" class="bank-card">
+              <mat-card-title class="bank-title">{{(this.formatDate(appointment))}}
+              </mat-card-title>
+              <mat-card-subtitle>{{this.formatStatus(appointment)}}</mat-card-subtitle>
+              <mat-card-content>
+                <p>Duration: <b>{{appointment.duration}} minutes</b></p>
+              </mat-card-content>
+              <mat-card-content>
+                <p>Scheduled by: <b>{{appointment.bloodDonor?.firstName}}</b> <b>{{appointment.bloodDonor?.lastName}}</b></p>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </mat-tab>
+     </mat-tab-group>
+    </div>
+</div>
+  

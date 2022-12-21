@@ -347,4 +347,27 @@ public class AppointmentServiceImpl implements AppointmentService {
 			return null;
 		}
 	}
+
+	@Override
+	public List<Appointment> getScheduleByBloodBankInDateRange(String bankId, String range) {
+		List<Appointment> bankSchedule = getByBloodBank(UUID.fromString(bankId));
+		switch (range){
+			case "week" :
+				return getAppointmentsInDateRange(bankSchedule,LocalDate.now().plusDays(7));
+			case "month":
+				return getAppointmentsInDateRange(bankSchedule,LocalDate.now().plusMonths(1));
+			case "year":
+				return getAppointmentsInDateRange(bankSchedule,LocalDate.now().plusYears(1));
+		}
+		return null;
+	}
+	public List<Appointment> getAppointmentsInDateRange(List<Appointment> appointments, LocalDate range){
+		List<Appointment> schedule = new ArrayList<Appointment>();
+		for(Appointment appointment : appointments){
+			if(appointment.getDateTime().before(Date.from(range.atStartOfDay(ZoneId.systemDefault()).toInstant()))){
+				schedule.add(appointment);
+			}
+		}
+		return schedule;
+	}
 }

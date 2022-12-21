@@ -30,5 +30,8 @@ export class MedicalStaffService {
   getBloodBank (): Observable<BloodBank>{
     return this.apiService.get(`${this.config.medical_staff_url}/bank`);
   }
+  getCurrentStaff() : Observable<MedicalStaff> {
+    return this.apiService.get(`${this.config.medical_staff_url}/current`);
+  }
 
 }

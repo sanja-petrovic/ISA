@@ -60,4 +60,7 @@ export class AppointmentService {
   cancel(id: string): Observable<void> {
     return this.apiService.post(`${this.config.appointments_url}/cancel/${id}`, '');
   }
+  getAppointmentsByMedicalStaffForTheTimePeriod(period : string, bank : string) : Observable<Appointment[]> {
+    return this.apiService.post(`${this.config.appointments_url}/schedule/${period}/${bank}`,'');
+  }
 }

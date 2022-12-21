@@ -29,39 +29,16 @@ export class LoginComponent implements OnInit {
   onSubmit(): void {
     this.authService.login(this.form.value).subscribe((data) => {
       this.userService.getActiveUser().subscribe( user => {
-              console.log(this.userService.currentUser)
-              console.log(user)
               this.userService.currentUser = user;
-              if(user.email == 'isidorapoznanovic1@gmail.com'){
-                this.logAndmin();
-              } else if(user.role == '0'){
+              if(user.role.name == 'ROLE_ADMIN'){
                 this.router.navigate(['/admin'])
-              } else{
-                //this.router.navigate(['/banks'])
+              } else if(user.role.name =='ROLE_STAFF'){
+                this.router.navigate(['/medical-staff/schedule'])
               }
             })
     },
       (error) => {
       console.log(error);
       })
-    // this.authService.login(this.form.value).subscribe({
-    //   next: (v) => {
-    //     this.userService.getMyInfo().subscribe( data => {
-    //    //   console.log(this.userService.currentUser)
-    //       console.log(data)
-    //       // if(this.userService.currentUser.email == 'isidorapoznanovic1@gmail.com'){
-    //       //   this.logAndmin(this.form.value.email);
-    //       // }
-    //     })
-    //   },
-    //   error: (e) => console.error(e),
-    //   complete: () => {
-
-    //   }
-    // })
-  }
-
-  public logAndmin(){
-    this.router.navigate(['/medical-staff'])
   }
 }

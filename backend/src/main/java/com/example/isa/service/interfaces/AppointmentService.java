@@ -1,6 +1,7 @@
 package com.example.isa.service.interfaces;
 
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,4 +28,6 @@ public interface AppointmentService {
 	void schedulePredefined(Appointment appointment, BloodDonor donor);
 	void cancel(Appointment appointment);
 	public List<BloodBank> checkFreeBanksForDate(String dateTimeString, long duration, Sort sort) throws ParseException;
+	public List<Appointment> getScheduleByBloodBankInDateRange(String bankId, String range);
+	public List<Appointment> getAppointmentsInDateRange(List<Appointment> appointments, LocalDate range);
 }

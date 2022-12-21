@@ -49,6 +49,7 @@ import { DonorSchedulingComponent } from './donor-scheduling/donor-scheduling.co
 import { DatePipe } from '@angular/common';
 import {MatTabsModule} from "@angular/material/tabs";
 import { AdminProfileComponent } from './admin-profile/admin-profile.component';
+import { MedicalStaffScheduleComponent } from './medical-staff-schedule/medical-staff-schedule.component';
 
 @NgModule({
   declarations: [
@@ -73,9 +74,12 @@ import { AdminProfileComponent } from './admin-profile/admin-profile.component';
     AppointmentsComponent,
     DonorsAppointmentsComponent,
     AdminRegistrationComponent,
+    AdminRegistrationComponent,
     AdminSchedulingComponent,
     AdminProfileComponent,
+    AdminProfileComponent,
     DonorSchedulingComponent,
+    MedicalStaffScheduleComponent,
     
   ],
   imports: [

@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ChangePasswordDialogComponent } from '../change-password-dialog/change-password-dialog.component';
 import { Admin, PasswordDto } from '../model/Users';
-import { AdminService } from '../services/admin.service';
+import { AdminService } from '../services/AdminService';
 
 @Component({
   selector: 'app-admin-profile',
@@ -54,8 +54,6 @@ export class AdminProfileComponent implements OnInit {
     });
     pwDialog.afterClosed().subscribe(result => {
       this.newPassword = result;
-
-      
       this.passwordDto.oldPassword = this.admin.password;
       this.passwordDto.newPassword = this.newPassword;
       console.log(this.passwordDto);

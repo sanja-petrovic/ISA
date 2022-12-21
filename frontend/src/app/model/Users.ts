@@ -28,7 +28,8 @@ type MedicalStaff = {
   country: string,
   email: string,
   password: string,
-  bloodBank: any
+  bloodBank: any,
+  bloodBankId: string
 }
 
 type User = {
@@ -40,7 +41,13 @@ type User = {
   phoneNumber: string,
   email: string,
   isVerified: boolean,
-  role: string
+  role: Role
+}
+
+type Role = {
+  id: string,
+  authority: string,
+  name: string
 }
 type Admin ={
   id: string,
