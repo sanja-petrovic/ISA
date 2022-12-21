@@ -179,7 +179,12 @@ public class AppointmentServiceImpl implements AppointmentService {
 				appointment.setBloodDonor(donor);
                 appointment.setStatus(AppointmentStatus.SCHEDULED);
 				repository.save(appointment);
-            } else {
+				try {
+					sendDetails(appointment, donor);
+				} catch (Exception e) {
+					throw new RuntimeException(e);
+				}
+			} else {
                 throw new AlreadyScheduledException();
             }
         } else {
@@ -229,10 +234,8 @@ public class AppointmentServiceImpl implements AppointmentService {
 			try {
 				sendDetails(appointment, donor);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -314,17 +317,17 @@ public class AppointmentServiceImpl implements AppointmentService {
 		List<BloodBank> banks = bankService.search(sort, searchCriteria, "0");
 		if(banks!=null) {
 			List<BloodBank> retVal = new ArrayList<BloodBank>();
-			LocalDateTime converteDateTime = DateConverter.convert(dateTime);
+			LocalDateTime convertedDateTime = DateConverter.convert(dateTime);
 			for (BloodBank bank : banks) {
 				if(!this.bloodBankIsWorking(bank,(Date)dateTime.clone(), duration)) {
 					continue;
 				}
-				List<Appointment> listScheduled = repository.findAllByBloodBankAndDate( bank, converteDateTime.getYear(), converteDateTime.getMonthValue(), converteDateTime.getDayOfMonth());
-				if(listScheduled == null) {//bank is free for that day
+				List<Appointment> listScheduled = repository.findAllByBloodBankAndDate( bank, convertedDateTime.getYear(), convertedDateTime.getMonthValue(), convertedDateTime.getDayOfMonth());
+				if(listScheduled == null) {
 					retVal.add(bank);
 					continue;
 				}
-				else { //bank has scheduled apps for that day
+				else {
 					boolean overlap = false;
 					for(Appointment appointment : listScheduled) {
 						if(hasDateTimeOverlap(appointment, dateTime, duration)){
