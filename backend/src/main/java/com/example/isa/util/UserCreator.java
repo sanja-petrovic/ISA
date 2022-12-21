@@ -6,10 +6,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-<<<<<<< HEAD
-=======
-import java.text.SimpleDateFormat;
->>>>>>> 5b6ff167894d390116d4079d97de2b7b1fba52f7
 import java.util.Date;
 import java.util.UUID;
 
