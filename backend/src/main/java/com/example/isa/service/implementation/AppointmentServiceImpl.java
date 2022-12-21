@@ -25,15 +25,19 @@ import com.example.isa.exception.*;
 import com.example.isa.model.AppointmentStatus;
 import com.example.isa.model.BloodBank;
 import com.example.isa.model.BloodDonor;
+import com.example.isa.model.Email;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.metrics.buffering.StartupTimeline;
 import org.springframework.kafka.listener.ListenerMetadata;
+import org.springframework.mail.MailSender;
 import org.springframework.stereotype.Service;
 
 import com.example.isa.model.Appointment;
 import com.example.isa.repository.AppointmentRepository;
 import com.example.isa.service.interfaces.AppointmentService;
 import com.example.isa.service.interfaces.BloodBankService;
+import com.example.isa.util.EmailSender;
 import com.example.isa.util.converters.DateConverter;
 
 import org.springframework.data.domain.Sort;
@@ -46,11 +50,13 @@ import javax.transaction.Transactional;
 public class AppointmentServiceImpl implements AppointmentService {
     private final AppointmentRepository repository;
     private final BloodBankService bankService;
+    private final EmailSender mailSender;
 
     @Autowired
-    public AppointmentServiceImpl(AppointmentRepository repository, BloodBankService bankService) {
+    public AppointmentServiceImpl(AppointmentRepository repository, BloodBankService bankService,EmailSender mailSender) {
         this.repository = repository;
         this.bankService = bankService;
+        this.mailSender = mailSender;
     }
 
     @Override
@@ -214,11 +220,21 @@ public class AppointmentServiceImpl implements AppointmentService {
 			appointment.setStatus(AppointmentStatus.SCHEDULED);
 			appointment.setBloodDonor(donor);
 			repository.save(appointment);
+			sendDetails(appointment, donor);
 		}
 		else {
 			throw new NotFoundException();
 		}
 		return null;
+	}
+
+	private void sendDetails(Appointment appointment, BloodDonor donor) {
+		StringBuilder mailBodyBuilder = new StringBuilder();
+		mailBodyBuilder.append("Your appointment at bank: ");
+		mailBodyBuilder.append(appointment.getBloodBank().getTitle());
+		mailBodyBuilder.append(",has been succesfully scheduled for ");
+		mailBodyBuilder.append(appointment.getDateTime().toString());
+		mailSender.send(new Email(donor.getEmail(),"Appointment scheduled", mailBodyBuilder.toString()));
 	}
 	private boolean donorHasAtChosenTime(BloodDonor donor, Date dateTime) {
 		return !repository.findAllByBloodDonorAndDateTime(donor, dateTime).isEmpty();
