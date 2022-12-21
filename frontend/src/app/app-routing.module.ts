@@ -17,6 +17,7 @@ import {ViewUsersComponent} from './view-users/view-users.component';
 import { AdminRegistrationComponent } from './admin-registration/admin-registration/admin-registration.component';
 import { AdminSchedulingComponent } from './admin-scheduling/admin-scheduling.component';
 import {AppointmentsComponent} from "./appointments/appointments.component";
+import { DonorSchedulingComponent } from './donor-scheduling/donor-scheduling.component';
 
 const routes: Routes = [{
   path: 'home', component: HomeComponent
@@ -48,8 +49,10 @@ const routes: Routes = [{
   path: 'admin/register', component: AdminRegistrationComponent
 }, {
   path: 'admin/scheduling', component: AdminSchedulingComponent
-}, {
-  path: 'blood-banks/:id/appointments', component: AppointmentsComponent
+},{
+  path: 'donor/scheduling', component: DonorSchedulingComponent
+},{
+  path: 'blood-bank/:id/appointments', component: AppointmentsComponent
 }]
 
 @NgModule({
