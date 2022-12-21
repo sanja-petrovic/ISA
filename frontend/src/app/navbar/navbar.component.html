@@ -1,13 +1,13 @@
 <mat-toolbar class="nav-bar">
   <div class="title">{{title}}</div>
   <div class="links">
-    <a href="/">Blood banks</a>
-    <a href="/questionnaire" *ngIf="isLoggedIn">Questionnaire</a>
-    <a href="/appointments" *ngIf="isLoggedIn">My appointments</a>
+    <a routerLink="/">Blood banks</a>
+    <a routerLink="/questionnaire" *ngIf="user != undefined && user.role.name=='ROLE_DONOR'">Questionnaire</a>
+    <a routerLink="/appointments" *ngIf="user != undefined && user.role.name=='ROLE_DONOR'">My appointments</a>
   </div>
   <div class="buttons" *ngIf="!isLoggedIn; else loggedIn">
-    <a href="/register"><button class="register-button">Register</button></a>
-    <a href="/login"><button class="login-button">Login</button></a>
+    <a routerLink="/register"><button class="register-button">Register</button></a>
+    <a routerLink="/login"><button class="login-button">Login</button></a>
   </div>
   <ng-template #loggedIn>
     <div class="buttons">
