@@ -1,5 +1,6 @@
 package com.example.isa.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,6 +25,7 @@ public class BloodDonor extends User {
     @Enumerated(EnumType.STRING)
     private LoyaltyStatus loyaltyStatus;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "blood_donor_id")
     private List<Answer> answers = new ArrayList<>();
