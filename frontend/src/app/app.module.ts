@@ -73,7 +73,7 @@ import {MatTabsModule} from "@angular/material/tabs";
     AppointmentsComponent,
     DonorsAppointmentsComponent,
     AdminSchedulingComponent,
-    DonorSchedulingComponent
+    DonorSchedulingComponent,
     AdminRegistrationComponent
   ],
   imports: [

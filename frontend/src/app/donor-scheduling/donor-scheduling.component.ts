@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BloodDonor } from '../model/Users';
-import { BloodDonorService } from '../services/BloodDonor.service';
+import { BloodDonorService } from '../services/BloodDonorService';
 import { DonorSchedulingService } from '../services/donor-scheduling.service';
 import { ScheduleDurationValidator } from '../validators/ScheduleDurationValidator';
 import { SchedulingDateValidator } from '../validators/SchedulingDateValidator';
