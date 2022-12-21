@@ -23,5 +23,6 @@ public class BloodDonorDto {
     private String city;
     private String country;
     private String institution;
+    private int penalty;
 }
 

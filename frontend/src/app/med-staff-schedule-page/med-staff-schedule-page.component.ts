@@ -66,8 +66,11 @@ export class MedStaffSchedulePageComponent implements OnInit {
 
   notPresentClick(): void {
     if (confirm("Are you sure donor is not present?")) { 
-      this.cancel(this.appointment);  
-      this.router.navigate([`/medical-staff/schedule/`])
+      this.bloodDonorService.increasePenalties(this.appointment.bloodDonor).subscribe((res) => {
+        console.log("Penalty given")
+        this.cancel(this.appointment);  
+        this.router.navigate([`/medical-staff/schedule/`])
+      })
     }
   }
 
@@ -164,7 +167,7 @@ export class CheckBloodSuppliesDialog {
       supl = this.supplies.find((s) => s.id === this.form.value.suppliesId)
       supl.amount -= this.form.value.suppliesQuantity;
       this.suppliesService.update(supl).subscribe(res =>{
-        console.log('gotovo')
+        console.log('Updated supplies')
       })
     }
     this.visible = !this.visible

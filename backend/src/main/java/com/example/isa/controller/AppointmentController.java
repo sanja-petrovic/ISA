@@ -169,7 +169,7 @@ public class AppointmentController {
 
 	@PostMapping("/complete/{id}")
 	@PreAuthorize("hasRole('ROLE_STAFF')")
-	@ApiOperation(value = "Cancel a previously scheduled appointment.", httpMethod = "POST")
+	@ApiOperation(value = "Complete a previously scheduled appointment.", httpMethod = "POST")
 	public ResponseEntity complete(@PathVariable UUID id, Principal user) {
 		appointmentService.complete(appointmentService.getById(id));
 		return ResponseEntity.ok().build();
