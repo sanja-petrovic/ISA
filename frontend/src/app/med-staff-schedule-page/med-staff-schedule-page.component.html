@@ -1,0 +1,53 @@
+<div fxLayout="column" fxLayoutAlign="space-between stretch" fxFlexFil fxFill class="components-container-gt-xs ">
+
+    <div fxLayout="row" fxLayoutAlign="space-between stretch" fxFlexFil fxFill fxLayoutGap="20px">
+
+        <div fxFlex="35" fxLayout="column" class="mat-elevation-z2 medicalStaff-profile">
+
+            <div fxFlex="10" fxLayout="row" fxLayoutAlign="space-between center">
+
+                <h3 class="mat-headline" fxFill fxLayoutAlign="space-around center">Appointment</h3>
+
+            </div>
+            <mat-divider></mat-divider>
+
+            <div fxFlex="50" fxLayout="row" fxLayoutAlign="space-between center" class="center-data">
+
+                <!-- <div fxFlex="40" fxLayoutAlign="space-between center">
+					<img class="avatar" src="assets/images/pharmacist.png"/>
+				</div> -->
+
+                <div fxFlex="0" fxLayout="column" fxLayoutAlign="center start">
+                    <div style="height: 12em;"></div>
+                    <br>
+                    <mat-label>Date</mat-label>
+                    <p *ngIf="appointment">
+                        {{(this.formatDate(appointment))}}
+                    </p>
+                    <mat-label>Status</mat-label>
+                    <p *ngIf="appointment">
+                        {{this.formatStatus(appointment)}}
+                    </p>
+                    <mat-label>Duration</mat-label>
+                    <p *ngIf="appointment">
+                        {{appointment.duration}} minutes
+                    </p>
+                    <label>Donor</label>
+                    <p *ngIf="appointment">
+                        {{appointment.bloodDonor?.firstName}} {{appointment.bloodDonor?.lastName}}
+                    </p>
+                    <div style="height: 2em;"></div>
+                    <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center stretch" >
+                        <button mat-raised-button color="warn" (click)="wrongTermsClick()">Bad questionnaire</button>
+                        <button mat-raised-button color="warn" (click)="notPresentClick()">Not present</button>
+                        <button mat-raised-button color="primary" (click)="startClick()">Start appointment</button>
+                    </div>
+                </div>
+                
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

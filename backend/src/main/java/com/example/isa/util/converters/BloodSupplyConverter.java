@@ -21,7 +21,7 @@ public class BloodSupplyConverter implements Converter<BloodSupply, BloodSupplyD
         return BloodSupply.builder()
                 .amount(bloodSupplyDto.getAmount())
                 .id(bloodSupplyDto.getId())
-                .type(BloodType.valueOf(bloodSupplyDto.getBloodType().split(" ")[0] + "_" + bloodSupplyDto.getBloodType().split(" ")[1]))
+                .type(BloodType.valueOf(bloodSupplyDto.getBloodType()))
                 .build();
     }
 }

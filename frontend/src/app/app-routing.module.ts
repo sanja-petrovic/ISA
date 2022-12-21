@@ -21,6 +21,7 @@ import { DonorSchedulingComponent } from './donor-scheduling/donor-scheduling.co
 import {DonorsAppointmentsComponent} from "./donors-appointments/donors-appointments.component";
 import { AdminProfileComponent } from './admin-profile/admin-profile.component';
 import { MedicalStaffScheduleComponent } from './medical-staff-schedule/medical-staff-schedule.component';
+import { MedStaffSchedulePageComponent } from './med-staff-schedule-page/med-staff-schedule-page.component';
 
 const appRoutes: Routes = [{
   path: 'home', component: HomeComponent, canActivate: [AuthGuard]
@@ -62,6 +63,8 @@ const appRoutes: Routes = [{
   path: 'donor/scheduling', component: DonorSchedulingComponent
 },{
   path: 'medical-staff/schedule', component: MedicalStaffScheduleComponent, canActivate: [AuthGuard]
+},{
+  path: 'medical-staff/appointment/:id', component: MedStaffSchedulePageComponent, canActivate: [AuthGuard]
 },{
   path: '**', redirectTo: 'login'
 },]

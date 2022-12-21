@@ -194,6 +194,13 @@ public class AppointmentServiceImpl implements AppointmentService {
 	}
 
 	@Override
+	@Transactional
+	public void complete(Appointment appointment) {
+		appointment.setStatus(AppointmentStatus.COMPLETED);
+		repository.save(appointment);
+	}
+
+	@Override
 	public Appointment createByDonor(Appointment appointment, BloodDonor donor) {
 		if(appointment!=null && donor!=null) {
 			if (appointment.getDateTime().before(new Date())) {
