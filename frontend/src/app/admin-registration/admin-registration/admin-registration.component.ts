@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Admin } from 'src/app/model/Users';
-import { AdminService } from 'src/app/services/admin.service';
+import { AdminService } from 'src/app/services/AdminService';
 import { AuthService } from 'src/app/services/AuthService';
 
 @Component({
