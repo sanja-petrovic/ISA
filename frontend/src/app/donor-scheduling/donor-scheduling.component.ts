@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BloodDonor } from '../model/Users';
 import { BloodDonorService } from '../services/BloodDonorService';
-import { DonorSchedulingService } from '../services/donor-scheduling.service';
+import { DonorSchedulingService } from '../services/DonorSchedulingService';
 import { ScheduleDurationValidator } from '../validators/ScheduleDurationValidator';
 import { SchedulingDateValidator } from '../validators/SchedulingDateValidator';
 
@@ -18,20 +18,20 @@ export class DonorSchedulingComponent implements OnInit {
   public displayDuration: String = "";
   public displayBank: String = "";
   public currentDonor : BloodDonor;
-  public questionsFlag: Boolean; 
+  public questionsFlag: Boolean;
   constructor(private formBuilder: FormBuilder,
     private appointmentService: DonorSchedulingService,
     private donorService: BloodDonorService) { }
-  
+
   private today: Date = new Date();
   public querry_form: FormGroup = this.formBuilder.group({
     dateTime: [this.today.toString(),[Validators.required,SchedulingDateValidator()]],
   });
-  
+
   public schedule_form: FormGroup = this.formBuilder.group({
     dateTime: [this.today.toString(),[Validators.required,SchedulingDateValidator()]],
     bloodBankId: [null, [Validators.required]],
-    bloodDonorId: null, 
+    bloodDonorId: null,
     duration: [30,[Validators.required,ScheduleDurationValidator()]],
     id: null,
     status: "NOT_SCHEDULED",
@@ -40,7 +40,7 @@ export class DonorSchedulingComponent implements OnInit {
 
   get dateTimeScheduled() { return this.schedule_form.get('dateTime'); }
   get durationScheduled() { return this.schedule_form.get('duration'); }
-  
+
 
   ngOnInit(): void {
     this.querry_form.valueChanges.subscribe(x => {
@@ -55,13 +55,13 @@ export class DonorSchedulingComponent implements OnInit {
         console.log(this.questionsFlag);
       })
     })
-    
+
   }
   checkBanks(): void{
     let item = this.querry_form.getRawValue();
     let date = new Date(item.dateTime);
     //"dd-MM-yyyy hh:mm:ss"
-    
+
     const dto = {
       dateTime: ('0'+date.getDate()).slice(-2)+"-"+('0'+(date.getMonth()+1)).slice(-2)+"-"+date.getFullYear()+" "+('0'+date.getHours()).slice(-2)+":"+('0'+date.getMinutes()).slice(-2)+":00",
       duration: 30,

@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ChangePasswordDialogComponent } from '../change-password-dialog/change-password-dialog.component';
 import { Admin, PasswordDto } from '../model/Users';
-import { AdminService } from '../services/admin.service';
+import { AdminService } from '../services/AdminService';
 
 @Component({
   selector: 'app-admin-profile',
