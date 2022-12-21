@@ -6,6 +6,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.Date;
+import java.util.UUID;
 
 @Component
 public class UserCreator {
@@ -37,7 +39,9 @@ public class UserCreator {
         adminRepository.save(admin);
         BloodDonor bloodDonor = new BloodDonor("2801001123456", "blooddonor@gmail.com", passwordEncoder.encode("BLOODDONOR"), "Jane", "Doe", "0681234567", Gender.FEMALE, true, "Student", new Address("Ulica 15", "Novi Sad", "Srbija"), "FTN", roleDonor);
         bloodDonorRepository.save(bloodDonor);
-        //MedicalStaff medicalStaff = new MedicalStaff("0101010101010", "staff@gmail.com", passwordEncoder.encode("STAFF"), "Good", "Doctor", "0101010101", Gender.FEMALE, true, roleRepository.findByName("STAFF"), null);
-        //medicalStaffRepository.save(medicalStaff);
+        BloodBank bloodBank = new BloodBank("Prva prava banka krvi", new Address("Daniciceva 15", "Novi Sad", "Srbija"), "Najopremljenija banka krvi ovih prostora", new Interval(new Date(12345), new Date(12345)), 4.8);
+        bloodBankRepository.save(bloodBank);
+        MedicalStaff medicalStaff = new MedicalStaff("0101010101010", "staff@gmail.com", passwordEncoder.encode("STAFF"), "Good", "Doctor", "0101010101", Gender.FEMALE, true, roleStaff, bloodBank);
+        medicalStaffRepository.save(medicalStaff);
     }
 }

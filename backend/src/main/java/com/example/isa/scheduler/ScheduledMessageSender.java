@@ -18,7 +18,7 @@ public class ScheduledMessageSender implements Runnable {
     public void run() {
         try {
             this.producer.send(message);
-            BloodRequestResponseDto response = BloodRequestResponseDto.builder().requestId(message.getRequestId()).status("FULFILLED").build();
+            BloodRequestResponseDto response = BloodRequestResponseDto.builder().requestId(message.getId()).status("FULFILLED").build();
             this.producer.send(response);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);

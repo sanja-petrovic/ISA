@@ -3,13 +3,14 @@ package com.example.isa.dto;
 import lombok.*;
 
 import java.util.UUID;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class BloodSupplyDto {
+public class SuppliesDto {
     private UUID id;
-    private String bloodType;
-    private double amount;
+    private int amount;
+    private String name;
 }
