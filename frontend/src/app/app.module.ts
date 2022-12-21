@@ -44,9 +44,12 @@ import { AuthGuard } from './guards/auth-guard';
 import { AppointmentsComponent } from './appointments/appointments.component';
 import { DonorsAppointmentsComponent } from './donors-appointments/donors-appointments.component';
 import { AdminRegistrationComponent } from './admin-registration/admin-registration/admin-registration.component';
-
 import { AdminSchedulingComponent } from './admin-scheduling/admin-scheduling.component';
+import { DonorSchedulingComponent } from './donor-scheduling/donor-scheduling.component';
 import { DatePipe } from '@angular/common';
+import {MatTabsModule} from "@angular/material/tabs";
+import { AdminProfileComponent } from './admin-profile/admin-profile.component';
+import { MedicalStaffScheduleComponent } from './medical-staff-schedule/medical-staff-schedule.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +74,13 @@ import { DatePipe } from '@angular/common';
     AppointmentsComponent,
     DonorsAppointmentsComponent,
     AdminRegistrationComponent,
-    AdminSchedulingComponent
+    AdminRegistrationComponent,
+    AdminSchedulingComponent,
+    AdminProfileComponent,
+    AdminProfileComponent,
+    DonorSchedulingComponent,
+    MedicalStaffScheduleComponent,
+    
   ],
   imports: [
     HttpClientModule,
@@ -113,7 +122,8 @@ import { DatePipe } from '@angular/common';
     FlexLayoutModule,
     MatDialogModule,
     MatRadioModule,
-    MatListModule
+    MatListModule,
+    MatTabsModule
   ],
 
 

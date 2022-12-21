@@ -25,6 +25,7 @@ export class AdminRegistrationComponent implements OnInit {
   form: FormGroup = this.formBuilder.group({
     email: ['', Validators.compose([Validators.required, Validators.email],)],
     password: this.password,
+    firstPassword: this.password,
     passwordCheck: this.passwordCheck,
     firstName: ['', Validators.compose([Validators.required])],
     lastName: ['', Validators.compose([Validators.required])],

@@ -1,0 +1,20 @@
+<div class="centered-content">
+  <div class="cards" *ngIf="!editEnabled">
+    <mat-card class="profile-card">
+      <img mat-card-image src="https://digitalsynopsis.com/wp-content/uploads/2017/07/beautiful-color-ui-gradients-backgrounds-roseanna.png" alt="Photo of a Shiba Inu">
+      <mat-card-title class="profile-title">{{admin.firstName}} {{admin.lastName}}
+      </mat-card-title>
+      <mat-card-subtitle>{{admin.homeAddress}}, {{admin.city}}, {{admin.country}}</mat-card-subtitle>
+      <mat-card-content>
+        <p>Contact: {{admin.phoneNumber}}</p>
+      </mat-card-content>
+      <mat-card-content *ngIf="admin.password != admin.firstPassword">
+        <button class="admin-button" (click)="registerMedicalStaff()">Register Medical Staff</button>
+        <button class="admin-button" (click)="registerAdmin()">Register Admin</button>
+      </mat-card-content>
+      <mat-card-content >
+        <button class="admin-button" (click)="openPasswordDialog()">Change Password</button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

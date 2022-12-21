@@ -17,6 +17,10 @@ import {ViewUsersComponent} from './view-users/view-users.component';
 import { AdminRegistrationComponent } from './admin-registration/admin-registration/admin-registration.component';
 import { AdminSchedulingComponent } from './admin-scheduling/admin-scheduling.component';
 import {AppointmentsComponent} from "./appointments/appointments.component";
+import { DonorSchedulingComponent } from './donor-scheduling/donor-scheduling.component';
+import {DonorsAppointmentsComponent} from "./donors-appointments/donors-appointments.component";
+import { AdminProfileComponent } from './admin-profile/admin-profile.component';
+import { MedicalStaffScheduleComponent } from './medical-staff-schedule/medical-staff-schedule.component';
 
 const appRoutes: Routes = [{
   path: 'home', component: HomeComponent, canActivate: [AuthGuard]
@@ -31,7 +35,7 @@ const appRoutes: Routes = [{
 }, {
   path: 'medical-staff', component: MedicalStaffComponent, canActivate: [AuthGuard]
 }, {
-  path: 'profile', component: ProfileComponent
+  path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]
 }, {
   path: 'profile/edit', component: ProfileComponent, canActivate: [AuthGuard]
 }, {
@@ -52,6 +56,14 @@ const appRoutes: Routes = [{
   path: 'blood-banks/:id/appointments', component: AppointmentsComponent, canActivate: [AuthGuard]
 },{
   path: '**', redirectTo: ''
+},  {
+  path: 'blood-banks/:id/appointments', component: AppointmentsComponent, canActivate: [AuthGuard]
+}, {
+  path: 'appointments', component: DonorsAppointmentsComponent, canActivate: [AuthGuard]
+},{
+  path: 'donor/scheduling', component: DonorSchedulingComponent
+},{
+  path: 'medical-staff/schedule', component: MedicalStaffScheduleComponent
 }]
 
 @NgModule({

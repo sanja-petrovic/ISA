@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { BloodDonorService } from '../services/BloodDonor.service';
+import { BloodDonorService } from '../services/BloodDonorService';
 import { PasswordDto, BloodDonor } from '../model/Users';
 import {MatDialog,MatDialogModule, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { ChangePasswordDialogComponent } from '../change-password-dialog/change-password-dialog.component';

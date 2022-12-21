@@ -1,5 +1,6 @@
 package com.example.isa.controller;
 
+import com.example.isa.dto.AdminDto;
 import com.example.isa.dto.BloodBankDto;
 import com.example.isa.dto.MedicalStaffDto;
 import com.example.isa.dto.MedicalStaffListDto;
@@ -16,11 +17,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -99,5 +102,11 @@ public class MedicalStaffController {
         } else {
             return new ResponseEntity<>(null, HttpStatus.CONFLICT);
         }
+    }
+    @GetMapping("/current")
+    @PreAuthorize("hasRole('ROLE_STAFF')")
+    public ResponseEntity<MedicalStaffDto> getCurrentStaff(Principal principal) {
+        Optional<MedicalStaff> staff = medicalStaffService.findByEmail(principal.getName());
+        return staff.map(medicalStaff -> ResponseEntity.ok(converter.entityToDto(medicalStaff))).orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

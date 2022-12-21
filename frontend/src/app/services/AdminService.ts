@@ -3,7 +3,7 @@ import {map} from 'rxjs/operators';
 import {ApiService} from "./ApiService";
 import {ConfigService} from "./ConfigService";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Admin, MedicalStaff, PasswordDto } from '../model/Users';
+import { Admin, MedicalStaff } from '../model/Users';
 import { Observable } from 'rxjs';
 
 
@@ -27,11 +27,6 @@ export class AdminService {
   getAll() {
     return this.apiService.get(this.config.users_url);
   }
-  getCurrentAdmin() : Observable<Admin> {
-    return this.apiService.get(`${this.config.admin_url}/current`);
-  }
-  updateAdminPassword(passwordDto : PasswordDto): Observable<any>{
-    return this.apiService.put(`${this.config.users_url}/update`, passwordDto);
-  }
+  
 
 }

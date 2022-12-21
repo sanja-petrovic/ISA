@@ -31,4 +31,8 @@ export class BloodDonorService {
   updateBloodDonorPassword(passwordDto : PasswordDto): Observable<any>{
     return this.apiService.put(`${this.config.users_url}/password/update`, passwordDto);
   }
+
+  checkBloodDonorQuestionaire(personalId : String) : Observable<Boolean>{
+    return this.apiService.get(`${this.config.blood_donors_url}/questions/${personalId}`);
+  }
 }

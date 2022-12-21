@@ -1,5 +1,4 @@
 package com.example.isa.controller;
-
 import com.example.isa.dto.AdminDto;
 import com.example.isa.dto.AdminListDto;
 import com.example.isa.model.Admin;
@@ -13,14 +12,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
+import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+
 
 @RestController
 @Api(value = "/admin", tags = "Admins")
+
 @RequestMapping(value = "/admin")
 public class AdminController {
     private final AdminService adminService;
@@ -43,6 +46,12 @@ public class AdminController {
     public ResponseEntity<?> getAll() {
         List<Admin> admins = adminService.getAll();
         return ResponseEntity.ok(convertListToDto(admins));
+    }
+    @GetMapping("/current")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<AdminDto> getCurrentAdmin(Principal principal) {
+        Optional<Admin> admin = adminService.findByEmail(principal.getName());
+        return admin.map(admin1 -> ResponseEntity.ok(converter.entityToDto(admin1))).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping(value = "/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
