@@ -21,6 +21,7 @@ import { DonorSchedulingComponent } from './donor-scheduling/donor-scheduling.co
 import {DonorsAppointmentsComponent} from "./donors-appointments/donors-appointments.component";
 
 import { AdminProfileComponent } from './admin-profile/admin-profile.component';
+import { MedicalStaffScheduleComponent } from './medical-staff-schedule/medical-staff-schedule.component';
 const routes: Routes = [{
   path: 'home', component: HomeComponent, canActivate: [AuthGuard]
 }, {
@@ -57,6 +58,8 @@ const routes: Routes = [{
   path: 'appointments', component: DonorsAppointmentsComponent, canActivate: [AuthGuard]
 },{
   path: 'donor/scheduling', component: DonorSchedulingComponent
+},{
+  path: 'medical-staff/schedule', component: MedicalStaffScheduleComponent
 }]
 
 @NgModule({

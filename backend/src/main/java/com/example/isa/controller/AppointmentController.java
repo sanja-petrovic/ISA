@@ -166,5 +166,11 @@ public class AppointmentController {
 		appointmentService.cancel(appointmentService.getById(id));
 		return ResponseEntity.ok().build();
 	}
+	@PostMapping("/schedule/{range}/{bankId}")
+	@PreAuthorize("hasRole('ROLE_STAFF')")
+	@ApiOperation(value = "Get schedule for time period", httpMethod = "POST")
+	public ResponseEntity<List<AppointmentDto>> getScheduleByBloodBankInDateRange(@PathVariable String range ,@PathVariable String bankId){
+		return ResponseEntity.ok(converter.listToDtoList(appointmentService.getScheduleByBloodBankInDateRange(bankId,range)));
+	}
 
 }

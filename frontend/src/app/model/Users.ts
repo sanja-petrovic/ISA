@@ -28,7 +28,8 @@ type MedicalStaff = {
   country: string,
   email: string,
   password: string,
-  bloodBank: any
+  bloodBank: any,
+  bloodBankId: string
 }
 
 type User = {

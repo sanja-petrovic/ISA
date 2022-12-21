@@ -54,8 +54,6 @@ export class AdminProfileComponent implements OnInit {
     });
     pwDialog.afterClosed().subscribe(result => {
       this.newPassword = result;
-
-      
       this.passwordDto.oldPassword = this.admin.password;
       this.passwordDto.newPassword = this.newPassword;
       console.log(this.passwordDto);

@@ -7,6 +7,7 @@ import java.util.List;
 import com.example.isa.model.BloodBank;
 import com.example.isa.model.MedicalStaff;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface MedicalStaffService {
@@ -17,5 +18,5 @@ public interface MedicalStaffService {
     boolean register(MedicalStaff medicalStaff);
 
     BloodBank getBloodBank(MedicalStaff medicalStaff);
-
+    Optional<MedicalStaff> findByEmail(String email);
 }

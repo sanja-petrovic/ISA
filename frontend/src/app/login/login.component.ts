@@ -30,14 +30,17 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.form.value).subscribe((data) => {
       this.userService.getActiveUser().subscribe( user => {
               console.log(this.userService.currentUser)
+              console.log(this.userService.currentUser)
               console.log(user)
               this.userService.currentUser = user;
               if(user.email == 'isidorapoznanovic1@gmail.com'){
                 this.logAndmin();
-              } else if(user.role == '0'){
+              } else if(user.role == 'ROLE_ADMIN'){
                 this.router.navigate(['/admin'])
-              } else{
-                //this.router.navigate(['/banks'])
+              } else if(user.role =='ROLE_STAFF'){
+                this.router.navigate(['/medical-staff/schedule'])
+              }else{
+                this.router.navigate(['/banks'])
               }
             })
     },
