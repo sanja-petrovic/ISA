@@ -48,6 +48,7 @@ import { AdminRegistrationComponent } from './admin-registration/admin-registrat
 import { AdminSchedulingComponent } from './admin-scheduling/admin-scheduling.component';
 import { DonorSchedulingComponent } from './donor-scheduling/donor-scheduling.component';
 import { DatePipe } from '@angular/common';
+import {MatTabsModule} from "@angular/material/tabs";
 
 @NgModule({
   declarations: [
@@ -115,7 +116,8 @@ import { DatePipe } from '@angular/common';
     FlexLayoutModule,
     MatDialogModule,
     MatRadioModule,
-    MatListModule
+    MatListModule,
+    MatTabsModule
   ],
 
 

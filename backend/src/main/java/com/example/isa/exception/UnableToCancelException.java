@@ -5,6 +5,6 @@ public class UnableToCancelException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
     public UnableToCancelException() {
-        super("Appointment can only be cancelled up to 24 hours before.");
+        super("Cancellations can only be made up to 24 hours before the scheduled appointment time.");
     }
 }
