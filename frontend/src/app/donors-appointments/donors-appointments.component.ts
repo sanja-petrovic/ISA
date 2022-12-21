@@ -7,7 +7,7 @@ import {Appointment} from "../model/Appointment";
 @Component({
   selector: 'app-donors-appointments',
   templateUrl: './donors-appointments.component.html',
-  styleUrls: ['./donors-appointments.component.css', '../banks-page/banks-page.component.css', '../appointments/appointments.component.css']
+  styleUrls: ['./donors-appointments.component.css', '../banks-page/banks-page.component.css']
 })
 export class DonorsAppointmentsComponent implements OnInit {
 
