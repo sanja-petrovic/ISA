@@ -43,7 +43,7 @@ public class UserCreator {
 
         BloodBank bloodBank = new BloodBank("Prva prava banka krvi", new Address("Daniciceva 15", "Novi Sad", "Srbija"), "Najopremljenija banka krvi ovih prostora", new Interval(new Date(12345), new Date(12345)), 4.8);
         bloodBankRepository.save(bloodBank);
-        MedicalStaff medicalStaff1 = new MedicalStaff("0101010101010", "staff1@gmail.com", passwordEncoder.encode("STAFF1"), "Good", "Doctor", "0101010101", Gender.FEMALE, true, roleStaff, bloodBank);
+        MedicalStaff medicalStaff1 = new MedicalStaff("1101010101010", "staff1@gmail.com", passwordEncoder.encode("STAFF1"), "Good", "Doctor", "7101010101", Gender.FEMALE, true, roleStaff, bloodBank);
         medicalStaffRepository.save(medicalStaff1);
         BloodBank bank = new BloodBank("banka puno krvi",new Address("Vojvode Misica 10","Kragujevac","Srbija"),new Interval(new Date(),new Date()),"Vampiri ovde povremeno borave",3.5);
         bank.setId(UUID.fromString("16e4a8c2-3e86-4e93-825f-24e36cb29655"));
