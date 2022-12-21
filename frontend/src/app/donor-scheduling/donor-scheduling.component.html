@@ -1,4 +1,4 @@
-<div class="centered-content">
+<div class="centered-content" *ngIf="questionsFlag">
     <h1> Donor appointments scheduling </h1>
     <form class="form-wrapper" [formGroup]="querry_form">
         <mat-form-field required appearance="outline">
@@ -14,7 +14,7 @@
         <p> Date scheduled: {{this.displayDate}}</p>
         <p> Bank: {{this.displayBank}}</p>
         <p> Duration: {{this.displayDuration}}</p>
-        <button (click)="shedule">Schedule</button>
+        <button (click)="shedule()">Schedule</button>
     </div>
     <div class="cards">
         <mat-card *ngFor="let bank of banks" class="bank-card" (click)="cardClick(bank)">
@@ -30,4 +30,7 @@
           </mat-card-content>
         </mat-card>
     </div>
+</div>
+<div class="centered-content" *ngIf="!questionsFlag">
+  <h1> Users without filled out questionare cannot schedule appointments</h1> 
 </div>

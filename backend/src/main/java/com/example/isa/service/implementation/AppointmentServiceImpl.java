@@ -216,6 +216,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 			endTime.setTime(bank.getWorkingHours().getIntervalEnd().getTime());
 			LocalTime endTimeLocal = DateConverter.convert(endTime).toLocalTime();
 			
+			if(startTimeLocal.equals(LocalTime.of(0,0, 0)) && endTimeLocal.equals(LocalTime.of(0,0, 0))) return true;
 			
 			if(appointmentTime.isAfter(startTimeLocal) && appointmentTime.plusMinutes(appointment.getDuration()).isBefore(endTimeLocal)) return true;
 

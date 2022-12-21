@@ -15,6 +15,6 @@ export class AdminSchedulingService {
     private config: ConfigService) { }
 
   createAppointment(appointment: any): Observable<any> {
-    return this.apiService.post(`${this.config.admin_scheduling_url}`, appointment);
+    return this.apiService.post(`${this.config.new_scheduling_url}`, appointment);
   }
 }
