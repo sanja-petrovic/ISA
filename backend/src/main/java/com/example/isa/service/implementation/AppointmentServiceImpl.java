@@ -131,9 +131,9 @@ public class AppointmentServiceImpl implements AppointmentService {
                 if (appointment.getDateTime().before(new Date())) {
                     throw new PassedException();
                 }
-                /*if (CollectionUtils.isEmpty(donor.getAnswers())) {
+                if (CollectionUtils.isEmpty(donor.getAnswers())) {
                     throw new NoCompletedQuestionnaire();
-                }*/
+                }
 				if (!canScheduleAppointment(donor, appointment.getDateTime())) {
 					throw new NewAppointmentTooSoonException();
 				}
