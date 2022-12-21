@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.time.*;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -66,14 +67,30 @@ public class AppointmentServiceImpl implements AppointmentService {
         return repository.findAllByBloodBankId(bloodBankId);
     }
 
-    @Override
+	@Override
+	public List<Appointment> getByBloodBank(String title) {
+		return null;
+	}
+
+	@Override
+	public List<Appointment> getUnscheduledByBloodBank(UUID bloodBankId) {
+		Date today = new Date();
+		return repository.findAllByBloodBankIdAndStatus(bloodBankId, AppointmentStatus.NOT_SCHEDULED).stream().filter(appointment -> !today.after(appointment.getDateTime()) && !appointment.getDateTime().before(today)).toList();
+	}
+
+	@Override
     public List<Appointment> getByBloodDonor(UUID bloodDonorId) {
         return repository.findAllByBloodDonorId(bloodDonorId);
     }
-
-    public boolean canScheduleAppointment(BloodDonor bloodDonor) {
+	@Override
+	public List<Appointment> getUpcomingByBloodDonor(UUID bloodDonorId) {
+		return repository.findAllByBloodDonorIdAndStatus(bloodDonorId, AppointmentStatus.SCHEDULED);
+	}
+    public boolean canScheduleAppointment(BloodDonor bloodDonor, Date date) {
         Optional<Appointment> mostRecentAppointment = repository.findTopByBloodDonorOrderByDateTimeDesc(bloodDonor);
-        return mostRecentAppointment.isEmpty() || mostRecentAppointment.get().getDateTime().after(Date.from(Instant.from(LocalDate.now().minusMonths(6))));
+		LocalDateTime sixMonthsAgo = DateConverter.convert(date).minusMonths(6);
+		Instant milliseconds = sixMonthsAgo.toInstant(ZoneOffset.UTC);
+        return mostRecentAppointment.isEmpty() || !mostRecentAppointment.get().getDateTime().after(Date.from(milliseconds));
     }
 
     @Override
@@ -123,8 +140,6 @@ public class AppointmentServiceImpl implements AppointmentService {
         return repository.save(appointment);
     }
 
-
-
     @Override
     @Transactional
     public void schedulePredefined(Appointment appointment, BloodDonor donor) {
@@ -136,7 +151,7 @@ public class AppointmentServiceImpl implements AppointmentService {
                 if (CollectionUtils.isEmpty(donor.getAnswers())) {
                     throw new NoCompletedQuestionnaire();
                 }
-				if (!canScheduleAppointment(donor)) {
+				if (!canScheduleAppointment(donor, appointment.getDateTime())) {
 					throw new NewAppointmentTooSoonException();
 				}
                 if (repository.findAllByBloodBankAndBloodDonorAndDateTime(appointment.getBloodBank(), donor, appointment.getDateTime()).isPresent()) {
@@ -180,7 +195,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 			}
 	        /*if (CollectionUtils.isEmpty(donor.getAnswers())) {
 	            throw new NoCompletedQuestionnaire();
-	        }*/
+	        }
 			/*if (!canScheduleAppointment(donor)) {
 				throw new NewAppointmentTooSoonException();
 			}*/

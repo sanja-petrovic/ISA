@@ -1,31 +1,42 @@
 package com.example.isa.service.implementation;
 
 import com.example.isa.model.Admin;
-import com.example.isa.model.Gender;
 import com.example.isa.repository.AdminRepository;
 import com.example.isa.service.interfaces.AdminService;
-import com.example.isa.service.interfaces.RoleService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
+import java.util.List;
+import java.util.UUID;
 
 @Service
 public class AdminServiceImpl implements AdminService {
-    private final RoleService roleService;
-    private final PasswordEncoder passwordEncoder;
-    private final AdminRepository adminRepository;
+    private  final AdminRepository repository;
 
-    public AdminServiceImpl(RoleService roleService, PasswordEncoder passwordEncoder, AdminRepository adminRepository) {
-        this.roleService = roleService;
-        this.passwordEncoder = passwordEncoder;
-        this.adminRepository = adminRepository;
+    public AdminServiceImpl(AdminRepository repository) {
+        this.repository = repository;
+    }
+    @Override
+    public List<Admin> getAll() {
+        return repository.findAll();
     }
 
     @Override
-    public void create(Admin admin) {
-        admin.setRole(roleService.findByName("ADMIN"));
-        adminRepository.save(admin);
+    public Admin getById(UUID id) {
+        return repository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Admin updateAdmin(Admin admin) {
+        if (admin.getPassword() == null || admin.getPassword().trim().isEmpty()) {
+            //to do
+        }
+        return repository.save(admin);
+    }
+
+    @Override
+    public boolean register(Admin admin) {
+        repository.save(admin);
+        return true;
     }
 
 }

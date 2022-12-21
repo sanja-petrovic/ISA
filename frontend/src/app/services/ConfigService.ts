@@ -20,6 +20,8 @@ export class ConfigService {
   public refresh_token_url = this._auth_url + '/refresh-token';
   public new_scheduling_url = this._api_url + '/appointments/create'
   public available_bank_url = this._api_url + '/appointments/blood-donor/check-available'
+  public admin_url = this._api_url+'/admin';
+
 
   get login_url(): string {
     return this._login_url;

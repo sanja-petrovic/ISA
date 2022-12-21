@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {BloodBankService} from "../services/BloodBankService";
 import axios from 'axios';
+import { BloodBank } from '../model/BloodBank';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-banks-page',
@@ -9,7 +11,7 @@ import axios from 'axios';
 })
 export class BanksPageComponent implements OnInit {
 
-  public banks: any[] = [];
+  public banks: BloodBank[] = [];
   public searchCriteria: string[] = ["", ""];
   public gradeFilter: string = "0";
   public sortFilter: string = "title-asc";
@@ -36,12 +38,15 @@ export class BanksPageComponent implements OnInit {
     })
   }
 
-  constructor(private bloodBankService: BloodBankService) {
+  constructor(private bloodBankService: BloodBankService, private router: Router) {
   }
 
   ngOnInit(): void {
     this.getBanks();
   }
 
+  seeAppointments(id: string): void {
+    this.router.navigate([`/blood-banks/${id}/appointments`]);
+  }
 
 }

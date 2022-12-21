@@ -25,7 +25,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
-@Api(value = "/medical-staff")
+@Api(value = "/medical-staff", tags = "Medical staff")
 @RequestMapping(value = "/medical-staff")
 public class MedicalStaffController {
     private final MedicalStaffService medicalStaffService;

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.example.isa.service.interfaces.BloodDonorService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.data.domain.Sort;
@@ -28,6 +29,7 @@ import com.example.isa.util.converters.BloodBankConverter;
 
 @RestController
 @RequestMapping("/appointments")
+@Api(value = "/appointments", tags = "Appointments")
 public class AppointmentController {
 	private final AppointmentService appointmentService;
 	private final BloodDonorService bloodDonorService;
@@ -54,9 +56,17 @@ public class AppointmentController {
 	}
 	
 	@GetMapping("/blood-bank/{id}")
+	@PreAuthorize("hasRole('ROLE_STAFF') or hasRole('ROLE_ADMIN')")
 	@ApiOperation(value = "Get all appointments in a blood bank.", httpMethod = "GET")
 	public ResponseEntity<List<AppointmentDto>> getAllByBloodBank(@PathVariable String id){
 		return ResponseEntity.ok(converter.listToDtoList(appointmentService.getByBloodBank(UUID.fromString(id))));
+	}
+
+	@GetMapping("/blood-bank/{id}/available")
+	@PreAuthorize("hasRole('ROLE_DONOR')")
+	@ApiOperation(value = "Get all available appointments in a blood bank.", httpMethod = "GET")
+	public ResponseEntity<List<AppointmentDto>> getAllUnscheduledByBloodBank(@PathVariable String id){
+		return ResponseEntity.ok(converter.listToDtoList(appointmentService.getUnscheduledByBloodBank(UUID.fromString(id))));
 	}
 
 	@GetMapping("/blood-donor/{id}")
@@ -65,7 +75,6 @@ public class AppointmentController {
 	public ResponseEntity<List<AppointmentDto>> getAllByBloodDonor(@PathVariable String id){
 		return ResponseEntity.ok(converter.listToDtoList(appointmentService.getByBloodDonor(UUID.fromString(id))));
 	}
-	
 	@PostMapping("/blood-donor/check-available")
 	@PreAuthorize("hasRole('ROLE_DONOR')")
 	@ApiOperation(value = "Check availability of banks for date.", httpMethod = "POST")
@@ -85,7 +94,12 @@ public class AppointmentController {
 		
 		return ResponseEntity.ok(new ArrayList<BloodBankDto>());
 	}
-	
+	@GetMapping("/blood-donor/{id}/upcoming")
+	@PreAuthorize("hasRole('ROLE_DONOR')")
+	@ApiOperation(value = "Get all upcoming appointments for a blood donor.", httpMethod = "GET")
+	public ResponseEntity<List<AppointmentDto>> getAllUpcomingByBloodDonor(@PathVariable String id){
+		return ResponseEntity.ok(converter.listToDtoList(appointmentService.getByBloodDonor(UUID.fromString(id))));
+	}
 	@PostMapping("/create")
 	@ApiOperation(value = "Create appointment.", httpMethod = "POST")
 	@ResponseBody

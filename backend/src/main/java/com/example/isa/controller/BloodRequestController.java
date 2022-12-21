@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@Api(value = "/blood-requests")
+@Api(value = "/blood-requests", tags = "Blood requests")
 @RequestMapping("/blood-requests")
 public class BloodRequestController {
 

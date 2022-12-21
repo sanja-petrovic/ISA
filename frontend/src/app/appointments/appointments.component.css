@@ -1,0 +1,30 @@
+.schedule-button {
+  height: 100%;
+  background-color: white;
+  text-align: center;
+  border: 1px solid #f49ba9;
+  color: #ff5e75;
+  background-color: rgba(255, 255, 255, 0.7);
+  transition: 0.5s;
+  padding: 0.3rem 1.5rem;
+  box-shadow: 0 0 20px rgba(255, 100, 125, 0.2);
+  border-radius: 1rem;
+  cursor: pointer;
+  width: 100%;
+}
+
+.schedule-button:hover {
+  background-color: rgba(255, 255, 255, 1);
+}
+
+.bank-card {
+  width: 15vw !important;
+}
+
+.mat-card-subtitle {
+  margin-top: 1rem;
+}
+
+.cards {
+  margin-top: 1.5rem;
+}

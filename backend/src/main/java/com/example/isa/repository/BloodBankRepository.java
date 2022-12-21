@@ -25,4 +25,5 @@ public interface BloodBankRepository extends JpaRepository<BloodBank, UUID> {
     List<BloodBank> findByTitleLikeAndAddressCityLike(String title, String city, double filterGrade, Sort sort );
 	@Query("from BloodBank b where b.averageGrade >= ?1")
     List<BloodBank> findAllWithFilter(double filterGrade, Sort sort);
+    List<BloodBank> findAllByTitleIgnoreCaseContainingAndAddress_CityIgnoreCaseContainingAndAverageGradeGreaterThanEqual(String title, String city, Double averageGrade, Sort sort);
 }

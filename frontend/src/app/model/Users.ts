@@ -41,16 +41,24 @@ type User = {
   email: string,
   isVerified: boolean
 }
-
+type Admin ={
+  id: string,
+  firstName: string,
+  lastName: string,
+  personalId: string,
+  gender: string,
+  phoneNumber: string,
+  email: string,
+  isVerified: boolean
+}
 type Credentials = {
   email: string,
   password: string
 }
 
 type PasswordDto ={
-  personalId: string,
   oldPassword: string,
   newPassword: string
 }
 
-export { BloodDonor, Credentials, PasswordDto, User, MedicalStaff };
+export { BloodDonor, Credentials, PasswordDto, User, MedicalStaff, Admin };

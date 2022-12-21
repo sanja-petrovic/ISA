@@ -1,14 +1,16 @@
 package com.example.isa.dto;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PasswordDto {
-	private String oldPassword;
-	private String newPassword;
+public class AdminListDto {
+    List<AdminDto> admin;
 }

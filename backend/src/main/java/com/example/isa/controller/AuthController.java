@@ -9,6 +9,7 @@ import com.example.isa.security.TokenHandler;
 import com.example.isa.service.interfaces.RefreshTokenService;
 import com.example.isa.service.interfaces.RoleService;
 import com.example.isa.service.interfaces.UserService;
+import io.swagger.annotations.Api;
 import org.springframework.http.HttpHeaders;
 import com.example.isa.util.converters.BloodDonorConverter;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/auth")
+@Api(value = "/auth", tags = "Auth")
 public class AuthController {
     private final TokenHandler tokenHandler;
     private final AuthenticationManager authenticationManager;

@@ -43,8 +43,11 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { AuthGuard } from './guards/auth-guard';
 import { AppointmentsComponent } from './appointments/appointments.component';
 import { DonorsAppointmentsComponent } from './donors-appointments/donors-appointments.component';
+import { AdminRegistrationComponent } from './admin-registration/admin-registration/admin-registration.component';
+
 import { AdminSchedulingComponent } from './admin-scheduling/admin-scheduling.component';
 import { DonorSchedulingComponent } from './donor-scheduling/donor-scheduling.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -70,6 +73,7 @@ import { DonorSchedulingComponent } from './donor-scheduling/donor-scheduling.co
     DonorsAppointmentsComponent,
     AdminSchedulingComponent,
     DonorSchedulingComponent
+    AdminRegistrationComponent
   ],
   imports: [
     HttpClientModule,
@@ -116,6 +120,7 @@ import { DonorSchedulingComponent } from './donor-scheduling/donor-scheduling.co
 
 
   providers: [
+    [DatePipe],
     {
 		provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}
 	},

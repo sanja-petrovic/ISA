@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.example.isa.model.AppointmentStatus;
 import com.example.isa.model.BloodBank;
 import com.example.isa.model.BloodDonor;
 import org.springframework.data.domain.Sort;
@@ -21,7 +22,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, UUID> 
     Optional<Appointment> findById(UUID appointmentId);
 
     List<Appointment> findAllByBloodBankId(UUID bloodBankId);
-    
+    List<Appointment> findAllByBloodBankIdAndStatus(UUID bloodBankId, AppointmentStatus status);
     Optional<Appointment> findAllByBloodBankAndBloodDonorAndDateTime(BloodBank bloodBank, BloodDonor bloodDonor, Date dateTime);
 
     List<Appointment> findAllByDateTime(Date date);
@@ -39,4 +40,6 @@ public interface AppointmentRepository extends JpaRepository<Appointment, UUID> 
     
     @Query("from Appointment a where year(a.dateTime) = ?1 and month(a.dateTime) = ?2 and day(a.dateTime) = ?3")
     List<Appointment> findAllByDate( int year, int month, int day);
+    List<Appointment> findAllByBloodDonorIdAndStatus(UUID bloodDonorId, AppointmentStatus status);
+
 }

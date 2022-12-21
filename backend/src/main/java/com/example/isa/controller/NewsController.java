@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@Api(value = "/news")
+@Api(value = "/news", tags = "News")
 @RequestMapping(value = "/news")
 public class NewsController {
 

@@ -59,8 +59,19 @@ public class BloodBankServiceImpl implements BloodBankService {
         else {
         	return repository.findByTitleLikeAndAddressCityLike("%"+titleString+"%", "%"+cityString+"%",Double.parseDouble(filterGrade), sort);
         }
+    	String titleString = searchCriteria.get(0) == null ? "" : searchCriteria.get(0);
+    	String cityString = searchCriteria.get(1) == null ? "" : searchCriteria.get(1);
+
+        return this.repository.findAllByTitleIgnoreCaseContainingAndAddress_CityIgnoreCaseContainingAndAverageGradeGreaterThanEqual(titleString, cityString, parseGrade(filterGrade), sort);
     }
 
+    private Double parseGrade(String filterGrade) {
+        try {
+            return Double.parseDouble(filterGrade);
+        } catch (NumberFormatException e) {
+            return 0.0;
+        }
+    }
     @Override
     public BloodBank update(BloodBank bloodBank) {
         if (bloodBank.getTitle() == null || bloodBank.getAddress() == null) {
