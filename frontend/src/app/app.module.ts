@@ -46,6 +46,7 @@ import { DonorsAppointmentsComponent } from './donors-appointments/donors-appoin
 import { AdminRegistrationComponent } from './admin-registration/admin-registration/admin-registration.component';
 
 import { AdminSchedulingComponent } from './admin-scheduling/admin-scheduling.component';
+import { DonorSchedulingComponent } from './donor-scheduling/donor-scheduling.component';
 import { DatePipe } from '@angular/common';
 import {MatTabsModule} from "@angular/material/tabs";
 
@@ -71,8 +72,9 @@ import {MatTabsModule} from "@angular/material/tabs";
     NavbarComponent,
     AppointmentsComponent,
     DonorsAppointmentsComponent,
-    AdminRegistrationComponent,
-    AdminSchedulingComponent
+    AdminSchedulingComponent,
+    DonorSchedulingComponent
+    AdminRegistrationComponent
   ],
   imports: [
     HttpClientModule,

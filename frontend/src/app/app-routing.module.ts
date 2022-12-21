@@ -17,6 +17,7 @@ import {ViewUsersComponent} from './view-users/view-users.component';
 import { AdminRegistrationComponent } from './admin-registration/admin-registration/admin-registration.component';
 import { AdminSchedulingComponent } from './admin-scheduling/admin-scheduling.component';
 import {AppointmentsComponent} from "./appointments/appointments.component";
+import { DonorSchedulingComponent } from './donor-scheduling/donor-scheduling.component';
 import {DonorsAppointmentsComponent} from "./donors-appointments/donors-appointments.component";
 
 const routes: Routes = [{
@@ -53,6 +54,8 @@ const routes: Routes = [{
   path: 'blood-banks/:id/appointments', component: AppointmentsComponent, canActivate: [AuthGuard]
 }, {
   path: 'appointments', component: DonorsAppointmentsComponent, canActivate: [AuthGuard]
+},{
+  path: 'donor/scheduling', component: DonorSchedulingComponent
 }]
 
 @NgModule({

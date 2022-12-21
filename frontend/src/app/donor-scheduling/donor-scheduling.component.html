@@ -1,0 +1,36 @@
+<div class="centered-content" *ngIf="questionsFlag">
+    <h1> Donor appointments scheduling </h1>
+    <form class="form-wrapper" [formGroup]="querry_form">
+        <mat-form-field required appearance="outline">
+            <mat-label>Date</mat-label>
+            <input formControlName="dateTime" matInput type="datetime-local">
+        </mat-form-field>
+        <div *ngIf="dateTime.errors?.['dateValidation']">
+            Date must be atleast a day after tomorow.
+        </div>
+        <input [disabled]="!querry_form.valid" type="submit" (click)="checkBanks()" value="Search" class="submit-button">
+    </form>
+    <div *ngIf="new_flag">
+        <p> Date scheduled: {{this.displayDate}}</p>
+        <p> Bank: {{this.displayBank}}</p>
+        <p> Duration: {{this.displayDuration}}</p>
+        <button (click)="shedule()">Schedule</button>
+    </div>
+    <div class="cards">
+        <mat-card *ngFor="let bank of banks" class="bank-card" (click)="cardClick(bank)">
+          <mat-card-title class="bank-title">{{bank.title}}
+            <div class="tag">
+              <mat-icon fontIcon="star" class="icon"></mat-icon>
+              <span>{{bank.averageGrade}}</span></div>
+          </mat-card-title>
+          <mat-card-subtitle>{{bank.street}} {{bank.number}}, {{bank.city}}, {{bank.country}}<br>{{bank.workingHoursStart}}
+            - {{bank.workingHoursEnd}}</mat-card-subtitle>
+          <mat-card-content>
+            <p>{{bank.description}}</p>
+          </mat-card-content>
+        </mat-card>
+    </div>
+</div>
+<div class="centered-content" *ngIf="!questionsFlag">
+  <h1> Users without filled out questionare cannot schedule appointments</h1> 
+</div>

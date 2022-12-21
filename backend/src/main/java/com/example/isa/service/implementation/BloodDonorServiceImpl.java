@@ -6,6 +6,7 @@ import com.example.isa.repository.BloodDonorRepository;
 import com.example.isa.service.interfaces.BloodDonorService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.relational.core.sql.TrueCondition;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,7 +28,14 @@ public class BloodDonorServiceImpl implements BloodDonorService {
 	public BloodDonor getByPersonalId(String personalId) {
 		return repository.findByPersonalId(personalId).orElse(null);
 	}
-
+	public Boolean filledOutQuestions(String personalId) {
+		BloodDonor donor = this.getByPersonalId(personalId);
+		if(donor==null) {
+			return false;
+		}
+		if(donor.getAnswers().isEmpty()) return false;
+		return true;
+	}
 	@Override
 	public BloodDonor update(BloodDonor bloodDonor){
 		BloodDonor fromRepo = repository.findByPersonalId(bloodDonor.getPersonalId()).orElse(null);

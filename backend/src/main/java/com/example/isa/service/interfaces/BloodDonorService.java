@@ -9,4 +9,5 @@ public interface BloodDonorService {
     BloodDonor getByPersonalId(String personalId);
     BloodDonor update(BloodDonor bloodDonor);
     BloodDonor getByEmail(String email);
+    Boolean filledOutQuestions(String personalId);
 }

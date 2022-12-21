@@ -1,6 +1,8 @@
 package com.example.isa.controller;
 
 import java.security.Principal;
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -11,18 +13,22 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.RequestBody;
-
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.isa.dto.AppointmentDto;
+import com.example.isa.dto.AvailabilityDto;
+import com.example.isa.dto.BloodBankDto;
 import com.example.isa.exception.AlreadyExistsException;
 import com.example.isa.exception.BloodBankClosedException;
 import com.example.isa.model.Appointment;
+import com.example.isa.model.BloodBank;
 import com.example.isa.service.interfaces.AppointmentService;
 import com.example.isa.util.converters.AppointmentConverter;
+import com.example.isa.util.converters.BloodBankConverter;
 
 @RestController
 @RequestMapping("/appointments")
@@ -31,11 +37,13 @@ public class AppointmentController {
 	private final AppointmentService appointmentService;
 	private final BloodDonorService bloodDonorService;
 	private final AppointmentConverter converter;
+	private final BloodBankConverter bloodBankConverter;
 	
-	public AppointmentController(AppointmentService service, BloodDonorService bloodDonorService, AppointmentConverter converter) {
+	public AppointmentController(AppointmentService service, BloodDonorService bloodDonorService, AppointmentConverter converter,BloodBankConverter bloodBankConverter) {
 		appointmentService = service;
 		this.bloodDonorService = bloodDonorService;
 		this.converter = converter;
+		this.bloodBankConverter = bloodBankConverter;
 	}
 
 	@GetMapping
@@ -70,7 +78,25 @@ public class AppointmentController {
 	public ResponseEntity<List<AppointmentDto>> getAllByBloodDonor(@PathVariable String id){
 		return ResponseEntity.ok(converter.listToDtoList(appointmentService.getByBloodDonor(UUID.fromString(id))));
 	}
-
+	@PostMapping("/blood-donor/check-available")
+	@PreAuthorize("hasRole('ROLE_DONOR')")
+	@ApiOperation(value = "Check availability of banks for date.", httpMethod = "POST")
+	public ResponseEntity<List<BloodBankDto>> checkAvailableForDate(@RequestBody AvailabilityDto dto){
+		Sort sort = Sort.by(Sort.Direction.fromString(dto.getSortCriteria().getDirection()), dto.getSortCriteria().getProperty());
+		List<BloodBank> banks = null;
+		try {
+			banks = appointmentService.checkFreeBanksForDate(dto.getDateTime(), dto.getDuration(), sort);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(banks!=null) {
+			List<BloodBankDto> dtos = banks.stream().map(bloodBankConverter::entityToDto).toList();
+			return ResponseEntity.ok(dtos);
+		}
+		
+		return ResponseEntity.ok(new ArrayList<BloodBankDto>());
+	}
 	@GetMapping("/blood-donor")
 	@PreAuthorize("hasRole('ROLE_DONOR')")
 	@ApiOperation(value = "Get all appointments by the logged in blood donor.", httpMethod = "GET")
