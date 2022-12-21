@@ -1,7 +1,7 @@
 
 
 .bank-card {
-  width: 400px !important;
+  width: 500px;
   border: 1px solid white;
   border-radius: 12px;
   box-shadow: 0 5px 30px rgba(217, 79, 111, 0.2);
@@ -65,7 +65,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 70vw;
+  width: 90vw;
   flex-wrap: wrap;
 }
 
@@ -73,24 +73,39 @@
 }
 .search-wrapper{
   display: flex;
+  width: 90vw;
   flex-direction:row;
-  justify-content:space-evenly;
-  align-items: baseline;
+  justify-content: center;
+  align-items: center;
   margin-right: 2rem;
+  border-radius: 12px;
+  transition: 0.5s;
+  padding: 0rem 1rem;
+  border-radius: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  height: 1rem !important;
 }
-.search-div{
+
+mat-form-field {
+  font-size: 12px;
+  letter-spacing: normal;
+  width: 14.7rem;
+}
+.search-div {
   display: flex;
   flex-direction:row;
   justify-content:space-evenly;
+  align-self: center;
+  align-items: center;
 }
 .search-wrapper :nth-child(1){
   padding-right:0.5rem;
   padding-left:0.3rem;
 }
 
-
 .search-button {
-  padding: 0.3rem 1.5rem;
+  padding: 0 2rem;
   border: 1px solid transparent;
   background-image: linear-gradient(to right, #ea283f 0%, #ff5e70 51%, #ea283f 100%);
   text-align: center;
@@ -98,9 +113,12 @@
   background-size: 200% auto;
   color: white;
   box-shadow: 0 0 20px rgba(225, 59, 85, 0.4);
-  border-radius: 15px;
+  border-radius: 16px;
   font-size: 12px;
   cursor: pointer;
+  height: 3vw;
+  font-size: 14px;
+  margin-bottom: 14px;
 }
 
 
@@ -108,4 +126,38 @@
   background-position: right center; /* change the direction of the change here */
   color: #fff;
   text-decoration: none;
+}
+
+hr {
+  height: 8px;
+    background-image: linear-gradient(90deg, transparent, #ffd2d7, transparent);
+    border: 0;
+    height: 1px;
+}
+
+.check-out-button {
+  background-color: transparent;
+  color: #ff5e70;
+  padding: 0.5rem 1rem;
+  padding-bottom: 0.8rem;
+  border: 0;
+}
+
+.schedule-button {
+  height: 100%;
+  background-color: white;
+  text-align: center;
+  border: 1px solid #f49ba9;
+  color: #ff5e75;
+  background-color: rgba(255, 255, 255, 0.7);
+  transition: 0.5s;
+  padding: 0.3rem 1.5rem;
+  box-shadow: 0 0 20px rgba(255, 100, 125, 0.2);
+  border-radius: 1rem;
+  cursor: pointer;
+  width: 100%;
+}
+
+.schedule-button:hover {
+  background-color: rgba(255, 255, 255, 1);
 }

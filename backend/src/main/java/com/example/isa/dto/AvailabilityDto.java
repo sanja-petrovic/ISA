@@ -1,4 +1,6 @@
 package com.example.isa.dto;
+
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,7 +10,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PasswordDto {
-	private String oldPassword;
-	private String newPassword;
+public class AvailabilityDto {
+	String dateTime;
+	long duration;
+	SortDto sortCriteria;
 }

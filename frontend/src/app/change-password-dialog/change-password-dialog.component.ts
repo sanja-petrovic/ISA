@@ -49,7 +49,7 @@ export class ChangePasswordDialogComponent implements OnInit {
     @Optional() public dialogRef: MatDialogRef<ChangePasswordDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: PasswordDialogData,
   ) {}
-  
+
   ngOnInit(): void {
   }
   onNoClick(): void {

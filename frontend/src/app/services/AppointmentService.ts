@@ -26,8 +26,27 @@ export class AppointmentService {
     return this.apiService.get(`${this.config.appointments_url}/blood-bank/${id}`);
   }
 
+  getAllAvailableByBloodBank(id: string): Observable<Appointment[]> {
+    return this.apiService.get(`${this.config.appointments_url}/blood-bank/${id}/available`);
+  }
+
   getAllByBloodDonor(id: string): Observable<Appointment[]> {
     return this.apiService.get(`${this.config.appointments_url}/blood-donor/${id}`);
+  }
+
+  getAllByLoggedInBloodDonor(): Observable<Appointment[]> {
+    return this.apiService.get(`${this.config.appointments_url}/blood-donor/`);
+  }
+
+  getAllUpcomingByLoggedInBloodDonor(): Observable<Appointment[]> {
+    return this.apiService.get(`${this.config.appointments_url}/blood-donor/upcoming`);
+  }
+
+  getAllPastByLoggedInBloodDonor(): Observable<Appointment[]> {
+    return this.apiService.get(`${this.config.appointments_url}/blood-donor/past`);
+  }
+  getAllCancelledByLoggedInBloodDonor(): Observable<Appointment[]> {
+    return this.apiService.get(`${this.config.appointments_url}/blood-donor/cancelled`);
   }
 
   getById(id: string): Observable<Appointment[]> {

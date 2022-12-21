@@ -29,13 +29,14 @@ public class AppointmentConverter implements Converter<Appointment, AppointmentD
 	 
 	@Override
 	public AppointmentDto entityToDto(Appointment entity) {
+		 String bloodDonorId = entity.getBloodDonor() == null ? null : entity.getBloodDonor().getPersonalId();
 		return new AppointmentDto(
 				entity.getId(),
 				entity.getStatus().toString(),
 				entity.getDateTime().toString(),
 				entity.getDuration(),
 				entity.getBloodBank().getId().toString(),
-				entity.getBloodDonor().getPersonalId().toString()
+				bloodDonorId
 				);
 	}
 
@@ -43,10 +44,7 @@ public class AppointmentConverter implements Converter<Appointment, AppointmentD
 	public Appointment dtoToEntity(AppointmentDto dto) {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.ENGLISH);
 		formatter.setTimeZone(TimeZone.getDefault());
-		BloodDonor donor = null;
-		if(!(dto.getBloodDonorId() == null)) {
-			donor = bloodDonorService.getByPersonalId(dto.getBloodDonorId());
-		}
+		BloodDonor donor = dto.getBloodDonorId() == null ? null : bloodDonorService.getByPersonalId(dto.getBloodDonorId());
 		if(dto.getId() == null) {
 			try {
 				return new Appointment(

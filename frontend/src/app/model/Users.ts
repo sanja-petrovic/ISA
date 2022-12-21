@@ -60,7 +60,6 @@ type Credentials = {
 }
 
 type PasswordDto ={
-  personalId: string,
   oldPassword: string,
   newPassword: string
 }

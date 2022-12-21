@@ -6,6 +6,7 @@ import com.example.isa.service.interfaces.AnswerService;
 import com.example.isa.service.interfaces.BloodDonorService;
 import com.example.isa.service.interfaces.QuestionService;
 import com.example.isa.util.converters.AnswerConverter;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/answers")
+@Api(value = "/answers", tags = "Questionnaire answers")
 public class AnswerController {
 
     private final AnswerService answerService;

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
 
+import io.swagger.annotations.Api;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 
@@ -16,6 +17,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 //0 2 * * *
 @Controller
+@Api(value = "/subscriptions", tags = "PSW subscriptions")
 public class SubscriptionController {
 
 	private final BloodSubscriptionService service;

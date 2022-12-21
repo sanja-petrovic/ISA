@@ -1,77 +1,89 @@
 <div class="centered-content">
-    <form class="form-wrapper" [formGroup]="profileForm" *ngIf="editEnabled">
-        <div class="form-header-wrapper">
-          <h2><b>Personal</b></h2>
-          <button (click)="editClicked()" class="login-button"> Edit Profile </button>
-        </div>
-        <mat-form-field required appearance="outline">
+  <div class="cards" *ngIf="editEnabled">
+    <mat-card class="profile-card">
+      <mat-card-title class="profile-title"><button class="icon-button material-icons.md-18" (click)="goBack()"><mat-icon fontIcon="arrow_back_ios"></mat-icon></button>Profile</mat-card-title>
+      <mat-card-content>
+        <form class="form-wrapper" [formGroup]="profileForm">
+          <h2>Personal information</h2>
+          <mat-form-field required appearance="outline">
             <mat-label>First name</mat-label>
-            <input formControlName="firstName" matInput type="text">
-        </mat-form-field>
-        <mat-form-field required appearance="outline">
-            <mat-label>Last name</mat-label>
-            <input formControlName="lastName" matInput type="text">
+            <input formControlName="firstName" matInput type="text" />
           </mat-form-field>
-        <mat-form-field required appearance="outline">
-          <mat-label>Personal ID</mat-label>
-          <input formControlName="personalId" matInput type="text">
-        </mat-form-field>
-        <mat-form-field required appearance="outline" *ngIf="editEnabled">
-          <mat-label>Gender</mat-label>
-          <mat-select formControlName="gender"  name="gender">
-            <mat-option value="female">
-              Female
-            </mat-option>
-            <mat-option value="male">
-              Male
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field required appearance="outline">
-          <mat-label>Occupation</mat-label>
-          <input formControlName="occupation" matInput type="text">
-        </mat-form-field>
-        <mat-form-field required appearance="outline">
-          <mat-label>Your school or organization</mat-label>
-          <input formControlName="institution"  matInput type="text">
-          <mat-hint>The name of your <b>school/university</b> if you're a student, or <b>organization</b> you're employed at.</mat-hint>
-        </mat-form-field>
-        <h2 class="needs-space"><b>Contact</b></h2>
-        <mat-form-field required appearance="outline">
-          <mat-label>Phone number</mat-label>
-          <input formControlName="phoneNumber" matInput type="text">
-        </mat-form-field>
-        <mat-form-field required appearance="outline">
-          <mat-label>Home address (street, number)</mat-label>
-          <input formControlName="homeAddress" matInput type="text">
-        </mat-form-field>
-        <mat-form-field required appearance="outline">
-          <mat-label>City</mat-label>
-          <input formControlName="city" matInput type="text">
-        </mat-form-field>
-        <mat-form-field required appearance="outline">
-          <mat-label>Country</mat-label>
-          <input formControlName="country" matInput type="text">
-        </mat-form-field>
-        <h2><b>Account</b></h2>
-        <mat-form-field required appearance="outline">
-          <mat-label>Email</mat-label>
-          <input formControlName="email" matInput type="email">
-        </mat-form-field>
-        <div class="password-field-wrapper">
-          <button class="password-field-button" (click)="openPasswordDialog()" [disabled]="!editEnabled">Change password </button>
-        </div>
-        <input type="submit" value="Save changes" class="submit-button" (click)="saveEditChanges()" *ngIf="editEnabled">
-
-    </form>
+          <mat-form-field required appearance="outline">
+            <mat-label>Last name</mat-label>
+            <input formControlName="lastName" matInput type="text" />
+          </mat-form-field>
+          <mat-form-field required appearance="outline">
+            <mat-label>Occupation</mat-label>
+            <input formControlName="occupation" matInput type="text">
+          </mat-form-field>
+          <mat-form-field required appearance="outline">
+            <mat-label>Your school or organization</mat-label>
+            <input formControlName="institution"  matInput type="text">
+            <mat-hint>The name of your <b>school/university</b> if you're a student, or <b>organization</b> you're employed at.</mat-hint>
+          </mat-form-field>
+          <h2 style="margin-top: 1rem">Contact</h2>
+          <mat-form-field required appearance="outline">
+            <mat-label>Phone number</mat-label>
+            <input formControlName="phoneNumber" matInput type="text">
+          </mat-form-field>
+          <mat-form-field required appearance="outline">
+            <mat-label>Home address (street, number)</mat-label>
+            <input formControlName="homeAddress" matInput type="text">
+          </mat-form-field>
+          <mat-form-field required appearance="outline">
+            <mat-label>City</mat-label>
+            <input formControlName="city" matInput type="text">
+          </mat-form-field>
+          <mat-form-field required appearance="outline">
+            <mat-label>Country</mat-label>
+            <input formControlName="country" matInput type="text">
+          </mat-form-field>
+          <input type="submit" class="submit-button" (click)="saveEditChanges()"/>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
   <div class="cards" *ngIf="!editEnabled">
     <mat-card class="profile-card">
-      <img mat-card-image src="https://digitalsynopsis.com/wp-content/uploads/2017/07/beautiful-color-ui-gradients-backgrounds-roseanna.png" alt="Photo of a Shiba Inu">
-      <mat-card-title class="profile-title">{{bloodDonor.firstName}} {{bloodDonor.lastName}}
+      <mat-card-title class="profile-title"
+        >{{ bloodDonor.firstName }} {{ bloodDonor.lastName }}
       </mat-card-title>
-      <mat-card-subtitle>{{bloodDonor.homeAddress}}, {{bloodDonor.city}}, {{bloodDonor.country}}</mat-card-subtitle>
       <mat-card-content>
-        <p>Contact: {{bloodDonor.phoneNumber}}</p>
+        <h2>Personal information</h2>
+        <p>
+          > ID: <b>{{ bloodDonor.personalId }}</b>
+        </p>
+        <p>
+          > Gender:
+          <b>{{ bloodDonor.gender == "FEMALE" ? "Female" : "Male" }}</b>
+        </p>
+        <p>
+          > Occupation: <b>{{ bloodDonor.occupation }}</b>
+        </p>
+        <p>
+          > Associated institution: <b>{{ bloodDonor.institution }}</b>
+        </p>
+        <h2>Contact</h2>
+        <p>
+          > Home address:
+          <b
+            >{{ bloodDonor.homeAddress }}, {{ bloodDonor.city }},
+            {{ bloodDonor.country }}</b
+          >
+        </p>
+        <p>
+          > Email: <b>{{ bloodDonor.email }}</b>
+        </p>
+        <p>
+          > Phone number: <b>{{ bloodDonor.phoneNumber }}</b>
+        </p>
+        <p>
+          <button class="password-field-button" (click)="editClicked()">
+            Edit profile
+          </button>
+            <button class="password-field-button" (click)="openPasswordDialog()">Change password</button>
+        </p>
       </mat-card-content>
     </mat-card>
   </div>

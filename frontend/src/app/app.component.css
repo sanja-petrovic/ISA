@@ -108,6 +108,12 @@ a {
   cursor: pointer;
 }
 
+.icon-button {
+  background-color: transparent;
+  border-radius: 100%;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
 
 .submit-button:hover {
   background-position: right center;

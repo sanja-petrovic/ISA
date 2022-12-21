@@ -12,4 +12,5 @@ public interface AdminService {
     Admin updateAdmin(Admin admin);
     boolean register(Admin admin);
     Optional<Admin> findByEmail(String email);
+
 }

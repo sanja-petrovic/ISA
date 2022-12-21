@@ -3,6 +3,7 @@
   <div class="links">
     <a href="/">Blood banks</a>
     <a href="/questionnaire" *ngIf="isLoggedIn">Questionnaire</a>
+    <a href="/appointments" *ngIf="isLoggedIn">My appointments</a>
   </div>
   <div class="buttons" *ngIf="!isLoggedIn; else loggedIn">
     <a href="/register"><button class="register-button">Register</button></a>

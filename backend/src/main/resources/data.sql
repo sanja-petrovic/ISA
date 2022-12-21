@@ -1,3 +1,5 @@
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 -- blood banks
 insert into public.blood_banks (id, city, street, country, average_grade, description, title, interval_end,
                                 interval_start)
@@ -112,14 +114,14 @@ VALUES ('9274a7eb-8c9e-4d50-badc-debd665f34b1', 'Are you currently on your perio
 INSERT INTO public.questions(id, text, type)
 VALUES ('99cc9319-f99d-466a-b2e7-f589ec69f83d',
         'Have you in the past 6 months given birth or had a pregnancy termination?', 'FOR_WOMEN');
--- blood donors
-
 
 --appointments
 insert into public.appointments(id,date_time,duration,status,blood_bank_id,blood_donor_id)
-values (uuid_generate_v4(),'2022-02-02 11:30:00',30,'NOT_SCHEDULED','16e4a8c2-3e86-4e93-825f-24e36cb29669',null);
+values (uuid_generate_v4(),'2023-02-02 11:30:00',30,'NOT_SCHEDULED','16e4a8c2-3e86-4e93-825f-24e36cb29669',null);
 insert into public.appointments(id,date_time,duration,status,blood_bank_id,blood_donor_id)
-values (uuid_generate_v4(),'2022-02-02 9:30:00',15,'NOT_SCHEDULED','16e4a8c2-3e86-4e93-825f-24e36cb29669',null);
+values (uuid_generate_v4(),'2023-02-02 9:30:00',15,'NOT_SCHEDULED','16e4a8c2-3e86-4e93-825f-24e36cb29669',null);
 insert into public.appointments(id,date_time,duration,status,blood_bank_id,blood_donor_id)
-values (uuid_generate_v4(),'2022-02-02 18:00:00',30,'NOT_SCHEDULED','16e4a8c2-3e86-4e93-825f-24e36cb29669',null);
+values (uuid_generate_v4(),'2023-02-02 18:00:00',30,'NOT_SCHEDULED','16e4a8c2-3e86-4e93-825f-24e36cb29669',null);
+insert into public.appointments(id,date_time,duration,status,blood_bank_id,blood_donor_id)
+values (uuid_generate_v4(),'2023-02-02 18:00:00',30,'SCHEDULED','16e4a8c2-3e86-4e93-825f-24e36cb29669', null);
 

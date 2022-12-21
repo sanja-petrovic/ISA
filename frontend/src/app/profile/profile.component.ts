@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { BloodDonorService } from '../services/BloodDonor.service';
+import { BloodDonorService } from '../services/BloodDonorService';
 import { PasswordDto, BloodDonor } from '../model/Users';
 import {MatDialog,MatDialogModule, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { ChangePasswordDialogComponent } from '../change-password-dialog/change-password-dialog.component';
@@ -31,7 +31,6 @@ export class ProfileComponent implements OnInit {
   public editEnabled : boolean = false;
   private newPassword : string ='';
   private passwordDto : PasswordDto = {
-    personalId: "",
     oldPassword: "",
     newPassword: ""
   };
@@ -40,29 +39,46 @@ export class ProfileComponent implements OnInit {
     private bloodDonorService : BloodDonorService,
     public dialog: MatDialog,
     private router: Router
-    ) { }
+    ) {
+     }
 
   ngOnInit(): void {
     this.bloodDonorService.getCurrentBloodDonor().subscribe((res: any)=>{
       this.bloodDonor = res;
       this.profileForm.setValue(this.bloodDonor);
     })
+    if(window.location.href.indexOf("edit") > -1) {
+      this.editEnabled = true;
+    } else {
+      this.editEnabled = false;
+    }
     //this.disableSensitive();
     //this.disableSafe();
   }
   saveEditChanges() :void{
     this.bloodDonorService.updateBloodDonor(this.profileForm.getRawValue()).subscribe((res: any)=>{
       console.log(res);
+      this.disableSafe();
+      window.location.href = window.location.origin + "/profile";
     })
   }
   editClicked(): void{
     this.editEnabled = !this.editEnabled;
+    console.log(this.editEnabled);
     if(this.editEnabled){
+      window.history.pushState('edit', 'Edit', '/profile/edit');
       this.enableSafe();
     }
     else{
+      window.history.pushState('profile', 'Profile', '/profile');
       this.disableSafe();
     }
+  }
+
+  goBack() {
+    this.editEnabled = false;
+    window.history.pushState('profile', 'Profile', '/profile');
+    this.disableSafe();
   }
   disableSensitive():void{
     this.profileForm.get('personalId').disable();
@@ -97,11 +113,10 @@ export class ProfileComponent implements OnInit {
       data: { oldPass: this.bloodDonor.password ,oldPassCheck: '', newPass: '', newPassCheck:''},
     });
     pwDialog.afterClosed().subscribe(result => {
-      this.newPassword = result;
-
-      this.passwordDto.personalId = this.bloodDonor.personalId;
-      this.passwordDto.oldPassword = this.bloodDonor.password;
-      this.passwordDto.newPassword = this.newPassword;
+      console.log(result);
+      this.newPassword = result.newPassConfirm;
+      this.passwordDto.oldPassword = result.oldPassConfirm;
+      this.passwordDto.newPassword = result.newPassConfirmyas;
       console.log(this.passwordDto);
       this.updateBloodDonorPassword();
 
@@ -109,7 +124,6 @@ export class ProfileComponent implements OnInit {
   }
   updateBloodDonorPassword():void{
     this.bloodDonorService.updateBloodDonorPassword(this.passwordDto).subscribe((res: any)=>{
-      console.log(res);
       alert("Password change successful, you will be redirected.")
       setTimeout(() =>
       {

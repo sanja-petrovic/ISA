@@ -44,8 +44,10 @@ import { AuthGuard } from './guards/auth-guard';
 import { AppointmentsComponent } from './appointments/appointments.component';
 import { DonorsAppointmentsComponent } from './donors-appointments/donors-appointments.component';
 import { AdminRegistrationComponent } from './admin-registration/admin-registration/admin-registration.component';
-
 import { AdminSchedulingComponent } from './admin-scheduling/admin-scheduling.component';
+import { DonorSchedulingComponent } from './donor-scheduling/donor-scheduling.component';
+import { DatePipe } from '@angular/common';
+import {MatTabsModule} from "@angular/material/tabs";
 import { AdminProfileComponent } from './admin-profile/admin-profile.component';
 
 @NgModule({
@@ -72,7 +74,9 @@ import { AdminProfileComponent } from './admin-profile/admin-profile.component';
     DonorsAppointmentsComponent,
     AdminRegistrationComponent,
     AdminSchedulingComponent,
-    AdminProfileComponent
+    AdminProfileComponent,
+    DonorSchedulingComponent,
+    
   ],
   imports: [
     HttpClientModule,
@@ -114,11 +118,13 @@ import { AdminProfileComponent } from './admin-profile/admin-profile.component';
     FlexLayoutModule,
     MatDialogModule,
     MatRadioModule,
-    MatListModule
+    MatListModule,
+    MatTabsModule
   ],
 
 
   providers: [
+    [DatePipe],
     {
 		provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}
 	},
