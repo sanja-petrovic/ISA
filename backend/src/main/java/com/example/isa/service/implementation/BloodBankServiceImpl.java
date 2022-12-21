@@ -57,12 +57,11 @@ public class BloodBankServiceImpl implements BloodBankService {
         	return repository.findByTitleLike("%"+titleString+"%",Double.parseDouble(filterGrade), sort);
         }
         else {
-        	return repository.findByTitleLikeAndAddressCityLike("%"+titleString+"%", "%"+cityString+"%",Double.parseDouble(filterGrade), sort);
+        	//return repository.findByTitleLikeAndAddressCityLike("%"+titleString+"%", "%"+cityString+"%",Double.parseDouble(filterGrade), sort);
+        	 return this.repository.findAllByTitleIgnoreCaseContainingAndAddress_CityIgnoreCaseContainingAndAverageGradeGreaterThanEqual(titleString, cityString, parseGrade(filterGrade), sort);
         }
-    	String titleString = searchCriteria.get(0) == null ? "" : searchCriteria.get(0);
-    	String cityString = searchCriteria.get(1) == null ? "" : searchCriteria.get(1);
-
-        return this.repository.findAllByTitleIgnoreCaseContainingAndAddress_CityIgnoreCaseContainingAndAverageGradeGreaterThanEqual(titleString, cityString, parseGrade(filterGrade), sort);
+         
+       
     }
 
     private Double parseGrade(String filterGrade) {
