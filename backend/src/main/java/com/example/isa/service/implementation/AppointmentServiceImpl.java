@@ -211,6 +211,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 	}
 
 	@Override
+	@Transactional
 	public Appointment createByDonor(Appointment appointment, BloodDonor donor) {
 		if(appointment!=null && donor!=null) {
 			if (appointment.getDateTime().before(new Date())) {
