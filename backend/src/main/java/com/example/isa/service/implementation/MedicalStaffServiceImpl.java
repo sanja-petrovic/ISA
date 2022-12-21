@@ -14,6 +14,7 @@ import com.example.isa.repository.MedicalStaffRepository;
 import com.example.isa.service.interfaces.MedicalStaffService;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -51,6 +52,11 @@ public class MedicalStaffServiceImpl implements MedicalStaffService {
     @Override
     public BloodBank getBloodBank(MedicalStaff medicalStaff) {
         return medicalStaff.getBloodBank();
+    }
+
+    @Override
+    public Optional<MedicalStaff> findByEmail(String email) {
+        return repository.findByEmail(email);
     }
 
 }
