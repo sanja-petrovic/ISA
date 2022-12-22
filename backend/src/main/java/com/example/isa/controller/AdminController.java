@@ -1,7 +1,11 @@
 package com.example.isa.controller;
 import com.example.isa.dto.AdminDto;
 import com.example.isa.dto.AdminListDto;
+import com.example.isa.dto.BloodDonorDto;
+import com.example.isa.dto.PasswordDto;
 import com.example.isa.model.Admin;
+import com.example.isa.model.BloodDonor;
+import com.example.isa.model.User;
 import com.example.isa.service.interfaces.AdminService;
 import com.example.isa.service.interfaces.RoleService;
 import com.example.isa.service.interfaces.UserService;
@@ -67,6 +71,8 @@ public class AdminController {
     @ApiOperation(value = "Register an admin.", httpMethod = "POST")
     public ResponseEntity<?> register(@RequestBody AdminDto adminDto){
         Admin admin = converter.dtoToEntity(adminDto);
+        admin.setPassword(passwordEncoder.encode(admin.getPassword()));
+        admin.setFirstPassword(admin.getPassword());
         if (userService.findByUsername(adminDto.getEmail()) == null) {
             admin.setRole(roleService.findByName("ROLE_ADMIN"));
             adminService.register(admin);
@@ -80,5 +86,14 @@ public class AdminController {
     private AdminListDto convertListToDto(List<Admin> adminsList) {
         List<AdminDto> adminsDtoList = adminsList.stream().map(converter::entityToDto).collect(Collectors.toList());
         return new AdminListDto(adminsDtoList);
+    }
+    @PostMapping(value="/update")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @ApiOperation(value = "Update a admin's information", httpMethod = "POST")
+    public ResponseEntity<AdminDto> update(@RequestBody AdminDto adminDto){
+        Admin retVal = converter.dtoToEntity(adminDto);
+        retVal.setPassword(passwordEncoder.encode(retVal.getPassword()));
+        retVal = adminService.update(retVal);
+        return retVal == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(converter.entityToDto(retVal));
     }
 }

@@ -1,6 +1,7 @@
 package com.example.isa.service.implementation;
 
 import com.example.isa.model.Admin;
+import com.example.isa.model.User;
 import com.example.isa.repository.AdminRepository;
 import com.example.isa.service.interfaces.AdminService;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,10 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Optional<Admin> findByEmail(String email) {
         return repository.findByEmail(email);
+    }
+    public Admin update(Admin admin) {
+
+       return repository.save(admin);
     }
 
 }

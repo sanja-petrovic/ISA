@@ -60,6 +60,8 @@ const routes: Routes = [{
   path: 'donor/scheduling', component: DonorSchedulingComponent
 },{
   path: 'medical-staff/schedule', component: MedicalStaffScheduleComponent
+},{
+  path: 'admin', component:AdminProfileComponent, canActivate: [AuthGuard]
 }]
 
 @NgModule({

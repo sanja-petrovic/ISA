@@ -53,9 +53,9 @@ export class AdminProfileComponent implements OnInit {
       data: { oldPass: this.admin.password ,oldPassCheck: '', newPass: '', newPassCheck:''},
     });
     pwDialog.afterClosed().subscribe(result => {
-      this.newPassword = result;
-      this.passwordDto.oldPassword = this.admin.password;
-      this.passwordDto.newPassword = this.newPassword;
+      this.newPassword = result.newPassConfirm;
+      this.passwordDto.oldPassword = result.oldPassConfirm;
+      this.passwordDto.newPassword = result.newPassConfirm;
       console.log(this.passwordDto);
       this.updateAdminPassword();
 
@@ -67,7 +67,7 @@ export class AdminProfileComponent implements OnInit {
       alert("Password change successful, you will be redirected.")
       setTimeout(() =>
       {
-          this.router.navigate(['/profile']);
+          this.router.navigate(['/admin']);
       },
       2000);
     })

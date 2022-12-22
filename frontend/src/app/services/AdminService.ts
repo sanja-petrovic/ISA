@@ -31,8 +31,8 @@ export class AdminService {
   getCurrentAdmin() : Observable<Admin> {
     return this.apiService.get(`${this.config.admin_url}/current`);
   }
-  updateAdminPassword(passwordDto : PasswordDto): Observable<void>{
-    return this.apiService.put(`${this.config.users_url}/update`, passwordDto);
+  updateAdminPassword(passwordDto : PasswordDto): Observable<any>{
+    return this.apiService.put(`${this.config.users_url}/password/update`, passwordDto);
   }
 
 
