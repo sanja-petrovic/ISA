@@ -1,4 +1,5 @@
 <div class="centered-content">
+  <h1 class="title">{{bloodBank.title}}</h1>
   <div class="cards">
     <mat-card *ngFor="let appointment of appointments" class="bank-card">
       <mat-card-title class="bank-title">{{(this.formatDate(appointment))}}
@@ -9,5 +10,6 @@
         <button class="schedule-button" (click)="this.schedule(appointment)">Schedule</button>
       </mat-card-content>
     </mat-card>
+    <p *ngIf="appointments.length === 0">No available appointments right now.</p>
   </div>
 </div>

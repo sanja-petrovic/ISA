@@ -123,7 +123,7 @@ values (uuid_generate_v4(),'2023-02-02 9:30:00',15,'NOT_SCHEDULED','16e4a8c2-3e8
 insert into public.appointments(id,date_time,duration,status,blood_bank_id,blood_donor_id)
 values (uuid_generate_v4(),'2023-02-02 18:00:00',30,'NOT_SCHEDULED','16e4a8c2-3e86-4e93-825f-24e36cb29669',null);
 insert into public.appointments(id,date_time,duration,status,blood_bank_id,blood_donor_id)
-values (uuid_generate_v4(),'2023-02-02 18:00:00',30,'NOT_SCHEDULED','16e4a8c2-3e86-4e93-825f-24e36cb29669', null);
+values (uuid_generate_v4(),'2023-02-05 12:00:00',30,'NOT_SCHEDULED','16e4a8c2-3e86-4e93-825f-24e36cb29669', null);
 insert into public.appointments(id,date_time,duration,status,blood_bank_id,blood_donor_id)
 values (uuid_generate_v4(),'2022-12-30 18:00:00',30,'SCHEDULED','16e4a8c2-3e86-4e93-825f-24e36cb29655', '16e4a8c2-3e86-4e93-825f-24e36cb29645');
 insert into public.appointments(id,date_time,duration,status,blood_bank_id,blood_donor_id)
