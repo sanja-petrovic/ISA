@@ -35,4 +35,8 @@ export class BloodDonorService {
   checkBloodDonorQuestionaire(personalId : String) : Observable<Boolean>{
     return this.apiService.get(`${this.config.blood_donors_url}/questions/${personalId}`);
   }
+
+  increasePenalties(BloodDonorDto : BloodDonor): Observable<any>{
+    return this.apiService.put(`${this.config.blood_donors_url}/give-penalty`, BloodDonorDto);
+  }
 }

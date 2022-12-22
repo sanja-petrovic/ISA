@@ -6,6 +6,7 @@ import { MedicalStaff } from '../model/Users';
 import { AppointmentService } from '../services/AppointmentService';
 import { BloodDonorService } from '../services/BloodDonorService';
 import { MedicalStaffService } from '../services/MedicalStaffService';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-medical-staff-schedule',
@@ -14,7 +15,7 @@ import { MedicalStaffService } from '../services/MedicalStaffService';
 })
 export class MedicalStaffScheduleComponent implements OnInit {
 
-  constructor(private appointmentService: AppointmentService, private route: ActivatedRoute, private datePipe: DatePipe, private medicalStaffService : MedicalStaffService, private bloodDonorService : BloodDonorService) { }
+  constructor(private appointmentService: AppointmentService, private route: ActivatedRoute, private datePipe: DatePipe, private medicalStaffService : MedicalStaffService, private bloodDonorService : BloodDonorService, private router: Router) { }
 
   public appointments: Appointment[] = [];
   public staff : MedicalStaff;
@@ -24,7 +25,7 @@ export class MedicalStaffScheduleComponent implements OnInit {
     this.medicalStaffService.getCurrentStaff().subscribe(data => {
       this.staff = data;
       this.appointmentService.getAppointmentsByMedicalStaffForTheTimePeriod("week",this.staff.bloodBankId).subscribe(data => {
-        this.appointments = data;
+        this.appointments = data.filter((appoimtment)=> this.formatStatus(appoimtment)==='scheduled');
       });
     });
     
@@ -40,7 +41,7 @@ export class MedicalStaffScheduleComponent implements OnInit {
 
   getAppointments(period: string): void {
     this.appointmentService.getAppointmentsByMedicalStaffForTheTimePeriod( period ,this.staff.bloodBankId).subscribe(data => {
-      this.appointments = data;
+      this.appointments = data.filter((appoimtment)=> this.formatStatus(appoimtment)==='scheduled');
       for(let i = 0;i<this.appointments.length;i+=1){
         this.bloodDonorService.getBloodDonor(this.appointments[i].bloodDonorId).subscribe(donor =>{
           this.appointments[i].bloodDonor = donor;
@@ -48,6 +49,10 @@ export class MedicalStaffScheduleComponent implements OnInit {
       }
       
     }); 
+  }
+
+  openAppointmentPage(appointment: Appointment): void{
+    this.router.navigate([`/medical-staff/appointment/${appointment.id}`]);
   }
 
 }

@@ -1,5 +1,6 @@
 package com.example.isa.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,30 +22,22 @@ public class BloodDonor extends User {
     @Column
     private String institution;
     @Column
+    private int penalty;
+    @Column
     @Enumerated(EnumType.STRING)
     private LoyaltyStatus loyaltyStatus;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "blood_donor_id")
     private List<Answer> answers = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "blood_donor_id")
-    private Set<Appointment> appointments = new LinkedHashSet<>();
-
-    public Set<Appointment> getAppointments() {
-        return appointments;
-    }
-
-    public void setAppointments(Set<Appointment> appointments) {
-        this.appointments = appointments;
-    }
-
     @Builder
-    public BloodDonor(String personalId, String email, String password, String firstName, String lastName, String phoneNumber, Gender gender, boolean verified, String occupation, Address address, String institution, Role roles) {
+    public BloodDonor(String personalId, String email, String password, String firstName, String lastName, String phoneNumber, Gender gender, boolean verified, String occupation, Address address, String institution, Role roles, int penalty) {
         super(personalId, email, password, firstName, lastName, phoneNumber, gender, verified, roles);
         this.occupation = occupation;
         this.address = address;
         this.institution = institution;
+        this.penalty = penalty;
     }
 }

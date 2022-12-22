@@ -82,5 +82,13 @@ public class BloodDonorController {
     	BloodDonor retVal = bloodDonorService.update(bloodDonorConverter.dtoToEntity(bloodDonorDto));
 		return retVal == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(bloodDonorConverter.entityToDto(retVal));
     }
+
+    @PutMapping(value = "/give-penalty")
+    @PreAuthorize("hasRole('ROLE_STAFF')")
+    @ApiOperation(value = "Increment penalties of blood donor")
+    public ResponseEntity<BloodDonorDto> increasePenalties(@RequestBody BloodDonorDto bloodDonorDto){
+        bloodDonorService.increasePenalties(bloodDonorConverter.dtoToEntity(bloodDonorDto));
+        return ResponseEntity.ok().build();
+    }
     
 }

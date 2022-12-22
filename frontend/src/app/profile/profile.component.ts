@@ -116,7 +116,7 @@ export class ProfileComponent implements OnInit {
       console.log(result);
       this.newPassword = result.newPassConfirm;
       this.passwordDto.oldPassword = result.oldPassConfirm;
-      this.passwordDto.newPassword = result.newPassConfirmyas;
+      this.passwordDto.newPassword = result.newPassConfirm;
       console.log(this.passwordDto);
       this.updateBloodDonorPassword();
 

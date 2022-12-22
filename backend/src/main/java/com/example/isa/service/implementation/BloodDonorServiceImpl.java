@@ -36,6 +36,14 @@ public class BloodDonorServiceImpl implements BloodDonorService {
 		if(donor.getAnswers().isEmpty()) return false;
 		return true;
 	}
+
+	@Override
+	public void increasePenalties(BloodDonor bloodDonor) {
+		BloodDonor fromRepo = repository.findByPersonalId(bloodDonor.getPersonalId()).orElse(null);
+		fromRepo.setPenalty(bloodDonor.getPenalty() + 1);
+		repository.save(fromRepo);
+	}
+
 	@Override
 	public BloodDonor update(BloodDonor bloodDonor){
 		BloodDonor fromRepo = repository.findByPersonalId(bloodDonor.getPersonalId()).orElse(null);

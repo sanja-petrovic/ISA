@@ -1,5 +1,8 @@
 package com.example.isa.service.implementation;
 
+import java.awt.image.RenderedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.sql.SQLClientInfoException;
 import java.sql.Time;
 import java.text.ParseException;
@@ -25,32 +28,41 @@ import com.example.isa.exception.*;
 import com.example.isa.model.AppointmentStatus;
 import com.example.isa.model.BloodBank;
 import com.example.isa.model.BloodDonor;
+import com.example.isa.model.Email;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.metrics.buffering.StartupTimeline;
 import org.springframework.kafka.listener.ListenerMetadata;
+import org.springframework.mail.MailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.example.isa.model.Appointment;
 import com.example.isa.repository.AppointmentRepository;
 import com.example.isa.service.interfaces.AppointmentService;
 import com.example.isa.service.interfaces.BloodBankService;
+import com.example.isa.util.EmailSender;
+import com.example.isa.util.QrCodeGenerator;
 import com.example.isa.util.converters.DateConverter;
 
 import org.springframework.data.domain.Sort;
 
 import org.springframework.util.CollectionUtils;
 
+import javax.imageio.ImageIO;
 import javax.transaction.Transactional;
 
 @Service
 public class AppointmentServiceImpl implements AppointmentService {
     private final AppointmentRepository repository;
     private final BloodBankService bankService;
+    private final EmailSender mailSender;
 
     @Autowired
-    public AppointmentServiceImpl(AppointmentRepository repository, BloodBankService bankService) {
+    public AppointmentServiceImpl(AppointmentRepository repository, BloodBankService bankService,EmailSender mailSender) {
         this.repository = repository;
         this.bankService = bankService;
+        this.mailSender = mailSender;
     }
 
     @Override
@@ -167,7 +179,12 @@ public class AppointmentServiceImpl implements AppointmentService {
 				appointment.setBloodDonor(donor);
                 appointment.setStatus(AppointmentStatus.SCHEDULED);
 				repository.save(appointment);
-            } else {
+				try {
+					sendDetails(appointment, donor);
+				} catch (Exception e) {
+					throw new RuntimeException(e);
+				}
+			} else {
                 throw new AlreadyScheduledException();
             }
         } else {
@@ -194,6 +211,13 @@ public class AppointmentServiceImpl implements AppointmentService {
 	}
 
 	@Override
+	@Transactional
+	public void complete(Appointment appointment) {
+		appointment.setStatus(AppointmentStatus.COMPLETED);
+		repository.save(appointment);
+	}
+
+	@Override
 	public Appointment createByDonor(Appointment appointment, BloodDonor donor) {
 		if(appointment!=null && donor!=null) {
 			if (appointment.getDateTime().before(new Date())) {
@@ -214,11 +238,34 @@ public class AppointmentServiceImpl implements AppointmentService {
 			appointment.setStatus(AppointmentStatus.SCHEDULED);
 			appointment.setBloodDonor(donor);
 			repository.save(appointment);
+			try {
+				sendDetails(appointment, donor);
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		else {
 			throw new NotFoundException();
 		}
 		return null;
+	}
+	@Async
+	private void sendDetails(Appointment appointment, BloodDonor donor) throws IOException, Exception {
+		StringBuilder mailBodyBuilder = new StringBuilder();
+		mailBodyBuilder.append("Your appointment at bank: ");
+		mailBodyBuilder.append(appointment.getBloodBank().getTitle());
+		mailBodyBuilder.append(",has been succesfully scheduled for ");
+		mailBodyBuilder.append(appointment.getDateTime().toString());
+		
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ImageIO.write(QrCodeGenerator.generateQRCodeImage(mailBodyBuilder.toString()), "png", baos);
+		baos.flush();
+		byte[] imageBytes= baos.toByteArray();
+		baos.close();
+		
+		mailSender.sendWithImage(new Email(donor.getEmail(),"Appointment scheduled", mailBodyBuilder.toString()),imageBytes);
 	}
 	private boolean donorHasAtChosenTime(BloodDonor donor, Date dateTime) {
 		return !repository.findAllByBloodDonorAndDateTime(donor, dateTime).isEmpty();
@@ -271,20 +318,23 @@ public class AppointmentServiceImpl implements AppointmentService {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.ENGLISH);
 		formatter.setTimeZone(TimeZone.getDefault());
 		Date dateTime = formatter.parse(dateTimeString);
-		List<BloodBank> banks = bankService.search(sort, null, "0");
+		List<String> searchCriteria = new ArrayList<String>();
+		searchCriteria.add("");
+		searchCriteria.add("");
+		List<BloodBank> banks = bankService.search(sort, searchCriteria, "0");
 		if(banks!=null) {
 			List<BloodBank> retVal = new ArrayList<BloodBank>();
-			LocalDateTime converteDateTime = DateConverter.convert(dateTime);
+			LocalDateTime convertedDateTime = DateConverter.convert(dateTime);
 			for (BloodBank bank : banks) {
 				if(!this.bloodBankIsWorking(bank,(Date)dateTime.clone(), duration)) {
 					continue;
 				}
-				List<Appointment> listScheduled = repository.findAllByBloodBankAndDate( bank, converteDateTime.getYear(), converteDateTime.getMonthValue(), converteDateTime.getDayOfMonth());
-				if(listScheduled == null) {//bank is free for that day
+				List<Appointment> listScheduled = repository.findAllByBloodBankAndDate( bank, convertedDateTime.getYear(), convertedDateTime.getMonthValue(), convertedDateTime.getDayOfMonth());
+				if(listScheduled == null) {
 					retVal.add(bank);
 					continue;
 				}
-				else { //bank has scheduled apps for that day
+				else {
 					boolean overlap = false;
 					for(Appointment appointment : listScheduled) {
 						if(hasDateTimeOverlap(appointment, dateTime, duration)){

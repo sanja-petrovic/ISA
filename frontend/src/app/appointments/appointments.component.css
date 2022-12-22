@@ -11,3 +11,9 @@
 .cards {
   margin-top: 1.5rem;
 }
+.title {
+  color: rgb(199, 58, 91);
+  font-weight: bold;
+  margin-top: 2rem;
+  font-size: 30px;
+}
