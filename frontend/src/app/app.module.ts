@@ -50,6 +50,7 @@ import { DatePipe } from '@angular/common';
 import {MatTabsModule} from "@angular/material/tabs";
 import { AdminProfileComponent } from './admin-profile/admin-profile.component';
 import { MedicalStaffScheduleComponent } from './medical-staff-schedule/medical-staff-schedule.component';
+import { MedStaffSchedulePageComponent, CheckBloodSuppliesDialog } from './med-staff-schedule-page/med-staff-schedule-page.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +81,8 @@ import { MedicalStaffScheduleComponent } from './medical-staff-schedule/medical-
     AdminProfileComponent,
     DonorSchedulingComponent,
     MedicalStaffScheduleComponent,
+    MedStaffSchedulePageComponent,
+    CheckBloodSuppliesDialog
     
   ],
   imports: [

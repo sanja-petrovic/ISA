@@ -1,10 +1,7 @@
 package com.example.isa.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -29,5 +26,10 @@ public class BloodSupply {
     @ManyToOne
     @JoinColumn(name = "blood_bank_id")
     private BloodBank bloodBank;
-
+    @Builder
+    public BloodSupply(double amount, UUID id, BloodType type){
+        this.amount = amount;
+        this.id = id;
+        this.type = type;
+    }
 }

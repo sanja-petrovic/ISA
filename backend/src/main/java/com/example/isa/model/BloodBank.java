@@ -57,6 +57,15 @@ public class BloodBank {
         this.description = description;
         this.averageGrade = averageGrade;
     }
+
+    public BloodBank(String title, Address address, String description, Interval workingHours, double averageGrade) {
+        this.id = UUID.randomUUID();
+        this.title = title;
+        this.address = address;
+        this.description = description;
+        this.workingHours = workingHours;
+        this.averageGrade = averageGrade;
+    }
     
     public boolean checkBloodSupply(BloodType type, double amount) {
     	for(BloodSupply supply : this.bloodSupplies) {

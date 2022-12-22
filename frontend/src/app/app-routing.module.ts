@@ -19,10 +19,11 @@ import { AdminSchedulingComponent } from './admin-scheduling/admin-scheduling.co
 import {AppointmentsComponent} from "./appointments/appointments.component";
 import { DonorSchedulingComponent } from './donor-scheduling/donor-scheduling.component';
 import {DonorsAppointmentsComponent} from "./donors-appointments/donors-appointments.component";
-
 import { AdminProfileComponent } from './admin-profile/admin-profile.component';
 import { MedicalStaffScheduleComponent } from './medical-staff-schedule/medical-staff-schedule.component';
-const routes: Routes = [{
+import { MedStaffSchedulePageComponent } from './med-staff-schedule-page/med-staff-schedule-page.component';
+
+const appRoutes: Routes = [{
   path: 'home', component: HomeComponent, canActivate: [AuthGuard]
 }, {
   path: '', component: BanksPageComponent
@@ -52,20 +53,26 @@ const routes: Routes = [{
   path: 'admin/register', component: AdminRegistrationComponent, canActivate: [AuthGuard]
 }, {
   path: 'admin/scheduling', component: AdminSchedulingComponent, canActivate: [AuthGuard]
-},  {
+}, {
+  path: 'blood-banks/:id/appointments', component: AppointmentsComponent, canActivate: [AuthGuard]
+}, {
   path: 'blood-banks/:id/appointments', component: AppointmentsComponent, canActivate: [AuthGuard]
 }, {
   path: 'appointments', component: DonorsAppointmentsComponent, canActivate: [AuthGuard]
 },{
   path: 'donor/scheduling', component: DonorSchedulingComponent
 },{
-  path: 'medical-staff/schedule', component: MedicalStaffScheduleComponent
-}]
+  path: 'medical-staff/schedule', component: MedicalStaffScheduleComponent, canActivate: [AuthGuard]
+},{
+  path: 'medical-staff/appointment/:id', component: MedStaffSchedulePageComponent, canActivate: [AuthGuard]
+},{
+  path: '**', redirectTo: 'login'
+},]
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(appRoutes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
 
-export const routing = RouterModule.forRoot(routes);
+export const routing = RouterModule.forRoot(appRoutes);

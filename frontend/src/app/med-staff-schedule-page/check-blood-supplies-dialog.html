@@ -1,0 +1,49 @@
+<h1 mat-dialog-title>Blood supplies {{data.bloodType}}</h1>
+<div mat-dialog-content>
+  <form [formGroup]="form">
+    
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Quantity [L]</mat-label>
+      <input type="number" id="quantity"
+            min="0"
+            aria-label="Number"
+            matInput
+            formControlName="quantity"
+            [(ngModel)]="data.quantity"
+            >
+    </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Enter blood type (eg. O_NEGATIVE)</mat-label>
+      <input type="text" id="bloodType"
+            autocomplete="off" required matInput
+            aria-label="Number"
+            formControlName="bloodType"
+            [(ngModel)]="data.bloodType">
+        
+    </mat-form-field>
+      <button mat-button (click)="spendSupplies()">
+        {{visible ? "Spend supplies":  "Add supplies"}}
+      </button>
+    <mat-form-field *ngIf="visible">
+      <mat-label>Supplies</mat-label>
+        <mat-select formControlName="suppliesId">
+            <mat-option *ngFor="let item of supplies" [value]="item.id">
+                {{item.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field *ngIf="visible">
+      <mat-label>Supplies</mat-label>
+        <mat-label>Enter quantity</mat-label>
+        <mat-select formControlName="suppliesQuantity">
+          <mat-option *ngFor="let item of [1,2,3,4,5]" [value]="item">
+              {{item}}
+          </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Close</button>
+  <button mat-button id="submit" (click)="onCheckClick(data.quantity, data.bloodType)" cdkFocusInitial [disabled]="!data.bloodType.length">Check</button>
+</div>

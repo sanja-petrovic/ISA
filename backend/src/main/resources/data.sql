@@ -131,3 +131,32 @@ values (uuid_generate_v4(),'2023-01-12 18:00:00',30,'SCHEDULED','16e4a8c2-3e86-4
 
 
 
+--supplies
+insert into public.supplies(id,amount, name)
+values (uuid_generate_v4(),300,'Igla');
+insert into public.supplies(id,amount, name)
+values (uuid_generate_v4(),200,'Spric');
+insert into public.supplies(id,amount, name)
+values (uuid_generate_v4(),100,'Epruveta');
+insert into public.supplies(id,amount, name)
+values (uuid_generate_v4(),400,'Gaza');
+insert into public.supplies(id,amount, name)
+values (uuid_generate_v4(),50,'Hanzaplast');
+
+--blood supplies
+insert into public.blood_supplies(id,amount, type, blood_bank_id)
+values (uuid_generate_v4(),360,'A_POSITIVE', '16e4a8c2-3e86-4e93-825f-24e36cb29669');
+insert into public.blood_supplies(id,amount, type, blood_bank_id)
+values (uuid_generate_v4(),150,'B_POSITIVE', '16e4a8c2-3e86-4e93-825f-24e36cb29669');
+insert into public.blood_supplies(id,amount, type, blood_bank_id)
+values (uuid_generate_v4(),240,'O_POSITIVE', '16e4a8c2-3e86-4e93-825f-24e36cb29669');
+insert into public.blood_supplies(id,amount, type, blood_bank_id)
+values (uuid_generate_v4(),30,'AB_POSITIVE', '16e4a8c2-3e86-4e93-825f-24e36cb29669');
+insert into public.blood_supplies(id,amount, type, blood_bank_id)
+values (uuid_generate_v4(),120,'A_NEGATIVE', '16e4a8c2-3e86-4e93-825f-24e36cb29669');
+insert into public.blood_supplies(id,amount, type, blood_bank_id)
+values (uuid_generate_v4(),210,'B_NEGATIVE', '16e4a8c2-3e86-4e93-825f-24e36cb29669');
+insert into public.blood_supplies(id,amount, type, blood_bank_id)
+values (uuid_generate_v4(),20,'O_NEGATIVE', '16e4a8c2-3e86-4e93-825f-24e36cb29669');
+insert into public.blood_supplies(id,amount, type, blood_bank_id)
+values (uuid_generate_v4(),350,'AB_NEGATIVE', '16e4a8c2-3e86-4e93-825f-24e36cb29669');

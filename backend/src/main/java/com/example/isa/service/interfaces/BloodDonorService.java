@@ -10,4 +10,5 @@ public interface BloodDonorService {
     BloodDonor update(BloodDonor bloodDonor);
     BloodDonor getByEmail(String email);
     Boolean filledOutQuestions(String personalId);
+    void increasePenalties(BloodDonor bloodDonor);
 }

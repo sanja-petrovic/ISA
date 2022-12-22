@@ -21,7 +21,8 @@ export class ConfigService {
   public admin_url = this._api_url+'/admin';
   public new_scheduling_url = this._api_url + '/appointments/create';
   public available_bank_url = this._api_url + '/appointments/blood-donor/check-available';
-
+  public supplies_url = this._api_url + '/supplies';
+  public blood_supplies_url = this._api_url + '/blood-supplies';
 
   get login_url(): string {
     return this._login_url;

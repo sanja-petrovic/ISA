@@ -22,6 +22,8 @@ public class BloodDonor extends User {
     @Column
     private String institution;
     @Column
+    private int penalty;
+    @Column
     @Enumerated(EnumType.STRING)
     private LoyaltyStatus loyaltyStatus;
 
@@ -31,10 +33,11 @@ public class BloodDonor extends User {
     private List<Answer> answers = new ArrayList<>();
 
     @Builder
-    public BloodDonor(String personalId, String email, String password, String firstName, String lastName, String phoneNumber, Gender gender, boolean verified, String occupation, Address address, String institution, Role roles) {
+    public BloodDonor(String personalId, String email, String password, String firstName, String lastName, String phoneNumber, Gender gender, boolean verified, String occupation, Address address, String institution, Role roles, int penalty) {
         super(personalId, email, password, firstName, lastName, phoneNumber, gender, verified, roles);
         this.occupation = occupation;
         this.address = address;
         this.institution = institution;
+        this.penalty = penalty;
     }
 }
