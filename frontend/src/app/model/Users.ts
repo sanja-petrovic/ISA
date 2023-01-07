@@ -11,7 +11,8 @@ type BloodDonor = {
   country: string,
   email: string,
   password: string,
-  loyaltyStatus: string
+  loyaltyStatus: string,
+  penaltyCount: number
 }
 
 type MedicalStaff = {

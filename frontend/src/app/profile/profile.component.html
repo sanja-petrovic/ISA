@@ -78,12 +78,31 @@
         <p>
           > Phone number: <b>{{ bloodDonor.phoneNumber }}</b>
         </p>
+        <h2>Penalties</h2>
+        <h6 class="subtitle">A penalty is given if a donor does not show up to a scheduled appointment.</h6>
+        <p >
+          > Count: <b [ngClass]="
+          [bloodDonor.penaltyCount === 2 ? 'orange' :
+          bloodDonor.penaltyCount === 3 ? 'red' : '']
+          ">{{bloodDonor.penaltyCount}}</b>
+        </p>
+        <p class="small-text yellow-background" *ngIf="bloodDonor.penaltyCount === 2">
+          <img src="assets/images/warning.png" width="20"/>
+           Please make sure to show up to your next appointment. If you have three penalties, you won't be able to schedule any more appointments for the month.
+        </p>
+        <p class="small-text red-background" *ngIf="bloodDonor.penaltyCount >= 3">
+          <img src="assets/images/alert.png" width="20"/>
+          Unfortunately, due to exceeding the penalty limit, you won't be able to schedule any more appointments for the month.
+        </p>
+        <br>
+        <mat-divider></mat-divider>
         <p>
           <button class="password-field-button" (click)="editClicked()">
             Edit profile
           </button>
             <button class="password-field-button" (click)="openPasswordDialog()">Change password</button>
         </p>
+
       </mat-card-content>
     </mat-card>
   </div>
