@@ -68,4 +68,8 @@ export class AppointmentService {
   getAppointmentsByMedicalStaffForTheTimePeriod(period : string, bank : string) : Observable<Appointment[]> {
     return this.apiService.post(`${this.config.appointments_url}/schedule/${period}/${bank}`,'');
   }
+
+  setAsMissed(id: string): Observable<void> {
+    return this.apiService.post(`${this.config.appointments_url}/missed/${id}`, '');
+  }
 }

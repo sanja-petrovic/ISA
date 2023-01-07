@@ -21,5 +21,6 @@ public class AppointmentDto {
     private String dateTime;
     private Long duration;
     private String bloodBankId;
+    private String bloodBankTitle;
     private String bloodDonorId;
 }

@@ -42,7 +42,7 @@ export class MedStaffSchedulePageComponent implements OnInit {
         for (let a of data){
           if(a.id === this.id){
             this.appointment = a;
-            
+
             this.bloodDonorService.getBloodDonor(this.appointment.bloodDonorId).subscribe(donor =>{
               this.appointment.bloodDonor = donor;
             })
@@ -65,18 +65,18 @@ export class MedStaffSchedulePageComponent implements OnInit {
   }
 
   notPresentClick(): void {
-    if (confirm("Are you sure donor is not present?")) { 
+    if (confirm("Are you sure donor is not present?")) {
       this.bloodDonorService.increasePenalties(this.appointment.bloodDonor).subscribe((res) => {
         console.log("Penalty given")
-        this.cancel(this.appointment);  
+        this.cancel(this.appointment);
         this.router.navigate([`/medical-staff/schedule/`])
       })
     }
   }
 
   wrongTermsClick(): void {
-    if (confirm("Are you sure donor is not satisfying terms of blood donation?")) {   
-      this.cancel(this.appointment); 
+    if (confirm("Are you sure donor is not satisfying terms of blood donation?")) {
+      this.cancel(this.appointment);
       this.router.navigate([`/medical-staff/schedule/`])
     }
   }
@@ -87,7 +87,7 @@ export class MedStaffSchedulePageComponent implements OnInit {
       data: {bloodType: this.bloodType, quantity: this.quantity},
     });
     pwDialog.afterClosed().subscribe(result => {
-      this.complete(this.appointment); 
+      this.complete(this.appointment);
       this.router.navigate([`/medical-staff/schedule/`])
       // this.newPassword = result;
       // this.passwordDto.oldPassword = this.admin.password;
@@ -99,7 +99,7 @@ export class MedStaffSchedulePageComponent implements OnInit {
   }
 
   cancel(appointment: Appointment): void {
-    this.appointmentService.cancel(appointment.id).subscribe(res => {
+    this.appointmentService.setAsMissed(appointment.id).subscribe(res => {
         console.log(res);
         window.location.reload();
       },

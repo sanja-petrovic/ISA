@@ -8,7 +8,9 @@ type Appointment = {
   duration: number,
   bloodBank: BloodBank,
   bloodDonor: BloodDonor,
-  bloodDonorId:String,
+  bloodDonorId: String,
+  bloodBankId: String,
+  bloodBankTitle: String
 }
 
 export { Appointment }

@@ -21,6 +21,7 @@ public interface AppointmentService {
 	List<Appointment> getByBloodDonor(UUID bloodDonorId);
 	List<Appointment> getByBloodDonor(UUID bloodDonorId, AppointmentStatus status);
 	List<Appointment> getUpcomingByBloodDonor(UUID bloodDonorId);
+	List<Appointment> getPastByBloodDonor(UUID bloodDonorId);
 	Appointment create(Appointment appointment);
 	Appointment createScheduled(Appointment appointment);
 	Appointment createByDonor(Appointment appointment, BloodDonor donor);
@@ -28,6 +29,7 @@ public interface AppointmentService {
 	void schedulePredefined(Appointment appointment, BloodDonor donor);
 	void cancel(Appointment appointment);
 	void complete(Appointment appointment);
+	void setStatus(Appointment appointment, AppointmentStatus status);
 	public List<BloodBank> checkFreeBanksForDate(String dateTimeString, long duration, Sort sort) throws ParseException;
 	public List<Appointment> getScheduleByBloodBankInDateRange(String bankId, String range);
 	public List<Appointment> getAppointmentsInDateRange(List<Appointment> appointments, LocalDate range);

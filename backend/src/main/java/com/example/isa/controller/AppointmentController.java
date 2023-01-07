@@ -11,6 +11,7 @@ import com.example.isa.model.User;
 import com.example.isa.service.interfaces.BloodDonorService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.data.domain.Sort;
@@ -108,21 +109,27 @@ public class AppointmentController {
 	@PreAuthorize("hasRole('ROLE_DONOR')")
 	@ApiOperation(value = "Get all upcoming appointments for a blood donor.", httpMethod = "GET")
 	public ResponseEntity<List<AppointmentDto>> getAllUpcomingByBloodDonor(@AuthenticationPrincipal User user){
-		return ResponseEntity.ok(converter.listToDtoList(appointmentService.getByBloodDonor(user.getId(), AppointmentStatus.SCHEDULED)));
+		return ResponseEntity.ok(converter.listToDtoList(appointmentService.getUpcomingByBloodDonor(user.getId())));
 	}
 
 	@GetMapping("/blood-donor/past")
 	@PreAuthorize("hasRole('ROLE_DONOR')")
 	@ApiOperation(value = "Get all past appointments for a blood donor.", httpMethod = "GET")
 	public ResponseEntity<List<AppointmentDto>> getAllPastByBloodDonor(@AuthenticationPrincipal User user){
-		return ResponseEntity.ok(converter.listToDtoList(appointmentService.getByBloodDonor(user.getId(), AppointmentStatus.COMPLETED)));
-	}
+		return ResponseEntity.ok(converter.listToDtoList(appointmentService.getPastByBloodDonor(user.getId())));	}
 
 	@GetMapping("/blood-donor/cancelled")
 	@PreAuthorize("hasRole('ROLE_DONOR')")
 	@ApiOperation(value = "Get all cancelled appointments for a blood donor.", httpMethod = "GET")
 	public ResponseEntity<List<AppointmentDto>> getAllCancelledByBloodDonor(@AuthenticationPrincipal User user){
 		return ResponseEntity.ok(converter.listToDtoList(appointmentService.getByBloodDonor(user.getId(), AppointmentStatus.CANCELLED)));
+	}
+
+	@GetMapping("/blood-donor/missed")
+	@PreAuthorize("hasRole('ROLE_DONOR')")
+	@ApiOperation(value = "Get all missed appointments by a blood donor.", httpMethod = "GET")
+	public ResponseEntity<List<AppointmentDto>> getAllMissedByBloodDonor(@AuthenticationPrincipal User user){
+		return ResponseEntity.ok(converter.listToDtoList(appointmentService.getByBloodDonor(user.getId(), AppointmentStatus.MISSED)));
 	}
 	@PostMapping("/create")
 	@ApiOperation(value = "Create an appointment.", httpMethod = "POST")
@@ -179,6 +186,14 @@ public class AppointmentController {
 	@ApiOperation(value = "Get schedule for time period", httpMethod = "POST")
 	public ResponseEntity<List<AppointmentDto>> getScheduleByBloodBankInDateRange(@PathVariable String range ,@PathVariable String bankId){
 		return ResponseEntity.ok(converter.listToDtoList(appointmentService.getScheduleByBloodBankInDateRange(bankId,range)));
+	}
+
+	@PostMapping("/missed/{id}")
+	@PreAuthorize("hasRole('ROLE_STAFF')")
+	@ApiOperation(value = "Set appointment as missed due to a donor not showing up.", httpMethod = "POST")
+	public ResponseEntity setAsMissed(@PathVariable UUID id) {
+		appointmentService.setStatus(appointmentService.getById(id), AppointmentStatus.MISSED);
+		return ResponseEntity.ok().build();
 	}
 
 }

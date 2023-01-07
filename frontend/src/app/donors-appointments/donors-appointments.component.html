@@ -4,10 +4,11 @@
       <mat-tab label="Upcoming">
         <div class="tab">
           <mat-card *ngFor="let appointment of upcoming" class="bank-card">
-            <mat-card-title class="bank-title">{{(this.formatDate(appointment))}}
+            <mat-card-title class="bank-title">{{appointment.bloodBankTitle}}
             </mat-card-title>
-            <mat-card-subtitle>{{this.formatStatus(appointment)}}</mat-card-subtitle>
+            <mat-card-subtitle>{{(this.formatDate(appointment))}} - ap</mat-card-subtitle>
             <mat-card-content>
+              Date and time: <b>{{(this.formatDate(appointment))}}</b>
               <p>Duration: <b>{{appointment.duration}} minutes</b></p>
               <button class="schedule-button" (click)="this.cancel(appointment)">Cancel</button>
             </mat-card-content>
@@ -18,7 +19,7 @@
       <mat-tab label="Past">
         <div class="tab">
           <mat-card *ngFor="let appointment of past" class="bank-card">
-            <mat-card-title class="bank-title">{{(this.formatDate(appointment))}}
+            <mat-card-title class="bank-title title">{{(this.formatDate(appointment))}}
             </mat-card-title>
             <mat-card-subtitle>{{this.formatStatus(appointment)}}</mat-card-subtitle>
             <mat-card-content>
@@ -33,7 +34,6 @@
           <mat-card *ngFor="let appointment of cancelled" class="bank-card">
             <mat-card-title class="bank-title">{{(this.formatDate(appointment))}}
             </mat-card-title>
-            <mat-card-subtitle>{{this.formatStatus(appointment)}}</mat-card-subtitle>
             <mat-card-content>
               <p>Duration: <b>{{appointment.duration}} minutes</b></p>
             </mat-card-content>

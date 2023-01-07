@@ -38,7 +38,8 @@ export class DonorsAppointmentsComponent implements OnInit {
   }
 
   formatStatus(appointment: Appointment): string {
-    return appointment.status.replace("_", " ").toLocaleLowerCase();
+    let status: string = appointment.status.replace("_", " ");
+    return status.charAt(0) + status.slice(1).toLowerCase();
   }
 
   cancel(appointment: Appointment): void {
