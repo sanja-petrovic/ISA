@@ -75,7 +75,7 @@ public class BloodDonorServiceImpl implements BloodDonorService {
         return repository.findAllByEmail(email).orElse(null);
     }
 
-	@Scheduled(cron = "0 0 1 * *", zone="Europe/Vienna")
+	@Scheduled(cron = "@monthly", zone="Europe/Vienna")
 	public void clearPenalties() {
 		log.info("[" + DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(LocalDateTime.now()) + "]:" + "Clearing penalties for all blood donors.");
 		for(BloodDonor bloodDonor : this.getAll()) {
