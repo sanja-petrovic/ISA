@@ -1,6 +1,7 @@
 package com.example.isa.controller;
 
 import com.example.isa.dto.BloodDonorDto;
+import com.example.isa.dto.PenaltyDto;
 import com.example.isa.dto.UserDto;
 import com.example.isa.model.BloodDonor;
 import com.example.isa.model.User;
@@ -27,14 +28,11 @@ import java.util.Optional;
 public class BloodDonorController {
     private final BloodDonorService bloodDonorService;
 	private final BloodDonorConverter bloodDonorConverter;
-    private final BloodDonorRepository bloodDonorRepository;
 
     @Autowired
-    public BloodDonorController(BloodDonorService bloodDonorService, BloodDonorConverter bloodDonorConverter,
-                                BloodDonorRepository bloodDonorRepository) {
+    public BloodDonorController(BloodDonorService bloodDonorService, BloodDonorConverter bloodDonorConverter) {
         this.bloodDonorService = bloodDonorService;
 		this.bloodDonorConverter = bloodDonorConverter;
-        this.bloodDonorRepository = bloodDonorRepository;
     }
 
     @GetMapping
@@ -71,8 +69,8 @@ public class BloodDonorController {
     @GetMapping("/current")
     @PreAuthorize("hasRole('ROLE_DONOR')")
     public ResponseEntity<BloodDonorDto> getCurrentBloodDonor(Principal principal) {
-        Optional<BloodDonor> bloodDonor = bloodDonorRepository.findAllByEmail(principal.getName());
-        return bloodDonor.map(donor -> ResponseEntity.ok(bloodDonorConverter.entityToDto(donor))).orElseGet(() -> ResponseEntity.notFound().build());
+        BloodDonor bloodDonor = bloodDonorService.getByEmail(principal.getName());
+        return bloodDonor == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(bloodDonorConverter.entityToDto(bloodDonor));
     }
 
     @PutMapping(value="/update")
@@ -85,10 +83,9 @@ public class BloodDonorController {
 
     @PutMapping(value = "/give-penalty")
     @PreAuthorize("hasRole('ROLE_STAFF')")
-    @ApiOperation(value = "Increment penalties of blood donor")
+    @ApiOperation(value = "Increment a blood donor's penalty count", httpMethod = "PUT")
     public ResponseEntity<BloodDonorDto> increasePenalties(@RequestBody BloodDonorDto bloodDonorDto){
         bloodDonorService.increasePenalties(bloodDonorConverter.dtoToEntity(bloodDonorDto));
         return ResponseEntity.ok().build();
     }
-    
 }
