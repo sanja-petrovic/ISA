@@ -5,9 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -22,7 +20,7 @@ public class BloodDonor extends User {
     @Column
     private String institution;
     @Column
-    private int penalty;
+    private int penaltyCount;
     @Column
     @Enumerated(EnumType.STRING)
     private LoyaltyStatus loyaltyStatus;
@@ -38,6 +36,6 @@ public class BloodDonor extends User {
         this.occupation = occupation;
         this.address = address;
         this.institution = institution;
-        this.penalty = penalty;
+        this.penaltyCount = penalty;
     }
 }

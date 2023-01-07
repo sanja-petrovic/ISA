@@ -1,17 +1,20 @@
 package com.example.isa.service.implementation;
 
-import com.example.isa.exception.NotFoundException;
 import com.example.isa.model.*;
 import com.example.isa.repository.BloodDonorRepository;
 import com.example.isa.service.interfaces.BloodDonorService;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.relational.core.sql.TrueCondition;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
+@Slf4j
 public class BloodDonorServiceImpl implements BloodDonorService {
     private final BloodDonorRepository repository;
 
@@ -40,7 +43,7 @@ public class BloodDonorServiceImpl implements BloodDonorService {
 	@Override
 	public void increasePenalties(BloodDonor bloodDonor) {
 		BloodDonor fromRepo = repository.findByPersonalId(bloodDonor.getPersonalId()).orElse(null);
-		fromRepo.setPenalty(bloodDonor.getPenalty() + 1);
+		fromRepo.setPenaltyCount(bloodDonor.getPenaltyCount() + 1);
 		repository.save(fromRepo);
 	}
 
@@ -71,4 +74,12 @@ public class BloodDonorServiceImpl implements BloodDonorService {
     public BloodDonor getByEmail(String email) {
         return repository.findAllByEmail(email).orElse(null);
     }
+
+	@Scheduled(cron = "@monthly", zone="Europe/Vienna")
+	public void clearPenalties() {
+		log.info("[" + DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(LocalDateTime.now()) + "]:" + "Clearing penalties for all blood donors.");
+		for(BloodDonor bloodDonor : this.getAll()) {
+			bloodDonor.setPenaltyCount(0);
+		}
+	}
 }

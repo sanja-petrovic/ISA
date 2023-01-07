@@ -32,7 +32,7 @@ public class BloodDonorConverter implements Converter<BloodDonor, BloodDonorDto>
                 .city(bloodDonor.getAddress().getCity())
                 .country(bloodDonor.getAddress().getCountry())
                 .institution(bloodDonor.getInstitution())
-                .penalty(bloodDonor.getPenalty())
+                .penaltyCount(bloodDonor.getPenaltyCount())
                 .build();
     }
 
@@ -49,7 +49,7 @@ public class BloodDonorConverter implements Converter<BloodDonor, BloodDonorDto>
                 .occupation(bloodDonorDto.getOccupation())
                 .address(new Address(bloodDonorDto.getHomeAddress(), bloodDonorDto.getCity(), bloodDonorDto.getCountry()))
                 .institution(bloodDonorDto.getInstitution())
-                .penalty(bloodDonorDto.getPenalty())
+                .penalty(bloodDonorDto.getPenaltyCount())
                 .build();
     }
 }

@@ -117,6 +117,7 @@ public class AuthController {
         if (userService.findByUsername(dto.getEmail()) == null) {
             BloodDonor bloodDonor = bloodDonorConverter.dtoToEntity(dto);
             bloodDonor.setRole(roleService.findByName("DONOR"));
+            bloodDonor.setVerified(false);
             userService.register(bloodDonor);
             return new ResponseEntity<>(bloodDonorConverter.entityToDto(bloodDonor), HttpStatus.CREATED);
         } else {
