@@ -1,13 +1,9 @@
 package com.example.isa.service.implementation;
 
-import java.awt.image.RenderedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.sql.SQLClientInfoException;
-import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -16,7 +12,6 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -31,9 +26,6 @@ import com.example.isa.model.BloodDonor;
 import com.example.isa.model.Email;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.metrics.buffering.StartupTimeline;
-import org.springframework.kafka.listener.ListenerMetadata;
-import org.springframework.mail.MailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -159,6 +151,8 @@ public class AppointmentServiceImpl implements AppointmentService {
         return repository.save(appointment);
     }
 
+
+
     @Override
     @Transactional
     public void schedulePredefined(Appointment appointment, BloodDonor donor) {
@@ -170,6 +164,9 @@ public class AppointmentServiceImpl implements AppointmentService {
                 if (CollectionUtils.isEmpty(donor.getAnswers())) {
                     throw new NoCompletedQuestionnaire();
                 }
+				if(donor.getPenaltyCount() >= 3) {
+					throw new ReachedPenaltyLimitException();
+				}
 				if (!canScheduleAppointment(donor, appointment.getDateTime())) {
 					throw new NewAppointmentTooSoonException();
 				}
@@ -220,15 +217,18 @@ public class AppointmentServiceImpl implements AppointmentService {
 	@Override
 	public Appointment createByDonor(Appointment appointment, BloodDonor donor) {
 		if(appointment!=null && donor!=null) {
+			if (CollectionUtils.isEmpty(donor.getAnswers())) {
+				throw new NoCompletedQuestionnaire();
+			}
+			if(donor.getPenaltyCount() >= 3) {
+				throw new ReachedPenaltyLimitException();
+			}
 			if (appointment.getDateTime().before(new Date())) {
 	            throw new PassedException();
 	        }
 			if(!this.bloodBankIsWorking(appointment)) {
 				throw new BloodBankClosedException();
 			}
-	        if (CollectionUtils.isEmpty(donor.getAnswers())) {
-	            throw new NoCompletedQuestionnaire();
-	        }
 			if (!canScheduleAppointment(donor, appointment.getDateTime())) {
 				throw new NewAppointmentTooSoonException();
 			}
@@ -252,18 +252,18 @@ public class AppointmentServiceImpl implements AppointmentService {
 		return null;
 	}
 	@Async
-	private void sendDetails(Appointment appointment, BloodDonor donor) throws IOException, Exception {
+	void sendDetails(Appointment appointment, BloodDonor donor) throws IOException, Exception {
 		StringBuilder mailBodyBuilder = new StringBuilder();
 		mailBodyBuilder.append("Your appointment at bank: ");
 		mailBodyBuilder.append(appointment.getBloodBank().getTitle());
-		mailBodyBuilder.append(",has been succesfully scheduled for ");
+		mailBodyBuilder.append(" has been successfully scheduled for ");
 		mailBodyBuilder.append(appointment.getDateTime().toString());
 		
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		ImageIO.write(QrCodeGenerator.generateQRCodeImage(mailBodyBuilder.toString()), "png", baos);
-		baos.flush();
-		byte[] imageBytes= baos.toByteArray();
-		baos.close();
+		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+		ImageIO.write(QrCodeGenerator.generateQRCodeImage(mailBodyBuilder.toString()), "png", byteArrayOutputStream);
+		byteArrayOutputStream.flush();
+		byte[] imageBytes= byteArrayOutputStream.toByteArray();
+		byteArrayOutputStream.close();
 		
 		mailSender.sendWithImage(new Email(donor.getEmail(),"Appointment scheduled", mailBodyBuilder.toString()),imageBytes);
 	}
