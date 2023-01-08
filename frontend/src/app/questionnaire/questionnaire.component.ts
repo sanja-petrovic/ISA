@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {UserService} from "../services/UserService";
 import {Router} from "@angular/router";
 import {QuestionService} from "../services/QuestionService";
 import {Question} from "../model/Question";
 import {Answer} from "../model/Answer";
 import {AnswerService} from "../services/AnswerService";
+import {BloodDonor} from "../model/Users";
+import {BloodDonorService} from "../services/BloodDonorService";
 
 @Component({
   selector: 'app-questionnaire',
@@ -12,34 +13,37 @@ import {AnswerService} from "../services/AnswerService";
   styleUrls: ['./questionnaire.component.css', '../app.component.css']
 })
 export class QuestionnaireComponent implements OnInit {
-
-  // @ts-ignore
   questions: Question[];
-  answers: any[];
-  user: any;
+  answers: Answer[];
+  bloodDonor: BloodDonor;
 
   constructor(
     private questionService: QuestionService,
     private answerService: AnswerService,
-    private userService: UserService,
+    private bloodDonorService: BloodDonorService,
     private router: Router) {
-    this.questionService.getAll().subscribe(data => {
-      this.questions = data;
-      for (let i = 0; i < data.length; i++) {
-        // @ts-ignore
-        this.answers[i] = null;
-      }
-    });
+
     this.answers = [];
-    userService.getActiveUser()?.subscribe(data => this.user = data.email);
-    console.log(this.user);
+    bloodDonorService.getCurrentBloodDonor()?.subscribe(data => {
+      this.bloodDonor = data;
+      this.questionService.getAll().subscribe(questionData => {
+        if (this.bloodDonor.gender === 'MALE') {
+          questionData = questionData.filter(question => question.type === 'FOR_ALL');
+          this.questions = questionData;
+        } else {
+          this.questions = questionData;
+        }
+        for (let i = 0; i < questionData.length; i++) {
+          this.answers[i] = null;
+        }
+      });
+    });
   }
 
   ngOnInit(): void {
   }
 
   onSubmit(): void {
-    console.log(this.answers);
     this.answerService.save(this.answers);
     alert('Thanks for submitting!');
     this.router.navigate(["/"]);
@@ -49,11 +53,8 @@ export class QuestionnaireComponent implements OnInit {
     let answer: Answer = {
       questionId: questionId,
       answerValue: value,
-      user: this.user
+      user: this.bloodDonor.email
     }
     this.answers[index] = answer;
-    if(index == 37) {
-      console.log(this.answers);
-    }
   }
 }
