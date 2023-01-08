@@ -19,9 +19,10 @@ public interface AppointmentService {
 	List<Appointment> getByBloodBank(String title);
 	List<Appointment> getUnscheduledByBloodBank(UUID bloodBankId);
 	List<Appointment> getByBloodDonor(UUID bloodDonorId);
-	List<Appointment> getByBloodDonor(UUID bloodDonorId, AppointmentStatus status);
-	List<Appointment> getUpcomingByBloodDonor(UUID bloodDonorId);
-	List<Appointment> getPastByBloodDonor(UUID bloodDonorId);
+	List<Appointment> getByBloodDonor(UUID bloodDonorId, AppointmentStatus status, Sort sort);
+	List<Appointment> getAllUpcomingByBloodDonor(UUID bloodDonorId, Sort sort);
+	List<Appointment> getUpcomingScheduledByBloodDonor(UUID bloodDonorId, Sort sort);
+	List<Appointment> getPastByBloodDonor(UUID bloodDonorId, Sort sort);
 	Appointment create(Appointment appointment);
 	Appointment createScheduled(Appointment appointment);
 	Appointment createByDonor(Appointment appointment, BloodDonor donor);

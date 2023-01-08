@@ -23,9 +23,10 @@ public interface AppointmentRepository extends JpaRepository<Appointment, UUID> 
 
     List<Appointment> findAllByBloodBankId(UUID bloodBankId);
     List<Appointment> findAllByBloodBankIdAndStatus(UUID bloodBankId, AppointmentStatus status);
-    List<Appointment> findAllByBloodDonorIdAndDateTimeBefore(UUID bloodDonorId, Date date);
+    List<Appointment> findAllByBloodDonorIdAndDateTimeBefore(UUID bloodDonorId, Date date, Sort sort);
+    List<Appointment> findAllByBloodDonorIdAndDateTimeAfter(UUID bloodDonorId, Date date, Sort sort);
     List<Appointment> findAllByBloodDonorIdAndDateTimeAfter(UUID bloodDonorId, Date date);
-    List<Appointment> findAllByBloodDonorIdAndStatusAndDateTimeAfter(UUID bloodDonorId, AppointmentStatus status, Date date);
+    List<Appointment> findAllByBloodDonorIdAndStatusAndDateTimeAfter(UUID bloodDonorId, AppointmentStatus status, Date date, Sort sort);
 
     Optional<Appointment> findAllByBloodBankIdAndBloodDonorIdAndDateTime(UUID bloodBankId, UUID bloodDonorId, Date dateTime);
 
@@ -44,7 +45,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, UUID> 
     
     @Query("from Appointment a where year(a.dateTime) = ?1 and month(a.dateTime) = ?2 and day(a.dateTime) = ?3")
     List<Appointment> findAllByDate( int year, int month, int day);
-    List<Appointment> findAllByBloodDonorIdAndStatus(UUID bloodDonorId, AppointmentStatus status);
+    List<Appointment> findAllByBloodDonorIdAndStatus(UUID bloodDonorId, AppointmentStatus status, Sort sort);
     List<Appointment> findAllByStatus(AppointmentStatus status);
 
 }

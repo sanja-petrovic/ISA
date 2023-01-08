@@ -1,7 +1,7 @@
 import {BloodBank} from "./BloodBank";
 import {BloodDonor} from "./Users";
 
-type Appointment = {
+export interface Appointment {
   id: string,
   status: string,
   dateTime: Date,
@@ -12,5 +12,3 @@ type Appointment = {
   bloodBankId: String,
   bloodBankTitle: String
 }
-
-export { Appointment }
