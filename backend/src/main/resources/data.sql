@@ -58,7 +58,7 @@ VALUES ('a88dceb9-8eb8-4f04-befa-e0fd016b4a37',
 
 INSERT INTO public.questions(id, text, type)
 VALUES ('a48374fb-a3dc-41c1-a5f2-c33e89a3376e',
-        'Have you ever been treated in a hospital, or are currently being treated in a hospital?', 'FOR_ALL')
+        'Have you ever been treated in a hospital, or are currently being treated in a hospital?', 'FOR_ALL');
 
 INSERT INTO public.questions(id, text, type)
 VALUES ('a695d651-51ce-480b-9c7c-6e2740bb5407', 'Have you had a tooth extraction in the past 7 days?', 'FOR_ALL');
