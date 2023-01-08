@@ -7,11 +7,21 @@
   flex-direction: column;
 }
 
+table {
+  width: 100%;
+}
+
+.schedule-button {
+  width: auto !important;
+}
+
 .bank-card {
   margin-top: 2rem;
   width: 400px !important;
 }
-
+.mat-column-cancel {
+  width: 5px;
+}
 .mat-tab-body-wrapper {
   display: flex;
   justify-content: center;

@@ -27,6 +27,7 @@ import com.example.isa.model.Email;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.example.isa.model.Appointment;
@@ -89,13 +90,28 @@ public class AppointmentServiceImpl implements AppointmentService {
 	}
 
 	@Override
-	public List<Appointment> getByBloodDonor(UUID bloodDonorId, AppointmentStatus status) {
-		return repository.findAllByBloodDonorIdAndStatus(bloodDonorId, status);
+	public List<Appointment> getByBloodDonor(UUID bloodDonorId, AppointmentStatus status, Sort sort) {
+		return repository.findAllByBloodDonorIdAndStatus(bloodDonorId, status, sort);
 	}
 
 	@Override
-	public List<Appointment> getUpcomingByBloodDonor(UUID bloodDonorId) {
-		return repository.findAllByBloodDonorIdAndStatus(bloodDonorId, AppointmentStatus.SCHEDULED);
+	public List<Appointment> getUpcomingScheduledByBloodDonor(UUID bloodDonorId, Sort sort) {
+		return repository.findAllByBloodDonorIdAndStatusAndDateTimeAfter(
+				bloodDonorId,
+				AppointmentStatus.SCHEDULED,
+				Date.from(Instant.now().minus(Duration.ofDays(1))),
+				sort);
+	}
+
+	public List<Appointment> getAllUpcomingByBloodDonor(UUID bloodDonorId, Sort sort) {
+		return repository.findAllByBloodDonorIdAndDateTimeAfter(
+				bloodDonorId,
+				Date.from(Instant.now().minus(Duration.ofDays(1))),
+				sort);
+	}
+
+	public List<Appointment> getPastByBloodDonor(UUID bloodDonorId, Sort sort) {
+		return repository.findAllByBloodDonorIdAndDateTimeBefore(bloodDonorId, new Date(), sort);
 	}
     public boolean canScheduleAppointment(BloodDonor bloodDonor, Date date) {
         Optional<Appointment> mostRecentAppointment = repository.findTopByBloodDonorOrderByDateTimeDesc(bloodDonor);
@@ -205,6 +221,12 @@ public class AppointmentServiceImpl implements AppointmentService {
 		} else {
 			throw new UnableToCancelException();
 		}
+	}
+
+	@Override
+	public void setStatus(Appointment appointment, AppointmentStatus status) {
+		appointment.setStatus(status);
+		repository.save(appointment);
 	}
 
 	@Override
@@ -375,5 +397,14 @@ public class AppointmentServiceImpl implements AppointmentService {
 			}
 		}
 		return schedule;
+	}
+
+	@Scheduled(cron = "@daily", zone = "Europe/Vienna")
+	public void checkNotHeldAppointments() {
+		for(Appointment appointment : repository.findAllByStatus(AppointmentStatus.SCHEDULED)) {
+			if(appointment.getDateTime().before(new Date())) {
+				appointment.setStatus(AppointmentStatus.NOT_HELD);
+			}
+		}
 	}
 }

@@ -22,35 +22,34 @@ export class AppointmentService {
     return this.apiService.get(`${this.config.appointments_url}`);
   }
 
-  getAllByBloodBank(id: string): Observable<Appointment[]> {
-    return this.apiService.get(`${this.config.appointments_url}/blood-bank/${id}`);
-  }
-
   getAllAvailableByBloodBank(id: string): Observable<Appointment[]> {
     return this.apiService.get(`${this.config.appointments_url}/blood-bank/${id}/available`);
   }
 
-  getAllByBloodDonor(id: string): Observable<Appointment[]> {
-    return this.apiService.get(`${this.config.appointments_url}/blood-donor/${id}`);
+  getAllUpcomingByLoggedInBloodDonor(sortDirection?:string, sortProperty?:string): Observable<Appointment[]> {
+    let path: string = `${this.config.appointments_url}/blood-donor/upcoming`;
+    if(!!sortDirection || !!sortProperty) {
+      const params = new URLSearchParams({
+        sortDirection: sortDirection,
+        sortProperty: sortProperty
+      })
+      path += "?" + params.toString();
+    }
+    console.log(path);
+    return this.apiService.get(path);
   }
 
-  getAllByLoggedInBloodDonor(): Observable<Appointment[]> {
-    return this.apiService.get(`${this.config.appointments_url}/blood-donor/`);
-  }
-
-  getAllUpcomingByLoggedInBloodDonor(): Observable<Appointment[]> {
-    return this.apiService.get(`${this.config.appointments_url}/blood-donor/upcoming`);
-  }
-
-  getAllPastByLoggedInBloodDonor(): Observable<Appointment[]> {
-    return this.apiService.get(`${this.config.appointments_url}/blood-donor/past`);
-  }
-  getAllCancelledByLoggedInBloodDonor(): Observable<Appointment[]> {
-    return this.apiService.get(`${this.config.appointments_url}/blood-donor/cancelled`);
-  }
-
-  getById(id: string): Observable<Appointment[]> {
-    return this.apiService.get(`${this.config.appointments_url}/${id}`);
+  getAllPastByLoggedInBloodDonor(sortDirection?:string, sortProperty?:string): Observable<Appointment[]> {
+    let path: string = `${this.config.appointments_url}/blood-donor/past`;
+    if(!!sortDirection || !!sortProperty) {
+      const params = new URLSearchParams({
+        sortDirection: sortDirection,
+        sortProperty: sortProperty
+      })
+      path += "?" + params.toString();
+    }
+    console.log(path);
+    return this.apiService.get(path);
   }
 
   schedule(id: string): Observable<void> {
@@ -67,5 +66,9 @@ export class AppointmentService {
 
   getAppointmentsByMedicalStaffForTheTimePeriod(period : string, bank : string) : Observable<Appointment[]> {
     return this.apiService.post(`${this.config.appointments_url}/schedule/${period}/${bank}`,'');
+  }
+
+  setAsMissed(id: string): Observable<void> {
+    return this.apiService.post(`${this.config.appointments_url}/missed/${id}`, '');
   }
 }

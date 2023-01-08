@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {DatePipe} from '@angular/common';
 import {AppointmentService} from "../services/AppointmentService";
 import {ActivatedRoute} from "@angular/router";
 import {Appointment} from "../model/Appointment";
+import {MatTableDataSource} from "@angular/material/table";
+import {MatSort, Sort} from "@angular/material/sort";
 
 @Component({
   selector: 'app-donors-appointments',
@@ -16,17 +18,42 @@ export class DonorsAppointmentsComponent implements OnInit {
   public appointments: Appointment[] = [];
   public upcoming: Appointment[] = [];
   public past: Appointment[] = [];
-  public cancelled: Appointment[] = [];
+  public dataSourceUpcoming;
+  public dataSourcePast;
+  displayedColumnsUpcoming: string[] = ['bloodBank', 'dateTime', 'duration', 'status', 'cancel'];
+  displayedColumns: string[] = ['bloodBank', 'dateTime', 'duration', 'status'];
+
   getAppointments() {
-    this.appointmentService.getAllUpcomingByLoggedInBloodDonor().subscribe(data => {
-      this.upcoming = data;
-    })
-    this.appointmentService.getAllPastByLoggedInBloodDonor().subscribe(data => {
-      this.past = data;
-    })
-    this.appointmentService.getAllCancelledByLoggedInBloodDonor().subscribe(data => {
-      this.cancelled = data;
-    })
+    this.getUpcoming();
+    this.getPast();
+  }
+
+  getUpcoming(sortDirection?:string, sortProperty?:string) {
+    if(!!sortDirection || !!sortProperty) {
+      this.appointmentService.getAllUpcomingByLoggedInBloodDonor(sortDirection, sortProperty).subscribe(data => {
+        this.upcoming = data;
+        this.dataSourceUpcoming = new MatTableDataSource(data);
+      })
+    } else {
+      this.appointmentService.getAllUpcomingByLoggedInBloodDonor().subscribe(data => {
+        this.upcoming = data;
+        this.dataSourceUpcoming = new MatTableDataSource(data);
+      })
+    }
+  }
+
+  getPast(sortDirection?:string, sortProperty?:string) {
+    if(!!sortDirection || !!sortProperty) {
+      this.appointmentService.getAllPastByLoggedInBloodDonor(sortDirection, sortProperty).subscribe(data => {
+        this.past = data;
+        this.dataSourcePast = new MatTableDataSource(data);
+      })
+    } else {
+      this.appointmentService.getAllPastByLoggedInBloodDonor().subscribe(data => {
+        this.past = data;
+        this.dataSourcePast = new MatTableDataSource(data);
+      })
+    }
   }
 
   ngOnInit(): void {
@@ -38,7 +65,8 @@ export class DonorsAppointmentsComponent implements OnInit {
   }
 
   formatStatus(appointment: Appointment): string {
-    return appointment.status.replace("_", " ").toLocaleLowerCase();
+    let status: string = appointment.status.replace("_", " ");
+    return status.charAt(0) + status.slice(1).toLowerCase();
   }
 
   cancel(appointment: Appointment): void {
@@ -49,6 +77,23 @@ export class DonorsAppointmentsComponent implements OnInit {
       error => {
         alert(error.error.message);
       })
+  }
+
+  handleSortChange(sortState: Sort, table: string) {
+    let sortDirection: string = sortState.direction;
+    let sortProperty: string = sortState.active;
+    console.log(sortState);
+    if (table === 'upcoming') {
+      this.getUpcoming(sortDirection, sortProperty);
+    } else if (table === 'past') {
+      this.getPast(sortDirection, sortProperty);
+    }
+  }
+
+  @ViewChild(MatSort) sort: MatSort;
+
+  ngAfterViewInit() {
+    this.dataSourceUpcoming.sort = this.sort;
   }
 
 }
