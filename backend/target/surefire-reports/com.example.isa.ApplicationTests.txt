@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.example.isa.ApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.728 s - in com.example.isa.ApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 24.676 s - in com.example.isa.ApplicationTests
