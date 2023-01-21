@@ -5,9 +5,7 @@ import java.util.UUID;
 
 @Table(name = "reviews")
 @Entity
-public class Review {
-    @Id
-    private UUID id;
+public class Review extends BaseEntity {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn
     private BloodDonor reviewer;

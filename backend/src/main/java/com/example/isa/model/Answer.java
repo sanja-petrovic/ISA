@@ -10,10 +10,7 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(name = "answers")
-public class Answer {
-    @Id
-    private UUID id = UUID.randomUUID();
-
+public class Answer extends BaseEntity {
     @Column
     private boolean value;
 

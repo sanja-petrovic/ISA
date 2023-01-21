@@ -40,10 +40,11 @@ import com.example.isa.util.converters.DateConverter;
 
 import org.springframework.data.domain.Sort;
 
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.imageio.ImageIO;
-import javax.transaction.Transactional;
 
 @Service
 public class AppointmentServiceImpl implements AppointmentService {
@@ -167,10 +168,8 @@ public class AppointmentServiceImpl implements AppointmentService {
         return repository.save(appointment);
     }
 
-
-
     @Override
-    @Transactional
+	@Transactional
     public void schedulePredefined(Appointment appointment, BloodDonor donor) {
         if (appointment != null) {
             if (appointment.getStatus() == AppointmentStatus.NOT_SCHEDULED) {
@@ -274,7 +273,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 		return null;
 	}
 	@Async
-	void sendDetails(Appointment appointment, BloodDonor donor) throws IOException, Exception {
+	void sendDetails(Appointment appointment, BloodDonor donor) throws Exception {
 		StringBuilder mailBodyBuilder = new StringBuilder();
 		mailBodyBuilder.append("Your appointment at bank: ");
 		mailBodyBuilder.append(appointment.getBloodBank().getTitle());
@@ -308,11 +307,10 @@ public class AppointmentServiceImpl implements AppointmentService {
 			LocalTime endTimeLocal = DateConverter.convert(endTime).toLocalTime();
 			
 			if(startTimeLocal.equals(LocalTime.of(0,0, 0)) && endTimeLocal.equals(LocalTime.of(0,0, 0))) return true;
-			
-			if(appointmentTime.isAfter(startTimeLocal) && appointmentTime.plusMinutes(appointment.getDuration()).isBefore(endTimeLocal)) return true;
+
+			return appointmentTime.isAfter(startTimeLocal) && appointmentTime.plusMinutes(appointment.getDuration()).isBefore(endTimeLocal);
 
 		}
-		return false;
 	}
 	
 	private boolean bloodBankIsWorking(BloodBank bank, Date date, long duration) {
@@ -329,11 +327,10 @@ public class AppointmentServiceImpl implements AppointmentService {
 			LocalTime endTimeLocal = DateConverter.convert(endTime).toLocalTime();
 			
 			if(startTimeLocal.equals(LocalTime.of(0,0, 0)) && endTimeLocal.equals(LocalTime.of(0,0, 0))) return true;
-			
-			if(appointmentTime.isAfter(startTimeLocal) && appointmentTime.plusMinutes(duration).isBefore(endTimeLocal)) return true;
+
+			return appointmentTime.isAfter(startTimeLocal) && appointmentTime.plusMinutes(duration).isBefore(endTimeLocal);
 
 		}
-		return false;
 	}
 	
 	public List<BloodBank> checkFreeBanksForDate(String dateTimeString, long duration, Sort sort) throws ParseException{
@@ -364,7 +361,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 							break;
 						}
 					}
-					if(overlap==false) {
+					if(!overlap) {
 						retVal.add(bank);
 					}
 				}

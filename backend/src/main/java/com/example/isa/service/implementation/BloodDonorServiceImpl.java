@@ -36,9 +36,8 @@ public class BloodDonorServiceImpl implements BloodDonorService {
 		if(donor==null) {
 			return false;
 		}
-		if(donor.getAnswers().isEmpty()) return false;
-		return true;
-	}
+        return !donor.getAnswers().isEmpty();
+    }
 
 	@Override
 	public void increasePenalties(BloodDonor bloodDonor) {

@@ -14,9 +14,7 @@ import java.util.UUID;
 @Table(name = "blood_supplies", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"type", "blood_bank_id"})
 })
-public class BloodSupply {
-    @Id
-    private UUID id;
+public class BloodSupply extends BaseEntity {
     @Column
     @Enumerated(EnumType.STRING)
     private BloodType type;
@@ -27,9 +25,8 @@ public class BloodSupply {
     @JoinColumn(name = "blood_bank_id")
     private BloodBank bloodBank;
     @Builder
-    public BloodSupply(double amount, UUID id, BloodType type){
+    public BloodSupply(double amount, BloodType type){
         this.amount = amount;
-        this.id = id;
         this.type = type;
     }
 }

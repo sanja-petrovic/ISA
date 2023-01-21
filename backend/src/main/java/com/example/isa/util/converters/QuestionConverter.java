@@ -15,7 +15,6 @@ public class QuestionConverter implements Converter<Question, QuestionDto> {
     @Override
     public QuestionDto entityToDto(Question question) {
         return QuestionDto.builder()
-                .id(question.getId())
                 .type(question.getType().toString())
                 .text(question.getText())
                 .build();

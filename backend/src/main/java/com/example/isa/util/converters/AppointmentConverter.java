@@ -62,7 +62,6 @@ public class AppointmentConverter implements Converter<Appointment, AppointmentD
 		else {
 			try {
 				return new Appointment(
-						dto.getId(),
 						AppointmentStatus.valueOf(dto.getStatus()),
 						formatter.parse(dto.getDateTime()),
 						dto.getDuration(),
