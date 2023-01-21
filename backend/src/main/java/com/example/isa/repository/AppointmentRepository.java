@@ -18,31 +18,20 @@ import com.example.isa.model.Appointment;
 @Repository
 public interface AppointmentRepository extends JpaRepository<Appointment, UUID> {
     List<Appointment> findAllByBloodDonorId(UUID bloodDonorId);
-
     Optional<Appointment> findById(UUID appointmentId);
-
     List<Appointment> findAllByBloodBankId(UUID bloodBankId);
     List<Appointment> findAllByBloodBankIdAndStatus(UUID bloodBankId, AppointmentStatus status);
     List<Appointment> findAllByBloodDonorIdAndDateTimeBefore(UUID bloodDonorId, Date date, Sort sort);
     List<Appointment> findAllByBloodDonorIdAndDateTimeAfter(UUID bloodDonorId, Date date, Sort sort);
     List<Appointment> findAllByBloodDonorIdAndDateTimeAfter(UUID bloodDonorId, Date date);
     List<Appointment> findAllByBloodDonorIdAndStatusAndDateTimeAfter(UUID bloodDonorId, AppointmentStatus status, Date date, Sort sort);
-
     Optional<Appointment> findAllByBloodBankIdAndBloodDonorIdAndDateTime(UUID bloodBankId, UUID bloodDonorId, Date dateTime);
-
     List<Appointment> findAllByDateTime(Date date);
     Optional<Appointment> findTopByBloodDonorOrderByDateTimeDesc(BloodDonor bloodDonor);
-
     List<Appointment> findAllByBloodBankAndDateTime(BloodBank bloodBank, Date dateTime);
-    
     List<Appointment> findAllByBloodDonorAndDateTime(BloodDonor bloodDonor, Date dateTime);
-    /*
     @Query("from Appointment a where a.bloodBank = ?1 and year(a.dateTime) = ?2 and month(a.dateTime) = ?3 and day(a.dateTime) = ?4")
     List<Appointment> findAllByBloodBankAndDate(BloodBank bloodBank, int year, int month, int day);
-    */
-    @Query("from Appointment a where a.bloodBank = ?1 and year(a.dateTime) = ?2 and month(a.dateTime) = ?3 and day(a.dateTime) = ?4")
-    List<Appointment> findAllByBloodBankAndDate(BloodBank bloodBank, int year, int month, int day);
-    
     @Query("from Appointment a where year(a.dateTime) = ?1 and month(a.dateTime) = ?2 and day(a.dateTime) = ?3")
     List<Appointment> findAllByDate( int year, int month, int day);
     List<Appointment> findAllByBloodDonorIdAndStatus(UUID bloodDonorId, AppointmentStatus status, Sort sort);

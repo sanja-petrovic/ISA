@@ -15,4 +15,5 @@ public class QrCodeGenerator {
 
         return MatrixToImageWriter.toBufferedImage(bitMatrix);
     }
+
 }

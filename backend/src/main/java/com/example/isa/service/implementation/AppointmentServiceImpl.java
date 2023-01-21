@@ -1,52 +1,28 @@
 package com.example.isa.service.implementation;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneId;
-import java.util.ArrayList;
-import java.time.*;
-import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.TimeZone;
-import java.util.UUID;
-
 import com.example.isa.exception.*;
-import com.example.isa.model.AppointmentStatus;
-import com.example.isa.model.BloodBank;
-import com.example.isa.model.BloodDonor;
-import com.example.isa.model.Email;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
-
-import com.example.isa.model.Appointment;
+import com.example.isa.model.*;
 import com.example.isa.repository.AppointmentRepository;
 import com.example.isa.service.interfaces.AppointmentService;
 import com.example.isa.service.interfaces.BloodBankService;
 import com.example.isa.util.EmailSender;
-import com.example.isa.util.QrCodeGenerator;
 import com.example.isa.util.converters.DateConverter;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
-
-import org.springframework.transaction.annotation.Isolation;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import javax.imageio.ImageIO;
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.*;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
 
 @Service
+@Transactional(readOnly = true)
 public class AppointmentServiceImpl implements AppointmentService {
     private final AppointmentRepository repository;
     private final BloodBankService bankService;
@@ -122,7 +98,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    @Transactional
+	@Transactional(readOnly = false)
     public Appointment create(Appointment appointment) {
         List<Appointment> listScheduled = repository.findAllByBloodBankAndDateTime(appointment.getBloodBank(), appointment.getDateTime());
         for (Appointment scheduled : listScheduled) {
@@ -133,14 +109,14 @@ public class AppointmentServiceImpl implements AppointmentService {
         return repository.save(appointment);
     }
     @Override
-    @Transactional
+	@Transactional(readOnly = false)
     public Appointment createScheduled(Appointment appointment) {
     	if(appointment!=null) {
     		if(!this.bloodBankIsWorking(appointment)) {
 				throw new BloodBankClosedException();
 			}
-    		LocalDateTime converteDateTime = DateConverter.convert(appointment.getDateTime());
-            List<Appointment> listScheduled = repository.findAllByBloodBankAndDate(appointment.getBloodBank(), converteDateTime.getYear(), converteDateTime.getMonthValue(), converteDateTime.getDayOfMonth());
+    		LocalDateTime convertedDateTime = DateConverter.convert(appointment.getDateTime());
+            List<Appointment> listScheduled = repository.findAllByBloodBankAndDate(appointment.getBloodBank(), convertedDateTime.getYear(), convertedDateTime.getMonthValue(), convertedDateTime.getDayOfMonth());
             for (Appointment scheduled : listScheduled) {
                 if (this.hasDateTimeOverlap(scheduled, appointment)) {
                     throw new AlreadyExistsException();
@@ -154,22 +130,21 @@ public class AppointmentServiceImpl implements AppointmentService {
     private boolean hasDateTimeOverlap(Appointment a1, Appointment a2) {
     	LocalDateTime a1DateTime = DateConverter.convert(a1.getDateTime());
     	LocalDateTime a2DateTime = DateConverter.convert(a2.getDateTime());
-    	//A.end >= B.start AND A.start <= B.end
         return (a1DateTime.plusMinutes(a1.getDuration()).isAfter(a2DateTime) && a1DateTime.isBefore(a2DateTime.plusMinutes(a2.getDuration())));
     }
     private boolean hasDateTimeOverlap(Appointment a1, Date DateTime, long duration) {
     	LocalDateTime a1DateTime = DateConverter.convert(a1.getDateTime());
     	LocalDateTime a2DateTime = DateConverter.convert(DateTime);
-    	//A.end >= B.start AND A.start <= B.end
         return (a1DateTime.plusMinutes(a1.getDuration()).isAfter(a2DateTime) && a1DateTime.isBefore(a2DateTime.plusMinutes(duration)));
     }
     @Override
+	@Transactional(readOnly = false)
     public Appointment update(Appointment appointment) {
         return repository.save(appointment);
     }
 
     @Override
-	@Transactional
+	@Transactional(readOnly = false)
     public void schedulePredefined(Appointment appointment, BloodDonor donor) {
         if (appointment != null) {
             if (appointment.getStatus() == AppointmentStatus.NOT_SCHEDULED) {
@@ -192,7 +167,7 @@ public class AppointmentServiceImpl implements AppointmentService {
                 appointment.setStatus(AppointmentStatus.SCHEDULED);
 				repository.save(appointment);
 				try {
-					sendDetails(appointment, donor);
+					mailSender.sendAppointmentDetails(appointment);
 				} catch (Exception e) {
 					throw new RuntimeException(e);
 				}
@@ -211,7 +186,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = false)
 	public void cancel(Appointment appointment) {
 		if(canCancelAppointment(appointment)) {
 			appointment.setStatus(AppointmentStatus.CANCELLED);
@@ -223,19 +198,21 @@ public class AppointmentServiceImpl implements AppointmentService {
 	}
 
 	@Override
+	@Transactional(readOnly = false)
 	public void setStatus(Appointment appointment, AppointmentStatus status) {
 		appointment.setStatus(status);
 		repository.save(appointment);
 	}
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = false)
 	public void complete(Appointment appointment) {
 		appointment.setStatus(AppointmentStatus.COMPLETED);
 		repository.save(appointment);
 	}
 
 	@Override
+	@Transactional(readOnly = false)
 	public Appointment createByDonor(Appointment appointment, BloodDonor donor) {
 		if(appointment!=null && donor!=null) {
 			if (CollectionUtils.isEmpty(donor.getAnswers())) {
@@ -260,9 +237,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 			appointment.setBloodDonor(donor);
 			repository.save(appointment);
 			try {
-				sendDetails(appointment, donor);
-			} catch (IOException e) {
-				e.printStackTrace();
+				mailSender.sendAppointmentDetails(appointment);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -272,28 +247,12 @@ public class AppointmentServiceImpl implements AppointmentService {
 		}
 		return null;
 	}
-	@Async
-	void sendDetails(Appointment appointment, BloodDonor donor) throws Exception {
-		StringBuilder mailBodyBuilder = new StringBuilder();
-		mailBodyBuilder.append("Your appointment at bank: ");
-		mailBodyBuilder.append(appointment.getBloodBank().getTitle());
-		mailBodyBuilder.append(" has been successfully scheduled for ");
-		mailBodyBuilder.append(appointment.getDateTime().toString());
-		
-		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-		ImageIO.write(QrCodeGenerator.generateQRCodeImage(mailBodyBuilder.toString()), "png", byteArrayOutputStream);
-		byteArrayOutputStream.flush();
-		byte[] imageBytes= byteArrayOutputStream.toByteArray();
-		byteArrayOutputStream.close();
-		
-		mailSender.sendWithImage(new Email(donor.getEmail(),"Appointment scheduled", mailBodyBuilder.toString()),imageBytes);
-	}
+
 	private boolean donorHasAtChosenTime(BloodDonor donor, Date dateTime) {
 		return !repository.findAllByBloodDonorAndDateTime(donor, dateTime).isEmpty();
 	}
 	private boolean bloodBankIsWorking(Appointment appointment) {
 		LocalDateTime appointmentDateTime = DateConverter.convert(appointment.getDateTime());
-		//appointmentDateTime = DateConverter.convert(appointment.getDateTime());
 		LocalTime appointmentTime = appointmentDateTime.toLocalTime();
 		Date appointmentDate = (Date) appointment.getDateTime().clone();
 		BloodBank bank = appointment.getBloodBank();
