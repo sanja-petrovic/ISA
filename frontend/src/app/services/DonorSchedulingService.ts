@@ -13,7 +13,7 @@ export class DonorSchedulingService {
     private apiService: ApiService,
     private config: ConfigService) { }
 
-    checkBanks(dto: any): Observable<any> {
+    getFreeBanks(dto: any): Observable<any> {
       return this.apiService.post(`${this.config.available_bank_url}`, dto);
     }
 

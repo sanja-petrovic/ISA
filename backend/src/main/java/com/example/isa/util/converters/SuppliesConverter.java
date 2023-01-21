@@ -21,7 +21,6 @@ public class SuppliesConverter implements Converter<Supplies, SuppliesDto> {
     public Supplies dtoToEntity(SuppliesDto suppliesDto) {
         return Supplies.builder()
                 .amount(suppliesDto.getAmount())
-                .id(suppliesDto.getId())
                 .name(suppliesDto.getName())
                 .build();
     }

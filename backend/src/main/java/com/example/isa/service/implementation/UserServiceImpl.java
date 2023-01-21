@@ -3,7 +3,7 @@ package com.example.isa.service.implementation;
 import com.example.isa.model.*;
 import com.example.isa.repository.UserRepository;
 import com.example.isa.service.interfaces.UserService;
-import com.example.isa.util.EmailSender;
+import com.example.isa.util.email.EmailSender;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;

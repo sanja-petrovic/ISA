@@ -26,9 +26,7 @@ import springfox.documentation.swagger.web.SwaggerApiListingReader;
 @Table(name = "blood_subscriptions",
 uniqueConstraints = {@UniqueConstraint(columnNames = {"blood_bank_id", "type"})})
 
-public class BloodSubscription {
-	@Id
-    private UUID id = UUID.randomUUID();
+public class BloodSubscription extends BaseEntity {
 	@Column
     @Enumerated(EnumType.STRING)
     private BloodType type;
@@ -43,15 +41,5 @@ public class BloodSubscription {
     @ManyToOne
     @JoinColumn(name = "blood_bank_id")
     private BloodBank bloodBank;
-	public BloodSubscription(BloodType type, double amount, int deliveryDate, boolean active,String originid, BloodBank bloodBank) {
-		super();
-		this.id = UUID.randomUUID();
-		this.type = type;
-		this.amount = amount;
-		this.deliveryDate = deliveryDate;
-		this.active = active;
-		this.originId = originid;
-		this.bloodBank = bloodBank;
-	}
 
 }

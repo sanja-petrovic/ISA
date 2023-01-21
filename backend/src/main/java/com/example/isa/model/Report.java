@@ -5,9 +5,7 @@ import java.util.*;
 
 @Table(name = "reports")
 @Entity
-public class Report {
-    @Id
-    private UUID id;
+public class Report extends BaseEntity {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn
     private Appointment appointment;

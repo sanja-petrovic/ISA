@@ -14,9 +14,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "news")
 @NoArgsConstructor
-public class News {
-    @Id
-    private UUID id = UUID.randomUUID();
+public class News extends BaseEntity {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "blood_bank_id")
     private BloodBank bloodBank;

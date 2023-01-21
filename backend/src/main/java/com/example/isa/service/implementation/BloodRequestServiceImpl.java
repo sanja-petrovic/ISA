@@ -83,7 +83,7 @@ public class BloodRequestServiceImpl implements BloodRequestService {
     }
 
     public void save(BloodRequestDto bloodRequestDto, BloodType bloodType, BloodBank bloodBank, boolean canSend) throws ParseException {
-        BloodRequest bloodRequest = BloodRequest.builder().id(bloodRequestDto.getId()).bloodType(bloodType).amount(bloodRequestDto.getAmount()).bloodBank(bloodBank).receivedDate(new Date(System.currentTimeMillis())).sendOnDate(new SimpleDateFormat("dd-MM-yyyy HH:mm").parse(bloodRequestDto.getSendOnDate())).status(canSend ? BloodRequestStatus.APPROVED : BloodRequestStatus.REJECTED).build();
+        BloodRequest bloodRequest = BloodRequest.builder().bloodType(bloodType).amount(bloodRequestDto.getAmount()).bloodBank(bloodBank).receivedDate(new Date(System.currentTimeMillis())).sendOnDate(new SimpleDateFormat("dd-MM-yyyy HH:mm").parse(bloodRequestDto.getSendOnDate())).status(canSend ? BloodRequestStatus.APPROVED : BloodRequestStatus.REJECTED).build();
         bloodRequestRepository.save(bloodRequest);
     }
 }

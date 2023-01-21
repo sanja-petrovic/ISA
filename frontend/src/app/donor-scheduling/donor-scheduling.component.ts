@@ -24,7 +24,7 @@ export class DonorSchedulingComponent implements OnInit {
     private donorService: BloodDonorService) { }
 
   private today: Date = new Date();
-  public querry_form: FormGroup = this.formBuilder.group({
+  public queryForm: FormGroup = this.formBuilder.group({
     dateTime: [this.today.toString(),[Validators.required,SchedulingDateValidator()]],
   });
 
@@ -36,14 +36,14 @@ export class DonorSchedulingComponent implements OnInit {
     id: null,
     status: "NOT_SCHEDULED",
   });
-  get dateTime() { return this.querry_form.get('dateTime'); }
+  get dateTime() { return this.queryForm.get('dateTime'); }
 
   get dateTimeScheduled() { return this.schedule_form.get('dateTime'); }
   get durationScheduled() { return this.schedule_form.get('duration'); }
 
 
   ngOnInit(): void {
-    this.querry_form.valueChanges.subscribe(x => {
+    this.queryForm.valueChanges.subscribe(x => {
           this.new_flag = false;
           this.banks = null;
       })
@@ -58,7 +58,7 @@ export class DonorSchedulingComponent implements OnInit {
 
   }
   checkBanks(): void{
-    let item = this.querry_form.getRawValue();
+    let item = this.queryForm.getRawValue();
     let date = new Date(item.dateTime);
     //"dd-MM-yyyy hh:mm:ss"
 
@@ -70,12 +70,12 @@ export class DonorSchedulingComponent implements OnInit {
         property: "averageGrade"
       }
     }
-    this.appointmentService.checkBanks(dto).subscribe(res=>{
+    this.appointmentService.getFreeBanks(dto).subscribe(res=>{
       this.banks = res;
     })
   }
   cardClick(item : any): void{
-    this.schedule_form.get("dateTime").setValue(this.querry_form.get('dateTime').value);
+    this.schedule_form.get("dateTime").setValue(this.queryForm.get('dateTime').value);
     this.schedule_form.get("bloodBankId").setValue(item.id);
     this.schedule_form.get("bloodDonorId").setValue(this.currentDonor.personalId);
 
@@ -84,7 +84,7 @@ export class DonorSchedulingComponent implements OnInit {
     this.displayDuration = this.schedule_form.get('duration').value;
     this.displayBank = item.title;
   }
-  shedule() :void{
+  schedule() :void{
     let item = this.schedule_form.getRawValue();
     let date = new Date(item.dateTime);
     //"dd-MM-yyyy hh:mm:ss"
