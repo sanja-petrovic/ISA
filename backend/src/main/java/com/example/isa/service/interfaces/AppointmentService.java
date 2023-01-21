@@ -26,12 +26,12 @@ public interface AppointmentService {
 	Appointment create(Appointment appointment);
 	Appointment createScheduled(Appointment appointment);
 	Appointment createByDonor(Appointment appointment, BloodDonor donor);
-	Appointment update(Appointment appointment);
+	Appointment save(Appointment appointment);
 	void schedulePredefined(Appointment appointment, BloodDonor donor);
 	void cancel(Appointment appointment);
 	void complete(Appointment appointment);
 	void setStatus(Appointment appointment, AppointmentStatus status);
-	List<BloodBank> checkFreeBanksForDate(String dateTimeString, long duration, Sort sort) throws ParseException;
+	List<BloodBank> getFreeBloodBanksForDate(String dateTimeString, long duration, Sort sort) throws ParseException;
 	List<Appointment> getScheduleByBloodBankInDateRange(String bankId, String range);
 	List<Appointment> getAppointmentsInDateRange(List<Appointment> appointments, LocalDate range);
 }

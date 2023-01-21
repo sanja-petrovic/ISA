@@ -1,12 +1,15 @@
 package com.example.isa.service.implementation;
 
 import com.example.isa.exception.*;
-import com.example.isa.model.*;
+import com.example.isa.model.Appointment;
+import com.example.isa.model.AppointmentStatus;
+import com.example.isa.model.BloodBank;
+import com.example.isa.model.BloodDonor;
 import com.example.isa.repository.AppointmentRepository;
 import com.example.isa.service.interfaces.AppointmentService;
 import com.example.isa.service.interfaces.BloodBankService;
-import com.example.isa.util.EmailSender;
 import com.example.isa.util.converters.DateConverter;
+import com.example.isa.util.email.EmailSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -14,9 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -24,127 +25,131 @@ import java.util.*;
 @Service
 @Transactional(readOnly = true)
 public class AppointmentServiceImpl implements AppointmentService {
-    private final AppointmentRepository repository;
-    private final BloodBankService bankService;
-    private final EmailSender mailSender;
+    private final AppointmentRepository appointmentRepository;
+    private final BloodBankService bloodBankService;
+    private final EmailSender emailSender;
 
     @Autowired
-    public AppointmentServiceImpl(AppointmentRepository repository, BloodBankService bankService,EmailSender mailSender) {
-        this.repository = repository;
-        this.bankService = bankService;
-        this.mailSender = mailSender;
+    public AppointmentServiceImpl(AppointmentRepository appointmentRepository, BloodBankService bloodBankService, EmailSender emailSender) {
+        this.appointmentRepository = appointmentRepository;
+        this.bloodBankService = bloodBankService;
+        this.emailSender = emailSender;
     }
 
     @Override
     public List<Appointment> getAll() {
-        return repository.findAll();
+        return appointmentRepository.findAll();
     }
 
-	@Override
-	public Appointment getById(UUID appointmentId) {
-		return repository.findById(appointmentId).orElse(null);
-	}
+    @Override
+    public Appointment getById(UUID appointmentId) {
+        return appointmentRepository.findById(appointmentId).orElse(null);
+    }
 
-	@Override
+    @Override
     public List<Appointment> getByBloodBank(UUID bloodBankId) {
-        return repository.findAllByBloodBankId(bloodBankId);
+        return appointmentRepository.findAllByBloodBankId(bloodBankId);
     }
 
-	@Override
-	public List<Appointment> getByBloodBank(String title) {
-		return null;
-	}
+    @Override
+    public List<Appointment> getByBloodBank(String title) {
+        return null;
+    }
 
-	@Override
-	public List<Appointment> getUnscheduledByBloodBank(UUID bloodBankId) {
-		Date today = new Date();
-		return repository.findAllByBloodBankIdAndStatus(bloodBankId, AppointmentStatus.NOT_SCHEDULED).stream().filter(appointment -> !today.after(appointment.getDateTime()) && !appointment.getDateTime().before(today)).toList();
-	}
+    @Override
+    public List<Appointment> getUnscheduledByBloodBank(UUID bloodBankId) {
+        Date today = new Date();
+        return appointmentRepository.findAllByBloodBankIdAndStatus(bloodBankId, AppointmentStatus.NOT_SCHEDULED).stream().filter(appointment -> !today.after(appointment.getDateTime()) && !appointment.getDateTime().before(today)).toList();
+    }
 
-	@Override
-	public List<Appointment> getByBloodDonor(UUID bloodDonorId) {
-		return repository.findAllByBloodDonorId(bloodDonorId);
-	}
+    @Override
+    public List<Appointment> getByBloodDonor(UUID bloodDonorId) {
+        return appointmentRepository.findAllByBloodDonorId(bloodDonorId);
+    }
 
-	@Override
-	public List<Appointment> getByBloodDonor(UUID bloodDonorId, AppointmentStatus status, Sort sort) {
-		return repository.findAllByBloodDonorIdAndStatus(bloodDonorId, status, sort);
-	}
+    @Override
+    public List<Appointment> getByBloodDonor(UUID bloodDonorId, AppointmentStatus status, Sort sort) {
+        return appointmentRepository.findAllByBloodDonorIdAndStatus(bloodDonorId, status, sort);
+    }
 
-	@Override
-	public List<Appointment> getUpcomingScheduledByBloodDonor(UUID bloodDonorId, Sort sort) {
-		return repository.findAllByBloodDonorIdAndStatusAndDateTimeAfter(
-				bloodDonorId,
-				AppointmentStatus.SCHEDULED,
-				Date.from(Instant.now().minus(Duration.ofDays(1))),
-				sort);
-	}
+    @Override
+    public List<Appointment> getUpcomingScheduledByBloodDonor(UUID bloodDonorId, Sort sort) {
+        return appointmentRepository.findAllByBloodDonorIdAndStatusAndDateTimeAfter(
+                bloodDonorId,
+                AppointmentStatus.SCHEDULED,
+                Date.from(Instant.now().minus(Duration.ofDays(1))),
+                sort);
+    }
 
-	public List<Appointment> getAllUpcomingByBloodDonor(UUID bloodDonorId, Sort sort) {
-		return repository.findAllByBloodDonorIdAndDateTimeAfter(
-				bloodDonorId,
-				Date.from(Instant.now().minus(Duration.ofDays(1))),
-				sort);
-	}
+    public List<Appointment> getAllUpcomingByBloodDonor(UUID bloodDonorId, Sort sort) {
+        return appointmentRepository.findAllByBloodDonorIdAndDateTimeAfter(
+                bloodDonorId,
+                Date.from(Instant.now().minus(Duration.ofDays(1))),
+                sort);
+    }
 
-	public List<Appointment> getPastByBloodDonor(UUID bloodDonorId, Sort sort) {
-		return repository.findAllByBloodDonorIdAndDateTimeBefore(bloodDonorId, new Date(), sort);
-	}
-    public boolean canScheduleAppointment(BloodDonor bloodDonor, Date date) {
-        Optional<Appointment> mostRecentAppointment = repository.findTopByBloodDonorOrderByDateTimeDesc(bloodDonor);
-		LocalDateTime sixMonthsAgo = DateConverter.convert(date).minusMonths(6);
-		Instant milliseconds = sixMonthsAgo.toInstant(ZoneOffset.UTC);
+    public List<Appointment> getPastByBloodDonor(UUID bloodDonorId, Sort sort) {
+        return appointmentRepository.findAllByBloodDonorIdAndDateTimeBefore(bloodDonorId, new Date(), sort);
+    }
+
+    private boolean canScheduleAppointment(BloodDonor bloodDonor, Date date) {
+        Optional<Appointment> mostRecentAppointment = appointmentRepository.findTopByBloodDonorOrderByDateTimeDesc(bloodDonor);
+        LocalDateTime sixMonthsAgo = DateConverter.convert(date).minusMonths(6);
+        Instant milliseconds = sixMonthsAgo.toInstant(ZoneOffset.UTC);
         return mostRecentAppointment.isEmpty() || mostRecentAppointment.get().getStatus() == AppointmentStatus.CANCELLED || !mostRecentAppointment.get().getDateTime().after(Date.from(milliseconds));
     }
 
     @Override
-	@Transactional(readOnly = false)
+    @Transactional(readOnly = false)
     public Appointment create(Appointment appointment) {
-        List<Appointment> listScheduled = repository.findAllByBloodBankAndDateTime(appointment.getBloodBank(), appointment.getDateTime());
+        List<Appointment> listScheduled = appointmentRepository.findAllByBloodBankAndDateTime(appointment.getBloodBank(), appointment.getDateTime());
         for (Appointment scheduled : listScheduled) {
-            if (this.hasDateTimeOverlap(scheduled, appointment)) {
+            if (this.hasOverlap(scheduled, appointment)) {
                 throw new AlreadyExistsException();
             }
         }
-        return repository.save(appointment);
-    }
-    @Override
-	@Transactional(readOnly = false)
-    public Appointment createScheduled(Appointment appointment) {
-    	if(appointment!=null) {
-    		if(!this.bloodBankIsWorking(appointment)) {
-				throw new BloodBankClosedException();
-			}
-    		LocalDateTime convertedDateTime = DateConverter.convert(appointment.getDateTime());
-            List<Appointment> listScheduled = repository.findAllByBloodBankAndDate(appointment.getBloodBank(), convertedDateTime.getYear(), convertedDateTime.getMonthValue(), convertedDateTime.getDayOfMonth());
-            for (Appointment scheduled : listScheduled) {
-                if (this.hasDateTimeOverlap(scheduled, appointment)) {
-                    throw new AlreadyExistsException();
-                }
-            }
-            return repository.save(appointment);
-    	}
-    	return null;
-    }
-    
-    private boolean hasDateTimeOverlap(Appointment a1, Appointment a2) {
-    	LocalDateTime a1DateTime = DateConverter.convert(a1.getDateTime());
-    	LocalDateTime a2DateTime = DateConverter.convert(a2.getDateTime());
-        return (a1DateTime.plusMinutes(a1.getDuration()).isAfter(a2DateTime) && a1DateTime.isBefore(a2DateTime.plusMinutes(a2.getDuration())));
-    }
-    private boolean hasDateTimeOverlap(Appointment a1, Date DateTime, long duration) {
-    	LocalDateTime a1DateTime = DateConverter.convert(a1.getDateTime());
-    	LocalDateTime a2DateTime = DateConverter.convert(DateTime);
-        return (a1DateTime.plusMinutes(a1.getDuration()).isAfter(a2DateTime) && a1DateTime.isBefore(a2DateTime.plusMinutes(duration)));
-    }
-    @Override
-	@Transactional(readOnly = false)
-    public Appointment update(Appointment appointment) {
-        return repository.save(appointment);
+        return appointmentRepository.save(appointment);
     }
 
     @Override
-	@Transactional(readOnly = false)
+    @Transactional(readOnly = false)
+    public Appointment createScheduled(Appointment appointment) {
+        if (appointment != null) {
+            if (!bloodBankService.isOpen(appointment.getBloodBank(), appointment.getDateTime(), appointment.getDuration())) {
+                throw new BloodBankClosedException();
+            }
+            LocalDateTime convertedDateTime = DateConverter.convert(appointment.getDateTime());
+            List<Appointment> listScheduled = appointmentRepository.findAllByBloodBankAndDate(appointment.getBloodBank(), convertedDateTime.getYear(), convertedDateTime.getMonthValue(), convertedDateTime.getDayOfMonth());
+            for (Appointment scheduled : listScheduled) {
+                if (this.hasOverlap(scheduled, appointment)) {
+                    throw new AlreadyExistsException();
+                }
+            }
+            return appointmentRepository.save(appointment);
+        }
+        return null;
+    }
+
+    private boolean hasOverlap(Appointment first, Appointment second) {
+        LocalDateTime firstLocal = DateConverter.convert(first.getDateTime());
+        LocalDateTime secondLocal = DateConverter.convert(second.getDateTime());
+        return (firstLocal.plusMinutes(first.getDuration()).isAfter(secondLocal) && firstLocal.isBefore(secondLocal.plusMinutes(second.getDuration())));
+    }
+
+    private boolean hasOverlap(Appointment appointment, Date dateTime, long duration) {
+        LocalDateTime a1DateTime = DateConverter.convert(appointment.getDateTime());
+        LocalDateTime a2DateTime = DateConverter.convert(dateTime);
+        return (a1DateTime.plusMinutes(appointment.getDuration()).isAfter(a2DateTime) && a1DateTime.isBefore(a2DateTime.plusMinutes(duration)));
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public Appointment save(Appointment appointment) {
+        return appointmentRepository.save(appointment);
+    }
+
+    @Override
+    @Transactional(readOnly = false)
     public void schedulePredefined(Appointment appointment, BloodDonor donor) {
         if (appointment != null) {
             if (appointment.getStatus() == AppointmentStatus.NOT_SCHEDULED) {
@@ -154,24 +159,24 @@ public class AppointmentServiceImpl implements AppointmentService {
                 if (CollectionUtils.isEmpty(donor.getAnswers())) {
                     throw new NoCompletedQuestionnaire();
                 }
-				if(donor.getPenaltyCount() >= 3) {
-					throw new ReachedPenaltyLimitException();
-				}
-				if (!canScheduleAppointment(donor, appointment.getDateTime())) {
-					throw new NewAppointmentTooSoonException();
-				}
-                if (repository.findAllByBloodBankIdAndBloodDonorIdAndDateTime(appointment.getBloodBank().getId(), donor.getId(), appointment.getDateTime()).isPresent()) {
+                if (donor.getPenaltyCount() >= 3) {
+                    throw new ReachedPenaltyLimitException();
+                }
+                if (!canScheduleAppointment(donor, appointment.getDateTime())) {
+                    throw new NewAppointmentTooSoonException();
+                }
+                if (appointmentRepository.findAllByBloodBankIdAndBloodDonorIdAndDateTime(appointment.getBloodBank().getId(), donor.getId(), appointment.getDateTime()).isPresent()) {
                     throw new CantScheduleTwiceException();
                 }
-				appointment.setBloodDonor(donor);
+                appointment.setBloodDonor(donor);
                 appointment.setStatus(AppointmentStatus.SCHEDULED);
-				repository.save(appointment);
-				try {
-					mailSender.sendAppointmentDetails(appointment);
-				} catch (Exception e) {
-					throw new RuntimeException(e);
-				}
-			} else {
+                appointmentRepository.save(appointment);
+                try {
+                    emailSender.sendAppointmentDetails(appointment);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            } else {
                 throw new AlreadyScheduledException();
             }
         } else {
@@ -179,188 +184,122 @@ public class AppointmentServiceImpl implements AppointmentService {
         }
     }
 
-	public boolean canCancelAppointment(Appointment appointment) {
-		LocalDateTime appointmentDateTime = DateConverter.convert(appointment.getDateTime());
-		long hours = ChronoUnit.HOURS.between(appointmentDateTime, LocalDateTime.now());
-		return Math.abs(hours) > 24;
-	}
+    public boolean canCancelAppointment(Appointment appointment) {
+        LocalDateTime appointmentDateTime = DateConverter.convert(appointment.getDateTime());
+        long hours = ChronoUnit.HOURS.between(appointmentDateTime, LocalDateTime.now());
+        return Math.abs(hours) > 24;
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public void cancel(Appointment appointment) {
+        if (canCancelAppointment(appointment)) {
+            appointment.setStatus(AppointmentStatus.CANCELLED);
+            appointmentRepository.save(appointment);
+            appointmentRepository.save(new Appointment(appointment));
+        } else {
+            throw new UnableToCancelException();
+        }
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public void setStatus(Appointment appointment, AppointmentStatus status) {
+        appointment.setStatus(status);
+        appointmentRepository.save(appointment);
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public void complete(Appointment appointment) {
+        appointment.setStatus(AppointmentStatus.COMPLETED);
+        appointmentRepository.save(appointment);
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public Appointment createByDonor(Appointment appointment, BloodDonor donor) {
+        if (appointment != null && donor != null) {
+            if (CollectionUtils.isEmpty(donor.getAnswers())) {
+                throw new NoCompletedQuestionnaire();
+            }
+            if (donor.getPenaltyCount() >= 3) {
+                throw new ReachedPenaltyLimitException();
+            }
+            if (appointment.getDateTime().before(new Date())) {
+                throw new PassedException();
+            }
+            if (!bloodBankService.isOpen(appointment.getBloodBank(), appointment.getDateTime(), appointment.getDuration())) {
+                throw new BloodBankClosedException();
+            }
+            if (!canScheduleAppointment(donor, appointment.getDateTime())) {
+                throw new NewAppointmentTooSoonException();
+            }
+            if (donorHasAtChosenTime(donor, appointment.getDateTime())) {
+                throw new DuplicateAppointmentException();
+            }
+            appointment.setStatus(AppointmentStatus.SCHEDULED);
+            appointment.setBloodDonor(donor);
+            appointmentRepository.save(appointment);
+            try {
+                emailSender.sendAppointmentDetails(appointment);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            throw new NotFoundException();
+        }
+        return null;
+    }
+
+    private boolean donorHasAtChosenTime(BloodDonor donor, Date dateTime) {
+        return !appointmentRepository.findAllByBloodDonorAndDateTime(donor, dateTime).isEmpty();
+    }
 
 	@Override
-	@Transactional(readOnly = false)
-	public void cancel(Appointment appointment) {
-		if(canCancelAppointment(appointment)) {
-			appointment.setStatus(AppointmentStatus.CANCELLED);
-			repository.save(appointment);
-            repository.save(new Appointment(appointment));
-		} else {
-			throw new UnableToCancelException();
-		}
-	}
+    public List<BloodBank> getFreeBloodBanksForDate(String selectedDate, long duration, Sort sort) throws ParseException {
+        List<BloodBank> openBloodBanksOnDate = bloodBankService.getAll().stream().filter(bloodBank -> bloodBankService.isOpen(bloodBank, DateConverter.convert(selectedDate), duration)).toList();
+        List<BloodBank> freeBloodBanksForDate = new ArrayList<>();
+        LocalDateTime localDateTime = DateConverter.convertToLocal(selectedDate);
+        for (BloodBank bank : openBloodBanksOnDate) {
+            List<Appointment> scheduledAppointments = appointmentRepository.findAllByBloodBankAndDate(bank, localDateTime.getYear(), localDateTime.getMonthValue(), localDateTime.getDayOfMonth());
+            if (scheduledAppointments.isEmpty()) {
+                freeBloodBanksForDate.add(bank);
+            } else {
+                List<Appointment> overlappingAppointments = scheduledAppointments.stream().filter(appointment -> hasOverlap(appointment, DateConverter.convert(selectedDate), duration)).toList();
+                if (overlappingAppointments.isEmpty()) {
+                    freeBloodBanksForDate.add(bank);
+                }
+            }
+        }
+        return freeBloodBanksForDate;
+    }
+
+    @Override
+    public List<Appointment> getScheduleByBloodBankInDateRange(String bankId, String range) {
+        List<Appointment> bankSchedule = getByBloodBank(UUID.fromString(bankId));
+        switch (range) {
+            case "week":
+                return getAppointmentsInDateRange(bankSchedule, LocalDate.now().plusDays(7));
+            case "month":
+                return getAppointmentsInDateRange(bankSchedule, LocalDate.now().plusMonths(1));
+            case "year":
+                return getAppointmentsInDateRange(bankSchedule, LocalDate.now().plusYears(1));
+        }
+        return null;
+    }
 
 	@Override
-	@Transactional(readOnly = false)
-	public void setStatus(Appointment appointment, AppointmentStatus status) {
-		appointment.setStatus(status);
-		repository.save(appointment);
-	}
+    public List<Appointment> getAppointmentsInDateRange(List<Appointment> appointments, LocalDate range) {
+		return appointments.stream().filter(appointment -> appointment.getDateTime().before(Date.from(range.atStartOfDay(ZoneId.systemDefault()).toInstant()))).toList();
+    }
 
-	@Override
-	@Transactional(readOnly = false)
-	public void complete(Appointment appointment) {
-		appointment.setStatus(AppointmentStatus.COMPLETED);
-		repository.save(appointment);
-	}
-
-	@Override
-	@Transactional(readOnly = false)
-	public Appointment createByDonor(Appointment appointment, BloodDonor donor) {
-		if(appointment!=null && donor!=null) {
-			if (CollectionUtils.isEmpty(donor.getAnswers())) {
-				throw new NoCompletedQuestionnaire();
-			}
-			if(donor.getPenaltyCount() >= 3) {
-				throw new ReachedPenaltyLimitException();
-			}
-			if (appointment.getDateTime().before(new Date())) {
-	            throw new PassedException();
-	        }
-			if(!this.bloodBankIsWorking(appointment)) {
-				throw new BloodBankClosedException();
-			}
-			if (!canScheduleAppointment(donor, appointment.getDateTime())) {
-				throw new NewAppointmentTooSoonException();
-			}
-			if(donorHasAtChosenTime(donor, appointment.getDateTime())) {
-				throw new DuplicateAppointmentException();
-			}
-			appointment.setStatus(AppointmentStatus.SCHEDULED);
-			appointment.setBloodDonor(donor);
-			repository.save(appointment);
-			try {
-				mailSender.sendAppointmentDetails(appointment);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		else {
-			throw new NotFoundException();
-		}
-		return null;
-	}
-
-	private boolean donorHasAtChosenTime(BloodDonor donor, Date dateTime) {
-		return !repository.findAllByBloodDonorAndDateTime(donor, dateTime).isEmpty();
-	}
-	private boolean bloodBankIsWorking(Appointment appointment) {
-		LocalDateTime appointmentDateTime = DateConverter.convert(appointment.getDateTime());
-		LocalTime appointmentTime = appointmentDateTime.toLocalTime();
-		Date appointmentDate = (Date) appointment.getDateTime().clone();
-		BloodBank bank = appointment.getBloodBank();
-		if(bank == null) return false;
-		else {	
-			Date startTime = appointmentDate;
-			startTime.setTime(bank.getWorkingHours().getIntervalStart().getTime());
-			LocalTime startTimeLocal = DateConverter.convert(startTime).toLocalTime();
-			Date endTime = appointmentDate;
-			endTime.setTime(bank.getWorkingHours().getIntervalEnd().getTime());
-			LocalTime endTimeLocal = DateConverter.convert(endTime).toLocalTime();
-			
-			if(startTimeLocal.equals(LocalTime.of(0,0, 0)) && endTimeLocal.equals(LocalTime.of(0,0, 0))) return true;
-
-			return appointmentTime.isAfter(startTimeLocal) && appointmentTime.plusMinutes(appointment.getDuration()).isBefore(endTimeLocal);
-
-		}
-	}
-	
-	private boolean bloodBankIsWorking(BloodBank bank, Date date, long duration) {
-		if(bank == null) return false;
-		else {
-			LocalDateTime appointmentDateTime = DateConverter.convert(date);
-			LocalTime appointmentTime = appointmentDateTime.toLocalTime();
-			Date appointmentDate = date;
-			Date startTime = appointmentDate;
-			startTime.setTime(bank.getWorkingHours().getIntervalStart().getTime());
-			LocalTime startTimeLocal = DateConverter.convert(startTime).toLocalTime();
-			Date endTime = appointmentDate;
-			endTime.setTime(bank.getWorkingHours().getIntervalEnd().getTime());
-			LocalTime endTimeLocal = DateConverter.convert(endTime).toLocalTime();
-			
-			if(startTimeLocal.equals(LocalTime.of(0,0, 0)) && endTimeLocal.equals(LocalTime.of(0,0, 0))) return true;
-
-			return appointmentTime.isAfter(startTimeLocal) && appointmentTime.plusMinutes(duration).isBefore(endTimeLocal);
-
-		}
-	}
-	
-	public List<BloodBank> checkFreeBanksForDate(String dateTimeString, long duration, Sort sort) throws ParseException{
-		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.ENGLISH);
-		formatter.setTimeZone(TimeZone.getDefault());
-		Date dateTime = formatter.parse(dateTimeString);
-		List<String> searchCriteria = new ArrayList<String>();
-		searchCriteria.add("");
-		searchCriteria.add("");
-		List<BloodBank> banks = bankService.search(sort, searchCriteria, "0");
-		if(banks!=null) {
-			List<BloodBank> retVal = new ArrayList<BloodBank>();
-			LocalDateTime convertedDateTime = DateConverter.convert(dateTime);
-			for (BloodBank bank : banks) {
-				if(!this.bloodBankIsWorking(bank,(Date)dateTime.clone(), duration)) {
-					continue;
-				}
-				List<Appointment> listScheduled = repository.findAllByBloodBankAndDate( bank, convertedDateTime.getYear(), convertedDateTime.getMonthValue(), convertedDateTime.getDayOfMonth());
-				if(listScheduled == null) {
-					retVal.add(bank);
-					continue;
-				}
-				else {
-					boolean overlap = false;
-					for(Appointment appointment : listScheduled) {
-						if(hasDateTimeOverlap(appointment, dateTime, duration)){
-							overlap = true;
-							break;
-						}
-					}
-					if(!overlap) {
-						retVal.add(bank);
-					}
-				}
-			}
-			return retVal.isEmpty() ? null : retVal;
-		}
-		else {
-			return null;
-		}
-	}
-
-	@Override
-	public List<Appointment> getScheduleByBloodBankInDateRange(String bankId, String range) {
-		List<Appointment> bankSchedule = getByBloodBank(UUID.fromString(bankId));
-		switch (range){
-			case "week" :
-				return getAppointmentsInDateRange(bankSchedule,LocalDate.now().plusDays(7));
-			case "month":
-				return getAppointmentsInDateRange(bankSchedule,LocalDate.now().plusMonths(1));
-			case "year":
-				return getAppointmentsInDateRange(bankSchedule,LocalDate.now().plusYears(1));
-		}
-		return null;
-	}
-	public List<Appointment> getAppointmentsInDateRange(List<Appointment> appointments, LocalDate range){
-		List<Appointment> schedule = new ArrayList<Appointment>();
-		for(Appointment appointment : appointments){
-			if(appointment.getDateTime().before(Date.from(range.atStartOfDay(ZoneId.systemDefault()).toInstant()))){
-				schedule.add(appointment);
-			}
-		}
-		return schedule;
-	}
-
-	@Scheduled(cron = "@daily", zone = "Europe/Vienna")
-	public void checkNotHeldAppointments() {
-		for(Appointment appointment : repository.findAllByStatus(AppointmentStatus.SCHEDULED)) {
-			if(appointment.getDateTime().before(new Date())) {
-				appointment.setStatus(AppointmentStatus.NOT_HELD);
-			}
-		}
-	}
+    @Scheduled(cron = "@daily", zone = "Europe/Vienna")
+    public void checkNotHeldAppointments() {
+        for (Appointment appointment : appointmentRepository.findAllByStatus(AppointmentStatus.SCHEDULED)) {
+            if (appointment.getDateTime().before(new Date())) {
+                appointment.setStatus(AppointmentStatus.NOT_HELD);
+            }
+        }
+    }
 }

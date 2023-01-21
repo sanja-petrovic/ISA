@@ -1,8 +1,10 @@
-package com.example.isa.util;
+package com.example.isa.util.email;
 
 import com.example.isa.model.Appointment;
 import com.example.isa.model.Email;
-import com.example.isa.util.converters.ImageHelper;
+import com.example.isa.util.converters.ImageConverter;
+import com.example.isa.util.formatters.TextFormatter;
+import com.example.isa.util.qrCode.QrCodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -77,10 +79,10 @@ public class EmailSender {
 
     @Async
     public void sendAppointmentDetails(Appointment appointment) throws Exception {
-        String emailBody = TextFormattingHelper.formatAppointmentDetails(appointment);
-        String qrCodeInformation = TextFormattingHelper.formatQrCodeInformation(appointment);
+        String emailBody = TextFormatter.formatAppointmentDetails(appointment);
+        String qrCodeInformation = TextFormatter.formatQrCodeInformation(appointment);
         BufferedImage qrCode = QrCodeGenerator.generateQRCodeImage(qrCodeInformation);
-        byte[] qrCodeInBytes = ImageHelper.convertToBytes(qrCode);
+        byte[] qrCodeInBytes = ImageConverter.convertToBytes(qrCode);
         this.sendWithImage(new Email(appointment.getBloodDonor().getEmail(), "Appointment scheduled", emailBody), qrCodeInBytes);
     }
 }

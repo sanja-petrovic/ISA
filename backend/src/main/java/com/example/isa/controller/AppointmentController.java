@@ -11,7 +11,6 @@ import com.example.isa.model.User;
 import com.example.isa.service.interfaces.BloodDonorService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.data.domain.Sort;
@@ -87,7 +86,7 @@ public class AppointmentController {
         Sort sort = Sort.by(Sort.Direction.fromString(dto.getSortCriteria().getDirection()), dto.getSortCriteria().getProperty());
         List<BloodBank> banks = null;
         try {
-            banks = appointmentService.checkFreeBanksForDate(dto.getDateTime(), dto.getDuration(), sort);
+            banks = appointmentService.getFreeBloodBanksForDate(dto.getDateTime(), dto.getDuration(), sort);
         } catch (ParseException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

@@ -1,4 +1,4 @@
-package com.example.isa.util;
+package com.example.isa.util.qrCode;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.common.BitMatrix;

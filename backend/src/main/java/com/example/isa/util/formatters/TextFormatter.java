@@ -1,14 +1,13 @@
-package com.example.isa.util;
+package com.example.isa.util.formatters;
 
 import com.example.isa.model.Appointment;
-import com.example.isa.model.BloodDonor;
 import org.springframework.stereotype.Service;
 import org.apache.commons.text.TextStringBuilder;
 
 import java.util.Locale;
 
 @Service
-public class TextFormattingHelper {
+public class TextFormatter {
     public static String formatQrCodeInformation(Appointment appointment) {
         TextStringBuilder textStringBuilder = new TextStringBuilder();
         textStringBuilder.append("Your personal ID: ");
@@ -16,7 +15,7 @@ public class TextFormattingHelper {
         textStringBuilder.append("Blood bank: ");
         textStringBuilder.appendln(appointment.getBloodBank().getTitle());
         textStringBuilder.append("Date and time: ");
-        textStringBuilder.appendln(DateHelper.formatDate(appointment.getDateTime()));
+        textStringBuilder.appendln(DateFormatter.formatDate(appointment.getDateTime()));
         textStringBuilder.append("Status: ");
         textStringBuilder.appendln(appointment.getStatus().toString().toLowerCase(Locale.ROOT));
 
