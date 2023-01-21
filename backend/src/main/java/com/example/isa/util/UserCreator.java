@@ -40,6 +40,9 @@ public class UserCreator {
         BloodDonor bloodDonor = new BloodDonor("2801001123456", "blooddonor@gmail.com", passwordEncoder.encode("BLOODDONOR"), "Jane", "Doe", "0681234567", Gender.FEMALE, true, "Student", new Address("Ulica 15", "Novi Sad", "Srbija"), "FTN", roleDonor, 0);
         bloodDonor.setId(UUID.fromString("16e4a8c2-3e86-4e93-825f-24e36cb29645"));
         bloodDonorRepository.save(bloodDonor);
+        BloodDonor bloodDonor2 = new BloodDonor("2801001123475", "blooddonor2@gmail.com", passwordEncoder.encode("BLOODDONOR"), "John", "Doe", "0681234467", Gender.MALE, true, "Student", new Address("Ulica 15", "Novi Sad", "Srbija"), "FTN", roleDonor, 0);
+        bloodDonor2.setId(UUID.fromString("26e4a8c2-3e86-4e93-825f-24e36cb29645"));
+        bloodDonorRepository.save(bloodDonor2);
 
         BloodBank bloodBank = new BloodBank("Prva prava banka krvi", new Address("Daniciceva 15", "Novi Sad", "Srbija"), "Najopremljenija banka krvi ovih prostora", new Interval(new Date(12345), new Date(12345)), 4.8);
         bloodBankRepository.save(bloodBank);
