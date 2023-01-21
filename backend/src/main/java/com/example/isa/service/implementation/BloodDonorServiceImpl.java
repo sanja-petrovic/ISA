@@ -33,11 +33,7 @@ public class BloodDonorServiceImpl implements BloodDonorService {
 	}
 	public Boolean filledOutQuestions(String personalId) {
 		BloodDonor donor = this.getByPersonalId(personalId);
-		if(donor==null) {
-			return false;
-		}
-		if(donor.getAnswers().isEmpty()) return false;
-		return true;
+		return donor != null && !donor.getAnswers().isEmpty();
 	}
 
 	@Override

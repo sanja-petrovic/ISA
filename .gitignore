@@ -24,3 +24,5 @@ hs_err_pid*
 
 /frontend/node_modules
 backend/.env
+
+backend/pgadmin/
