@@ -12,17 +12,14 @@ import java.util.UUID;
 @Entity
 @Table(name = "supplies")
 
-public class Supplies {
-    @Id
-    private UUID id;
+public class Supplies extends BaseEntity {
     @Column
     private String name;
     @Column
     private int amount;
     @Builder
-    public Supplies(int amount, String name, UUID id){
+    public Supplies(int amount, String name){
         this.amount = amount;
         this.name = name;
-        this.id = id;
     }
 }

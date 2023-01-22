@@ -18,10 +18,8 @@ import java.util.UUID;
 public class Role implements GrantedAuthority {
     @Id
     UUID id = UUID.randomUUID();
-
     @Column(name="name")
     String name;
-
     @Override
     public String getAuthority() {
         return this.name;

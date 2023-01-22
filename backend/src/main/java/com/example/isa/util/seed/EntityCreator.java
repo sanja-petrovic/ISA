@@ -1,4 +1,4 @@
-package com.example.isa.util;
+package com.example.isa.util.seed;
 
 import com.example.isa.model.*;
 import com.example.isa.repository.*;
@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.UUID;
 
 @Component
-public class UserCreator {
+public class EntityCreator {
     private final RoleRepository roleRepository;
     private final MedicalStaffRepository medicalStaffRepository;
     private final BloodDonorRepository bloodDonorRepository;
@@ -18,7 +18,7 @@ public class UserCreator {
     private final BloodBankRepository bloodBankRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserCreator(RoleRepository roleRepository, MedicalStaffRepository medicalStaffRepository, BloodDonorRepository bloodDonorRepository, AdminRepository adminRepository, BloodBankRepository bloodBankRepository, PasswordEncoder passwordEncoder) {
+    public EntityCreator(RoleRepository roleRepository, MedicalStaffRepository medicalStaffRepository, BloodDonorRepository bloodDonorRepository, AdminRepository adminRepository, BloodBankRepository bloodBankRepository, PasswordEncoder passwordEncoder) {
         this.roleRepository = roleRepository;
         this.medicalStaffRepository = medicalStaffRepository;
         this.bloodDonorRepository = bloodDonorRepository;

@@ -18,9 +18,7 @@ import java.util.UUID;
 @Entity
 @AllArgsConstructor
 @Table(name = "blood_banks")
-public class BloodBank {
-    @Id
-    private UUID id = UUID.randomUUID();
+public class BloodBank extends BaseEntity {
     @Column(unique = true)
     private String title;
     @Embedded
@@ -43,7 +41,6 @@ public class BloodBank {
     private Set<News> news = new LinkedHashSet<>();
 
     public BloodBank(String title, Address address, String description) {
-        this.id = UUID.randomUUID();
         this.title = title;
         this.address = address;
         this.description = description;
@@ -59,7 +56,6 @@ public class BloodBank {
     }
 
     public BloodBank(String title, Address address, String description, Interval workingHours, double averageGrade) {
-        this.id = UUID.randomUUID();
         this.title = title;
         this.address = address;
         this.description = description;

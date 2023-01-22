@@ -6,11 +6,15 @@ import com.example.isa.model.BloodSupply;
 import com.example.isa.model.BloodType;
 import com.example.isa.repository.BloodBankRepository;
 import com.example.isa.service.interfaces.BloodBankService;
+import com.example.isa.util.converters.DateConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -41,6 +45,11 @@ public class BloodBankServiceImpl implements BloodBankService {
 
         return this.repository.findAllByTitleIgnoreCaseContainingAndAddress_CityIgnoreCaseContainingAndAverageGradeGreaterThanEqual(titleString, cityString, parseGrade(filterGrade), sort);
        
+    }
+
+    @Override
+    public List<BloodBank> getAll(Sort sort) {
+        return this.repository.findAll(sort);
     }
 
     private Double parseGrade(String filterGrade) {
@@ -107,5 +116,20 @@ public class BloodBankServiceImpl implements BloodBankService {
         }
     }
 
+    @Override
+    public boolean isOpen(BloodBank bank, Date date, long duration) {
+        LocalDateTime appointmentDateTime = DateConverter.convert(date);
+        LocalTime appointmentTime = appointmentDateTime.toLocalTime();
+        Date appointmentDate = date;
+        Date startTime = appointmentDate;
+        startTime.setTime(bank.getWorkingHours().getIntervalStart().getTime());
+        LocalTime startTimeLocal = DateConverter.convert(startTime).toLocalTime();
+        Date endTime = appointmentDate;
+        endTime.setTime(bank.getWorkingHours().getIntervalEnd().getTime());
+        LocalTime endTimeLocal = DateConverter.convert(endTime).toLocalTime();
 
+        if(startTimeLocal.equals(LocalTime.of(0,0, 0)) && endTimeLocal.equals(LocalTime.of(0,0, 0))) return true;
+
+        return appointmentTime.isAfter(startTimeLocal) && appointmentTime.plusMinutes(duration).isBefore(endTimeLocal);
+    }
 }

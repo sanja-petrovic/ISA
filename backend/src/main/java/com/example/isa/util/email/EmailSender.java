@@ -1,10 +1,12 @@
-package com.example.isa.util;
+package com.example.isa.util.email;
 
+import com.example.isa.model.Appointment;
 import com.example.isa.model.Email;
+import com.example.isa.util.converters.ImageConverter;
+import com.example.isa.util.formatters.TextFormatter;
+import com.example.isa.util.qrCode.QrCodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.web.servlet.MultipartAutoConfiguration;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
+import java.awt.image.BufferedImage;
 
 @Service
 public class EmailSender {
@@ -72,5 +75,14 @@ public class EmailSender {
         } catch (Exception e) {
             return "Error while sending mail:" + e.getLocalizedMessage();
         }
+    }
+
+    @Async
+    public void sendAppointmentDetails(Appointment appointment) throws Exception {
+        String emailBody = TextFormatter.formatAppointmentDetails(appointment);
+        String qrCodeInformation = TextFormatter.formatQrCodeInformation(appointment);
+        BufferedImage qrCode = QrCodeGenerator.generateQRCodeImage(qrCodeInformation);
+        byte[] qrCodeInBytes = ImageConverter.convertToBytes(qrCode);
+        this.sendWithImage(new Email(appointment.getBloodDonor().getEmail(), "Appointment scheduled", emailBody), qrCodeInBytes);
     }
 }

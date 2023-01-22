@@ -18,9 +18,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class User implements UserDetails {
-    @Id
-    private UUID id = UUID.randomUUID();
+public class User extends BaseEntity implements UserDetails{
     @Column(unique = true)
     private String personalId;
     @Column(unique = true)
@@ -55,6 +53,13 @@ public class User implements UserDetails {
     }
 
     public User(String personalId, String email, String password, String firstName, String lastName, String phoneNumber, Gender gender) {
+        this.personalId = personalId;
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.gender = gender;
     }
 
     @JsonIgnore

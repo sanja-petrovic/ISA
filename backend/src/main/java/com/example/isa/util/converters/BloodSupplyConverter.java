@@ -20,7 +20,6 @@ public class BloodSupplyConverter implements Converter<BloodSupply, BloodSupplyD
     public BloodSupply dtoToEntity(BloodSupplyDto bloodSupplyDto) {
         return BloodSupply.builder()
                 .amount(bloodSupplyDto.getAmount())
-                .id(bloodSupplyDto.getId())
                 .type(BloodType.valueOf(bloodSupplyDto.getBloodType()))
                 .build();
     }

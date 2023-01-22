@@ -9,20 +9,12 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 @Table(name="questions")
-public class Question {
-    @Id
-    private UUID id = UUID.randomUUID();
+public class Question extends BaseEntity {
     @Column
     private String text;
-
     @Enumerated(EnumType.STRING)
     private QuestionType type;
-
-    @Builder
-    public Question(String text, QuestionType type) {
-        this.text = text;
-        this.type = type;
-    }
 }

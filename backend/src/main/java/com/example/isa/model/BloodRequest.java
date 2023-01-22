@@ -13,9 +13,7 @@ import java.util.UUID;
 @Builder
 @Entity
 @Table(name = "blood_requests")
-public class BloodRequest {
-    @Id
-    private UUID id;
+public class BloodRequest extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "blood_bank_id")
     private BloodBank bloodBank;

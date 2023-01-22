@@ -21,10 +21,8 @@ import java.util.UUID;
 @Entity
 @ToString
 @Table(name = "appointments")
-public class Appointment {
-    @Id
-    @Column
-    private UUID id  = UUID.randomUUID();
+public class Appointment extends BaseEntity {
+
     @Column
     @Enumerated(EnumType.STRING)
     private AppointmentStatus status;
@@ -44,22 +42,11 @@ public class Appointment {
 
     
     public Appointment(Appointment appointment) {
-        this.id = UUID.randomUUID();
         status = AppointmentStatus.NOT_SCHEDULED;
         dateTime = appointment.dateTime;
         duration = appointment.duration;
         bloodBank = appointment.bloodBank;
+        bloodDonor = appointment.bloodDonor;
     }
-
-	public Appointment(AppointmentStatus status, Date dateTime, Long duration, BloodBank bloodBank,
-			BloodDonor bloodDonor) {
-		super();
-		this.id = UUID.randomUUID();
-		this.status = status;
-		this.dateTime = dateTime;
-		this.duration = duration;
-		this.bloodBank = bloodBank;
-		this.bloodDonor = bloodDonor;
-	}
     
 }
