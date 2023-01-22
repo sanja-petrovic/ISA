@@ -54,7 +54,8 @@ public class AppointmentConverter implements Converter<Appointment, AppointmentD
 						formatter.parse(dto.getDateTime()),
 						dto.getDuration(),
 						bankService.getById(UUID.fromString(dto.getBloodBankId())),
-						donor
+						donor,
+						dto.getReport()
 						);
 			} catch (ParseException e) {
 				e.printStackTrace();
