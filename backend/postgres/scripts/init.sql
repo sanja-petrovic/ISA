@@ -288,6 +288,24 @@ CREATE TABLE IF NOT EXISTS public.supplies
     CONSTRAINT supplies_pkey PRIMARY KEY (id)
 );
 
+CREATE TABLE IF NOT EXISTS public.tracking_requests
+(
+    id uuid NOT NULL,
+    end_latitude double precision,
+    end_longitude double precision,
+    start_latitude double precision,
+    start_longitude double precision,
+    "timestamp" timestamp without time zone,
+    unit integer,
+    value integer,
+    blood_bank_id uuid,
+    CONSTRAINT tracking_requests_pkey PRIMARY KEY (id),
+    CONSTRAINT fkq05i77gej2y8gfke025e7tuig FOREIGN KEY (blood_bank_id)
+        REFERENCES public.blood_banks (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
 
 -- blood banks
 insert into public.blood_banks (id, city, street, country, average_grade, description, title, interval_end,
