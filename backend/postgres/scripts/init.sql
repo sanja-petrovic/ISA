@@ -398,3 +398,4 @@ insert into public.blood_supplies(id,amount, type, blood_bank_id)
 values (uuid_generate_v4(),20,'O_NEGATIVE', '16e4a8c2-3e86-4e93-825f-24e36cb29669');
 insert into public.blood_supplies(id,amount, type, blood_bank_id)
 values (uuid_generate_v4(),350,'AB_NEGATIVE', '16e4a8c2-3e86-4e93-825f-24e36cb29669');
+

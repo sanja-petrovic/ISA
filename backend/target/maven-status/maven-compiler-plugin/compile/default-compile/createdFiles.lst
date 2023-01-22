@@ -63,6 +63,7 @@ com\example\isa\util\converters\DateConverter.class
 com\example\isa\model\Supplies$SuppliesBuilder.class
 com\example\isa\repository\UserRepository.class
 com\example\isa\dto\BloodBankDto$BloodBankDtoBuilder.class
+com\example\isa\repository\CacheDataRepository.class
 com\example\isa\dto\MedicalStaffDto.class
 com\example\isa\repository\BloodSupplyRepository.class
 com\example\isa\dto\UserSearchDto.class
@@ -120,6 +121,7 @@ com\example\isa\dto\SortDto.class
 com\example\isa\model\Supplies.class
 com\example\isa\model\Address.class
 com\example\isa\util\converters\AppointmentConverter.class
+com\example\isa\service\interfaces\CacheDataService.class
 com\example\isa\exception\TokenRefreshException.class
 com\example\isa\service\interfaces\BloodSupplyService.class
 com\example\isa\service\interfaces\NewsService.class
@@ -163,6 +165,7 @@ com\example\isa\dto\SuppliesDto$SuppliesDtoBuilder.class
 com\example\isa\exception\ReachedPenaltyLimitException.class
 com\example\isa\dto\BloodProductDto.class
 com\example\isa\exception\NotEnoughSupplyException.class
+com\example\isa\model\CacheData.class
 com\example\isa\repository\RoleRepository.class
 com\example\isa\dto\AdminDto$AdminDtoBuilder.class
 com\example\isa\model\Admin.class
@@ -180,6 +183,7 @@ com\example\isa\controller\AnswerController.class
 com\example\isa\service\implementation\BloodBankServiceImpl.class
 com\example\isa\model\News.class
 com\example\isa\security\TokenHandler.class
+com\example\isa\service\implementation\CacheDataSeviceImpl.class
 com\example\isa\util\converters\Converter.class
 com\example\isa\model\QuestionType.class
 com\example\isa\repository\AdminRepository.class

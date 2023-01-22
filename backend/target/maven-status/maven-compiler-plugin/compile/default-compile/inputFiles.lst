@@ -42,6 +42,7 @@ D:\isa2022\ISA\backend\src\main\java\com\example\isa\util\converters\DateConvert
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\exception\NotEnoughSupplyException.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\config\SwaggerConfig.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\exception\TokenRefreshException.java
+D:\isa2022\ISA\backend\src\main\java\com\example\isa\service\interfaces\CacheDataService.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\util\converters\QuestionConverter.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\controller\QuestionController.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\config\WebConfig.java
@@ -116,6 +117,7 @@ D:\isa2022\ISA\backend\src\main\java\com\example\isa\repository\NewsRepository.j
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\repository\QuestionRepository.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\dto\NewsDto.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\dto\BloodSubscriptionSignUpDto.java
+D:\isa2022\ISA\backend\src\main\java\com\example\isa\model\CacheData.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\model\Review.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\util\converters\BloodBankConverter.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\service\interfaces\BloodBankService.java
@@ -133,6 +135,7 @@ D:\isa2022\ISA\backend\src\main\java\com\example\isa\controller\AuthController.j
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\exception\AlreadyExistsException.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\service\implementation\AppointmentServiceImpl.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\util\converters\BloodSupplyConverter.java
+D:\isa2022\ISA\backend\src\main\java\com\example\isa\repository\CacheDataRepository.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\dto\CredentialsDto.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\service\interfaces\RefreshTokenService.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\model\AccountStatus.java
@@ -168,5 +171,6 @@ D:\isa2022\ISA\backend\src\main\java\com\example\isa\dto\BloodBankListDto.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\model\AppointmentStatus.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\model\BloodDonor.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\service\interfaces\NewsService.java
+D:\isa2022\ISA\backend\src\main\java\com\example\isa\service\implementation\CacheDataSeviceImpl.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\config\SecurityConfig.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\util\converters\MedicalStaffConverter.java
