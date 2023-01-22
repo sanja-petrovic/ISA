@@ -25,11 +25,9 @@ public class Appointment {
     @Id
     @Column
     private UUID id  = UUID.randomUUID();
-
     @Column
     @Enumerated(EnumType.STRING)
     private AppointmentStatus status;
-
     @Column
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateTime;
@@ -41,6 +39,9 @@ public class Appointment {
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "blood_donor_id")
     private BloodDonor bloodDonor;
+    @Column(columnDefinition="TEXT")
+    private String report;
+
     
     public Appointment(Appointment appointment) {
         this.id = UUID.randomUUID();
