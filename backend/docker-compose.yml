@@ -1,6 +1,6 @@
 version: '3'
 volumes:
-  cache:
+  redis:
     driver: local
 services:
   api:
@@ -10,6 +10,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
+    depends_on:
+      - db
     environment:
       POSTGRES_URL: ${POSTGRES_URL}
       POSTGRES_USERNAME: ${POSTGRES_USERNAME}
@@ -18,15 +20,15 @@ services:
       SPRING_MAIL_PASSWORD: ${SPRING_MAIL_PASSWORD}
       JWT_ACCESS_SECRET: ${JWT_ACCESS_SECRET}
       JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET}
-  cache:
-    image: redis:6.2-alpine
+  redis:
+    image: redis
     restart: always
-    container_name: cache
+    container_name: redis
     ports:
       - '6379:6379'
     command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
     volumes:
-      - cache:/data
+      - redis:/data
   db:
     image: 'postgres:alpine'
     container_name: db

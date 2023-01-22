@@ -4,12 +4,12 @@ D:\isa2022\ISA\backend\src\main\java\com\example\isa\controller\BloodDonorContro
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\dto\SortDto.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\service\interfaces\AppointmentService.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\scheduler\ScheduledMessageSender.java
+D:\isa2022\ISA\backend\src\main\java\com\example\isa\util\email\EmailSender.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\service\implementation\AnswerServiceImpl.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\util\converters\AppointmentConverter.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\service\interfaces\QuestionService.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\scheduler\ThreadPoolTaskSchedulerConfig.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\util\converters\SubscriptionSignUpConverter.java
-D:\isa2022\ISA\backend\src\main\java\com\example\isa\util\EmailSender.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\controller\BloodBankController.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\model\Role.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\service\implementation\BloodDonorServiceImpl.java
@@ -26,6 +26,8 @@ D:\isa2022\ISA\backend\src\main\java\com\example\isa\dto\UserSearchDto.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\service\interfaces\AdminService.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\exception\PassedException.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\service\interfaces\RoleService.java
+D:\isa2022\ISA\backend\src\main\java\com\example\isa\util\formatters\TextFormatter.java
+D:\isa2022\ISA\backend\src\main\java\com\example\isa\util\qrCode\QrCodeGenerator.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\repository\RefreshTokenRepository.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\service\implementation\BloodSubscriptionServiceImpl.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\dto\BloodRequestDto.java
@@ -64,6 +66,7 @@ D:\isa2022\ISA\backend\src\main\java\com\example\isa\dto\PenaltyDto.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\model\BloodRequestStatus.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\util\converters\Converter.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\dto\SuppliesListDto.java
+D:\isa2022\ISA\backend\src\main\java\com\example\isa\model\BaseEntity.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\Application.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\controller\SubscriptionController.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\controller\UserController.java
@@ -75,6 +78,7 @@ D:\isa2022\ISA\backend\src\main\java\com\example\isa\advice\ControllerAdvice.jav
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\service\interfaces\BloodRequestService.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\dto\UserDto.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\scheduler\Scheduler.java
+D:\isa2022\ISA\backend\src\main\java\com\example\isa\config\RedisConfig.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\dto\BloodBankDto.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\dto\PasswordDto.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\service\interfaces\BloodSubscriptionService.java
@@ -82,8 +86,10 @@ D:\isa2022\ISA\backend\src\main\java\com\example\isa\service\interfaces\Supplies
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\dto\BloodRequestResponseDto.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\controller\MedicalStaffController.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\exception\ReachedPenaltyLimitException.java
+D:\isa2022\ISA\backend\src\main\java\com\example\isa\util\formatters\DateFormatter.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\model\Gender.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\controller\BloodRequestController.java
+D:\isa2022\ISA\backend\src\main\java\com\example\isa\util\converters\ImageConverter.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\kafka\consumers\BloodRequestConsumer.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\model\BloodSubscription.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\exception\DuplicateAppointmentException.java
@@ -96,7 +102,6 @@ D:\isa2022\ISA\backend\src\main\java\com\example\isa\service\implementation\User
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\model\QuestionType.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\model\User.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\kafka\consumers\SubscriptionConsumer.java
-D:\isa2022\ISA\backend\src\main\java\com\example\isa\util\QrCodeGenerator.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\service\implementation\BloodSupplyServiceImpl.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\dto\AvailabilityDto.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\repository\RoleRepository.java
@@ -120,6 +125,7 @@ D:\isa2022\ISA\backend\src\main\java\com\example\isa\model\Question.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\security\TokenAuthenticationFilter.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\config\CORSFilter.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\dto\AnswerDto.java
+D:\isa2022\ISA\backend\src\main\java\com\example\isa\util\seed\EntityCreator.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\service\implementation\RefreshTokenServiceImpl.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\util\converters\AnswerConverter.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\repository\AnswerRepository.java
@@ -129,7 +135,6 @@ D:\isa2022\ISA\backend\src\main\java\com\example\isa\service\implementation\Appo
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\util\converters\BloodSupplyConverter.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\dto\CredentialsDto.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\service\interfaces\RefreshTokenService.java
-D:\isa2022\ISA\backend\src\main\java\com\example\isa\model\Report.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\model\AccountStatus.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\repository\AdminRepository.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\repository\BloodBankRepository.java
@@ -144,7 +149,6 @@ D:\isa2022\ISA\backend\src\main\java\com\example\isa\dto\UserTokenState.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\repository\SuppliesRepository.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\controller\SuppliesController.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\model\Supplies.java
-D:\isa2022\ISA\backend\src\main\java\com\example\isa\config\CaffeineConfig.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\config\KafkaConfig.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\exception\CantScheduleTwiceException.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\model\LoyaltyStatus.java
@@ -157,9 +161,7 @@ D:\isa2022\ISA\backend\src\main\java\com\example\isa\repository\BloodSubscriptio
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\model\Answer.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\controller\BloodUsagePdfController.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\dto\AnswerListDto.java
-D:\isa2022\ISA\backend\src\main\java\com\example\isa\util\ImageToBase64Converter.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\model\MedicalStaff.java
-D:\isa2022\ISA\backend\src\main\java\com\example\isa\util\UserCreator.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\dto\QuestionDto.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\exception\NewAppointmentTooSoonException.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\dto\BloodBankListDto.java

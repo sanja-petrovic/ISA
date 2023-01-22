@@ -19,6 +19,7 @@ com\example\isa\controller\BloodRequestController.class
 com\example\isa\model\BloodSubscription.class
 com\example\isa\dto\BloodRequestDto.class
 com\example\isa\repository\MedicalStaffRepository.class
+com\example\isa\util\qrCode\QrCodeGenerator.class
 com\example\isa\kafka\Producer.class
 com\example\isa\util\converters\NewsConverter.class
 com\example\isa\service\interfaces\RoleService.class
@@ -50,6 +51,7 @@ com\example\isa\service\interfaces\UserService.class
 com\example\isa\dto\BloodRequestResponseDto$BloodRequestResponseDtoBuilder.class
 com\example\isa\dto\NewsDto$NewsDtoBuilder.class
 com\example\isa\service\implementation\AdminServiceImpl.class
+com\example\isa\util\seed\EntityCreator.class
 com\example\isa\model\BloodType.class
 com\example\isa\service\interfaces\QuestionService.class
 com\example\isa\repository\AnswerRepository.class
@@ -67,7 +69,6 @@ com\example\isa\dto\UserSearchDto.class
 com\example\isa\dto\AdminDto.class
 com\example\isa\controller\MedicalStaffController.class
 com\example\isa\service\implementation\MedicalStaffServiceImpl.class
-com\example\isa\util\ImageToBase64Converter.class
 com\example\isa\Application.class
 com\example\isa\service\interfaces\BloodSubscriptionService.class
 com\example\isa\dto\BloodSupplyDto.class
@@ -88,20 +89,20 @@ com\example\isa\model\BloodSupply$BloodSupplyBuilder.class
 com\example\isa\config\ModelMapperConfig.class
 com\example\isa\kafka\consumers\BloodRequestConsumer.class
 com\example\isa\exception\NewAppointmentTooSoonException.class
+com\example\isa\config\RedisConfig.class
 com\example\isa\repository\BloodBankRepository.class
 com\example\isa\dto\UserTokenState.class
 com\example\isa\service\implementation\QuestionServiceImpl.class
-com\example\isa\config\CaffeineConfig.class
 com\example\isa\exception\NotFoundException.class
 com\example\isa\repository\RefreshTokenRepository.class
 com\example\isa\controller\AdminController.class
 com\example\isa\model\LoyaltyStatus.class
 com\example\isa\util\converters\BloodBankConverter.class
 com\example\isa\model\BloodBank.class
-com\example\isa\util\EmailSender.class
 com\example\isa\dto\BloodDonorListDto.class
 com\example\isa\service\implementation\RoleServiceImpl.class
 com\example\isa\exception\CantScheduleTwiceException.class
+com\example\isa\model\BaseEntity.class
 com\example\isa\repository\AppointmentRepository.class
 com\example\isa\controller\BloodUsagePdfController.class
 com\example\isa\model\BloodRequest.class
@@ -109,7 +110,6 @@ com\example\isa\model\AppointmentStatus.class
 com\example\isa\controller\SubscriptionController.class
 com\example\isa\service\interfaces\AnswerService.class
 com\example\isa\util\converters\QuestionConverter.class
-com\example\isa\util\QrCodeGenerator.class
 com\example\isa\model\Review.class
 com\example\isa\config\CORSFilter.class
 com\example\isa\model\RefreshToken.class
@@ -133,13 +133,13 @@ com\example\isa\model\Admin$AdminBuilder.class
 com\example\isa\config\SecurityConfig.class
 com\example\isa\model\Email.class
 com\example\isa\service\implementation\BloodSubscriptionServiceImpl.class
+com\example\isa\util\formatters\TextFormatter.class
 com\example\isa\service\implementation\AnswerServiceImpl.class
 com\example\isa\dto\NewsDto.class
 com\example\isa\dto\BloodSubscriptionSignUpDto.class
 com\example\isa\scheduler\ScheduledMessageSender.class
 com\example\isa\service\implementation\NewsServiceImpl.class
 com\example\isa\repository\NewsRepository.class
-com\example\isa\util\UserCreator.class
 com\example\isa\exception\BloodBankClosedException.class
 com\example\isa\util\converters\MedicalStaffConverter.class
 com\example\isa\repository\BloodDonorRepository.class
@@ -153,6 +153,7 @@ com\example\isa\exception\NoCompletedQuestionnaire.class
 com\example\isa\service\implementation\SuppliesServiceImpl.class
 com\example\isa\util\converters\EnumConverter.class
 com\example\isa\scheduler\ThreadPoolTaskSchedulerConfig.class
+com\example\isa\util\formatters\DateFormatter.class
 com\example\isa\dto\PenaltyDto.class
 com\example\isa\model\User.class
 com\example\isa\advice\ControllerAdvice.class
@@ -175,7 +176,6 @@ com\example\isa\service\interfaces\SuppliesService.class
 com\example\isa\service\implementation\RefreshTokenServiceImpl.class
 com\example\isa\dto\BloodRequestResponseDto.class
 com\example\isa\dto\AnswerDto.class
-com\example\isa\model\Report.class
 com\example\isa\controller\AnswerController.class
 com\example\isa\service\implementation\BloodBankServiceImpl.class
 com\example\isa\model\News.class
@@ -185,7 +185,9 @@ com\example\isa\model\QuestionType.class
 com\example\isa\repository\AdminRepository.class
 com\example\isa\model\MedicalStaff.class
 com\example\isa\repository\QuestionRepository.class
+com\example\isa\util\converters\ImageConverter.class
 com\example\isa\config\WebConfig.class
 com\example\isa\dto\BloodDonorDto.class
+com\example\isa\util\email\EmailSender.class
 com\example\isa\exception\AlreadyScheduledException.class
 com\example\isa\util\converters\BloodDonorConverter.class

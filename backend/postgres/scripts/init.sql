@@ -3,6 +3,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE TABLE IF NOT EXISTS public.role
 (
     id uuid NOT NULL,
+    version integer,
     name character varying(255) COLLATE pg_catalog."default",
     CONSTRAINT role_pkey PRIMARY KEY (id)
 );
@@ -10,6 +11,7 @@ CREATE TABLE IF NOT EXISTS public.role
 CREATE TABLE IF NOT EXISTS public.users
 (
     id uuid NOT NULL,
+    version integer,
     email character varying(255) COLLATE pg_catalog."default",
     first_name character varying(255) COLLATE pg_catalog."default",
     gender character varying(255) COLLATE pg_catalog."default",
@@ -42,6 +44,7 @@ CREATE TABLE IF NOT EXISTS public.refresh_tokens
 CREATE TABLE IF NOT EXISTS public.blood_banks
 (
     id uuid NOT NULL,
+    version integer,
     city character varying(255) COLLATE pg_catalog."default",
     country character varying(255) COLLATE pg_catalog."default",
     street character varying(255) COLLATE pg_catalog."default",
@@ -57,6 +60,7 @@ CREATE TABLE IF NOT EXISTS public.blood_banks
 CREATE TABLE IF NOT EXISTS public.admins
 (
     id uuid NOT NULL,
+    version integer,
     email character varying(255) COLLATE pg_catalog."default",
     first_name character varying(255) COLLATE pg_catalog."default",
     gender character varying(255) COLLATE pg_catalog."default",
@@ -81,6 +85,7 @@ CREATE TABLE IF NOT EXISTS public.admins
 CREATE TABLE IF NOT EXISTS public.blood_donors
 (
     id uuid NOT NULL,
+    version integer,
     email character varying(255) COLLATE pg_catalog."default",
     first_name character varying(255) COLLATE pg_catalog."default",
     gender character varying(255) COLLATE pg_catalog."default",
@@ -111,6 +116,7 @@ CREATE TABLE IF NOT EXISTS public.blood_donors
 CREATE TABLE IF NOT EXISTS public.medical_staff
 (
     id uuid NOT NULL,
+    version integer,
     email character varying(255) COLLATE pg_catalog."default",
     first_name character varying(255) COLLATE pg_catalog."default",
     gender character varying(255) COLLATE pg_catalog."default",
@@ -139,6 +145,7 @@ CREATE TABLE IF NOT EXISTS public.medical_staff
 CREATE TABLE IF NOT EXISTS public.news
 (
     id uuid NOT NULL,
+    version integer,
     body character varying(255) COLLATE pg_catalog."default",
     milliseconds bigint,
     title character varying(255) COLLATE pg_catalog."default",
@@ -153,6 +160,7 @@ CREATE TABLE IF NOT EXISTS public.news
 CREATE TABLE IF NOT EXISTS public.questions
 (
     id uuid NOT NULL,
+    version integer,
     text character varying(255) COLLATE pg_catalog."default",
     type character varying(255) COLLATE pg_catalog."default",
     CONSTRAINT questions_pkey PRIMARY KEY (id)
@@ -162,6 +170,7 @@ CREATE TABLE IF NOT EXISTS public.questions
 CREATE TABLE IF NOT EXISTS public.answers
 (
     id uuid NOT NULL,
+    version integer,
     value boolean,
     blood_donor_id uuid,
     question_id uuid,
@@ -180,6 +189,7 @@ CREATE TABLE IF NOT EXISTS public.answers
 CREATE TABLE IF NOT EXISTS public.blood_requests
 (
     id uuid NOT NULL,
+    version integer,
     amount double precision,
     blood_type integer,
     received_date timestamp without time zone,
@@ -198,6 +208,7 @@ CREATE TABLE IF NOT EXISTS public.blood_requests
 CREATE TABLE IF NOT EXISTS public.blood_subscriptions
 (
     id uuid NOT NULL,
+    version integer,
     active boolean,
     amount double precision,
     delivery_date integer,
@@ -216,6 +227,7 @@ CREATE TABLE IF NOT EXISTS public.blood_subscriptions
 CREATE TABLE IF NOT EXISTS public.blood_supplies
 (
     id uuid NOT NULL,
+    version integer,
     amount double precision,
     type character varying(255) COLLATE pg_catalog."default",
     blood_bank_id uuid,
@@ -230,6 +242,7 @@ CREATE TABLE IF NOT EXISTS public.blood_supplies
 CREATE TABLE IF NOT EXISTS public.appointments
 (
     id uuid NOT NULL,
+    version integer,
     date_time timestamp without time zone,
     duration bigint,
     status character varying(255),
@@ -250,6 +263,7 @@ CREATE TABLE appointments_past PARTITION OF appointments FOR VALUES IN ('COMPLET
 CREATE TABLE IF NOT EXISTS public.reviews
 (
     id uuid NOT NULL,
+    version integer,
     content character varying(255) COLLATE pg_catalog."default",
     blood_bank_id uuid NOT NULL,
     reviewer_id uuid NOT NULL,
@@ -268,6 +282,7 @@ CREATE TABLE IF NOT EXISTS public.reviews
 CREATE TABLE IF NOT EXISTS public.supplies
 (
     id uuid NOT NULL,
+    version integer,
     amount integer,
     name character varying(255) COLLATE pg_catalog."default",
     CONSTRAINT supplies_pkey PRIMARY KEY (id)
