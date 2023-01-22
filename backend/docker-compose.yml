@@ -60,6 +60,14 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+  locator-db:
+    image: cassandra:4.0
+    ports:
+        - 9042:9042
+    volumes:
+      - ./cassandra:/var/lib/cassandra
+    environment:
+      - CASSANDRA_CLUSTER_NAME=locator
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin
