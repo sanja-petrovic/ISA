@@ -12,6 +12,7 @@ services:
       - "8080:8080"
     depends_on:
       - db
+      - redis
     environment:
       POSTGRES_URL: ${POSTGRES_URL}
       POSTGRES_USERNAME: ${POSTGRES_USERNAME}
@@ -20,6 +21,13 @@ services:
       SPRING_MAIL_PASSWORD: ${SPRING_MAIL_PASSWORD}
       JWT_ACCESS_SECRET: ${JWT_ACCESS_SECRET}
       JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET}
+  location-simulator:
+    container_name: location-simulator
+    build:
+      context: ../location-simulator/
+      dockerfile: Dockerfile
+    depends_on:
+      - kafka
   redis:
     image: redislabs/redismod
     ports:
@@ -32,6 +40,8 @@ services:
       - '8001:8001'
     volumes:
       - ./redisinsight/:/db
+    depends_on:
+      - redis
   db:
     image: 'postgres:alpine'
     container_name: db
@@ -89,6 +99,8 @@ services:
         state.change.logger=INFO
       KAFKA_BROKER_ID: 1
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    depends_on:
+      - zookeeper
   kafdrop:
     container_name: kafdrop
     image: obsidiandynamics/kafdrop
