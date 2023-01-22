@@ -29,11 +29,12 @@ public class SubscriptionController {
 		this.bankService = bankService;
 		this.producer = producer;
 	}
-	@Scheduled(cron = "0 0 2 * * *")
+	@Scheduled(cron = "1 * * * * *")
+	//@Scheduled(cron = "0 0 2 * * *")
 	public void checkUpcoming() throws JsonProcessingException {
 		System.out.println("Starter check");
 		LocalDate firstInMonthDate = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1);
-		List<BloodSubscription> subscriptions = service.findAllUpcomminActive(firstInMonthDate.toString(), 3);
+		List<BloodSubscription> subscriptions = service.findAllUpcomminActive(firstInMonthDate.toString(), 1);
 		
 		if(subscriptions != null) {
 			for(BloodSubscription subscription : subscriptions) {
@@ -45,7 +46,8 @@ public class SubscriptionController {
 			}
 		}
 	}
-	@Scheduled(cron = "0 0 2 * * *")
+	@Scheduled(cron = "1 * * * * *")
+	//@Scheduled(cron = "0 0 3 * * *")
 	public void sendBlood() throws JsonProcessingException {
 		System.out.println("Started sending");
 		LocalDate firstInMonthDate = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1);
@@ -55,13 +57,16 @@ public class SubscriptionController {
 		for(BloodSubscription subscription : subscriptions) {
 			if(subscription.getBloodBank().checkBloodSupply(subscription.getType(), subscription.getAmount())) {
 				if(bankService.checkBloodSupply(subscription.getBloodBank(), subscription.getType(), subscription.getAmount())) {
+					bankService.updateBloodSupply(subscription.getBloodBank(), subscription.getType(), subscription.getAmount());
 					SubscriptionResponseDto responseDto = new SubscriptionResponseDto(subscription.getOriginId(),"DELIVERY-SUCCESS" + ":"+subscription.getType());
 					System.out.println(responseDto);
 					producer.send(responseDto);
 				}
 			}
-			SubscriptionResponseDto responseDto = new SubscriptionResponseDto(subscription.getOriginId(),"DELIVERY-FAIL"+ ":"+subscription.getType());
-			producer.send(responseDto);
+			else {
+				SubscriptionResponseDto responseDto = new SubscriptionResponseDto(subscription.getOriginId(),"DELIVERY-FAIL"+ ":"+subscription.getType());
+				producer.send(responseDto);
+			}
 		}
 	}
 }

@@ -42,6 +42,7 @@ public class EntityCreator {
         bloodDonorRepository.save(bloodDonor);
 
         BloodBank bloodBank = new BloodBank("Prva prava banka krvi", new Address("Daniciceva 15", "Novi Sad", "Srbija"), "Najopremljenija banka krvi ovih prostora", new Interval(new Date(12345), new Date(12345)), 4.8);
+        bloodBank.setId(UUID.fromString("46a2d0fe-e4b0-4160-93f8-03fe09815f8d"));
         bloodBankRepository.save(bloodBank);
         MedicalStaff medicalStaff1 = new MedicalStaff("1101010101010", "staff1@gmail.com", passwordEncoder.encode("STAFF1"), "Good", "Doctor", "7101010101", Gender.FEMALE, true, roleStaff, bloodBank);
         medicalStaffRepository.save(medicalStaff1);
