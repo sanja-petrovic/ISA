@@ -60,14 +60,16 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-  locator-db:
+  locatordb:
     image: cassandra:4.0
+    container_name: locatordb
+    hostname: locatordb
     ports:
-        - 9042:9042
+        - "9042:9042"
     volumes:
-      - ./cassandra:/var/lib/cassandra
+      - ../location-simulator/cassandra:/var/lib/cassandra
     environment:
-      - CASSANDRA_CLUSTER_NAME=locator
+      - CASSANDRA_CLUSTER_NAME=locatordb
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin

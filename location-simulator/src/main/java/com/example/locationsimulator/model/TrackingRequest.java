@@ -1,30 +1,27 @@
 package com.example.locationsimulator.model;
 
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.cassandra.core.mapping.PrimaryKey;
+import org.springframework.data.cassandra.core.mapping.Table;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.UUID;
 
-@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(value = "tracking_requests")
 public class TrackingRequest {
-    @Id
+    @PrimaryKey
     private UUID id;
-    @Column
-    private UUID bloodBankId;
-    @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime timestamp;
-    @Embedded
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
+    private Date timestamp;
     private Frequency updateFrequency;
-    @Embedded
     private Location start;
-    @Embedded
     private Location end;
 }
