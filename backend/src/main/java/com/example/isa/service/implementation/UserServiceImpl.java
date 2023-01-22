@@ -4,6 +4,7 @@ import com.example.isa.model.*;
 import com.example.isa.repository.UserRepository;
 import com.example.isa.service.interfaces.UserService;
 import com.example.isa.util.email.EmailSender;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ public class UserServiceImpl implements UserService {
         this.emailSender = emailSender;
     }
 
+    @Cacheable(value = "usersCache")
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = repository.findByEmail(username);
