@@ -39,5 +39,7 @@ public class TrackingRequest {
             @AttributeOverride(name = "longitude", column = @Column(name = "end_longitude"))
     })
     private Location end;
+    @Column
+    @Enumerated(EnumType.STRING)
     private TrackingRequestStatus status;
 }

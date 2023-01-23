@@ -299,6 +299,7 @@ CREATE TABLE IF NOT EXISTS public.tracking_requests
     unit integer,
     value integer,
     blood_bank_id uuid,
+    status character varying(255),
     CONSTRAINT tracking_requests_pkey PRIMARY KEY (id),
     CONSTRAINT fkq05i77gej2y8gfke025e7tuig FOREIGN KEY (blood_bank_id)
         REFERENCES public.blood_banks (id) MATCH SIMPLE
