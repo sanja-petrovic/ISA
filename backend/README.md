@@ -28,3 +28,6 @@ In case of schema or data changes, delete the folder "data" inside the folder "p
 After starting the API through Docker, it is also possible to run the app in debug mode in IntelliJ. To do so, first add the following configuration:
 ![img.png](debug-config.png)
 You can then just press on the debug button and the application should start in debug mode.
+
+To connect the database to pgAdmin, go to localhost:5005 and log in with the credentials provided in the .env file (_${EMAIL}, ${POSTGRES_PASSWORD}_).
+Then, register a server with the hostname "db" and port "5432". The database name, as well as username and password are also written inside the .env file (_${POSTGRES_USERNAME}, ${POSTGRES_PASSWORD}, ${POSTGRES_DB}_).
