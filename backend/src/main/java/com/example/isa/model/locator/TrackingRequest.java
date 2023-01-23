@@ -1,6 +1,6 @@
 package com.example.isa.model.locator;
 
-import com.example.isa.model.banks.BloodBank;
+import com.example.isa.model.BloodBank;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -39,4 +39,5 @@ public class TrackingRequest {
             @AttributeOverride(name = "longitude", column = @Column(name = "end_longitude"))
     })
     private Location end;
+    private TrackingRequestStatus status;
 }

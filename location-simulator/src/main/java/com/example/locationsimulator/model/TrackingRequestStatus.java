@@ -1,6 +1,6 @@
 package com.example.locationsimulator.model;
 
-public enum Status {
+public enum TrackingRequestStatus {
     RECEIVED,
     STARTED,
     COMPLETED,
