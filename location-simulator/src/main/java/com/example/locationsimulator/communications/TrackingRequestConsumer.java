@@ -13,7 +13,6 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class TrackingRequestConsumer {
-
     private final ObjectMapper objectMapper;
     private final TrackingRequestService trackingRequestService;
 
@@ -23,7 +22,7 @@ public class TrackingRequestConsumer {
     }
 
     @KafkaListener(topics = "tracking.request.topic", groupId = "locator")
-    public void consumeMessage(String message) throws JsonProcessingException {
+    public void consume(String message) throws JsonProcessingException {
         log.info("message consumed {}", message);
         TrackingRequestDto dto = objectMapper.readValue(message, TrackingRequestDto.class);
         TrackingRequest trackingRequest = TrackingRequest.builder()
@@ -34,6 +33,6 @@ public class TrackingRequestConsumer {
                 .end(new Location(dto.latitudeEnd(), dto.longitudeEnd()))
                 .updateFrequency(new Frequency(dto.frequencyTimeValue(), TimeUnit.valueOf(dto.frequencyTimeUnit())))
                 .build();
-        trackingRequestService.save(trackingRequest);
+        trackingRequestService.create(trackingRequest);
     }
 }
