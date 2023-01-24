@@ -23,6 +23,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/ol/ol.css",
               "src/custom-theme.scss",
               "src/styles.css"
             ],

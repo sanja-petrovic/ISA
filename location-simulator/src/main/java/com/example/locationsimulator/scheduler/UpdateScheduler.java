@@ -17,6 +17,7 @@ public class UpdateScheduler {
     public void scheduleUpdate(TrackingRequest trackingRequest, Producer producer) {
         PeriodicTrigger periodicTrigger = new PeriodicTrigger(trackingRequest.getUpdateFrequency().getValue(), trackingRequest.getUpdateFrequency().getUnit());
         periodicTrigger.setFixedRate(true);
+        //trigger koji ide svake sekunde recimo i broji sekunde ali proverava jel vreme da salje update
         taskScheduler.schedule(new UpdateSender(trackingRequest, producer), periodicTrigger);
     }
 

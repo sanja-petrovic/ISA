@@ -54,6 +54,8 @@ import { MedStaffSchedulePageComponent, CheckBloodSuppliesDialog } from './med-s
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatTableModule} from "@angular/material/table";
 import {MatSortModule} from "@angular/material/sort";
+import { LocationSimulatorComponent } from './location-simulator/location-simulator.component';
+import { MapComponent } from './map/map.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +87,9 @@ import {MatSortModule} from "@angular/material/sort";
     DonorSchedulingComponent,
     MedicalStaffScheduleComponent,
     MedStaffSchedulePageComponent,
-    CheckBloodSuppliesDialog
+    CheckBloodSuppliesDialog,
+    LocationSimulatorComponent,
+    MapComponent
 
   ],
   imports: [

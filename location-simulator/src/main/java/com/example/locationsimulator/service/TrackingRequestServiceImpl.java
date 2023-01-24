@@ -4,6 +4,7 @@ import com.example.locationsimulator.communications.Producer;
 import com.example.locationsimulator.model.TrackingRequest;
 import com.example.locationsimulator.scheduler.UpdateScheduler;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 @Service
 public class TrackingRequestServiceImpl implements TrackingRequestService {
