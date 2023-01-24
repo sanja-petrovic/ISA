@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {AuthService} from "./services/AuthService";
 import {UserService} from "./services/UserService";
-
+var global = window;
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

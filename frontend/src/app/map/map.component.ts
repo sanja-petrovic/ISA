@@ -1,36 +1,47 @@
 import { Component, OnInit } from '@angular/core';
-import 'ol/ol.css';
-import Map from 'ol/Map';
-import View from 'ol/View';
-import { OSM } from 'ol/source';
-import TileLayer from 'ol/layer/Tile';
-import {FullScreen} from "ol/control";
-import {transform} from "ol/proj";
+import { latLng, tileLayer, marker, geoJSON, LayerGroup, icon } from 'leaflet';
+
+import * as Stomp from 'stompjs';
+import * as SockJS from "sockjs-client";
+
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
-  styleUrls: ['./map.component.css']
+  styleUrls: ['./map.component.css'],
 })
 export class MapComponent implements OnInit {
-  public map!: Map
-  ngOnInit(): void {
-    this.map = new Map({
-      layers: [
-        new TileLayer({
-          source: new OSM(),
-        }),
-      ],
-      target: 'map',
-      view: new View({
-        center: transform(
-          [19.82301951799475, 45.24008849556734],
-          'EPSG:4326',
-          'EPSG:3857'
-        ),
-        zoom: 14,
+  options = {
+    layers: [
+      tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        attribution: '...',
       }),
-    });
-    this.map.addControl(new FullScreen)
+    ],
+    zoom: 14,
+    center: latLng(45.253434, 19.831323),
+  };
+  mainGroup: LayerGroup[] = [];
+  private stompClient: any;
 
+  constructor() {}
+
+  ngOnInit(): void {
+    this.initializeWebSocketConnection();
+  }
+
+  initializeWebSocketConnection() {
+    let ws = new SockJS('http://localhost:8080/api/socket');
+    this.stompClient = Stomp.over(ws);
+    this.stompClient.debug = null;
+    let that = this;
+    this.stompClient.connect({}, function () {
+    });
+  }
+
+  openGlobalSocket() {
+    this.stompClient.subscribe('/api/location-update')
+    this.stompClient.subscribe('/api/location-update', (message: { body: string }) => {
+      console.log(message.body);
+    });
   }
 }
