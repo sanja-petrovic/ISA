@@ -30,6 +30,11 @@ insert into public.blood_banks (id, city, street, country, average_grade, descri
                                 interval_start)
 values (uuid_generate_v4(), 'Niš', 'Srbija', 'Zetska 2', 4.94, '--', 'Zavod "Milenko Hadžić"', '20:00:00', '08:00:00');
 
+--INSERT INTO public.blood_banks
+--values('16e4a8c2-3e86-4e93-825f-24e36cb29655',0,'Kragujevac','Srbija','Vojvode Misica 10',	3.5,	'Vampiri ovde povremeno borave',	'banka puno krvi','11:48:07.019','11:48:07.019');
+
+
+
 -- questions
 INSERT INTO public.questions(id, text, type)
 VALUES ('60cfe366-8a12-453f-ae6c-78a22f90dbb5', 'Have you ever donated blood or blood components before?', 'FOR_ALL');
@@ -137,3 +142,16 @@ insert into public.blood_supplies(id,amount, type, blood_bank_id)
 values (uuid_generate_v4(),20,'O_NEGATIVE', '16e4a8c2-3e86-4e93-825f-24e36cb29669');
 insert into public.blood_supplies(id,amount, type, blood_bank_id)
 values (uuid_generate_v4(),350,'AB_NEGATIVE', '16e4a8c2-3e86-4e93-825f-24e36cb29669');
+
+insert into public.blood_supplies(id,amount, type, blood_bank_id)
+values (uuid_generate_v4(),700,'A_POSITIVE', '16e4a8c2-3e86-4e93-825f-24e36cb29655');
+insert into public.blood_supplies(id,amount, type, blood_bank_id)
+values (uuid_generate_v4(),700,'B_POSITIVE', '16e4a8c2-3e86-4e93-825f-24e36cb29655');
+insert into public.blood_supplies(id,amount, type, blood_bank_id)
+values (uuid_generate_v4(),700,'A_NEGATIVE', '16e4a8c2-3e86-4e93-825f-24e36cb29655');
+insert into public.blood_supplies(id,amount, type, blood_bank_id)
+values (uuid_generate_v4(),700,'B_NEGATIVE', '16e4a8c2-3e86-4e93-825f-24e36cb29655');
+
+insert into public.blood_supplies(id,amount, type, blood_bank_id)
+values (uuid_generate_v4(),700,'AB_POSITIVE', '46a2d0fe-e4b0-4160-93f8-03fe09815f8d');
+
