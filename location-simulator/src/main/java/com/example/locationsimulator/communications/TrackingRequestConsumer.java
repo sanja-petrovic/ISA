@@ -7,11 +7,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
+@Component
 public class TrackingRequestConsumer {
     private final ObjectMapper objectMapper;
     private final TrackingRequestService trackingRequestService;
