@@ -1,5 +1,6 @@
 package com.example.isa.scheduler;
 
+import com.example.isa.dto.BloodRequestSupplyDto;
 import com.example.isa.dto.BloodSupplyDto;
 import com.example.isa.kafka.Producer;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
@@ -16,7 +17,7 @@ public class Scheduler {
         this.threadPoolTaskScheduler = threadPoolTaskScheduler;
     }
 
-    public void sendScheduledBloodSupply(Producer producer, BloodSupplyDto message, Date date) {
+    public void sendScheduledBloodSupply(Producer producer, BloodRequestSupplyDto message, Date date) {
         threadPoolTaskScheduler.schedule(new ScheduledMessageSender(producer, message), date);
     }
 }

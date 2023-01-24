@@ -418,3 +418,7 @@ values (uuid_generate_v4(),20,'O_NEGATIVE', '16e4a8c2-3e86-4e93-825f-24e36cb2966
 insert into public.blood_supplies(id,amount, type, blood_bank_id)
 values (uuid_generate_v4(),350,'AB_NEGATIVE', '16e4a8c2-3e86-4e93-825f-24e36cb29669');
 
+-- blood requests
+INSERT INTO public.blood_requests(
+    id, version, amount, blood_type, received_date, send_on_date, status, urgent, blood_bank_id)
+VALUES (uuid_generate_v4(), 0, 5, 0, '2023-01-23', null, 'APPROVED', false, '16e4a8c2-3e86-4e93-825f-24e36cb29669');

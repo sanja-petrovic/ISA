@@ -1,9 +1,6 @@
 package com.example.isa.kafka;
 
-import com.example.isa.dto.BloodRequestResponseDto;
-import com.example.isa.dto.BloodSupplyDto;
-import com.example.isa.dto.NewsDto;
-import com.example.isa.dto.SubscriptionResponseDto;
+import com.example.isa.dto.*;
 import com.example.isa.dto.locator.TrackingRequestDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -37,7 +34,7 @@ public class Producer {
         log.info("response to blood request {} sent: {}", bloodRequestResponseDto.getRequestId(), responseAsMessage);
     }
 
-    public void send(BloodSupplyDto bloodSupplyDto) throws JsonProcessingException {
+    public void send(BloodRequestSupplyDto bloodSupplyDto) throws JsonProcessingException {
         String topic = "requested.blood.topic";
         String responseAsMessage = objectMapper.writeValueAsString(bloodSupplyDto);
         kafkaTemplate.send(topic, responseAsMessage);

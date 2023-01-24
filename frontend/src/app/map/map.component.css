@@ -1,8 +1,12 @@
 
-.map {
-  width: 50vw;
-  height: 600px;
-  border: 1px solid transparent;
-  border-radius: 1rem;
+
+
+.map-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 }
+
 
