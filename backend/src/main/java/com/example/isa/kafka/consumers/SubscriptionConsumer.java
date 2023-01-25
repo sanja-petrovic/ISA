@@ -26,7 +26,7 @@ public class SubscriptionConsumer {
     	this.bloodSubscriptionService = bloodSubscriptionService;
     }
     
-    /*@KafkaListener(topics = "blood.subscriptions.topic", groupId = "bloodSubscriptions")
+    @KafkaListener(topics = "blood.subscriptions.topic", groupId = "bloodSubscriptions")
     void consumeMessage(String message) throws JsonProcessingException, ParseException{
     	log.info("message consumed {}", message);
     	BloodSubscriptionSignUpDto dto = objectMapper.readValue(message, BloodSubscriptionSignUpDto.class);
@@ -37,5 +37,5 @@ public class SubscriptionConsumer {
     		log.info(e.toString());
     		log.info("message discarded");
     	}
-    }*/
+    }
 }

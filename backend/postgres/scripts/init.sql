@@ -415,3 +415,4 @@ VALUES ('5cc9ceab-e697-467f-86aa-39c123e27926'::uuid,2,'2021-12-10 09:00:00.000'
 
 INSERT INTO public.appointments (id,"version",date_time,duration,status,blood_bank_id,blood_donor_id,report)
 VALUES ('5dc9ceab-e697-467f-86aa-39c234e27926'::uuid,2,'2021-12-12 09:30:00.000',34,'COMPLETED','16e4a8c2-3e86-4e93-825f-24e36cb29655'::uuid,'46e4a8c2-3e86-4e93-825f-24e36cb29645'::uuid,'aaa');
+

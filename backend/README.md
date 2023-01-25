@@ -14,9 +14,9 @@ Services:
 To start, run these commands:
 1. `./mvnw clean package -DskipTests` (to build the project .jar file)
 2. `docker-compose build` (to build the docker-compose file)
-3. `docker-compose run db pgadmin zookeeper kafka kafdrop redis redis-insight` (to run everything except the api)
+3. `docker-compose up db pgadmin zookeeper kafka kafdrop redis redis-insight` (to run everything except the api)
 4. Wait about a minute for the database to setup if running the project for the first time or after deleting the backend/postgres/data folder
-5. New terminal, `docker-compose run api` (to run the api)
+5. New terminal, `docker-compose up api` (to run the api)
 
 To stop any service, press CTRL+C.
 To put services, run `docker-compose down -v`.

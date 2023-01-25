@@ -38,14 +38,16 @@ public class QuestionController {
 
     @GetMapping
     @ApiOperation(value = "Get all questions.", httpMethod = "GET")
-    public ResponseEntity<QuestionListDto> getAll() throws JsonProcessingException {
+    public ResponseEntity<List<QuestionDto>> getAll() throws JsonProcessingException {
         CacheData cachedQuestions = cacheDataService.get("allQuestions");
         if(cachedQuestions != null) {
-            return ResponseEntity.ok(objectMapper.readValue(cachedQuestions.getValue(), QuestionListDto.class));
+            QuestionListDto questionListDto = objectMapper.readValue(cachedQuestions.getValue(), QuestionListDto.class);
+            return ResponseEntity.ok(questionListDto.getQuestions());
         } else {
-            QuestionListDto questionListDto = new QuestionListDto(service.getAll().stream().map(questionConverter::entityToDto).collect(Collectors.toList()));
+            List<QuestionDto> questionDtos = service.getAll().stream().map(questionConverter::entityToDto).collect(Collectors.toList());
+            QuestionListDto questionListDto = new QuestionListDto(questionDtos);
             cacheDataService.add("allQuestions", objectMapper.writeValueAsString(questionListDto));
-            return ResponseEntity.ok(questionListDto);
+            return ResponseEntity.ok(questionDtos);
         }
     }
 
