@@ -10,6 +10,8 @@ import com.example.isa.service.interfaces.AppointmentService;
 import com.example.isa.service.interfaces.BloodBankService;
 import com.example.isa.util.converters.DateConverter;
 import com.example.isa.util.email.EmailSender;
+import com.example.isa.util.formatters.TextFormatter;
+import com.example.isa.util.qrCode.QrCodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import java.awt.image.BufferedImage;
 import java.text.ParseException;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
@@ -88,8 +91,19 @@ public class AppointmentServiceImpl implements AppointmentService {
                 sort);
     }
 
+
     public List<Appointment> getPastByBloodDonor(UUID bloodDonorId, Sort sort) {
         return appointmentRepository.findAllByBloodDonorIdAndDateTimeBefore(bloodDonorId, new Date(), sort);
+    }
+
+    @Override
+    public BufferedImage generateQrCodeForAppointment(Appointment appointment) {
+        String qrCodeInformation = TextFormatter.formatQrCodeInformation(appointment);
+        try {
+            return QrCodeGenerator.generateQRCodeImage(qrCodeInformation);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private boolean canScheduleAppointment(BloodDonor bloodDonor, Date date) {

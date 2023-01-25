@@ -9,6 +9,7 @@ import java.util.UUID;
 import com.example.isa.model.AppointmentStatus;
 import com.example.isa.model.User;
 import com.example.isa.service.interfaces.BloodDonorService;
+import com.example.isa.util.converters.ImageConverter;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -111,7 +112,9 @@ public class AppointmentController {
     @ApiOperation(value = "Get all upcoming appointments for a blood donor.", httpMethod = "GET")
     public ResponseEntity<List<AppointmentDto>> getAllUpcomingByBloodDonor(@AuthenticationPrincipal User user, @RequestParam(required = false, defaultValue = "DESC") String sortDirection, @RequestParam(required = false, defaultValue = "dateTime") String sortProperty) {
         Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortProperty);
-        return ResponseEntity.ok(converter.listToDtoList(appointmentService.getAllUpcomingByBloodDonor(user.getId(), sort)));
+        List<Appointment> appointments = appointmentService.getAllUpcomingByBloodDonor(user.getId(), sort);
+        List<AppointmentDto> appointmentDtos = converter.listToDtoList(appointments);
+        return ResponseEntity.ok(appointmentDtos);
     }
 
     @GetMapping("/blood-donor/past")

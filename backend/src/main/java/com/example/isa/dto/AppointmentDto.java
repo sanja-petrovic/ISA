@@ -24,4 +24,5 @@ public class AppointmentDto {
     private String bloodBankTitle;
     private String bloodDonorId;
     private String report;
+    private String qrCode;
 }
