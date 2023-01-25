@@ -296,6 +296,10 @@ values ('16e4a8c2-3e86-4e93-825f-24e36cb29669', 'Novi Sad', 'Srbija', 'Danila Ki
         '10:00:00');
 insert into public.blood_banks (id, city, street, country, average_grade, description, title, interval_end,
                                 interval_start)
+values ('16e4a8c2-3e86-4e93-825f-24e36cb29655', 'Novi Sad', 'Srbija', 'Danila Kiša 15', 4.32, 'Bankica', 'banka puno krvi', '22:00:00',
+        '10:00:00');
+insert into public.blood_banks (id, city, street, country, average_grade, description, title, interval_end,
+                                interval_start)
 values (uuid_generate_v4(), 'Belgrade', 'Srbija', 'Ljube Jovanovića 12', 4.11, 'Najveća banka krvi u Beogradu',
         'Institut za transfuziju krvi', '24:00:00', '00:00:00');
 insert into public.blood_banks (id, city, street, country, average_grade, description, title, interval_end,
@@ -399,3 +403,15 @@ values (uuid_generate_v4(),20,'O_NEGATIVE', '16e4a8c2-3e86-4e93-825f-24e36cb2966
 insert into public.blood_supplies(id,amount, type, blood_bank_id)
 values (uuid_generate_v4(),350,'AB_NEGATIVE', '16e4a8c2-3e86-4e93-825f-24e36cb29669');
 
+-- appointments
+INSERT INTO public.appointments (id,"version",date_time,duration,status,blood_bank_id,blood_donor_id,report)
+VALUES ('5bc7ceab-e697-467f-86aa-39c555e27926'::uuid,1,'2021-12-02 10:00:00.000',30,'COMPLETED','16e4a8c2-3e86-4e93-825f-24e36cb29655'::uuid,'16e4a8c2-3e86-4e93-825f-24e36cb29645'::uuid,'kkk');
+
+INSERT INTO public.appointments (id,"version",date_time,duration,status,blood_bank_id,blood_donor_id,report)
+VALUES ('5ac9ceab-e697-467f-86aa-39c555e27926'::uuid,3,'2021-12-10 11:00:00.000',34,'COMPLETED','16e4a8c2-3e86-4e93-825f-24e36cb29655'::uuid,'26e4a8c2-3e86-4e93-825f-24e36cb29645'::uuid,'aaa');
+
+INSERT INTO public.appointments (id,"version",date_time,duration,status,blood_bank_id,blood_donor_id,report)
+VALUES ('5cc9ceab-e697-467f-86aa-39c123e27926'::uuid,2,'2021-12-10 09:00:00.000',34,'COMPLETED','16e4a8c2-3e86-4e93-825f-24e36cb29655'::uuid,'36e4a8c2-3e86-4e93-825f-24e36cb29645'::uuid,'aaa');
+
+INSERT INTO public.appointments (id,"version",date_time,duration,status,blood_bank_id,blood_donor_id,report)
+VALUES ('5dc9ceab-e697-467f-86aa-39c234e27926'::uuid,2,'2021-12-12 09:30:00.000',34,'COMPLETED','16e4a8c2-3e86-4e93-825f-24e36cb29655'::uuid,'46e4a8c2-3e86-4e93-825f-24e36cb29645'::uuid,'aaa');

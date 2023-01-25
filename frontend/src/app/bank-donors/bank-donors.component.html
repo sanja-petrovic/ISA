@@ -1,0 +1,32 @@
+<div class="centered-content">
+  <div class="search-wrapper">
+    <div class="sort-div">
+      <mat-form-field appearance="outline">
+        <mat-label>Sort by</mat-label>
+        <mat-select (selectionChange)="sortDonors()" [(ngModel)]="sortFilter">
+          <mat-option value="bloodDonor.firstName-asc">First name, ascending</mat-option>
+          <mat-option value="bloodDonor.firstName-desc">First name, descending</mat-option>
+          <mat-option value="bloodDonor.lastName-asc">Last name, ascending</mat-option>
+          <mat-option value="bloodDonor.lastName-desc">Last name, descending</mat-option>
+          <mat-option value="dateTime-asc">Blood donation time, ascending</mat-option>
+          <mat-option value="dateTime-desc">Blood donation time, descending</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="cards">
+    <mat-card *ngFor="let appointment of appointments" class="appointment-card">
+      <mat-card-title class="appointment-title">{{appointment.bloodDonor.firstName}} {{appointment.bloodDonor.lastName}}
+        <div class="tag">
+          <mat-icon fontIcon="close" class="icon"></mat-icon>
+          <span>{{appointment.bloodDonor.penaltyCount}}</span></div>
+      </mat-card-title>
+      <mat-card-subtitle>{{appointment.bloodDonor.country}}, {{appointment.bloodDonor.city}}, {{appointment.bloodDonor.homeAddress}} <br>{{appointment.bloodDonor.occupation}}</mat-card-subtitle>
+      <mat-card-content>
+        <p>{{appointment.bloodDonor.email}}</p>
+        <p>{{appointment.bloodDonor.phoneNumber}}</p>
+        <p>{{appointment.dateTime}}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

@@ -41,9 +41,15 @@ public class EntityCreator {
             BloodDonor bloodDonor = new BloodDonor("2801001123456", "blooddonor@gmail.com", passwordEncoder.encode("BLOODDONOR"), "Jane", "Doe", "0681234567", Gender.FEMALE, true, "Student", new Address("Ulica 15", "Novi Sad", "Srbija"), "FTN", roleDonor, 0);
             bloodDonor.setId(UUID.fromString("16e4a8c2-3e86-4e93-825f-24e36cb29645"));
             bloodDonorRepository.save(bloodDonor);
-            BloodDonor bloodDonor2 = new BloodDonor("2801001123475", "blooddonor2@gmail.com", passwordEncoder.encode("BLOODDONOR"), "John", "Doe", "0681234467", Gender.MALE, true, "Student", new Address("Ulica 15", "Novi Sad", "Srbija"), "FTN", roleDonor, 0);
+            BloodDonor bloodDonor2 = new BloodDonor("2801001123475", "blooddonor2@gmail.com", passwordEncoder.encode("BLOODDONOR"), "John", "Smith", "0681234467", Gender.MALE, true, "Student", new Address("Ulica 15", "Novi Sad", "Srbija"), "FTN", roleDonor, 0);
             bloodDonor2.setId(UUID.fromString("26e4a8c2-3e86-4e93-825f-24e36cb29645"));
             bloodDonorRepository.save(bloodDonor2);
+            BloodDonor bloodDonor3 = new BloodDonor("2801001123474", "blooddonor3@gmail.com", passwordEncoder.encode("BLOODDONOR"), "Nick", "Jones", "0634234460", Gender.MALE, true, "Baker", new Address("Silver Street 2", "London", "UK"), "BBP", roleDonor, 0);
+            bloodDonor3.setId(UUID.fromString("36e4a8c2-3e86-4e93-825f-24e36cb29645"));
+            bloodDonorRepository.save(bloodDonor3);
+            BloodDonor bloodDonor4 = new BloodDonor("2801001123473", "blooddonor4@gmail.com", passwordEncoder.encode("BLOODDONOR"), "Jimmy", "Mcgil", "0621204367", Gender.MALE, true, "Attorney", new Address("Ulica 15", "Albuquerque", "USA"), "HMM", roleDonor, 1);
+            bloodDonor4.setId(UUID.fromString("46e4a8c2-3e86-4e93-825f-24e36cb29645"));
+            bloodDonorRepository.save(bloodDonor4);
 
             BloodBank bloodBank = new BloodBank("Prva prava banka krvi", new Address("Daniciceva 15", "Novi Sad", "Srbija"), "Najopremljenija banka krvi ovih prostora", new Interval(new Date(12345), new Date(12345)), 4.8);
             bloodBankRepository.save(bloodBank);

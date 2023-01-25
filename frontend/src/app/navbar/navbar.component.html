@@ -5,6 +5,9 @@
     <a routerLink="/questionnaire" *ngIf="user != undefined && user.role.name=='ROLE_DONOR'">Questionnaire</a>
     <a routerLink="/appointments" *ngIf="user != undefined && user.role.name=='ROLE_DONOR'">My appointments</a>
     <a routerLink="/medical-staff/schedule" *ngIf="user != undefined && user.role.name=='ROLE_STAFF'">Appointments</a>
+    <a routerLink="/medical-staff" *ngIf="user != undefined && user.role.name=='ROLE_STAFF'">Profile</a>
+    <a routerLink="medical-staff/bank-donors" *ngIf="user != undefined && user.role.name=='ROLE_STAFF'">Donors</a>
+    <a routerLink="/admin/scheduling" *ngIf="user != undefined && user.role.name=='ROLE_STAFF'">Create appointment</a>
   </div>
   <div class="buttons" *ngIf="!isLoggedIn; else loggedIn">
     <a routerLink="/register"><button class="register-button">Register</button></a>

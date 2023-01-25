@@ -54,6 +54,7 @@ import { MedStaffSchedulePageComponent, CheckBloodSuppliesDialog } from './med-s
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatTableModule} from "@angular/material/table";
 import {MatSortModule} from "@angular/material/sort";
+import { BankDonorsComponent } from './bank-donors/bank-donors.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +86,8 @@ import {MatSortModule} from "@angular/material/sort";
     DonorSchedulingComponent,
     MedicalStaffScheduleComponent,
     MedStaffSchedulePageComponent,
-    CheckBloodSuppliesDialog
+    CheckBloodSuppliesDialog,
+    BankDonorsComponent
 
   ],
   imports: [
