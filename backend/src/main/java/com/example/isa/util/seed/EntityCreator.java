@@ -29,27 +29,32 @@ public class EntityCreator {
 
     @PostConstruct
     public void create() {
-        Role roleAdmin = new Role("ROLE_ADMIN");
-        Role roleDonor = new Role("ROLE_DONOR");
-        Role roleStaff = new Role("ROLE_STAFF");
-        roleRepository.save(roleAdmin);
-        roleRepository.save(roleDonor);
-        roleRepository.save(roleStaff);
-        Admin admin = new Admin("0000000000000", "isaproject202223@gmail.com", passwordEncoder.encode("ISA202223"),passwordEncoder.encode("ISA202223"), "Admin", "Admin", "0000000000", Gender.FEMALE, true, roleAdmin);
-        adminRepository.save(admin);
-        BloodDonor bloodDonor = new BloodDonor("2801001123456", "blooddonor@gmail.com", passwordEncoder.encode("BLOODDONOR"), "Jane", "Doe", "0681234567", Gender.FEMALE, true, "Student", new Address("Ulica 15", "Novi Sad", "Srbija"), "FTN", roleDonor, 0);
-        bloodDonor.setId(UUID.fromString("16e4a8c2-3e86-4e93-825f-24e36cb29645"));
-        bloodDonorRepository.save(bloodDonor);
+        if(roleRepository.findAll().isEmpty()) {
+            Role roleAdmin = new Role("ROLE_ADMIN");
+            Role roleDonor = new Role("ROLE_DONOR");
+            Role roleStaff = new Role("ROLE_STAFF");
+            roleRepository.save(roleAdmin);
+            roleRepository.save(roleDonor);
+            roleRepository.save(roleStaff);
+            Admin admin = new Admin("0000000000000", "isaproject202223@gmail.com", passwordEncoder.encode("ISA202223"),passwordEncoder.encode("ISA202223"), "Admin", "Admin", "0000000000", Gender.FEMALE, true, roleAdmin);
+            adminRepository.save(admin);
+            BloodDonor bloodDonor = new BloodDonor("2801001123456", "blooddonor@gmail.com", passwordEncoder.encode("BLOODDONOR"), "Jane", "Doe", "0681234567", Gender.FEMALE, true, "Student", new Address("Ulica 15", "Novi Sad", "Srbija"), "FTN", roleDonor, 0);
+            bloodDonor.setId(UUID.fromString("16e4a8c2-3e86-4e93-825f-24e36cb29645"));
+            bloodDonorRepository.save(bloodDonor);
+            BloodDonor bloodDonor2 = new BloodDonor("2801001123475", "blooddonor2@gmail.com", passwordEncoder.encode("BLOODDONOR"), "John", "Doe", "0681234467", Gender.MALE, true, "Student", new Address("Ulica 15", "Novi Sad", "Srbija"), "FTN", roleDonor, 0);
+            bloodDonor2.setId(UUID.fromString("26e4a8c2-3e86-4e93-825f-24e36cb29645"));
+            bloodDonorRepository.save(bloodDonor2);
 
-        BloodBank bloodBank = new BloodBank("Prva prava banka krvi", new Address("Daniciceva 15", "Novi Sad", "Srbija"), "Najopremljenija banka krvi ovih prostora", new Interval(new Date(12345), new Date(12345)), 4.8);
-        bloodBank.setId(UUID.fromString("46a2d0fe-e4b0-4160-93f8-03fe09815f8d"));
-        bloodBankRepository.save(bloodBank);
-        MedicalStaff medicalStaff1 = new MedicalStaff("1101010101010", "staff1@gmail.com", passwordEncoder.encode("STAFF1"), "Good", "Doctor", "7101010101", Gender.FEMALE, true, roleStaff, bloodBank);
-        medicalStaffRepository.save(medicalStaff1);
-        BloodBank bank = new BloodBank("banka puno krvi",new Address("Vojvode Misica 10","Kragujevac","Srbija"),new Interval(new Date(),new Date()),"Vampiri ovde povremeno borave",3.5);
-        bank.setId(UUID.fromString("16e4a8c2-3e86-4e93-825f-24e36cb29655"));
-        bloodBankRepository.save(bank);
-        MedicalStaff medicalStaff2 = new MedicalStaff("0101010101010", "staff@gmail.com", passwordEncoder.encode("STAFF"), "Good", "Doctor", "0101010101", Gender.FEMALE, true, roleStaff, bank );
-        medicalStaffRepository.save(medicalStaff2);
+            BloodBank bloodBank = new BloodBank("Prva prava banka krvi", new Address("Daniciceva 15", "Novi Sad", "Srbija"), "Najopremljenija banka krvi ovih prostora", new Interval(new Date(12345), new Date(12345)), 4.8);
+            bloodBankRepository.save(bloodBank);
+            MedicalStaff medicalStaff1 = new MedicalStaff("1101010101010", "staff1@gmail.com", passwordEncoder.encode("STAFF1"), "Good", "Doctor", "7101010101", Gender.FEMALE, true, roleStaff, bloodBank);
+            medicalStaffRepository.save(medicalStaff1);
+            BloodBank bank = new BloodBank("banka puno krvi",new Address("Vojvode Misica 10","Kragujevac","Srbija"),new Interval(new Date(),new Date()),"Vampiri ovde povremeno borave",3.5);
+            bank.setId(UUID.fromString("16e4a8c2-3e86-4e93-825f-24e36cb29655"));
+            bloodBankRepository.save(bank);
+            MedicalStaff medicalStaff2 = new MedicalStaff("0101010101010", "staff@gmail.com", passwordEncoder.encode("STAFF"), "Good", "Doctor", "0101010101", Gender.FEMALE, true, roleStaff, bank );
+            medicalStaffRepository.save(medicalStaff2);
+        }
+
     }
 }

@@ -37,7 +37,8 @@ public class AppointmentConverter implements Converter<Appointment, AppointmentD
 				entity.getDuration(),
 				entity.getBloodBank().getId().toString(),
 				entity.getBloodBank().getTitle(),
-				bloodDonorId
+				bloodDonorId,
+				entity.getReport()
 				);
 	}
 
@@ -53,7 +54,8 @@ public class AppointmentConverter implements Converter<Appointment, AppointmentD
 						formatter.parse(dto.getDateTime()),
 						dto.getDuration(),
 						bankService.getById(UUID.fromString(dto.getBloodBankId())),
-						donor
+						donor,
+						dto.getReport()
 						);
 			} catch (ParseException e) {
 				e.printStackTrace();
@@ -66,7 +68,8 @@ public class AppointmentConverter implements Converter<Appointment, AppointmentD
 						formatter.parse(dto.getDateTime()),
 						dto.getDuration(),
 						bankService.getById(UUID.fromString(dto.getBloodBankId())),
-						donor
+						donor,
+						dto.getReport()
 						);
 			} catch (ParseException e) {
 				e.printStackTrace();

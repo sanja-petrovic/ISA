@@ -4,6 +4,8 @@ import com.example.isa.model.Answer;
 import com.example.isa.model.BloodDonor;
 import com.example.isa.repository.AnswerRepository;
 import com.example.isa.service.interfaces.AnswerService;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

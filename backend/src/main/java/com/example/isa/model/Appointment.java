@@ -37,6 +37,9 @@ public class Appointment extends BaseEntity {
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "blood_donor_id")
     private BloodDonor bloodDonor;
+    @Column(columnDefinition="TEXT")
+    private String report;
+
     
     public Appointment(Appointment appointment) {
         status = AppointmentStatus.NOT_SCHEDULED;
