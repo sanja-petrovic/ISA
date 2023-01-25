@@ -30,7 +30,13 @@ export class MedicalStaffComponent implements OnInit {
 
   
   fillData() {
-    this.medicalStaff = {...this.userService.currentUser as unknown as MedicalStaff}
+    this.medicalStaffService.getCurrentStaff().subscribe((res: any)=>{
+      this.medicalStaff = res;
+      //this.profileForm.setValue(this.bloodDonor);
+      console.log(this.medicalStaff)
+    })
+    // this.medicalStaff = {...this.userService.currentUser as unknown as MedicalStaff}
+    
   }
 
   cancelClick(): void {
