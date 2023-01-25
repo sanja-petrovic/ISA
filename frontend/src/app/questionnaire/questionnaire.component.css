@@ -9,6 +9,12 @@
   align-items: center;
 }
 
+.spinner-wrapper {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .question-wrapper {
   margin-top: 1rem;
 }
@@ -33,7 +39,12 @@
   margin-top: 2rem;
   width: 100%;
   border: 1px solid transparent;
-  background-image: linear-gradient(to right, #ea283f 0%, #ff5e70 51%, #ea283f 100%);
+  background-image: linear-gradient(
+    to right,
+    #ea283f 0%,
+    #ff5e70 51%,
+    #ea283f 100%
+  );
   text-align: center;
   transition: 0.5s;
   background-size: 200% auto;
@@ -53,4 +64,3 @@
 .submit-questionnaire-button:disabled {
   opacity: 50%;
 }
-
