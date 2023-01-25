@@ -112,9 +112,7 @@ public class AppointmentController {
     @ApiOperation(value = "Get all upcoming appointments for a blood donor.", httpMethod = "GET")
     public ResponseEntity<List<AppointmentDto>> getAllUpcomingByBloodDonor(@AuthenticationPrincipal User user, @RequestParam(required = false, defaultValue = "DESC") String sortDirection, @RequestParam(required = false, defaultValue = "dateTime") String sortProperty) {
         Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortProperty);
-        List<Appointment> appointments = appointmentService.getAllUpcomingByBloodDonor(user.getId(), sort);
-        List<AppointmentDto> appointmentDtos = converter.listToDtoList(appointments);
-        return ResponseEntity.ok(appointmentDtos);
+        return ResponseEntity.ok(converter.listToDtoList(appointmentService.getAllUpcomingByBloodDonor(user.getId(), sort)));
     }
 
     @GetMapping("/blood-donor/past")

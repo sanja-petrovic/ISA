@@ -38,11 +38,11 @@ export class DonorsAppointmentsComponent implements OnInit {
     'cancel',
   ];
   displayedColumns: string[] = [
+    'qrCode',
     'bloodBank',
     'dateTime',
     'duration',
     'status',
-    'qrCode',
   ];
 
   getAppointments() {
