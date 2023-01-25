@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.isa.model.BloodBank;
 import com.example.isa.model.BloodSubscription;
+import com.example.isa.model.BloodType;
 
 public interface BloodSubscriptionRepository extends JpaRepository<BloodSubscription, UUID>{
 	
@@ -22,4 +23,5 @@ public interface BloodSubscriptionRepository extends JpaRepository<BloodSubscrip
 	@Query("from BloodSubscription sub where sub.active = true and"
 			+ " DATE(?1)+sub.deliveryDate-1 = current_date")
     List<BloodSubscription>findAllTodayActive(String date);
+	BloodSubscription findByBloodBankAndType(BloodBank bank, BloodType type);
 }

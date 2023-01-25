@@ -32,16 +32,28 @@ public class BloodSubscriptionServiceImpl implements BloodSubscriptionService{
 		return repository.findAll();
 	}
 	public void handleRegistration(BloodSubscriptionSignUpDto dto) throws JsonProcessingException {
-		this.registerMultiple(converter.Convert(dto));
-		SubscriptionResponseDto responseDto = new SubscriptionResponseDto(dto.SubscriptionId,"SUBSCRIPTION-SUCCESS");
+		SubscriptionResponseDto responseDto = null;
+		if(!this.registerMultiple(converter.Convert(dto))) {
+			 responseDto = new SubscriptionResponseDto(dto.SubscriptionId,"SUBSCRIPTION-SUCCESS");
+		}
+		else {
+			 responseDto = new SubscriptionResponseDto(dto.SubscriptionId,"SUBSCRIPTION-SUCCESS-LAST-INVALIDATED");
+		}
 		System.out.println(responseDto);
 		producer.send(responseDto);
 	}
 	@Override
-	public void registerMultiple(List<BloodSubscription> subscriptions) {
+	public boolean registerMultiple(List<BloodSubscription> subscriptions) {
+		boolean retval = false;
 		for (BloodSubscription bloodSubscription : subscriptions) {
+			BloodSubscription existing= repository.findByBloodBankAndType(bloodSubscription.getBloodBank(), bloodSubscription.getType());
+			if ( existing != null){
+				repository.delete(existing);
+				retval = true;
+			}
 			repository.save(bloodSubscription);	
 		}
+		return retval;
 	}
 
 	@Override
