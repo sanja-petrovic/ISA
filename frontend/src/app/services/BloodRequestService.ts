@@ -19,7 +19,7 @@ export class BloodRequestService {
   }
 
   getAll(): Observable<BloodRequest[]> {
-    return this.apiService.get(`${this.config.blood_requests_url}`);
+    return this.apiService.get(`${this.config.blood_requests_url}/approved`);
   }
 
   getById(id: string): Observable<BloodRequest> {

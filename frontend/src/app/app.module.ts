@@ -61,6 +61,7 @@ import { LocationSimulatorComponent } from './location-simulator/location-simula
 import { MapComponent } from './map/map.component';
 import { BloodRequestsListComponent } from './blood-requests-list/blood-requests-list.component';
 import {ToastModule} from "primeng/toast";
+import {DataViewModule} from "primeng/dataview";
 
 @NgModule({
   declarations: [
@@ -146,6 +147,7 @@ import {ToastModule} from "primeng/toast";
     MatTableModule,
     MatSortModule,
     LeafletModule,
+    DataViewModule,
   ],
 
 

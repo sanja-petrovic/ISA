@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {BloodRequest} from "../model/BloodRequest";
+import {BloodRequestService} from "../services/BloodRequestService";
 
 @Component({
   selector: 'app-blood-requests-list',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BloodRequestsListComponent implements OnInit {
 
-  constructor() { }
+  public bloodRequests: BloodRequest[];
+
+  constructor(private bloodRequestService: BloodRequestService) {}
 
   ngOnInit(): void {
+    this.bloodRequestService.getAll().subscribe(response => {
+      this.bloodRequests = response;
+    })
   }
 
 }

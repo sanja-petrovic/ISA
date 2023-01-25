@@ -34,7 +34,7 @@ public class BloodRequestController {
     @GetMapping("/approved")
     @ApiOperation(value = "Get all blood approved requests.", httpMethod = "GET")
     public ResponseEntity<List<BloodRequestDto>> getAllApproved() {
-        return ResponseEntity.ok(this.bloodRequestService.getAllApproved().stream().map(bloodRequest -> new BloodRequestDto(bloodRequest.getId(), bloodRequest.getBloodType().toString(), bloodRequest.getAmount(), bloodRequest.isUrgent(), bloodRequest.getSendOnDate().toString())).toList());
+        return ResponseEntity.ok(this.bloodRequestService.getAllApproved().stream().map(bloodRequest -> new BloodRequestDto(bloodRequest.getId(), bloodRequest.getBloodType().toString(), bloodRequest.getAmount(), bloodRequest.isUrgent(), bloodRequest.getSendOnDate() == null ? "" : bloodRequest.getSendOnDate().toString() )).toList());
     }
 
     @GetMapping("/{id}")
