@@ -54,7 +54,9 @@ import { MedStaffSchedulePageComponent, CheckBloodSuppliesDialog } from './med-s
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatTableModule} from "@angular/material/table";
 import {MatSortModule} from "@angular/material/sort";
-
+import { MedicalStaffQrCodeUploaderComponent } from './medical-staff-qr-code-uploader/medical-staff-qr-code-uploader.component';
+ 
+  
 @NgModule({
   declarations: [
     AppComponent,
@@ -85,7 +87,8 @@ import {MatSortModule} from "@angular/material/sort";
     DonorSchedulingComponent,
     MedicalStaffScheduleComponent,
     MedStaffSchedulePageComponent,
-    CheckBloodSuppliesDialog
+    CheckBloodSuppliesDialog,
+    MedicalStaffQrCodeUploaderComponent
 
   ],
   imports: [
@@ -132,7 +135,7 @@ import {MatSortModule} from "@angular/material/sort";
     MatTabsModule,
     MatTooltipModule,
     MatTableModule,
-    MatSortModule
+    MatSortModule 
   ],
 
 

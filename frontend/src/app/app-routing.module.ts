@@ -22,6 +22,7 @@ import {DonorsAppointmentsComponent} from "./donors-appointments/donors-appointm
 import { AdminProfileComponent } from './admin-profile/admin-profile.component';
 import { MedicalStaffScheduleComponent } from './medical-staff-schedule/medical-staff-schedule.component';
 import { MedStaffSchedulePageComponent } from './med-staff-schedule-page/med-staff-schedule-page.component';
+import { MedicalStaffQrCodeUploaderComponent } from './medical-staff-qr-code-uploader/medical-staff-qr-code-uploader.component';
 
 const appRoutes: Routes = [{
   path: 'home', component: HomeComponent, canActivate: [AuthGuard]
@@ -65,6 +66,8 @@ const appRoutes: Routes = [{
   path: 'medical-staff/schedule', component: MedicalStaffScheduleComponent, canActivate: [AuthGuard]
 },{
   path: 'medical-staff/appointment/:id', component: MedStaffSchedulePageComponent, canActivate: [AuthGuard]
+},{
+  path: 'medical-staff/qrUpload', component: MedicalStaffQrCodeUploaderComponent, canActivate: [AuthGuard]
 },{
   path: '**', redirectTo: 'login'
 },]

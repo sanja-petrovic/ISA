@@ -1,5 +1,7 @@
 package com.example.isa.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.security.Principal;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -9,6 +11,9 @@ import java.util.UUID;
 import com.example.isa.model.AppointmentStatus;
 import com.example.isa.model.User;
 import com.example.isa.service.interfaces.BloodDonorService;
+import com.example.isa.util.qrCode.QrCodeUploader;
+import com.nimbusds.jose.shaded.json.JSONObject;
+import com.nimbusds.jose.shaded.json.parser.JSONParser;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -29,6 +34,8 @@ import com.example.isa.model.BloodBank;
 import com.example.isa.service.interfaces.AppointmentService;
 import com.example.isa.util.converters.AppointmentConverter;
 import com.example.isa.util.converters.BloodBankConverter;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RestController
 @RequestMapping("/appointments")
@@ -192,6 +199,21 @@ public class AppointmentController {
         appointmentService.setStatus(appointmentService.getById(id), AppointmentStatus.MISSED);
         return ResponseEntity.ok().build();
     }
+    @GetMapping("/uploadQrCode/{path}")
+    @PreAuthorize("hasRole('ROLE_STAFF')")
+    @ApiOperation(value = "Upload qr code to get appointments.", httpMethod = "GET")
+    public ResponseEntity<String> uploadQrCode(@PathVariable String path){
+        File qrCodeFile = new File("res/"+path);
 
+        String qrCodeContent = QrCodeUploader.readQRCode(qrCodeFile);
 
+        return ResponseEntity.ok(qrCodeContent);
+    }
 }
+
+
+
+
+
+
+

@@ -71,4 +71,7 @@ export class AppointmentService {
   setAsMissed(id: string): Observable<void> {
     return this.apiService.post(`${this.config.appointments_url}/missed/${id}`, '');
   }
+  uploadQrCode(Path:string) :Observable<any> {
+    return this.apiService.get(`${this.config.appointments_url}/uploadQrCode/${Path}`, '');
+  }
 }
