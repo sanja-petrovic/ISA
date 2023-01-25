@@ -28,6 +28,8 @@
     "leaflet": "^1.9.3",
     "net": "^1.0.2",
     "ol": "^7.2.2",
+    "primeicons": "^6.0.1",
+    "primeng": "^15.1.1",
     "rxjs": "~7.5.0",
     "sockjs": "^0.3.24",
     "sockjs-client": "^1.6.1",

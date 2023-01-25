@@ -34,7 +34,7 @@ public class TrackingRequestServiceImpl implements TrackingRequestService {
     public void create(TrackingRequest trackingRequest) {
         trackingRequestRepository.save(trackingRequest);
         try {
-            this.producer.send(new TrackingRequestDto(trackingRequest.getId(), trackingRequest.getUpdateFrequency().getValue(), trackingRequest.getUpdateFrequency().getUnit(), 0.0, 0.0, 0.0, 0.0, trackingRequest.getStatus().toString()));
+            this.producer.send(new TrackingRequestDto(trackingRequest.getId(), trackingRequest.getUpdateFrequency().getValue(), trackingRequest.getUpdateFrequency().getUnit(), trackingRequest.getStart().getLatitude(), trackingRequest.getStart().getLongitude(), trackingRequest.getEnd().getLatitude(), trackingRequest.getEnd().getLongitude(), trackingRequest.getStatus().toString()));
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

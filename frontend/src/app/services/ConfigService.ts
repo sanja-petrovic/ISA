@@ -14,6 +14,8 @@ export class ConfigService {
   public answers_url = this._api_url + '/answers'
   public appointments_url = this._api_url + '/appointments'
   public blood_banks_url = this._api_url + '/blood-banks';
+  public blood_requests_url = this._api_url + '/blood-requests';
+  public tracking_requests_url = this._api_url + '/tracking-requests';
   public medical_staff_url = this._api_url + '/medical-staff';
   public blood_donors_url = this._api_url + '/blood-donors';
   public log_out_url = this._auth_url + '/log-out';

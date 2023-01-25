@@ -5,6 +5,7 @@ import {ActivatedRoute} from "@angular/router";
 import {Appointment} from "../model/Appointment";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSort, Sort} from "@angular/material/sort";
+import {ConfirmationService, MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-donors-appointments',
@@ -13,7 +14,7 @@ import {MatSort, Sort} from "@angular/material/sort";
 })
 export class DonorsAppointmentsComponent implements OnInit {
 
-  constructor(private appointmentService: AppointmentService, private route: ActivatedRoute, private datePipe: DatePipe) { }
+  constructor(private messageService: MessageService, private confirmationService: ConfirmationService, private appointmentService: AppointmentService, private route: ActivatedRoute, private datePipe: DatePipe) { }
 
   public appointments: Appointment[] = [];
   public upcoming: Appointment[] = [];
@@ -71,12 +72,19 @@ export class DonorsAppointmentsComponent implements OnInit {
 
   cancel(appointment: Appointment): void {
     this.appointmentService.cancel(appointment.id).subscribe(res => {
-        console.log(res);
-        window.location.reload();
+        this.messageService.add({severity:'success', summary:'Success', detail:'Appointment canceled.'});
+        setTimeout(() => window.location.reload(), 1000);
       },
       error => {
-        alert(error.error.message);
+        this.messageService.add({severity:'error', summary:'Error', detail: error.error.message});
       })
+  }
+
+  confirmCancel(appointment: Appointment) {
+    this.confirmationService.confirm({
+      message: `You're about to cancel your appointment at ${appointment.bloodBankTitle} for ${appointment.dateTime}.`,
+      accept: () => this.cancel(appointment)
+    })
   }
 
   handleSortChange(sortState: Sort, table: string) {

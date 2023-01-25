@@ -31,6 +31,8 @@ import {MatRadioModule} from "@angular/material/radio";
 import {TokenInterceptor} from './interceptor/TokenInterceptor';
 import {AuthService} from "./services/AuthService";
 import {UserService} from "./services/UserService";
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ConfirmationService, MessageService} from 'primeng/api';
 import {ConfigService} from "./services/ConfigService";
 import {ApiService} from "./services/ApiService";
 import { BankRegistrationComponent } from './bank-registration/bank-registration.component';
@@ -57,6 +59,8 @@ import {MatTableModule} from "@angular/material/table";
 import {MatSortModule} from "@angular/material/sort";
 import { LocationSimulatorComponent } from './location-simulator/location-simulator.component';
 import { MapComponent } from './map/map.component';
+import { BloodRequestsListComponent } from './blood-requests-list/blood-requests-list.component';
+import {ToastModule} from "primeng/toast";
 
 @NgModule({
   declarations: [
@@ -90,7 +94,8 @@ import { MapComponent } from './map/map.component';
     MedStaffSchedulePageComponent,
     CheckBloodSuppliesDialog,
     LocationSimulatorComponent,
-    MapComponent
+    MapComponent,
+    BloodRequestsListComponent
 
   ],
   imports: [
@@ -107,6 +112,7 @@ import { MapComponent } from './map/map.component';
     MatSelectModule,
     FormsModule,
     MatFormFieldModule,
+    ConfirmDialogModule,
     MatInputModule,
     MatCheckboxModule,
     ReactiveFormsModule,
@@ -133,6 +139,7 @@ import { MapComponent } from './map/map.component';
     FlexLayoutModule,
     MatDialogModule,
     MatRadioModule,
+    ToastModule,
     MatListModule,
     MatTabsModule,
     MatTooltipModule,
@@ -154,6 +161,8 @@ import { MapComponent } from './map/map.component';
 	},
 	QuestionnaireComponent,
     AuthService,
+    ConfirmationService,
+    MessageService,
     ApiService,
     UserService,
     ConfigService,

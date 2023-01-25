@@ -46,7 +46,6 @@ public class Appointment extends BaseEntity {
         dateTime = appointment.dateTime;
         duration = appointment.duration;
         bloodBank = appointment.bloodBank;
-        bloodDonor = appointment.bloodDonor;
     }
     
 }

@@ -6,6 +6,7 @@ import {Answer} from "../model/Answer";
 import {AnswerService} from "../services/AnswerService";
 import {BloodDonor} from "../model/Users";
 import {BloodDonorService} from "../services/BloodDonorService";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-questionnaire',
@@ -18,6 +19,7 @@ export class QuestionnaireComponent implements OnInit {
   bloodDonor: BloodDonor;
 
   constructor(
+    private messageService: MessageService,
     private questionService: QuestionService,
     private answerService: AnswerService,
     private bloodDonorService: BloodDonorService,
@@ -45,8 +47,9 @@ export class QuestionnaireComponent implements OnInit {
 
   onSubmit(): void {
     this.answerService.save(this.answers);
-    alert('Thanks for submitting!');
-    this.router.navigate(["/"]);
+    this.messageService.add({severity:'success', summary:'Success', detail:'Questionnaire filled.'});
+    setTimeout(() => this.router.navigate(['/']), 1000);
+
   }
 
   handleClick(questionId: string, index: number, value: boolean) {

@@ -1,3 +1,4 @@
+@import "assets/css/styles.css";
 
 @font-face {
   font-family: 'Poppins Regular';
@@ -248,9 +249,14 @@ body {
   background-color: rgb(255, 233, 233);
 }
 
+.link-active {
+  font-weight: bold;
+}
+
 .centered-content {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
+

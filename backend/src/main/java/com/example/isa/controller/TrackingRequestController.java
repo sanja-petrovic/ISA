@@ -29,8 +29,8 @@ public class TrackingRequestController {
     @PostMapping
     @ApiOperation(value = "Start the session.", httpMethod = "POST")
     public ResponseEntity start() {
-        TrackingRequestDto trackingRequestDto = new TrackingRequestDto(UUID.randomUUID(), 5, TimeUnit.SECONDS, 0.0, 0.0, 0.0, 0.0, TrackingRequestStatus.RECEIVED.toString());
-        TrackingRequest trackingRequest = new TrackingRequest(UUID.randomUUID(), new Date(), null, new Frequency(5, TimeUnit.SECONDS), new Location(0.0, 0.0), new Location(0.0, 0.0), TrackingRequestStatus.RECEIVED);
+        TrackingRequest trackingRequest = new TrackingRequest(UUID.randomUUID(), new Date(), null, new Frequency(5, TimeUnit.MINUTES
+        ), new Location(44.799079093067974, 20.46751341785706), new Location(45.253434, 19.831323), TrackingRequestStatus.RECEIVED);
         trackingRequestService.create(trackingRequest);
         return ResponseEntity.ok().build();
     }

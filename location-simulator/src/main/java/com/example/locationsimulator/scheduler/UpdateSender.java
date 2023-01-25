@@ -20,13 +20,13 @@ public class UpdateSender implements Runnable {
         try {
             RestTemplate restTemplate = new RestTemplate();
             StringBuilder uri = new StringBuilder("https://routing.openstreetmap.de/routed-car/route/v1/driving/");
-            uri.append(trackingRequest.getStart().getLatitude());
-            uri.append(",");
             uri.append(trackingRequest.getStart().getLongitude());
-            uri.append(";");
-            uri.append(trackingRequest.getEnd().getLatitude());
             uri.append(",");
+            uri.append(trackingRequest.getStart().getLatitude());
+            uri.append(";");
             uri.append(trackingRequest.getEnd().getLongitude());
+            uri.append(",");
+            uri.append(trackingRequest.getEnd().getLatitude());
             uri.append("?geometries=geojson&overview=false&alternatives=true&steps=true");
             String result = restTemplate.getForObject(uri.toString(), String.class);
             producer.send(new LocationUpdateDto(trackingRequest.getId(), 0, 0));

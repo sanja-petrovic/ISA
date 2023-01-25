@@ -4,6 +4,22 @@
 }
 
 .questionnaire {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.question-wrapper {
+  margin-top: 1rem;
+}
+
+.answer {
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+}
+
+.form-wrapper {
+  width: 40vw;
   margin: 2rem 5rem;
   padding: 2rem;
   background-color: white;
@@ -12,11 +28,29 @@
   box-shadow: 0 0 20px rgba(255, 94, 117, 0.11);
 }
 
-.answer {
-  margin-right: 1rem;
-  margin-bottom: 1rem;
+.submit-questionnaire-button {
+  padding: 0.7rem;
+  margin-top: 2rem;
+  width: 100%;
+  border: 1px solid transparent;
+  background-image: linear-gradient(to right, #ea283f 0%, #ff5e70 51%, #ea283f 100%);
+  text-align: center;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  box-shadow: 0 0 20px #e13b55;
+  border-radius: 15px;
+  font-size: 16px;
+  cursor: pointer;
 }
 
-.submit-button {
-
+.submit-questionnaire-button:hover {
+  background-position: right center;
+  color: #fff;
+  text-decoration: none;
 }
+
+.submit-questionnaire-button:disabled {
+  opacity: 50%;
+}
+

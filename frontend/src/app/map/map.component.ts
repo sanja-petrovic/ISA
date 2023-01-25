@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { latLng, tileLayer, marker, geoJSON, LayerGroup, icon } from 'leaflet';
-
 import * as Stomp from 'stompjs';
 import * as SockJS from "sockjs-client";
+import {BloodRequestService} from "../services/BloodRequestService";
+import {BloodRequest} from "../model/BloodRequest";
+import {LocationUpdate} from "../model/LocationUpdate";
 
 @Component({
   selector: 'app-map',
@@ -22,10 +24,16 @@ export class MapComponent implements OnInit {
   };
   mainGroup: LayerGroup[] = [];
   private stompClient: any;
+  private bloodRequests: BloodRequest[];
+  private bloodRequest: BloodRequest;
 
-  constructor() {}
+  constructor(private bloodRequestService: BloodRequestService) {}
 
   ngOnInit(): void {
+    this.bloodRequestService.getAll().subscribe(response => {
+      this.bloodRequests = response;
+      this.bloodRequest = response[0];
+    })
     this.initializeWebSocketConnection();
   }
 
@@ -39,9 +47,8 @@ export class MapComponent implements OnInit {
   }
 
   openGlobalSocket() {
-    this.stompClient.subscribe('/api/location-update')
-    this.stompClient.subscribe('/api/location-update', (message: { body: string }) => {
-      console.log(message.body);
+    this.stompClient.subscribe(`/api/location-update/${this.bloodRequest.id}`, (message: { body: string }) => {
+      let locationUpdate: LocationUpdate = JSON.parse(message.body);
     });
   }
 }

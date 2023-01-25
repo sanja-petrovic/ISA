@@ -5,13 +5,14 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {DatePipe} from '@angular/common';
 import { BloodBank } from '../model/BloodBank';
 import { BloodBankService } from '../services/BloodBankService';
+import {ConfirmationService, MessageService} from "primeng/api";
 @Component({
   selector: 'app-appointments',
   templateUrl: './appointments.component.html',
   styleUrls: ['./appointments.component.css', '../banks-page/banks-page.component.css']
 })
 export class AppointmentsComponent implements OnInit {
-  constructor(private appointmentService: AppointmentService, private bloodBankService: BloodBankService, private route: ActivatedRoute, private router: Router, private datePipe: DatePipe) { }
+  constructor(private messageService: MessageService, private appointmentService: AppointmentService, private confirmationService: ConfirmationService, private bloodBankService: BloodBankService, private route: ActivatedRoute, private router: Router, private datePipe: DatePipe) { }
 
   public appointments: Appointment[] = [];
   public bloodBank: BloodBank;
@@ -45,13 +46,20 @@ export class AppointmentsComponent implements OnInit {
     return appointment.status.replace("_", " ").toLocaleLowerCase();
   }
 
+  confirm(appointment: Appointment) {
+    this.confirmationService.confirm({
+      message: `You're about to schedule an appointment at ${appointment.bloodBankTitle} for ${appointment.dateTime}.`,
+      accept: () => this.schedule(appointment)
+    })
+  }
+
   schedule(appointment: Appointment): void {
     this.appointmentService.schedule(appointment.id).subscribe(res => {
-      console.log(res);
-      window.location.reload();
+      this.messageService.add({severity:'success', summary:'Success', detail:'Appointment scheduled.'});
+      setTimeout(() => window.location.reload(), 1000);
     },
     error => {
-      alert(error.error.message);
+      this.messageService.add({severity:'error', summary:'Error', detail: error.error.message});
     })
   }
 }

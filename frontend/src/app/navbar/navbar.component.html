@@ -1,5 +1,5 @@
 <mat-toolbar class="nav-bar">
-  <div class="title">{{title}}</div>
+  <div class="title" (click)="toHome()">{{title}}</div>
   <div class="links">
     <a routerLink="/">Blood banks</a>
     <a routerLink="/questionnaire" *ngIf="user != undefined && user.role.name=='ROLE_DONOR'">Questionnaire</a>

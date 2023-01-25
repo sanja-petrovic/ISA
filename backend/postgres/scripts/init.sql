@@ -422,3 +422,20 @@ values (uuid_generate_v4(),350,'AB_NEGATIVE', '16e4a8c2-3e86-4e93-825f-24e36cb29
 INSERT INTO public.blood_requests(
     id, version, amount, blood_type, received_date, send_on_date, status, urgent, blood_bank_id)
 VALUES (uuid_generate_v4(), 0, 5, 0, '2023-01-23', null, 'APPROVED', false, '16e4a8c2-3e86-4e93-825f-24e36cb29669');
+INSERT INTO public.blood_requests(
+    id, version, amount, blood_type, received_date, send_on_date, status, urgent, blood_bank_id)
+VALUES (uuid_generate_v4(), 0, 10, 0, '2023-01-22', null, 'APPROVED', false, '16e4a8c2-3e86-4e93-825f-24e36cb29669');
+
+-- appointments
+insert into public.appointments(id,date_time,duration,status,blood_bank_id,blood_donor_id)
+values (uuid_generate_v4(),'2023-02-02 11:30:00',30,'SCHEDULED','16e4a8c2-3e86-4e93-825f-24e36cb29655','16e4a8c2-3e86-4e93-825f-24e36cb29645');
+insert into public.appointments(id,date_time,duration,status,blood_bank_id,blood_donor_id)
+values (uuid_generate_v4(),'2023-02-02 9:30:00',15,'NOT_SCHEDULED','16e4a8c2-3e86-4e93-825f-24e36cb29669',null);
+insert into public.appointments(id,date_time,duration,status,blood_bank_id,blood_donor_id)
+values (uuid_generate_v4(),'2023-02-02 18:00:00',30,'NOT_SCHEDULED','16e4a8c2-3e86-4e93-825f-24e36cb29669',null);
+insert into public.appointments(id,date_time,duration,status,blood_bank_id,blood_donor_id)
+values (uuid_generate_v4(),'2023-02-05 12:00:00',30,'NOT_SCHEDULED','16e4a8c2-3e86-4e93-825f-24e36cb29669', null);
+insert into public.appointments(id,date_time,duration,status,blood_bank_id,blood_donor_id)
+values (uuid_generate_v4(),'2023-03-30 18:00:00',30,'SCHEDULED','16e4a8c2-3e86-4e93-825f-24e36cb29655', '16e4a8c2-3e86-4e93-825f-24e36cb29645');
+insert into public.appointments(id,date_time,duration,status,blood_bank_id,blood_donor_id)
+values (uuid_generate_v4(),'2022-02-12 18:00:00',30,'MISSED','16e4a8c2-3e86-4e93-825f-24e36cb29655', '16e4a8c2-3e86-4e93-825f-24e36cb29645');

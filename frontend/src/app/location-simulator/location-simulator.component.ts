@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {TrackingRequestService} from "../services/TrackingRequestService";
 
 @Component({
   selector: 'app-location-simulator',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LocationSimulatorComponent implements OnInit {
 
-  constructor() { }
+  constructor(private trackingRequestService: TrackingRequestService) { }
 
   ngOnInit(): void {
+  }
+
+  start(): void {
+    this.trackingRequestService.start().subscribe();
   }
 
 }
