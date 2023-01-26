@@ -1,9 +1,6 @@
 package com.example.isa.security;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -87,13 +84,11 @@ public class TokenHandler {
     }
 
     public String generateTokenFromUsername(String username, Role role) {
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("role", role.getName());
         return Jwts.builder()
                 .setSubject(username)
-                .setClaims(claims)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + EXPIRES_IN))
+                .claim("role", role.getName())
                 .signWith(SignatureAlgorithm.HS512, SECRET)
                 .compact();
     }
@@ -110,12 +105,13 @@ public class TokenHandler {
             return null;
         }
     }
-    public String generateToken(String username) {
+    public String generateToken(String username, Role role) {
         return Jwts.builder()
                 .setIssuer(APP_NAME)
                 .setSubject(username)
                 .setAudience(generateAudience())
                 .setIssuedAt(new Date())
+                .claim("role", role.getName())
                 .setExpiration(generateExpirationDate())
                 .signWith(SIGNATURE_ALGORITHM, SECRET).compact();
     }
