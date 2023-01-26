@@ -198,9 +198,9 @@ public class AppointmentController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/uploadQrCode/{path}")
+    @PostMapping("/uploadQrCode")
     @ApiOperation(value = "Upload qr code to get appointments.", httpMethod = "GET")
-    public ResponseEntity<String> uploadQrCode(@PathVariable String path) throws IOException {
+    public ResponseEntity<String> uploadQrCode(@RequestBody String path) throws IOException {
         //File qrCodeFile = new File("res/"+path);
         BufferedImage qrCode = ImageConverter.convertFromBase64(path);
         String qrCodeContent = QrCodeUploader.readQRCode(qrCode);
