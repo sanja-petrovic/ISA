@@ -45,11 +45,11 @@ public class EntityCreator {
             bloodDonor2.setId(UUID.fromString("26e4a8c2-3e86-4e93-825f-24e36cb29645"));
             bloodDonorRepository.save(bloodDonor2);
 
-            BloodBank bloodBank = new BloodBank("Prva prava banka krvi", new Address("Daniciceva 15", "Novi Sad", "Srbija"), "Najopremljenija banka krvi ovih prostora", new Interval(new Date(12345), new Date(12345)), 4.8);
+            BloodBank bloodBank = new BloodBank("Prva prava banka krvi", new Address("Daniciceva 15", "Novi Sad", "Srbija"), "Najopremljenija banka krvi ovih prostora", new Interval(new Date(12345), new Date(12345)), 4.8, 45.92, 19.23);
             bloodBankRepository.save(bloodBank);
             MedicalStaff medicalStaff1 = new MedicalStaff("1101010101010", "staff1@gmail.com", passwordEncoder.encode("STAFF1"), "Good", "Doctor", "7101010101", Gender.FEMALE, true, roleStaff, bloodBank);
             medicalStaffRepository.save(medicalStaff1);
-            BloodBank bank = new BloodBank("banka puno krvi",new Address("Vojvode Misica 10","Kragujevac","Srbija"),new Interval(new Date(),new Date()),"Vampiri ovde povremeno borave",3.5);
+            BloodBank bank = new BloodBank("banka puno krvi",new Address("Vojvode Misica 10","Kragujevac","Srbija"),"Vampiri ovde povremeno borave",new Interval(new Date(),new Date()),3.5, 45.97, 20.23);
             bank.setId(UUID.fromString("16e4a8c2-3e86-4e93-825f-24e36cb29655"));
             bloodBankRepository.save(bank);
             MedicalStaff medicalStaff2 = new MedicalStaff("0101010101010", "staff@gmail.com", passwordEncoder.encode("STAFF"), "Good", "Doctor", "0101010101", Gender.FEMALE, true, roleStaff, bank );

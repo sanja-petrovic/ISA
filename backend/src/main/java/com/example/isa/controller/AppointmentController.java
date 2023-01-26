@@ -1,5 +1,8 @@
 package com.example.isa.controller;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.security.Principal;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -10,6 +13,7 @@ import com.example.isa.model.AppointmentStatus;
 import com.example.isa.model.User;
 import com.example.isa.service.interfaces.BloodDonorService;
 import com.example.isa.util.converters.ImageConverter;
+import com.example.isa.util.qrCode.QrCodeUploader;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -194,5 +198,14 @@ public class AppointmentController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/uploadQrCode")
+    @ApiOperation(value = "Upload qr code to get appointments.", httpMethod = "GET")
+    public ResponseEntity<String> uploadQrCode(@RequestBody String path) throws IOException {
+        //File qrCodeFile = new File("res/"+path);
+        BufferedImage qrCode = ImageConverter.convertFromBase64(path);
+        String qrCodeContent = QrCodeUploader.readQRCode(qrCode);
+
+        return ResponseEntity.ok(qrCodeContent);
+    }
 
 }

@@ -114,6 +114,7 @@ D:\isa2022\ISA\backend\src\main\java\com\example\isa\dto\BloodRequestDto.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\dto\QuestionListDto.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\dto\AdminListDto.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\service\interfaces\AnswerService.java
+D:\isa2022\ISA\backend\src\main\java\com\example\isa\util\qrCode\QrCodeUploader.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\exception\NotFoundException.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\util\converters\DateConverter.java
 D:\isa2022\ISA\backend\src\main\java\com\example\isa\exception\NotEnoughSupplyException.java
