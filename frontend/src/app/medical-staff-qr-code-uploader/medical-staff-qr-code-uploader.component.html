@@ -1,0 +1,8 @@
+<div class="centered-content" >
+  <h1>Choose your QR code image file to upload.</h1>
+  <input class="input" type="file" (change)="showPreviewImage($event)" >
+<img [src]="localUrl" *ngIf="localUrl" class="imgPlaceholder">
+
+<br>
+<button class="button" *ngIf="localUrl" (click)="LoadPage()">View appointment</button>
+</div>

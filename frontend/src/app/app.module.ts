@@ -71,6 +71,9 @@ import { UserService } from './services/UserService';
 import { VerificationComponent } from './verification/verification.component';
 import { ViewUsersComponent } from './view-users/view-users.component';
 import { BankDonorsComponent } from './bank-donors/bank-donors.component';
+import {
+  MedicalStaffQrCodeUploaderComponent
+} from "./medical-staff-qr-code-uploader/medical-staff-qr-code-uploader.component";
 
 @NgModule({
   declarations: [
@@ -107,8 +110,8 @@ import { BankDonorsComponent } from './bank-donors/bank-donors.component';
     MapComponent,
     BloodRequestsListComponent,
     CheckBloodSuppliesDialog,
-    BankDonorsComponent
-
+    BankDonorsComponent,
+    MedicalStaffQrCodeUploaderComponent
   ],
   imports: [
     HttpClientModule,

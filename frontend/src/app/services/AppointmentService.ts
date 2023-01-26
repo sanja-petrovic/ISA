@@ -43,6 +43,10 @@ export class AppointmentService {
     return this.apiService.get(path);
   }
 
+  uploadQrCode(Path:string) :Observable<any> {
+    return this.apiService.post(`${this.config.appointments_url}/uploadQrCode/`, Path);
+  }
+
   getAllPastByLoggedInBloodDonor(sortDirection?:string, sortProperty?:string): Observable<Appointment[]> {
     let path: string = `${this.config.appointments_url}/blood-donor/past`;
     if(!!sortDirection || !!sortProperty) {
