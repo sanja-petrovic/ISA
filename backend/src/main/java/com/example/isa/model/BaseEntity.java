@@ -14,5 +14,5 @@ public abstract class BaseEntity {
     private UUID id = UUID.randomUUID();
 
     @Version
-    private Integer version;
+    private Integer version = 1;
 }
