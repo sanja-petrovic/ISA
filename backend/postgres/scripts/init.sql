@@ -53,6 +53,8 @@ CREATE TABLE IF NOT EXISTS public.blood_banks
     title character varying(255) COLLATE pg_catalog."default",
     interval_end time without time zone,
     interval_start time without time zone,
+    latitude double precision,
+    longitude double precision,
     CONSTRAINT blood_banks_pkey PRIMARY KEY (id),
     CONSTRAINT uk_nmki042g2u18p2a8povcb6r91 UNIQUE (title)
 );
@@ -296,8 +298,7 @@ CREATE TABLE IF NOT EXISTS public.tracking_requests
     start_latitude double precision,
     start_longitude double precision,
     "timestamp" timestamp without time zone,
-    unit integer,
-    value integer,
+    frequency_in_seconds integer,
     blood_bank_id uuid,
     status character varying(255),
     CONSTRAINT tracking_requests_pkey PRIMARY KEY (id),
@@ -310,33 +311,44 @@ CREATE TABLE IF NOT EXISTS public.tracking_requests
 
 -- blood banks
 insert into public.blood_banks (id, city, street, country, average_grade, description, title, interval_end,
-                                interval_start)
-values ('16e4a8c2-3e86-4e93-825f-24e36cb29669', 'Novi Sad', 'Srbija', 'Danila Kiša 15', 4.32, 'Bankica', 'Moja banka krvi', '22:00:00',
-        '10:00:00');
+                                interval_start, latitude, longitude)
+values ('16e4a8c2-3e86-4e93-825f-24e36cb29669', 'Novi Sad', 'Srbija', 'Danila Kiša 15', 4.32, 'Bankica',
+        'Moja banka krvi', '22:00:00', '10:00:00', 45.24836608833101, 19.83678175453625);
+
 insert into public.blood_banks (id, city, street, country, average_grade, description, title, interval_end,
-                                interval_start)
+                                interval_start, latitude, longitude)
 values (uuid_generate_v4(), 'Belgrade', 'Srbija', 'Ljube Jovanovića 12', 4.11, 'Najveća banka krvi u Beogradu',
-        'Institut za transfuziju krvi', '24:00:00', '00:00:00');
+        'Institut za transfuziju krvi', '24:00:00', '00:00:00', 44.799650134139064, 20.468411795043);
+
 insert into public.blood_banks (id, city, street, country, average_grade, description, title, interval_end,
-                                interval_start)
+                                interval_start, latitude, longitude)
 values (uuid_generate_v4(), 'Zrenjanin', 'Srbija', 'Sremska 1', 3.17, 'Zrenjaninska banka krvi', 'Plasma Point',
-        '20:00:00', '08:00:00');
+        '20:00:00', '08:00:00', 45.377631105541056, 20.415080939202895);
+
 insert into public.blood_banks (id, city, street, country, average_grade, description, title, interval_end,
-                                interval_start)
+                                interval_start, latitude, longitude)
 values (uuid_generate_v4(), 'Novi Sad', 'Srbija', 'Hajduk Veljkova 7', 4.66, 'Najveća banka krvi u Novom Sadu',
-        'Zavod za transfuziju krvi Vojvodine', '24:00:00', '00:00:00');
+        'Zavod za transfuziju krvi Vojvodine', '24:00:00', '00:00:00', 45.25378411698129, 19.824104893176354);
+
 insert into public.blood_banks (id, city, street, country, average_grade, description, title, interval_end,
-                                interval_start)
-values (uuid_generate_v4(), 'Belgrade', 'Srbija', 'Šekspirova 25', 3.91, '--', 'Crveni krst', '22:00:00', '10:00:00');
+                                interval_start, latitude, longitude)
+values (uuid_generate_v4(), 'Belgrade', 'Srbija', 'Šekspirova 25', 3.91, '--',
+        'Crveni krst', '22:00:00', '10:00:00', 44.78282950620948, 20.460097798687478);
+
 insert into public.blood_banks (id, city, street, country, average_grade, description, title, interval_end,
-                                interval_start)
-values (uuid_generate_v4(), 'Subotica', 'Srbija', 'Ive Lole Ribara 20', 4.68, '--', 'Srce', '19:00:00', '07:00:00');
+                                interval_start, latitude, longitude)
+values (uuid_generate_v4(), 'Subotica', 'Srbija', 'Ive Lole Ribara 20', 4.68, '--',
+        'Srce', '19:00:00', '07:00:00', 46.096383598764966, 19.665005154580147);
+
 insert into public.blood_banks (id, city, street, country, average_grade, description, title, interval_end,
-                                interval_start)
-values (uuid_generate_v4(), 'Niš', 'Srbija', 'Dušanova 39', 4.25, '--', 'Centar krvi', '19:00:00', '07:00:00');
+                                interval_start, latitude, longitude)
+values (uuid_generate_v4(), 'Niš', 'Srbija', 'Dušanova 39', 4.25, '--',
+        'Centar krvi', '19:00:00', '07:00:00', 43.317637651623485, 21.89863772386244);
+
 insert into public.blood_banks (id, city, street, country, average_grade, description, title, interval_end,
-                                interval_start)
-values (uuid_generate_v4(), 'Niš', 'Srbija', 'Zetska 2', 4.94, '--', 'Zavod "Milenko Hadžić"', '20:00:00', '08:00:00');
+                                interval_start, latitude, longitude)
+values (uuid_generate_v4(), 'Niš', 'Srbija', 'Zetska 2', 4.94, '--',
+        'Zavod "Milenko Hadžić"', '20:00:00', '08:00:00', 43.31767170857, 21.91097694094361);
 
 -- questions
 INSERT INTO public.questions(id, text, type)

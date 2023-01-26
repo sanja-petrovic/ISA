@@ -2,10 +2,7 @@ package com.example.isa.model.locator;
 
 import com.example.isa.model.BloodBank;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -17,16 +14,14 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class TrackingRequest {
     @Id
     private UUID id;
     @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
     private Date timestamp;
-    @ManyToOne
-    @JoinColumn(name = "blood_bank_id")
-    private BloodBank bloodBank;
-    @Embedded
-    private Frequency updateFrequency;
+    @Column
+    private int frequencyInSeconds;
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name = "latitude", column = @Column(name = "start_latitude")),

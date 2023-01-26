@@ -13,7 +13,7 @@ import java.util.UUID;
 public class TrackingRequest {
     private UUID id;
     private Date timestamp;
-    private Frequency updateFrequency;
+    private int frequencyInSeconds;
     private Location start;
     private Location end;
     private TrackingRequestStatus status;

@@ -23,7 +23,7 @@ public class TrackingRequestConsumer {
         this.trackingRequestService = trackingRequestService;
     }
 
-    @KafkaListener(topics = "tracking.request.topic", groupId = "locator")
+    @KafkaListener(topics = "tracking.request.topic", groupId = "requests")
     public void consume(String message) throws JsonProcessingException {
         log.info("message consumed {}", message);
         TrackingRequestDto dto = objectMapper.readValue(message, TrackingRequestDto.class);
@@ -33,7 +33,7 @@ public class TrackingRequestConsumer {
                 .timestamp(new Date())
                 .start(new Location(dto.latitudeStart(), dto.longitudeStart()))
                 .end(new Location(dto.latitudeEnd(), dto.longitudeEnd()))
-                .updateFrequency(new Frequency(dto.frequencyTimeValue(), TimeUnit.valueOf(dto.frequencyTimeUnit())))
+                .frequencyInSeconds(dto.frequencyInSeconds())
                 .build();
         trackingRequestService.create(trackingRequest);
     }
