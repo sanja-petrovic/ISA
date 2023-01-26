@@ -24,6 +24,9 @@ import { BankDonorsComponent } from './bank-donors/bank-donors.component';
 import {RoleGuard} from "./guards/RoleGuard";
 import {LocationSimulatorComponent} from "./location-simulator/location-simulator.component";
 import {BloodRequestsListComponent} from "./blood-requests-list/blood-requests-list.component";
+import {
+  MedicalStaffQrCodeUploaderComponent
+} from "./medical-staff-qr-code-uploader/medical-staff-qr-code-uploader.component";
 
 const appRoutes: Routes = [{
   path: 'home', component: HomeComponent, canActivate: [AuthGuard]
@@ -82,6 +85,9 @@ const appRoutes: Routes = [{
 },{
   path: 'blood-requests/pending', component: BloodRequestsListComponent, canActivate: [RoleGuard],
   data: { expectedRole: 'ROLE_ADMIN' },
+
+},{
+  path: 'medical-staff/qrUpload', component: MedicalStaffQrCodeUploaderComponent, canActivate: [RoleGuard], data: { expectedRole: 'ROLE_STAFF' },
 },
   {
   path: 'location-simulator', component: LocationSimulatorComponent, canActivate: [RoleGuard],

@@ -92,6 +92,7 @@ com\example\isa\dto\QuestionDto$QuestionDtoBuilder.class
 com\example\isa\model\Answer.class
 com\example\isa\kafka\consumers\SubscriptionConsumer.class
 com\example\isa\model\BloodRequest$BloodRequestBuilder.class
+com\example\isa\util\qrCode\QrCodeUploader.class
 com\example\isa\advice\ErrorMessage.class
 com\example\isa\dto\BloodTypeDto.class
 com\example\isa\dto\SuppliesDto.class
