@@ -60,12 +60,30 @@ public class BloodBank extends BaseEntity {
         this.averageGrade = averageGrade;
     }
 
+    public BloodBank(String title, Address address, Interval workingHours, String description, double averageGrade, Location location) {
+        this.title = title;
+        this.address = address;
+        this.workingHours = workingHours;
+        this.description = description;
+        this.averageGrade = averageGrade;
+        this.location = location;
+    }
+
     public BloodBank(String title, Address address, String description, Interval workingHours, double averageGrade) {
         this.title = title;
         this.address = address;
         this.description = description;
         this.workingHours = workingHours;
         this.averageGrade = averageGrade;
+    }
+
+    public BloodBank(String title, Address address, String description, Interval workingHours, double averageGrade, double latitude, double longitude) {
+        this.title = title;
+        this.address = address;
+        this.description = description;
+        this.workingHours = workingHours;
+        this.averageGrade = averageGrade;
+        this.location = new Location(latitude, longitude);
     }
     
     public boolean checkBloodSupply(BloodType type, double amount) {
