@@ -33,7 +33,8 @@ public class BloodBank extends BaseEntity {
     @JsonBackReference
     @OneToMany(mappedBy = "bloodBank", cascade = CascadeType.ALL)
     private Set<MedicalStaff> medicalStaff;
-
+    @OneToMany(mappedBy = "bloodBank", cascade = CascadeType.ALL)
+    private Set<BloodSubscription> subscriptions;
     @JsonBackReference
     @OneToMany(mappedBy = "bloodBank", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<BloodSupply> bloodSupplies;

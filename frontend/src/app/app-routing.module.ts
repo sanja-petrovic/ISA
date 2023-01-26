@@ -20,9 +20,7 @@ import { DonorSchedulingComponent } from './donor-scheduling/donor-scheduling.co
 import {DonorsAppointmentsComponent} from "./donors-appointments/donors-appointments.component";
 import { MedicalStaffScheduleComponent } from './medical-staff-schedule/medical-staff-schedule.component';
 import { MedStaffSchedulePageComponent } from './med-staff-schedule-page/med-staff-schedule-page.component';
-import {LocationSimulatorComponent} from "./location-simulator/location-simulator.component";
-import {BloodRequestsListComponent} from "./blood-requests-list/blood-requests-list.component";
-import {RoleGuard} from "./guards/RoleGuard";
+import { BankDonorsComponent } from './bank-donors/bank-donors.component';
 
 const appRoutes: Routes = [{
   path: 'home', component: HomeComponent, canActivate: [AuthGuard]
@@ -76,6 +74,8 @@ const appRoutes: Routes = [{
 },{
   path: 'medical-staff/appointment/:id', component: MedStaffSchedulePageComponent, canActivate: [RoleGuard],
   data: { expectedRole: 'ROLE_STAFF' },
+},{
+  path: 'medical-staff/bank-donors', component: BankDonorsComponent, canActivate: [AuthGuard]
 },{
   path: 'blood-requests/pending', component: BloodRequestsListComponent, canActivate: [RoleGuard],
   data: { expectedRole: 'ROLE_ADMIN' },

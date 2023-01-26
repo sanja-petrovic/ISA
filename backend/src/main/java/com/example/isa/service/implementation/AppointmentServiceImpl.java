@@ -129,7 +129,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Transactional(readOnly = false)
     public Appointment createScheduled(Appointment appointment) {
         if (appointment != null) {
-            if (!bloodBankService.isOpen(appointment.getBloodBank(), appointment.getDateTime(), appointment.getDuration())) {
+            if (!bloodBankService.isOpen(appointment.getBloodBank(),(Date) appointment.getDateTime().clone(), appointment.getDuration())) {
                 throw new BloodBankClosedException();
             }
             LocalDateTime convertedDateTime = DateConverter.convert(appointment.getDateTime());
@@ -243,7 +243,7 @@ public class AppointmentServiceImpl implements AppointmentService {
             if (appointment.getDateTime().before(new Date())) {
                 throw new PassedException();
             }
-            if (!bloodBankService.isOpen(appointment.getBloodBank(), appointment.getDateTime(), appointment.getDuration())) {
+            if (!bloodBankService.isOpen(appointment.getBloodBank(), (Date) appointment.getDateTime().clone(), appointment.getDuration())) {
                 throw new BloodBankClosedException();
             }
             if (!canScheduleAppointment(donor, appointment.getDateTime())) {
@@ -254,17 +254,37 @@ public class AppointmentServiceImpl implements AppointmentService {
             }
             appointment.setStatus(AppointmentStatus.SCHEDULED);
             appointment.setBloodDonor(donor);
-            appointmentRepository.save(appointment);
-            try {
-                emailSender.sendAppointmentDetails(appointment);
-            } catch (Exception e) {
-                e.printStackTrace();
+            //create(appointment);
+            List<Appointment> listScheduled = appointmentRepository.findAllByBloodBankAndDateTime(appointment.getBloodBank(), (Date) appointment.getDateTime().clone());
+            for (Appointment scheduled : listScheduled) {
+                if (this.hasOverlap(scheduled, appointment)) {
+                	if(scheduled.getStatus().equals(AppointmentStatus.NOT_SCHEDULED)) {
+                		scheduled.setStatus(AppointmentStatus.SCHEDULED);
+                		scheduled.setBloodDonor(donor);
+                		appointmentRepository.save(scheduled);
+                		sendDetails(appointment);
+                		return null;
+                	}
+                	else {
+                		throw new AlreadyExistsException();
+                	}  
+                }
             }
+            appointmentRepository.save(appointment);
+            sendDetails(appointment);
         } else {
             throw new NotFoundException();
         }
         return null;
     }
+
+	private void sendDetails(Appointment appointment) {
+		try {
+		    emailSender.sendAppointmentDetails(appointment);
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+	}
 
     private boolean donorHasAtChosenTime(BloodDonor donor, Date dateTime) {
         return !appointmentRepository.findAllByBloodDonorAndDateTime(donor, dateTime).isEmpty();
@@ -276,7 +296,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         List<BloodBank> freeBloodBanksForDate = new ArrayList<>();
         LocalDateTime localDateTime = DateConverter.convertToLocal(selectedDate);
         for (BloodBank bank : openBloodBanksOnDate) {
-            List<Appointment> scheduledAppointments = appointmentRepository.findAllByBloodBankAndDate(bank, localDateTime.getYear(), localDateTime.getMonthValue(), localDateTime.getDayOfMonth());
+            List<Appointment> scheduledAppointments = appointmentRepository.findAllByBloodBankAndDateTime(bank, DateConverter.convert(localDateTime)).stream().filter(appointment -> !appointment.getStatus().equals(AppointmentStatus.NOT_SCHEDULED)).toList();
             if (scheduledAppointments.isEmpty()) {
                 freeBloodBanksForDate.add(bank);
             } else {

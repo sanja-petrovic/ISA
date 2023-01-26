@@ -22,6 +22,10 @@ export class AppointmentService {
     return this.apiService.get(`${this.config.appointments_url}`);
   }
 
+  getAllByBloodBank(id: string): Observable<Appointment[]> {
+    return this.apiService.get(`${this.config.appointments_url}/blood-bank/${id}`);
+  }
+
   getAllAvailableByBloodBank(id: string): Observable<Appointment[]> {
     return this.apiService.get(`${this.config.appointments_url}/blood-bank/${id}/available`);
   }

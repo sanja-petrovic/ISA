@@ -70,6 +70,7 @@ import { ConfigService } from './services/ConfigService';
 import { UserService } from './services/UserService';
 import { VerificationComponent } from './verification/verification.component';
 import { ViewUsersComponent } from './view-users/view-users.component';
+import { BankDonorsComponent } from './bank-donors/bank-donors.component';
 
 @NgModule({
   declarations: [
@@ -105,6 +106,9 @@ import { ViewUsersComponent } from './view-users/view-users.component';
     LocationSimulatorComponent,
     MapComponent,
     BloodRequestsListComponent,
+    CheckBloodSuppliesDialog,
+    BankDonorsComponent
+
   ],
   imports: [
     HttpClientModule,

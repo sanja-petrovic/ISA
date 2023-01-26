@@ -13,7 +13,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 public interface BloodSubscriptionService {
 	List<BloodSubscription> getAll();
-	void registerMultiple (List<BloodSubscription> subscriptions);
+	boolean registerMultiple (List<BloodSubscription> subscriptions);
     void registerSubscription (BloodSubscription subscription);
     BloodSubscription getById(UUID id);
     List<BloodSubscription> getByBankId(UUID id);
