@@ -9,11 +9,16 @@ com\example\isa\util\converters\SubscriptionSignUpConverter.class
 com\example\isa\model\BloodSupply.class
 com\example\isa\dto\SuppliesListDto.class
 com\example\isa\model\Interval.class
+com\example\isa\model\locator\TrackingRequest.class
+com\example\isa\controller\TrackingRequestController.class
+com\example\isa\kafka\consumers\TrackingResponseConsumer.class
 com\example\isa\security\TokenAuthenticationFilter.class
+com\example\isa\service\interfaces\TrackingRequestService.class
 com\example\isa\exception\DuplicateAppointmentException.class
 com\example\isa\model\BloodDonor.class
 com\example\isa\repository\BloodRequestRepository.class
 com\example\isa\exception\UnableToCancelException.class
+com\example\isa\model\locator\TrackingRequestStatus.class
 com\example\isa\controller\BloodDonorController.class
 com\example\isa\controller\BloodRequestController.class
 com\example\isa\model\BloodSubscription.class
@@ -42,6 +47,7 @@ com\example\isa\model\BloodBank$BloodBankBuilder.class
 com\example\isa\model\MedicalStaff$MedicalStaffBuilder.class
 com\example\isa\util\converters\SuppliesConverter.class
 com\example\isa\exception\AlreadyExistsException.class
+com\example\isa\util\converters\TrackingRequestConverter.class
 com\example\isa\dto\BloodSupplyDto$BloodSupplyDtoBuilder.class
 com\example\isa\dto\QuestionDto.class
 com\example\isa\scheduler\Scheduler.class
@@ -61,10 +67,12 @@ com\example\isa\service\implementation\BloodRequestServiceImpl.class
 com\example\isa\dto\AdminListDto.class
 com\example\isa\util\converters\DateConverter.class
 com\example\isa\model\Supplies$SuppliesBuilder.class
+com\example\isa\dto\BloodRequestSupplyDto.class
 com\example\isa\repository\UserRepository.class
 com\example\isa\dto\BloodBankDto$BloodBankDtoBuilder.class
 com\example\isa\repository\CacheDataRepository.class
 com\example\isa\dto\MedicalStaffDto.class
+com\example\isa\repository\TrackingRequestRepository.class
 com\example\isa\repository\BloodSupplyRepository.class
 com\example\isa\dto\UserSearchDto.class
 com\example\isa\dto\AdminDto.class
@@ -73,6 +81,7 @@ com\example\isa\service\implementation\MedicalStaffServiceImpl.class
 com\example\isa\Application.class
 com\example\isa\service\interfaces\BloodSubscriptionService.class
 com\example\isa\dto\BloodSupplyDto.class
+com\example\isa\dto\locator\LocationUpdateDto.class
 com\example\isa\dto\AnswerListDto.class
 com\example\isa\service\implementation\UserServiceImpl.class
 com\example\isa\service\interfaces\AdminService.class
@@ -90,6 +99,7 @@ com\example\isa\model\BloodSupply$BloodSupplyBuilder.class
 com\example\isa\config\ModelMapperConfig.class
 com\example\isa\kafka\consumers\BloodRequestConsumer.class
 com\example\isa\exception\NewAppointmentTooSoonException.class
+com\example\isa\kafka\consumers\LocatorUpdateConsumer.class
 com\example\isa\config\RedisConfig.class
 com\example\isa\repository\BloodBankRepository.class
 com\example\isa\dto\UserTokenState.class
@@ -101,6 +111,7 @@ com\example\isa\model\LoyaltyStatus.class
 com\example\isa\util\converters\BloodBankConverter.class
 com\example\isa\model\BloodBank.class
 com\example\isa\dto\BloodDonorListDto.class
+com\example\isa\dto\locator\TrackingResponseDto.class
 com\example\isa\service\implementation\RoleServiceImpl.class
 com\example\isa\exception\CantScheduleTwiceException.class
 com\example\isa\model\BaseEntity.class
@@ -127,11 +138,13 @@ com\example\isa\service\interfaces\BloodSupplyService.class
 com\example\isa\service\interfaces\NewsService.class
 com\example\isa\dto\SubscriptionResponseDto.class
 com\example\isa\service\interfaces\MedicalStaffService.class
+com\example\isa\service\implementation\TrackingRequestServiceImpl.class
 com\example\isa\model\News$NewsBuilder.class
 com\example\isa\dto\MedicalStaffListDto.class
 com\example\isa\repository\BloodSubscriptionRepository.class
 com\example\isa\controller\AppointmentController.class
 com\example\isa\model\Admin$AdminBuilder.class
+com\example\isa\dto\locator\TrackingRequestDto.class
 com\example\isa\config\SecurityConfig.class
 com\example\isa\model\Email.class
 com\example\isa\service\implementation\BloodSubscriptionServiceImpl.class
@@ -139,6 +152,7 @@ com\example\isa\util\formatters\TextFormatter.class
 com\example\isa\service\implementation\AnswerServiceImpl.class
 com\example\isa\dto\NewsDto.class
 com\example\isa\dto\BloodSubscriptionSignUpDto.class
+com\example\isa\model\locator\TrackingRequest$TrackingRequestBuilder.class
 com\example\isa\scheduler\ScheduledMessageSender.class
 com\example\isa\service\implementation\NewsServiceImpl.class
 com\example\isa\repository\NewsRepository.class
@@ -152,8 +166,11 @@ com\example\isa\service\implementation\AppointmentServiceImpl.class
 com\example\isa\dto\AppointmentDto.class
 com\example\isa\model\Role.class
 com\example\isa\exception\NoCompletedQuestionnaire.class
+com\example\isa\config\WebSocketConfig.class
 com\example\isa\service\implementation\SuppliesServiceImpl.class
+com\example\isa\model\locator\Location.class
 com\example\isa\util\converters\EnumConverter.class
+com\example\isa\dto\BloodRequestSupplyDto$BloodRequestSupplyDtoBuilder.class
 com\example\isa\scheduler\ThreadPoolTaskSchedulerConfig.class
 com\example\isa\util\formatters\DateFormatter.class
 com\example\isa\dto\PenaltyDto.class
@@ -163,6 +180,7 @@ com\example\isa\controller\AuthController.class
 com\example\isa\model\BloodRequestStatus.class
 com\example\isa\dto\SuppliesDto$SuppliesDtoBuilder.class
 com\example\isa\exception\ReachedPenaltyLimitException.class
+com\example\isa\dto\BloodBankRequestDto.class
 com\example\isa\dto\BloodProductDto.class
 com\example\isa\exception\NotEnoughSupplyException.class
 com\example\isa\model\CacheData.class
@@ -192,6 +210,7 @@ com\example\isa\repository\QuestionRepository.class
 com\example\isa\util\converters\ImageConverter.class
 com\example\isa\config\WebConfig.class
 com\example\isa\dto\BloodDonorDto.class
+com\example\isa\dto\BloodRequestExpandedDto.class
 com\example\isa\util\email\EmailSender.class
 com\example\isa\exception\AlreadyScheduledException.class
 com\example\isa\util\converters\BloodDonorConverter.class
