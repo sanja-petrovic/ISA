@@ -68,10 +68,12 @@ const appRoutes: Routes = [{
 },{
   path: 'medical-staff/appointment/:id', component: MedStaffSchedulePageComponent, canActivate: [AuthGuard]
 },{
-  path: 'medical-staff/blood-requests/pending', component: BloodRequestsListComponent
+  path: 'blood-requests/pending', component: BloodRequestsListComponent, canActivate: [AuthGuard]
 },
   {
-  path: 'medical-staff/location-simulator', component: LocationSimulatorComponent
+  path: 'location-simulator', component: LocationSimulatorComponent, canActivate: [AuthGuard], data: {
+      role: 'ROLE_ADMIN'
+    }
   },{
   path: '**', redirectTo: 'login'
 },]

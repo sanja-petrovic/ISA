@@ -1,10 +1,14 @@
 package com.example.isa.security;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
+import com.example.isa.model.Role;
 import com.example.isa.model.User;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +37,7 @@ public class TokenHandler {
     private final String jwtRefreshCookie = "refreshToken";
 
     public ResponseCookie generateJwtCookie(User user) {
-        String jwt = generateTokenFromUsername(user.getEmail());
+        String jwt = generateTokenFromUsername(user.getEmail(), user.getRole());
         return generateCookie(jwtCookie, jwt, "/api");
     }
 
@@ -82,9 +86,12 @@ public class TokenHandler {
         return false;
     }
 
-    public String generateTokenFromUsername(String username) {
+    public String generateTokenFromUsername(String username, Role role) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("role", role.getName());
         return Jwts.builder()
                 .setSubject(username)
+                .setClaims(claims)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + EXPIRES_IN))
                 .signWith(SignatureAlgorithm.HS512, SECRET)

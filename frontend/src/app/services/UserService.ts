@@ -35,5 +35,5 @@ export class UserService {
     return this.apiService.get(this.config.current_url + 'search',searchParam );
   }
 
-    
+
 }
