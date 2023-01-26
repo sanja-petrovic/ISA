@@ -2,6 +2,7 @@ package com.example.isa.service.implementation;
 
 import com.example.isa.dto.BloodRequestDto;
 import com.example.isa.dto.BloodRequestResponseDto;
+import com.example.isa.dto.BloodRequestSupplyDto;
 import com.example.isa.dto.BloodSupplyDto;
 import com.example.isa.kafka.Producer;
 import com.example.isa.model.BloodBank;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -49,7 +51,7 @@ public class BloodRequestServiceImpl implements BloodRequestService {
         this.respond(bloodRequestDto.getId(), canSend ? "APPROVED_BY_BANK" : "REJECTED_BY_BANK");
         if (canSend) {
             bloodBankService.updateBloodSupply(bloodBank, bloodType, bloodRequestDto.getAmount());
-            BloodSupplyDto bloodSupplyDto = new BloodSupplyDto(bloodRequestDto.getId(), bloodRequestDto.getBloodType(), bloodRequestDto.getAmount());
+            BloodRequestSupplyDto bloodSupplyDto = new BloodRequestSupplyDto(bloodRequestDto.getId(), bloodRequestDto.getBloodType(), bloodRequestDto.getAmount());
             if (bloodRequestDto.isUrgent()) {
                 producer.send(bloodSupplyDto);
                 this.respond(bloodRequestDto.getId(), "FULFILLED");
@@ -75,6 +77,16 @@ public class BloodRequestServiceImpl implements BloodRequestService {
 
         return null;
 	}
+
+    @Override
+    public List<BloodRequest> getAllApproved() {
+        return bloodRequestRepository.findAllByStatus(BloodRequestStatus.APPROVED);
+    }
+
+    @Override
+    public BloodRequest getById(UUID id) {
+        return bloodRequestRepository.findById(id).orElseThrow();
+    }
 
 
     private void respond(UUID requestId, String status) throws JsonProcessingException {

@@ -1,5 +1,6 @@
 package com.example.isa.service.interfaces;
 
+import java.awt.image.BufferedImage;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.List;
@@ -23,6 +24,7 @@ public interface AppointmentService {
 	List<Appointment> getAllUpcomingByBloodDonor(UUID bloodDonorId, Sort sort);
 	List<Appointment> getUpcomingScheduledByBloodDonor(UUID bloodDonorId, Sort sort);
 	List<Appointment> getPastByBloodDonor(UUID bloodDonorId, Sort sort);
+	BufferedImage generateQrCodeForAppointment(Appointment appointment);
 	Appointment create(Appointment appointment);
 	Appointment createScheduled(Appointment appointment);
 	Appointment createByDonor(Appointment appointment, BloodDonor donor);

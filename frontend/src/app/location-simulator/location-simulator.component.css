@@ -1,0 +1,44 @@
+.map-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.map {
+  width: 90vw;
+  height: 80vh;
+  border: 1px solid transparent;
+  border-radius: 1rem;
+  margin-bottom: -1.5rem;
+}
+.form-field {
+  width: 20vw;
+}
+
+.footer {
+  padding: 2rem;
+}
+
+button {
+  margin-left: 1rem;
+}
+.start-button {
+  padding: 1rem 3rem;
+  border: 1px solid transparent;
+  background-image: linear-gradient(to right, #ea283f 0%, #ff5e70 51%, #ea283f 100%);
+  text-align: center;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  box-shadow: 0 0 20px rgba(255, 100, 125, 0.3);
+  border-radius: 1rem;
+  cursor: pointer;
+}
+.start-button:hover {
+  background-position: right center;
+  color: #fff;
+  text-decoration: none;
+}

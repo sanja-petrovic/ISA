@@ -1,5 +1,6 @@
 package com.example.isa.model;
 
+import com.example.isa.model.locator.Location;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Builder;
 import lombok.AllArgsConstructor;
@@ -40,6 +41,9 @@ public class BloodBank extends BaseEntity {
 
     @OneToMany(mappedBy = "bloodBank", orphanRemoval = true)
     private Set<News> news = new LinkedHashSet<>();
+
+    @Embedded
+    private Location location;
 
     public BloodBank(String title, Address address, String description) {
         this.title = title;

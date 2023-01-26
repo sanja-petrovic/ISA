@@ -18,7 +18,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class User extends BaseEntity implements UserDetails{
+public class User extends BaseEntity implements UserDetails {
     @Column(unique = true)
     private String personalId;
     @Column(unique = true)

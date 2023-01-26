@@ -55,7 +55,7 @@ public class AuthController {
         Authentication authentication = this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         User user = (User) authentication.getPrincipal();
-        String jwt = this.tokenHandler.generateToken(user.getUsername());
+        String jwt = this.tokenHandler.generateToken(user.getUsername(), user.getRole());
         ResponseCookie jwtCookie = tokenHandler.generateJwtCookie(user);
         Role role = user.getRole();
         RefreshToken refreshToken = refreshTokenService.createRefreshToken(user.getId());

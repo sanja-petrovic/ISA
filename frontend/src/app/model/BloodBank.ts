@@ -7,8 +7,10 @@ type BloodBank = {
     description: string,
     averageGrade: string,
     workingHoursStart : string,
-    workingHoursEnd : string
+    workingHoursEnd : string,
+    latitude: number,
+    longitude: number
   }
-  
+
   export { BloodBank };
-  
+

@@ -1,0 +1,18 @@
+<div class="map-wrapper">
+  <div class="map-wrapper">
+    <div
+      style="height: 80%; width: 80%"
+      leaflet
+      [leafletOptions]="options"
+      [leafletLayers]="mainGroup"
+    ></div>
+    <div class="footer">
+      <mat-form-field class="form-field">
+        <mat-label>Frequency of location update [seconds]</mat-label>
+        <input matInput type="text" [(ngModel)]="frequency">
+      </mat-form-field>
+      <button class="start-button" (click)="start()">Start the ride</button>
+    </div>
+  </div>
+</div>
+

@@ -9,6 +9,7 @@ import java.util.UUID;
 import com.example.isa.model.AppointmentStatus;
 import com.example.isa.model.User;
 import com.example.isa.service.interfaces.BloodDonorService;
+import com.example.isa.util.converters.ImageConverter;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

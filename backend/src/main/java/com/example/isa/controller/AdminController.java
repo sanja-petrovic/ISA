@@ -56,6 +56,7 @@ public class AdminController {
 
     @GetMapping(value = "/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Get an admin by id.", httpMethod = "GET")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> getAdminById(@PathVariable String id) {
         Admin admin = (Admin)userService.loadUserByUsername(id);
         if (admin == null){
@@ -65,6 +66,7 @@ public class AdminController {
     }
     @PostMapping(value ="/register")
     @ApiOperation(value = "Register an admin.", httpMethod = "POST")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> register(@RequestBody AdminDto adminDto){
         Admin admin = converter.dtoToEntity(adminDto);
         if (userService.findByUsername(adminDto.getEmail()) == null) {

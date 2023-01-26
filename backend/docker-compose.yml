@@ -89,3 +89,13 @@ services:
       KAFKA_BROKERCONNECT: "kafka:9092"
     depends_on:
       - "kafka"
+  location-simulator:
+    container_name: location-simulator
+    ports:
+      - "8081:8081"
+      - "7007:7007"
+    build:
+      context: ../location-simulator/
+      dockerfile: Dockerfile
+    depends_on:
+      - kafka

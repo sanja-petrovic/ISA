@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
+import com.example.isa.model.Role;
 import com.example.isa.model.User;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +34,7 @@ public class TokenHandler {
     private final String jwtRefreshCookie = "refreshToken";
 
     public ResponseCookie generateJwtCookie(User user) {
-        String jwt = generateTokenFromUsername(user.getEmail());
+        String jwt = generateTokenFromUsername(user.getEmail(), user.getRole());
         return generateCookie(jwtCookie, jwt, "/api");
     }
 
@@ -82,11 +83,12 @@ public class TokenHandler {
         return false;
     }
 
-    public String generateTokenFromUsername(String username) {
+    public String generateTokenFromUsername(String username, Role role) {
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + EXPIRES_IN))
+                .claim("role", role.getName())
                 .signWith(SignatureAlgorithm.HS512, SECRET)
                 .compact();
     }
@@ -103,12 +105,13 @@ public class TokenHandler {
             return null;
         }
     }
-    public String generateToken(String username) {
+    public String generateToken(String username, Role role) {
         return Jwts.builder()
                 .setIssuer(APP_NAME)
                 .setSubject(username)
                 .setAudience(generateAudience())
                 .setIssuedAt(new Date())
+                .claim("role", role.getName())
                 .setExpiration(generateExpirationDate())
                 .signWith(SIGNATURE_ALGORITHM, SECRET).compact();
     }

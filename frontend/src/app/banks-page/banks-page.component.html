@@ -44,8 +44,8 @@
           <mat-icon fontIcon="star" class="icon"></mat-icon>
           <span>{{bank.averageGrade}}</span></div>
       </mat-card-title>
-      <mat-card-subtitle>{{bank.country}}, {{bank.city}}, {{bank.street}} <br>{{bank.workingHoursStart}}
-        - {{bank.workingHoursEnd}}</mat-card-subtitle>
+      <mat-card-subtitle>{{bank.street}}, {{bank.city}}, {{bank.country}} <br>{{bank.workingHoursStart.slice(0,5)}}
+        - {{bank.workingHoursEnd.slice(0,5)}}</mat-card-subtitle>
       <mat-card-content>
         <p>{{bank.description}}</p>
       </mat-card-content>

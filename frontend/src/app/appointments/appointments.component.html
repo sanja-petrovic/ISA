@@ -1,5 +1,7 @@
 <div class="centered-content">
   <h1 class="title">{{bloodBank.title}}</h1>
+  <p-toast position="top-right"></p-toast>
+  <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" [style]="{width: '30vw', fontSize: '16px'}" ></p-confirmDialog>
   <div class="cards">
     <mat-card *ngFor="let appointment of appointments" class="bank-card">
       <mat-card-title class="bank-title">{{(this.formatDate(appointment))}}
@@ -7,7 +9,7 @@
       <mat-card-subtitle>{{this.formatStatus(appointment)}}</mat-card-subtitle>
       <mat-card-content>
         <p>Duration: <b>{{appointment.duration}} minutes</b></p>
-        <button class="schedule-button" (click)="this.schedule(appointment)">Schedule</button>
+        <button class="schedule-button" (click)="this.confirm(appointment)">Schedule</button>
       </mat-card-content>
     </mat-card>
     <p *ngIf="appointments.length === 0">No available appointments right now.</p>

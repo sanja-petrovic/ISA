@@ -1,0 +1,46 @@
+.centered-content {
+  flex-direction: column;
+}
+
+table {
+  width: 50vw;
+  margin-top: 3rem;
+  border: 1px solid transparent;
+  border-radius: 1rem;
+}
+
+.mat-table{
+  border-radius: 8px;
+  overflow:hidden !important;
+}
+.schedule-button {
+  width: auto !important;
+  margin-right: -60px;
+}
+
+.bank-card {
+  margin-top: 2rem;
+  width: 400px !important;
+}
+.mat-column-cancel {
+  width: 5px;
+}
+.mat-tab-body-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.mat-tab-group {
+  width: 70vw;
+}
+
+.tab {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cancelled-text {
+  text-align: center;
+  padding: 2rem;
+}
