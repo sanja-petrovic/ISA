@@ -8,6 +8,8 @@
     <a routerLink="/medical-staff/schedule" *ngIf="user != undefined && user.role.name=='ROLE_STAFF'">Appointments</a>
     <a routerLink="medical-staff/bank-donors" *ngIf="user != undefined && user.role.name=='ROLE_STAFF'">Donors</a>
     <a routerLink="/blood-requests/pending" *ngIf="user != undefined && user.role.name=='ROLE_ADMIN'">Blood requests</a>
+    <a routerLink="/medical-staff" *ngIf="user != undefined && user.role.name=='ROLE_STAFF'">Profile</a>
+    <a routerLink="/admin/scheduling" *ngIf="user != undefined && (user.role.name=='ROLE_STAFF' || user.role.name=='ROLE_ADMIN')">Schedule predefined appointment</a>
   </div>
   <div class="buttons" *ngIf="!isLoggedIn; else loggedIn">
     <a routerLink="/register"><button class="register-button">Register</button></a>
