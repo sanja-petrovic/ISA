@@ -25,6 +25,7 @@ export class LocationSimulatorComponent implements OnInit {
     center: latLng(45.253434, 19.831323),
   };
   mainGroup: LayerGroup[] = [];
+  frequency: number = 1;
   originalMainGroup: LayerGroup[] = [];
   private stompClient: any;
   private bloodRequest: BloodRequest;
@@ -57,7 +58,7 @@ export class LocationSimulatorComponent implements OnInit {
 
   start(): void {
     this.initializeWebSocketConnection();
-    this.trackingRequestService.start(this.bloodRequest).subscribe();
+    this.trackingRequestService.start(this.bloodRequest, this.frequency).subscribe();
   }
 
   initializeWebSocketConnection() {
