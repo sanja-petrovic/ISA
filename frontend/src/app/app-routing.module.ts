@@ -78,7 +78,7 @@ const appRoutes: Routes = [{
   path: 'medical-staff/appointment/:id', component: MedStaffSchedulePageComponent, canActivate: [RoleGuard],
   data: { expectedRole: 'ROLE_STAFF' },
 },{
-  path: 'medical-staff/bank-donors', component: BankDonorsComponent, canActivate: [AuthGuard]
+  path: 'medical-staff/bank-donors', component: BankDonorsComponent, canActivate: [RoleGuard], data: { expectedRole: 'ROLE_STAFF' }
 },{
   path: 'blood-requests/pending', component: BloodRequestsListComponent, canActivate: [RoleGuard],
   data: { expectedRole: 'ROLE_ADMIN' },
