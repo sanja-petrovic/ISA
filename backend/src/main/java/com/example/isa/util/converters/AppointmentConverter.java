@@ -41,7 +41,7 @@ public class AppointmentConverter implements Converter<Appointment, AppointmentD
 					entity.getBloodBank().getTitle(),
 					entity.getBloodDonor() == null ? null : entity.getBloodDonor().getPersonalId(),
 					entity.getReport(),
-					ImageConverter.convertToBase64(QrCodeGenerator.generateQRCodeForAppointment(entity), "png")
+					entity.getBloodDonor() == null ? null : ImageConverter.convertToBase64(QrCodeGenerator.generateQRCodeForAppointment(entity), "png")
 					);
 		} catch (Exception e) {
 			throw new RuntimeException(e);

@@ -91,6 +91,13 @@ public class AppointmentServiceImpl implements AppointmentService {
                 sort);
     }
 
+    public List<Appointment> getAllUpcomingScheduledByBloodDonor(BloodDonor bloodDonor) {
+        return appointmentRepository.findAllByBloodDonorIdAndStatusAndDateTimeAfter(
+                bloodDonor.getId(),
+                AppointmentStatus.SCHEDULED,
+                Date.from(Instant.now().minus(Duration.ofDays(1))));
+    }
+
 
     public List<Appointment> getPastByBloodDonor(UUID bloodDonorId, Sort sort) {
         return appointmentRepository.findAllByBloodDonorIdAndDateTimeBefore(bloodDonorId, new Date(), sort);
@@ -108,8 +115,10 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     private boolean canScheduleAppointment(BloodDonor bloodDonor, Date date) {
         Optional<Appointment> mostRecentAppointment = appointmentRepository.findTopByBloodDonorOrderByDateTimeDesc(bloodDonor);
+        List<Appointment> appointments = this.getAllUpcomingScheduledByBloodDonor(bloodDonor);
         LocalDateTime sixMonthsAgo = DateConverter.convert(date).minusMonths(6);
         Instant milliseconds = sixMonthsAgo.toInstant(ZoneOffset.UTC);
+        if(!appointments.isEmpty()) return false;
         return mostRecentAppointment.isEmpty() || mostRecentAppointment.get().getStatus() == AppointmentStatus.CANCELLED || !mostRecentAppointment.get().getDateTime().after(Date.from(milliseconds));
     }
 

@@ -22,7 +22,9 @@ public interface AppointmentRepository extends JpaRepository<Appointment, UUID> 
     List<Appointment> findAllByBloodBankIdAndStatus(UUID bloodBankId, AppointmentStatus status);
     List<Appointment> findAllByBloodDonorIdAndDateTimeBefore(UUID bloodDonorId, Date date, Sort sort);
     List<Appointment> findAllByBloodDonorIdAndDateTimeAfter(UUID bloodDonorId, Date date, Sort sort);
+    List<Appointment> findAllByBloodDonorIdAndDateTimeAfter(UUID bloodDonorId, Date date);
     List<Appointment> findAllByBloodDonorIdAndStatusAndDateTimeAfter(UUID bloodDonorId, AppointmentStatus status, Date date, Sort sort);
+    List<Appointment> findAllByBloodDonorIdAndStatusAndDateTimeAfter(UUID bloodDonorId, AppointmentStatus status, Date date);
     Optional<Appointment> findAllByBloodBankIdAndBloodDonorIdAndDateTime(UUID bloodBankId, UUID bloodDonorId, Date dateTime);
     Optional<Appointment> findTopByBloodDonorOrderByDateTimeDesc(BloodDonor bloodDonor);
     List<Appointment> findAllByBloodBankAndDateTime(BloodBank bloodBank, Date dateTime);
