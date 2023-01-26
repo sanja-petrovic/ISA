@@ -41,7 +41,7 @@ export class BloodRequestsListComponent implements OnInit {
 
   startDelivery(bloodRequest: BloodRequest) {
     this.dataService.bloodRequest = bloodRequest;
-    this.router.navigate(['/medical-staff/location-simulator'], {
+    this.router.navigate(['/location-simulator'], {
       state: { bloodRequest: bloodRequest }
     })
   }

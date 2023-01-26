@@ -8,6 +8,7 @@ import com.example.isa.service.interfaces.TrackingRequestService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -26,6 +27,7 @@ public class TrackingRequestController {
 
     @PostMapping
     @ApiOperation(value = "Start the session.", httpMethod = "POST")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity start(@RequestBody TrackingRequestDto dto) {
         trackingRequestService.create(dto);
         return ResponseEntity.ok().build();

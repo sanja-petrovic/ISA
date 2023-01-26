@@ -77,14 +77,14 @@ const appRoutes: Routes = [{
   path: 'medical-staff/appointment/:id', component: MedStaffSchedulePageComponent, canActivate: [RoleGuard],
   data: { expectedRole: 'ROLE_STAFF' },
 },{
-  path: 'medical-staff/blood-requests/pending', component: BloodRequestsListComponent, canActivate: [RoleGuard],
+  path: 'blood-requests/pending', component: BloodRequestsListComponent, canActivate: [RoleGuard],
   data: { expectedRole: 'ROLE_ADMIN' },
 },
   {
-  path: 'medical-staff/location-simulator', component: LocationSimulatorComponent, canActivate: [RoleGuard],
+  path: 'location-simulator', component: LocationSimulatorComponent, canActivate: [RoleGuard],
     data: { expectedRole: 'ROLE_ADMIN' },
   },{
-  path: '**', redirectTo: 'login'
+  path: '**', redirectTo: '/'
 },]
 
 @NgModule({

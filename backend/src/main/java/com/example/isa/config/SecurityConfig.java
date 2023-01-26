@@ -71,7 +71,7 @@ public class SecurityConfig {
                 .authenticationProvider(authenticationProvider())
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
-                .authorizeRequests().antMatchers("/auth/**", "/blood-banks", "/tracking-requests", "/socket", "/questions", "/blood-banks/search").permitAll()
+                .authorizeRequests().antMatchers("/auth/**", "/blood-banks", "/socket", "/blood-banks/search").permitAll()
                 .anyRequest().authenticated().and()
                 .cors().and()
                 .addFilterBefore(new TokenAuthenticationFilter(tokenHandler, userService), BasicAuthenticationFilter.class);
