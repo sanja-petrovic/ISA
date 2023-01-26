@@ -30,13 +30,7 @@ public class UpdateTimerTask extends TimerTask {
             this.start();
         }
         Location location = coordinates.get(0);
-        for(int i = 0; i < trackingRequest.getFrequencyInSeconds(); i++) {
-            if(coordinates.size() > 0) {
-                coordinates.remove(0);
-            } else {
-                break;
-            }
-        }
+        coordinates.subList(0, Math.min(coordinates.size(), trackingRequest.getFrequencyInSeconds())).clear();
         try {
             producer.send(new LocationUpdateDto(trackingRequest.getId(), location.getLatitude(), location.getLongitude()));
         } catch (JsonProcessingException e) {

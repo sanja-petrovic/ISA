@@ -21,18 +21,38 @@ export class LocationSimulatorComponent implements OnInit {
         attribution: '...',
       }),
     ],
-    zoom: 10,
+    zoom: 8,
     center: latLng(45.253434, 19.831323),
   };
   mainGroup: LayerGroup[] = [];
+  originalMainGroup: LayerGroup[] = [];
   private stompClient: any;
   private bloodRequest: BloodRequest;
   private currentLocation: LocationUpdate;
+  private vehicle = null
   private icon: string =  "../../assets/images/location.png";
   constructor(private trackingRequestService: TrackingRequestService, private router: Router) {
     this.bloodRequest = this.router.getCurrentNavigation().extras.state['bloodRequest'];
   }
   ngOnInit(): void {
+    let geoLayerRouteGroup: LayerGroup = new LayerGroup();
+    let markerHospital = marker([44.797731767760375, 20.458045885543164], {
+      icon: icon({
+        iconUrl: "../../assets/images/hospital.png",
+        iconSize: [45, 45],
+        iconAnchor: [18, 45],
+      }),
+    });
+    let markerBloodBank = marker([this.bloodRequest.bloodBank.latitude, this.bloodRequest.bloodBank.longitude], {
+      icon: icon({
+        iconUrl: "../../assets/images/bloodbank.png",
+        iconSize: [45, 45],
+        iconAnchor: [18, 45],
+      }),
+    });
+    markerHospital.addTo(geoLayerRouteGroup);
+    markerBloodBank.addTo(geoLayerRouteGroup);
+    this.mainGroup = [...this.mainGroup, geoLayerRouteGroup];
   }
 
   start(): void {
@@ -41,32 +61,31 @@ export class LocationSimulatorComponent implements OnInit {
   }
 
   initializeWebSocketConnection() {
-    alert("initializing web socket connection");
     let ws = new SockJS('http://localhost:8080/api/socket');
     this.stompClient = Stomp.over(ws);
     this.stompClient.debug = null;
     let that = this;
     this.stompClient.connect({}, function () {
-      alert("initializing web socket connection2");
       that.openGlobalSocket();
     });
   }
 
   openGlobalSocket() {
-    alert("initializing web socket connection3");
     let geoLayerRouteGroup: LayerGroup = new LayerGroup();
+    let markerLayer = marker([this.bloodRequest.bloodBank.latitude, this.bloodRequest.bloodBank.longitude], {
+      icon: icon({
+        iconUrl: this.icon,
+        iconSize: [35, 35],
+        iconAnchor: [18, 35],
+      }),
+    });
+    this.vehicle = markerLayer;
+    markerLayer.addTo(geoLayerRouteGroup);
+    this.mainGroup = [...this.mainGroup, geoLayerRouteGroup];
     this.stompClient.subscribe(`/location-update/${this.bloodRequest.id}`, (message: { body: string }) => {
-      alert(message.body);
       let locationUpdate: LocationUpdate = JSON.parse(message.body);
-      let markerLayer = marker([locationUpdate.longitude, locationUpdate.latitude], {
-        icon: icon({
-          iconUrl: this.icon,
-          iconSize: [45, 45],
-          iconAnchor: [18, 45],
-        }),
-      });
-      markerLayer.addTo(geoLayerRouteGroup);
-      this.mainGroup = [...this.mainGroup, geoLayerRouteGroup];
+        this.vehicle.setLatLng([locationUpdate.latitude, locationUpdate.longitude])
+        this.vehicle.update();
     });
   }
 
