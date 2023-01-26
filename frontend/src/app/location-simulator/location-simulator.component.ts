@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {TrackingRequestService} from "../services/TrackingRequestService";
+import {DataService} from "../services/DataService";
+import {BloodRequest} from "../model/BloodRequest";
 
 @Component({
   selector: 'app-location-simulator',
@@ -8,9 +10,10 @@ import {TrackingRequestService} from "../services/TrackingRequestService";
 })
 export class LocationSimulatorComponent implements OnInit {
 
-  constructor(private trackingRequestService: TrackingRequestService) { }
-
+  constructor(private trackingRequestService: TrackingRequestService, private dataService: DataService) { }
+  bloodRequest: BloodRequest;
   ngOnInit(): void {
+    this.bloodRequest = this.dataService.bloodRequest;
   }
 
   start(): void {

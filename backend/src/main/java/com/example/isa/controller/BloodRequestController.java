@@ -1,6 +1,8 @@
 package com.example.isa.controller;
 
+import com.example.isa.dto.BloodBankRequestDto;
 import com.example.isa.dto.BloodRequestDto;
+import com.example.isa.dto.BloodRequestExpandedDto;
 import com.example.isa.dto.BloodSupplyDto;
 import com.example.isa.model.BloodRequest;
 import com.example.isa.service.interfaces.BloodRequestService;
@@ -33,13 +35,8 @@ public class BloodRequestController {
 
     @GetMapping("/approved")
     @ApiOperation(value = "Get all blood approved requests.", httpMethod = "GET")
-    public ResponseEntity<List<BloodRequestDto>> getAllApproved() {
-        return ResponseEntity.ok(this.bloodRequestService.getAllApproved().stream().map(bloodRequest -> new BloodRequestDto(bloodRequest.getId(), bloodRequest.getBloodType().toString(), bloodRequest.getAmount(), bloodRequest.isUrgent(), bloodRequest.getSendOnDate() == null ? "" : bloodRequest.getSendOnDate().toString() )).toList());
+    public ResponseEntity<List<BloodRequestExpandedDto>> getAllApproved() {
+        return ResponseEntity.ok(this.bloodRequestService.getAllApproved().stream().map(bloodRequest -> new BloodRequestExpandedDto(bloodRequest.getId(), bloodRequest.getBloodType().toString(), bloodRequest.getAmount(), bloodRequest.isUrgent(), new BloodBankRequestDto(bloodRequest.getBloodBank().getTitle(), bloodRequest.getBloodBank().getId().toString(), bloodRequest.getBloodBank().getLocation().getLatitude(), bloodRequest.getBloodBank().getLocation().getLongitude()), bloodRequest.getSendOnDate() == null ? "" : bloodRequest.getSendOnDate().toString())).toList());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<BloodRequestDto> getById(@PathVariable String id) {
-        BloodRequest bloodRequest = bloodRequestService.getById(UUID.fromString(id));
-        return ResponseEntity.ok(new BloodRequestDto(bloodRequest.getId(), bloodRequest.getBloodType().toString(), bloodRequest.getAmount(), bloodRequest.isUrgent(), bloodRequest.getSendOnDate().toString()));
-    }
 }

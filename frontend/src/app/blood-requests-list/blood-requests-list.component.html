@@ -1,41 +1,69 @@
-<p-dataView #dv [value]="bloodRequests" [paginator]="true" [rows]="9"  layout="grid">
-  <ng-template pTemplate="header">
-  </ng-template>
-  <ng-template let-bloodRequest pTemplate="listItem">
-    <div class="col-12">
-      <div class="product-list-item">
-        <div class="product-list-detail">
-          <div class="product-name">{{bloodRequest.bloodBankTitle}}</div>
-          <div class="product-description">{{bloodRequest.bloodType}}, {{bloodRequest.amount}} liters</div>
-        </div>
-        <div class="product-list-action">
-          <span class="product-price" *ngIf="bloodRequest.urgent"><b>URGENT</b></span>
-          <p-button label="Send"></p-button>
-        </div>
-      </div>
-    </div>
-  </ng-template>
-  <ng-template let-product pTemplate="gridItem">
-    <div class="col-12 md:col-4">
-      <div class="product-grid-item card">
-        <div class="product-grid-item-top">
-          <div>
-            <i class="pi pi-tag product-category-icon"></i>
-            <span class="product-category">{{product.category}}</span>
-          </div>
-          <span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span>
-        </div>
-        <div class="product-grid-item-content">
-          <img [src]="'assets/showcase/images/demo/product/' + product.image" [alt]="product.name"/>
-          <div class="product-name">{{product.name}}</div>
-          <div class="product-description">{{product.description}}</div>
-          <p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating>
-        </div>
-        <div class="product-grid-item-bottom">
-          <span class="product-price">${{product.price}}</span>
-          <p-button icon="pi pi-shopping-cart" [disabled]="product.inventoryStatus === 'OUTOFSTOCK'"></p-button>
-        </div>
-      </div>
-    </div>
-  </ng-template>
-</p-dataView>
+<div class="centered-content">
+  <p-toast position="top-right"></p-toast>
+          <table
+            mat-table
+            [dataSource]="dataSource"
+          >
+            <ng-container matColumnDef="bloodBank">
+              <th
+                mat-header-cell
+                *matHeaderCellDef
+              >
+                Blood bank
+              </th>
+              <td mat-cell *matCellDef="let bloodRequest">
+                {{ bloodRequest.bloodBank.title }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="amount">
+              <th
+                mat-header-cell
+                *matHeaderCellDef
+              >
+                Amount
+              </th>
+              <td mat-cell *matCellDef="let bloodRequest">
+                <b>{{ bloodRequest.amount }}</b>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="start">
+              <th
+                mat-header-cell
+                *matHeaderCellDef
+              >
+              </th>
+              <td mat-cell *matCellDef="let bloodRequest">
+                <button class="schedule-button" (click)="startDelivery(bloodRequest)">Delivery</button>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="bloodType">
+              <th
+                mat-header-cell
+                *matHeaderCellDef
+              >
+                Blood type
+              </th>
+              <td mat-cell *matCellDef="let bloodRequest">
+                {{ formatBloodType(bloodRequest) }}
+              </td>
+            </ng-container>
+
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr
+              mat-row
+              *matRowDef="let row; columns: displayedColumns"
+            ></tr>
+            <tr class="mat-row" *matNoDataRow>
+              <td
+                class="mat-cell cancelled-text"
+                [attr.colspan]="displayedColumns.length"
+              >
+                There are no unresolved blood requests.<br />
+              </td>
+            </tr>
+          </table>
+</div>

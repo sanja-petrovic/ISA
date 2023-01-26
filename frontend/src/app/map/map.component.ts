@@ -5,6 +5,7 @@ import * as SockJS from "sockjs-client";
 import {BloodRequestService} from "../services/BloodRequestService";
 import {BloodRequest} from "../model/BloodRequest";
 import {LocationUpdate} from "../model/LocationUpdate";
+import {DataService} from "../services/DataService";
 
 @Component({
   selector: 'app-map',
@@ -19,21 +20,20 @@ export class MapComponent implements OnInit {
         attribution: '...',
       }),
     ],
-    zoom: 14,
+    zoom: 10,
     center: latLng(45.253434, 19.831323),
   };
   mainGroup: LayerGroup[] = [];
   private stompClient: any;
-  private bloodRequests: BloodRequest[];
   private bloodRequest: BloodRequest;
 
-  constructor(private bloodRequestService: BloodRequestService) {}
+  constructor(private bloodRequestService: BloodRequestService, private dataService: DataService) {}
 
   ngOnInit(): void {
-    this.bloodRequestService.getAll().subscribe(response => {
-      this.bloodRequests = response;
-      this.bloodRequest = response[0];
-    })
+    this.bloodRequest = this.dataService.bloodRequest;
+  }
+
+  start(): void {
     this.initializeWebSocketConnection();
   }
 
@@ -43,6 +43,7 @@ export class MapComponent implements OnInit {
     this.stompClient.debug = null;
     let that = this;
     this.stompClient.connect({}, function () {
+      that.openGlobalSocket();
     });
   }
 

@@ -1,6 +1,5 @@
 .question {
   font-size: 18px;
-  font-weight: bold;
 }
 
 .questionnaire {
@@ -16,7 +15,6 @@
   align-items: center;
 }
 .question-wrapper {
-  margin-top: 1rem;
 }
 
 .answer {

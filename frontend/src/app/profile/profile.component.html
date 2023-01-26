@@ -52,36 +52,36 @@
       <mat-card-content>
         <h2>Personal information</h2>
         <p>
-          > ID: <b>{{ bloodDonor.personalId }}</b>
+         ID: <b>{{ bloodDonor.personalId }}</b>
         </p>
         <p>
-          > Gender:
+         Gender:
           <b>{{ bloodDonor.gender == "FEMALE" ? "Female" : "Male" }}</b>
         </p>
         <p>
-          > Occupation: <b>{{ bloodDonor.occupation }}</b>
+         Occupation: <b>{{ bloodDonor.occupation }}</b>
         </p>
         <p>
-          > Associated institution: <b>{{ bloodDonor.institution }}</b>
+         Associated institution: <b>{{ bloodDonor.institution }}</b>
         </p>
         <h2>Contact</h2>
         <p>
-          > Home address:
+         Home address:
           <b
             >{{ bloodDonor.homeAddress }}, {{ bloodDonor.city }},
             {{ bloodDonor.country }}</b
           >
         </p>
         <p>
-          > Email: <b>{{ bloodDonor.email }}</b>
+         Email: <b>{{ bloodDonor.email }}</b>
         </p>
         <p>
-          > Phone number: <b>{{ bloodDonor.phoneNumber }}</b>
+         Phone number: <b>{{ bloodDonor.phoneNumber }}</b>
         </p>
         <h2>Penalties</h2>
         <h6 class="subtitle">A penalty is given if a donor does not show up to a scheduled appointment.</h6>
         <p >
-          > Count: <b [ngClass]="
+         Count: <b [ngClass]="
           [bloodDonor.penaltyCount === 2 ? 'orange' :
           bloodDonor.penaltyCount === 3 ? 'red' : '']
           ">{{bloodDonor.penaltyCount}}</b>
