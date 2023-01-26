@@ -1,6 +1,12 @@
 <div class="map-wrapper">
-  <app-map class="map"></app-map>
-  <button class="start-button" (click)="start()">Start the ride</button>
-  {{bloodRequest.id}}
+  <div class="map-wrapper">
+    <div
+      style="height: 80%; width: 80%"
+      leaflet
+      [leafletOptions]="options"
+      [leafletLayers]="mainGroup"
+    ></div>
+    <button class="start-button" (click)="start()">Start the ride</button>
+  </div>
 </div>
 

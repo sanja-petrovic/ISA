@@ -18,8 +18,17 @@ export class TrackingRequestService {
     private config: ConfigService) {
   }
 
-  start(): Observable<void> {
-    return this.apiService.post(`${this.config.tracking_requests_url}`, "");
+  start(bloodRequest: BloodRequest): Observable<void> {
+
+    return this.apiService.post(`${this.config.tracking_requests_url}`, {
+      id: bloodRequest.id,
+      frequencyInSeconds: 5,
+      latitudeStart: bloodRequest.bloodBank.latitude,
+      longitudeStart: bloodRequest.bloodBank.longitude,
+      latitudeEnd: 44.797731767760375,
+      longitudeEnd: 20.458045885543164,
+      status: "RECEIVED"
+    });
   }
 
   getById(id: string): Observable<BloodRequest> {

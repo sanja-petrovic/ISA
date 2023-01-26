@@ -26,6 +26,8 @@ export class MapComponent implements OnInit {
   mainGroup: LayerGroup[] = [];
   private stompClient: any;
   private bloodRequest: BloodRequest;
+  private currentLocation: LocationUpdate;
+  private icon: string =  "../../assets/images/location.png";
 
   constructor(private bloodRequestService: BloodRequestService, private dataService: DataService) {}
 
@@ -38,18 +40,31 @@ export class MapComponent implements OnInit {
   }
 
   initializeWebSocketConnection() {
+    alert("initializing web socket connection");
     let ws = new SockJS('http://localhost:8080/api/socket');
     this.stompClient = Stomp.over(ws);
     this.stompClient.debug = null;
     let that = this;
     this.stompClient.connect({}, function () {
+      alert("initializing web socket connection2");
       that.openGlobalSocket();
     });
   }
 
   openGlobalSocket() {
-    this.stompClient.subscribe(`/api/location-update/${this.bloodRequest.id}`, (message: { body: string }) => {
+    alert("initializing web socket connection3");
+    let geoLayerRouteGroup: LayerGroup = new LayerGroup();
+    this.stompClient.subscribe(`/location-update/${this.bloodRequest.id}`, (message: { body: string }) => {
       let locationUpdate: LocationUpdate = JSON.parse(message.body);
+      let markerLayer = marker([locationUpdate.longitude, locationUpdate.latitude], {
+        icon: icon({
+          iconUrl: this.icon,
+          iconSize: [45, 45],
+          iconAnchor: [18, 45],
+        }),
+      });
+      markerLayer.addTo(geoLayerRouteGroup);
+      this.mainGroup = [...this.mainGroup, geoLayerRouteGroup];
     });
   }
 }
